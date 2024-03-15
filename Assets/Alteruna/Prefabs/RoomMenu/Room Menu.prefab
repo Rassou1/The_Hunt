@@ -2089,6 +2089,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Multiplayer: {fileID: 0}
+  uiTransform: {fileID: 8763101913705298803}
+  startPosition: {x: 900, y: 500}
+  teleportPosition: {x: 2500, y: 1000}
   TitleText: {fileID: 8763101912947651791}
   LANEntryPrefab: {fileID: 203257309}
   WANEntryPrefab: {fileID: 8763101913713047505}

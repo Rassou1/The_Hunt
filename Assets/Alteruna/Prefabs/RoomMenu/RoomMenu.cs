@@ -8,7 +8,11 @@ namespace Alteruna
 {
 	public class RoomMenu : CommunicationBridge
 	{
-		[SerializeField] private Text TitleText;
+        [SerializeField] private RectTransform uiTransform; // Reference to the RectTransform of the UI
+        [SerializeField] private Vector2 startPosition; // Original position of the UI
+        [SerializeField] private Vector2 teleportPosition; // Position to teleport the UI
+
+        [SerializeField] private Text TitleText;
 		[SerializeField] private GameObject LANEntryPrefab;
 		[SerializeField] private GameObject WANEntryPrefab;
 		[SerializeField] private GameObject ContentContainer;
@@ -56,7 +60,10 @@ namespace Alteruna
 					// for more control, use Multiplayer.CreateRoom
 					Multiplayer.JoinOnDemandRoom();
 					_refreshTime = RefreshInterval;
-				});
+
+                    // Teleport UI to a specific position
+                    TeleportUI(teleportPosition);
+                });
 
 				LeaveButton.onClick.AddListener(() =>
 				{
@@ -141,7 +148,14 @@ namespace Alteruna
 				}
 
 				_count++;
-			}
+
+                // Check if Tab button is held down
+                if (Input.GetKey(KeyCode.Tab))
+                {
+                    // Teleport UI back to its original position
+                    TeleportUI(startPosition);
+                }
+            }
 		}
 
 		public bool JoinRoom(string roomName, ushort password = 0)
@@ -201,9 +215,11 @@ namespace Alteruna
 			{
 				TitleText.text = "In Room " + room.Name;
 			}
-		}
 
-		private void LeftRoom(Multiplayer multiplayer)
+            TeleportUI(teleportPosition);
+        }
+
+        private void LeftRoom(Multiplayer multiplayer)
 		{
 			_roomI = -1;
 
@@ -310,7 +326,15 @@ namespace Alteruna
 			}
 		}
 
-		private struct RoomObject
+        private void TeleportUI(Vector2 position)
+        {
+            if (uiTransform != null)
+            {
+                uiTransform.anchoredPosition = position;
+            }
+        }
+
+        private struct RoomObject
 		{
 			public readonly GameObject GameObject;
 			public readonly Text Text;
