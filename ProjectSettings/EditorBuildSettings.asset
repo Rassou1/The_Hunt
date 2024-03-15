@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Tyron.unity
+    guid: 4d9e85d2dd82c6d4d837b7a49369503c
   m_configObjects: {}
