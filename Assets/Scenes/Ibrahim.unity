@@ -135,8 +135,8 @@ GameObject:
   - component: {fileID: 99203236}
   - component: {fileID: 99203235}
   - component: {fileID: 99203234}
-  m_Layer: 0
-  m_Name: Cube (1)
+  m_Layer: 10
+  m_Name: wall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,12 +221,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99203233}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -16.97, y: 5.1, z: -9.57}
   m_LocalScale: {x: 1, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2115210464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &115708464
 GameObject:
@@ -240,8 +240,8 @@ GameObject:
   - component: {fileID: 115708467}
   - component: {fileID: 115708466}
   - component: {fileID: 115708465}
-  m_Layer: 0
-  m_Name: Cube
+  m_Layer: 10
+  m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,12 +326,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115708464}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -9.87, y: 5.1, z: -9.57}
   m_LocalScale: {x: 1, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2115210464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &204017901
 GameObject:
@@ -725,6 +725,8 @@ GameObject:
   - component: {fileID: 1548855666}
   - component: {fileID: 1548855665}
   - component: {fileID: 1548855667}
+  - component: {fileID: 1548855668}
+  - component: {fileID: 1548855669}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -789,14 +791,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7049c1bd03a56468415ca745a9da77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 0
-  sprintSpeed: 0
+  walkSpeed: 7
+  sprintSpeed: 10
   groundDrag: 7
   jumpForce: 10
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  crouchSpeed: 0
-  crouchYScale: 0
+  crouchSpeed: 3
+  crouchYScale: 0.5
+  slideSpeed: 30
+  sliding: 0
+  wallrunSpeed: 8.5
+  wallrunning: 0
   jumpKey: 32
   sprintKey: 304
   crouchKey: 99
@@ -807,6 +813,49 @@ MonoBehaviour:
   maxSlopeAngle: 0
   orientation: {fileID: 505794921}
   state: 0
+--- !u!114 &1548855668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548855664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392821471ae11d5469e8000e30d0a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 505794921}
+  playerObj: {fileID: 1566717977}
+  maxSlideTime: 1
+  slideForce: 200
+  slideKey: 306
+--- !u!114 &1548855669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548855664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05bef5a4e5a98274b9a07b9548130378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 1024
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  wallRunForce: 200
+  maxWallRunTime: 1.5
+  upwardsRunKey: 304
+  downwardsRunKey: 306
+  wallClimbSpeed: 3
+  wallCheckDistance: 0.7
+  minJumpHeight: 2
+  orientation: {fileID: 505794921}
 --- !u!1 &1566717976
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,8 +868,6 @@ GameObject:
   - component: {fileID: 1566717980}
   - component: {fileID: 1566717979}
   - component: {fileID: 1566717978}
-  - component: {fileID: 1566717982}
-  - component: {fileID: 1566717981}
   m_Layer: 0
   m_Name: PlayerObj
   m_TagString: Untagged
@@ -850,7 +897,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566717976}
-  m_Material: {fileID: 13400000, guid: 5d8a7ed59a8ac984bb3458e865af8fff, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -916,53 +963,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566717976}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1566717981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566717976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 392821471ae11d5469e8000e30d0a858, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 505794921}
-  playerObj: {fileID: 1566717977}
-  maxSlideTime: 1
-  slideForce: 200
-  slideKey: 306
---- !u!114 &1566717982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566717976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7049c1bd03a56468415ca745a9da77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 0
-  sprintSpeed: 0
-  groundDrag: 0
-  jumpForce: 0
-  jumpCooldown: 0
-  airMultiplier: 0
-  crouchSpeed: 0
-  crouchYScale: 0
-  jumpKey: 32
-  sprintKey: 304
-  crouchKey: 99
-  playerHeight: 0
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 0
-  maxSlopeAngle: 0
-  orientation: {fileID: 0}
-  state: 0
 --- !u!1 &1684023549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,6 +1236,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 115708468}
+  - {fileID: 99203237}
   - {fileID: 1450360539}
   - {fileID: 904070482}
   - {fileID: 1684023550}
@@ -1249,5 +1251,3 @@ SceneRoots:
   - {fileID: 204017903}
   - {fileID: 1548855666}
   - {fileID: 2115210464}
-  - {fileID: 115708468}
-  - {fileID: 99203237}

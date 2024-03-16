@@ -24,7 +24,7 @@ public class Sliding : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
-    private bool sliding;
+    //IMPORTANT: I AM VERY UNHAPPY WITH HOW SLIDING WORKS AND WILL PERSONALLY BE UPDATING IT TO BE ENTIRELY MOMENTUM BASED IN THE FUTURE. THIS WILL DO FOR OUR CURRENT SLICE THOUGH.
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class Sliding : MonoBehaviour
             startSlide();
         }
 
-        if (Input.GetKeyUp(slideKey) && sliding)
+        if (Input.GetKeyUp(slideKey) && pm.sliding)
         {
             stopSlide();
         }
@@ -52,7 +52,7 @@ public class Sliding : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(sliding)
+        if(pm.sliding)
         {
             slidingMovement();
         }
@@ -60,7 +60,7 @@ public class Sliding : MonoBehaviour
 
     private void startSlide()
     {
-        sliding = true;
+        pm.sliding = true;
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYscale, playerObj.localScale.z);
 
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -91,7 +91,7 @@ public class Sliding : MonoBehaviour
 
     private void stopSlide()
     {
-        sliding = false;
+        pm.sliding = false;
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYscale, playerObj.localScale.z);
     }
 }

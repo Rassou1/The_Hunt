@@ -21,6 +21,14 @@ public class PlayerMovement : MonoBehaviour
     public float crouchYScale;
     private float startYScale;
 
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+    public float slideSpeed;
+    public bool sliding;
+
+    public float wallrunSpeed;
+    public bool wallrunning;
+
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
@@ -51,7 +59,9 @@ public class PlayerMovement : MonoBehaviour
     {
         walking,
         sprinting,
+        wallrunning,
         crouching,
+        sliding,
         air
     }
 
@@ -150,33 +160,87 @@ public class PlayerMovement : MonoBehaviour
     {
         //Script for changing what the player can do based on whether theyre in air/on ground/etc
 
+
+        //for wallrunning
+
+        if(wallrunning)
+        {
+            state = MovementState.wallrunning;
+            desiredMoveSpeed = wallrunSpeed;
+        }
+
+        //for sliding
+        if (sliding)
+        {
+            state = MovementState.sliding;
+
+            if (OnSlope() && rb.velocity.y < 0.1f)
+            {
+                desiredMoveSpeed = slideSpeed;
+            }
+            else { desiredMoveSpeed = sprintSpeed; }
+        }
+
         //for sprinting
         if (grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
+            desiredMoveSpeed = sprintSpeed;
         }
+
+
 
         //for walking
         else if (grounded)
         {
             state = MovementState.walking;
-            moveSpeed = walkSpeed;
+            desiredMoveSpeed = walkSpeed;
         }
 
         //for crouching
-        //BUG: CROUCHING MIDAIR SETS YOUR SPEED TO CROUCH SPEED. SHOULD ONLY CHANGE PLAYER SCALE.
+        
         else if (Input.GetKey(crouchKey))
         {
             state = MovementState.crouching;
-            moveSpeed = crouchSpeed;
+            desiredMoveSpeed = crouchSpeed;
         }
+
 
         //else
         else 
         {
             state = MovementState.air;
         }
+
+        //check for sudden big change in desired movespeed (dms)
+        if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 5f && moveSpeed != 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(SmoothMovespeedLerp());
+        }
+        else
+        {
+            moveSpeed = desiredMoveSpeed;
+        }
+        
+        lastDesiredMoveSpeed = desiredMoveSpeed;
+    }
+
+    private  IEnumerator SmoothMovespeedLerp()
+    {
+        //lerp movespeed to desired value. this is out momentum.
+        float time = 0;
+        float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
+        float startValue = moveSpeed;
+
+        while (time < difference)
+        {
+            moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time/difference);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        moveSpeed = desiredMoveSpeed;
     }
 
     private void SpeedControl()
