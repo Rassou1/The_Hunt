@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 4257361585538099745}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -873,4 +873,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 1000
   sensY: 1000
-  orientation: {fileID: 0}
+  orientation: {fileID: 2968612696684639942}

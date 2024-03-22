@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 1156188619}
   m_Layer: 0
   m_Name: map
-  m_TagString: Untagged
+  m_TagString: baseGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 1888874096}
   - component: {fileID: 1888874098}
   - component: {fileID: 1888874097}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,10 +1066,10 @@ Canvas:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 227254257}
   - {fileID: 1478868175}
   - {fileID: 1339620349}
   - {fileID: 1441325715}
   - {fileID: 1902227396}
   - {fileID: 1156188619}
   - {fileID: 1204236184}
-  - {fileID: 227254257}
