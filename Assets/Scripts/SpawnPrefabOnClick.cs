@@ -2,11 +2,17 @@ using UnityEngine;
 
 public class SpawnPrefabOnClick : MonoBehaviour
 {
-    public GameObject prefabToSpawn;
+    public GameObject lobbyMenu;
+    public GameObject PlayerPrefab;
+    public GameObject PlayerSpawn;
 
-    public void SpawnPrefabAndDeactivateButton()
+    public void SpawnLobbyMenuAndDeactivateButton()
     {
-        Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
+        Instantiate(lobbyMenu, transform.position, Quaternion.identity);
         gameObject.SetActive(false); // Deactivate the button
+    }
+    public void SpawnPlayerPrefabAndDeactivateButton()
+    {
+        Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
     }
 }
