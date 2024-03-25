@@ -20,6 +20,7 @@ public class PlayerLocator : MonoBehaviour
         {
             VivoxService.Instance.Set3DPosition(GameObject.FindWithTag("Player"), "ChannelName");
             _nextPosUpdate += 0.3f;
+            Debug.Log("Updated Player Location");
         }
     }
 }
