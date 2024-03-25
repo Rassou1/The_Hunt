@@ -14,8 +14,9 @@ public class VivoxTest : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
         await VivoxService.Instance.InitializeAsync();
         await VivoxService.Instance.LoginAsync();
-        Channel3DProperties props = new Channel3DProperties();
-        await VivoxService.Instance.JoinPositionalChannelAsync("ChannelName",ChatCapability.AudioOnly,props);
+        await VivoxService.Instance.JoinGroupChannelAsync("ChannelName", ChatCapability.AudioOnly);
+        //Channel3DProperties props = new Channel3DProperties();
+        //await VivoxService.Instance.JoinPositionalChannelAsync("ChannelName",ChatCapability.AudioOnly,props);
     }
 
     // Update is called once per frame
