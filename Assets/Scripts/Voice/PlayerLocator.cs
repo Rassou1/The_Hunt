@@ -15,12 +15,12 @@ public class PlayerLocator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        //if (Time.time > _nextPosUpdate)
-        //{
-        //    VivoxService.Instance.Set3DPosition(GameObject.FindWithTag("Player"), "ChannelName");
-        //    _nextPosUpdate += 0.3f;
-        //    Debug.Log("Updated Player Location");
-        //}
+
+        if (Time.time > _nextPosUpdate)
+        {
+            VivoxService.Instance.Set3DPosition(GameObject.FindWithTag("Player"), "ChannelName");
+            _nextPosUpdate += 0.3f;
+            Debug.Log("Updated Player Location");
+        }
     }
 }
