@@ -1,18 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class H_WallClimb : MonoBehaviour
+public class H_WallClimbingState : H_BaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public H_WallClimbingState(H_StateManager currentContext, H_StateFactory h_StateFactory) : base(currentContext, h_StateFactory)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void EnterState()
     {
-        
+
+    }
+
+    public override void UpdateState()
+    {
+
+        CheckSwitchState();
+    }
+
+    public override void ExitState()
+    {
+
+    }
+
+    public override void CheckSwitchState()
+    {
+
+    }
+
+    public override void InitializeSubState()
+    {
+
     }
 }
