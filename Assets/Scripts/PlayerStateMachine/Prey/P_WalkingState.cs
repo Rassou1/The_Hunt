@@ -10,15 +10,16 @@ public class P_WalkingState : P_BaseState
 
     public override void EnterState()
     {
-
+        _ctx.Animator.SetBool(_ctx.IsWalkingHash, true);
+        _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
     }
 
     public override void UpdateState()
     {
-        //Set movement to input
+        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x;
+        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y;
 
-
-        CheckSwitchState(); //This should always be last
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -28,12 +29,19 @@ public class P_WalkingState : P_BaseState
 
     public override void CheckSwitchState()
     {
-
+        if (!_ctx.IsMovementPressed)
+        {
+            SwitchState(_factory.Idle());
+        }
+        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
+        {
+            SwitchState(_factory.Run());
+        }
     }
 
     public override void InitializeSubState()
     {
-
+        //if (slide) -> slide
     }
 
 }

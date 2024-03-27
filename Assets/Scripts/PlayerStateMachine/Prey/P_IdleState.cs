@@ -9,12 +9,12 @@ public class P_IdleState : P_BaseState
 
     public override void EnterState()
     {
-        //Set the animator bools here
-
-        //AppliedMovevement = 0
+        _ctx.Animator.SetBool(_ctx.IsWalkingHash, false);
+        _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
+        _ctx.AppliedMovementX = 0f;
+        _ctx.AppliedMovementZ = 0f;
     }
 
-    KeyCode forward;
 
 
     public override void UpdateState()
@@ -29,17 +29,18 @@ public class P_IdleState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        //if(wasd && !leftshift)
-        //SetSubState(_factory.Walk());
-        //else
-        //SetSubState(_factory.Run());
-        //etc
-
-        //Fix for other substates as well
+        if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
+        {
+            SwitchState(_factory.Run());
+        }
+        else if (_ctx.IsMovementPressed)
+        {
+            SwitchState(_factory.Walk());
+        }
     }
 
     public override void InitializeSubState()
     {
-
+        //if (slide) -> slide
     }
 }

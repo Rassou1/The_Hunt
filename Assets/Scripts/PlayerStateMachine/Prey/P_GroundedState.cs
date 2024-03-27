@@ -10,11 +10,14 @@ public class P_GroundedState : P_BaseState
     public override void EnterState()
     {
         InitializeSubState();
+        _ctx.CurrentMovementY = _ctx.GroundedGravity;
+        _ctx.AppliedMovementY = _ctx.GroundedGravity;
+        _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
 
     public override void UpdateState()
     {
-
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -22,20 +25,38 @@ public class P_GroundedState : P_BaseState
 
     }
 
-    public override void CheckSwitchState()
-    {
-        CheckSwitchState();
-    }
 
     public override void InitializeSubState()
     {
-        //if(!anyMovementPressed)
-        //SetSubState(_factory.Idle());
-        //else if(wasd && !leftshift)
-        //SetSubState(_factory.Walk());
-        //else
-        //SetSubState(_factory.Run());
-        //etc
+        if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
+        {
+            SetSubState(_factory.Walk());
+        }
+        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
+        {
+            SetSubState(_factory.Run());
+        }
+        //else if (wallrunning) -> wallrun
+        else
+        {
+            SetSubState(_factory.Idle());
+        }
+
+    }
+
+    public override void CheckSwitchState()
+    {
+        if (_ctx.IsJumpPressed)
+        {
+            _ctx.CurrentMovementY += 6;
+            _ctx.AppliedMovementY += 6;
+            SwitchState(_factory.Air());
+        }
+        else if (!_ctx.CharacterController.isGrounded)
+        {
+            SwitchState(_factory.Air());
+        }
+        
     }
 
 }

@@ -15,6 +15,7 @@ public class P_WallRunningState : P_BaseState
     public override void UpdateState()
     {
 
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -24,11 +25,11 @@ public class P_WallRunningState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        CheckSwitchState();
+        
     }
 
     public override void InitializeSubState()
     {
-
+        //if (slide) -> slide
     }
 }

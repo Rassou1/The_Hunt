@@ -3,14 +3,14 @@ using UnityEngine;
 public abstract class P_BaseState
 {
     private bool _isRootState = false;
-    private P_StateManager _ctx;
-    private P_StateFactory _factory;
+    protected P_StateManager _ctx;
+    protected P_StateFactory _factory;
     private P_BaseState _currentSubState;
     private P_BaseState _currentSuperState;
 
     protected bool IsRootState { set { _isRootState = value; } }
-    protected P_StateManager Ctx { get { return _ctx; } }
-    protected P_StateFactory Factory { get { return _factory; } }
+    //protected P_StateManager Ctx { get { return _ctx; } }
+    //protected P_StateFactory Factory { get { return _factory; } }
 
     public P_BaseState(P_StateManager currentContext, P_StateFactory p_StateFactory)
     {

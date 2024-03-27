@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class P_SlidingState : P_BaseState
 {
+
+    //Make sliding into a sub-sub state, since it's just a modifier on how you lose and gain momentum
+
     public P_SlidingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
 
@@ -15,6 +18,7 @@ public class P_SlidingState : P_BaseState
     public override void UpdateState()
     {
 
+        CheckSwitchState();
     }
 
     public override void ExitState()
@@ -24,7 +28,7 @@ public class P_SlidingState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        CheckSwitchState();
+        
     }
 
     public override void InitializeSubState()

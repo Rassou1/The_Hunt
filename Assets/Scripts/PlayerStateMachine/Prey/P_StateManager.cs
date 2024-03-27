@@ -13,6 +13,8 @@ public class P_StateManager : MonoBehaviour
     int _isWalkingHash;
     int _isSprintingHash;
     int _isFallingHash;
+    int _isWallRunningHash;
+    int _isSlidingHash;
 
     P_BaseState _currentState;
     P_StateFactory _states;
@@ -21,17 +23,48 @@ public class P_StateManager : MonoBehaviour
     Vector2 _currentMovementInput;
     Vector3 _currentMovement;
     Vector3 _currentSprintMovement;
+    Vector3 _appliedMovement;
+
     bool _isMovementPressed;
     bool _isSprintPressed;
+    bool _isJumpPressed;
+    bool _isSlidePressed;
 
-    bool _isJumpPressed = false;
+    float _gravity = -12f;
+    float _groundedGravity = -.05f;
 
     float _rotationFactorPerFrame = 10f;
     float _sprintMultiplier = 3f;
 
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
+    public CharacterController CharacterController { get { return _characterController; } }
+    public Animator Animator { get { return _animator; } }
+    public int IsWalkingHash { get { return _isWalkingHash; } }
+    public int IsSprintingHash { get { return _isSprintingHash; } }
+    public int IsFallingHash { get { return _isFallingHash; } }
+    public int IsWallRunningHash { get { return _isWallRunningHash; } }
+    public int IsSlidingHash {  get { return _isSlidingHash; } }
 
+
+
+    public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; } }
+    public Vector3 CurrentMovement { get { return _currentMovement; } set { _currentMovement = value; } }
+    public Vector3 CurrentSprintMovement { get { return _currentSprintMovement; } set { _currentSprintMovement = value; } }
+    public Vector3 AppliedMovement {  get { return _appliedMovement; } set { _appliedMovement = value; } }
+
+    public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
+    public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
+    public float AppliedMovementX { get { return _appliedMovement.x; } set {  _appliedMovement.x = value; } }
+    public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
+
+    public bool IsMovementPressed { get { return _isMovementPressed; } }
+    public bool IsSprintPressed {  get { return _isSprintPressed; } }
+    public bool IsJumpPressed { get { return _isJumpPressed; } }
+    public bool IsSlidePressed { get { return _isSlidePressed; } }
+
+    public float Gravity { get { return _gravity; } set { _gravity = value; } }
+    public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
 
     //void Start()
@@ -48,7 +81,10 @@ public class P_StateManager : MonoBehaviour
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isSprintingHash = Animator.StringToHash("isRunning");
         _isFallingHash = Animator.StringToHash("isFalling");
+        _isWallRunningHash = Animator.StringToHash("isWallRunning");
+        _isSlidingHash = Animator.StringToHash("isSliding");
 
+        //This get's the inputs from the new input system
         _playerInput.PreyControls.Move.started += OnMovementInput;
         _playerInput.PreyControls.Move.canceled += OnMovementInput;
         _playerInput.PreyControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
@@ -56,6 +92,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Sprint.canceled += OnSprint;
         _playerInput.PreyControls.Jump.started += OnJump;
         _playerInput.PreyControls.Jump.canceled += OnJump;
+        _playerInput.PreyControls.Slide.started += OnSlide;
+        _playerInput.PreyControls.Slide.canceled += OnSlide;
 
 
         //setup state
@@ -63,6 +101,19 @@ public class P_StateManager : MonoBehaviour
 
         _currentState = _states.Ground();
         _currentState.EnterState();
+
+    }
+
+    void Update()
+    {
+        HandleRotation();
+        _characterController.Move(_appliedMovement * Time.deltaTime);
+        _currentState.UpdateStates();
+    }
+
+
+    public void GetCameraInput()
+    {
 
     }
 
@@ -94,99 +145,37 @@ public class P_StateManager : MonoBehaviour
         _isSprintPressed = context.ReadValueAsButton();
     }
 
+    void OnSlide(InputAction.CallbackContext context)
+    {
+        _isSlidePressed = context.ReadValueAsButton();
+    }
+
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
         _currentMovement.x = _currentMovementInput.x;
         _currentMovement.z = _currentMovementInput.y;
         _currentSprintMovement.x = _currentMovementInput.x * _sprintMultiplier;
-        _currentSprintMovement.z = _currentMovementInput.y * _sprintMultiplier;
+        _currentSprintMovement.z = _currentMovementInput.y * _sprintMultiplier;  //We set z=y here since we're getting a Vector2 as the input and z is sideways in Vector3
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
 
-    void HandleAnimation()
+    //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
+    IEnumerator WallRunBuffer()
     {
-        bool isWalking = _animator.GetBool(_isWalkingHash);
-        bool isSprinting = _animator.GetBool(_isSprintingHash);
-        bool isFalling = _animator.GetBool(_isFallingHash);
-
-        if (!_characterController.isGrounded && !isFalling)
-        {
-            _animator.SetBool(_isFallingHash, true);
-        }
-        else if (_characterController.isGrounded && isFalling)
-        {
-            _animator.SetBool(_isFallingHash, false);
-        }
-
-        if (_isMovementPressed && !isWalking)
-        {
-            _animator.SetBool(_isWalkingHash, true);
-        }
-        else if (!_isMovementPressed && isWalking)
-        {
-            _animator.SetBool(_isWalkingHash, false);
-        }
-
-        if (_isMovementPressed && _isSprintPressed && !isSprinting)
-        {
-            _animator.SetBool(_isSprintingHash, true);
-        }
-        else if ((!_isMovementPressed || !_isSprintPressed) && isSprinting)
-        {
-            _animator.SetBool(_isSprintingHash, false);
-
-        }
-
+        yield return new WaitForSeconds(2f);
+        //getNoMomentumLoss = true
     }
 
-    void HandleGravity()
+
+    void CalculateMomentumGrounded()
     {
-        if (_characterController.isGrounded)
-        {
-            float groundedGravity = -.05f;      //isGrounded only returns true if the character is touching the ground and has a downwards momentum
-            _currentMovement.y = groundedGravity;
-            _currentSprintMovement.y = groundedGravity;
-        }
-        else
-        {
-            float gravity = -9.8f;
-            _currentMovement.y += gravity * Time.deltaTime;
-            _currentSprintMovement.y += gravity * Time.deltaTime;
-        }
-
-
-
+        //Switch name to just "CalculateMomentum" if we remove CalculateMomentumAir
     }
 
-    void HandleJump()
+    void CalculateMomentumAir()
     {
-        if (_isJumpPressed && _characterController.isGrounded)
-        {
-            _currentMovement.y = 4;
-        }
-    }
-
-    void Update()
-    {
-        HandleRotation();
-        HandleAnimation();
-        HandleJump();
-
-        if (_isSprintPressed)
-        {
-            _characterController.Move(_currentSprintMovement * Time.deltaTime);
-
-        }
-        else
-        {
-            _characterController.Move(_currentMovement * Time.deltaTime);
-        }
-
-
-
-        HandleGravity();
-        _currentState.UpdateStates();
+        //If we want to calculate momentum in the air in an entierly different way. If we're just switching the values of some numbers we can remove this and just change the numbers using the P_InAirState script
     }
 
 
@@ -206,11 +195,5 @@ public class P_StateManager : MonoBehaviour
     {
         _currentState = state;
         state.EnterState();
-    }
-
-
-    public void GetCameraInput()
-    {
-
     }
 }
