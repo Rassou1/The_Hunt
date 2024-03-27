@@ -9,9 +9,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-//NEVER MANUALLY CHANGE ANYTHING HERE. UNITY DOES IT AUTOMATICALLY. YOU MIGHT BREAK SOMETHING
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
