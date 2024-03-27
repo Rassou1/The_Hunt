@@ -62,6 +62,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""4cdc3277-ee16-4a89-9346-7f6eec02411c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,149 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8a1e206-60ed-4838-af79-5e1f83f69f83"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""HunterControls"",
+            ""id"": ""0c4b8e2b-9fcd-4dc0-9788-c4a47887fe1e"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""05d3dd15-afb6-42c3-9f66-cbeca145e587"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""NormalizeVector2"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7397ec0-9bf2-424b-85ad-21d31849237f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""676c086e-5e9a-4124-852d-0ffe31803e91"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7c4131a-918f-4914-957b-3ce1f0298377"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""85201a4c-bf2e-47ee-9bf7-efc7f8fa285b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""4248113f-dbc0-4650-b00f-aeef2bd70cd2"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""e6dd0ec6-879b-4f3c-ab5f-34bd69a8c103"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""cf93b67f-efe9-4921-857f-8b8631f25855"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""52fae577-9e23-42f4-ba6d-055675cd9c06"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a495ea1f-f1bd-4e9f-afe2-c61a6cb11c53"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdd18fd3-0ae2-4fa6-9ce6-79c3fe47ecf3"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2ff3286-d7c6-404e-9ec7-ecb31eb3c2cd"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +316,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PreyControls_Jump = m_PreyControls.FindAction("Jump", throwIfNotFound: true);
         m_PreyControls_Sprint = m_PreyControls.FindAction("Sprint", throwIfNotFound: true);
         m_PreyControls_Slide = m_PreyControls.FindAction("Slide", throwIfNotFound: true);
+        m_PreyControls_Look = m_PreyControls.FindAction("Look", throwIfNotFound: true);
+        // HunterControls
+        m_HunterControls = asset.FindActionMap("HunterControls", throwIfNotFound: true);
+        m_HunterControls_Move = m_HunterControls.FindAction("Move", throwIfNotFound: true);
+        m_HunterControls_Jump = m_HunterControls.FindAction("Jump", throwIfNotFound: true);
+        m_HunterControls_Sprint = m_HunterControls.FindAction("Sprint", throwIfNotFound: true);
+        m_HunterControls_Slide = m_HunterControls.FindAction("Slide", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +388,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PreyControls_Jump;
     private readonly InputAction m_PreyControls_Sprint;
     private readonly InputAction m_PreyControls_Slide;
+    private readonly InputAction m_PreyControls_Look;
     public struct PreyControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -237,6 +397,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_PreyControls_Jump;
         public InputAction @Sprint => m_Wrapper.m_PreyControls_Sprint;
         public InputAction @Slide => m_Wrapper.m_PreyControls_Slide;
+        public InputAction @Look => m_Wrapper.m_PreyControls_Look;
         public InputActionMap Get() { return m_Wrapper.m_PreyControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +419,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Slide.started += instance.OnSlide;
             @Slide.performed += instance.OnSlide;
             @Slide.canceled += instance.OnSlide;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IPreyControlsActions instance)
@@ -274,6 +438,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Slide.started -= instance.OnSlide;
             @Slide.performed -= instance.OnSlide;
             @Slide.canceled -= instance.OnSlide;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IPreyControlsActions instance)
@@ -291,7 +458,85 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public PreyControlsActions @PreyControls => new PreyControlsActions(this);
+
+    // HunterControls
+    private readonly InputActionMap m_HunterControls;
+    private List<IHunterControlsActions> m_HunterControlsActionsCallbackInterfaces = new List<IHunterControlsActions>();
+    private readonly InputAction m_HunterControls_Move;
+    private readonly InputAction m_HunterControls_Jump;
+    private readonly InputAction m_HunterControls_Sprint;
+    private readonly InputAction m_HunterControls_Slide;
+    public struct HunterControlsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public HunterControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_HunterControls_Move;
+        public InputAction @Jump => m_Wrapper.m_HunterControls_Jump;
+        public InputAction @Sprint => m_Wrapper.m_HunterControls_Sprint;
+        public InputAction @Slide => m_Wrapper.m_HunterControls_Slide;
+        public InputActionMap Get() { return m_Wrapper.m_HunterControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HunterControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IHunterControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HunterControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HunterControlsActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
+        }
+
+        private void UnregisterCallbacks(IHunterControlsActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
+        }
+
+        public void RemoveCallbacks(IHunterControlsActions instance)
+        {
+            if (m_Wrapper.m_HunterControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IHunterControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HunterControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HunterControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public HunterControlsActions @HunterControls => new HunterControlsActions(this);
     public interface IPreyControlsActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+    }
+    public interface IHunterControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);

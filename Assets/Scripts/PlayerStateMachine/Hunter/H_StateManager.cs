@@ -89,15 +89,15 @@ public class H_StateManager : MonoBehaviour
         _isSlidingHash = Animator.StringToHash("isSliding");
 
         //This get's the inputs from the new input system
-        _playerInput.PreyControls.Move.started += OnMovementInput;
-        _playerInput.PreyControls.Move.canceled += OnMovementInput;
-        _playerInput.PreyControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
-        _playerInput.PreyControls.Sprint.started += OnSprint;
-        _playerInput.PreyControls.Sprint.canceled += OnSprint;
-        _playerInput.PreyControls.Jump.started += OnJump;
-        _playerInput.PreyControls.Jump.canceled += OnJump;
-        _playerInput.PreyControls.Slide.started += OnSlide;
-        _playerInput.PreyControls.Slide.canceled += OnSlide;
+        _playerInput.HunterControls.Move.started += OnMovementInput;
+        _playerInput.HunterControls.Move.canceled += OnMovementInput;
+        _playerInput.HunterControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
+        _playerInput.HunterControls.Sprint.started += OnSprint;
+        _playerInput.HunterControls.Sprint.canceled += OnSprint;
+        _playerInput.HunterControls.Jump.started += OnJump;
+        _playerInput.HunterControls.Jump.canceled += OnJump;
+        _playerInput.HunterControls.Slide.started += OnSlide;
+        _playerInput.HunterControls.Slide.canceled += OnSlide;
 
 
         //setup state
@@ -185,12 +185,12 @@ public class H_StateManager : MonoBehaviour
 
     void OnEnable()
     {
-        _playerInput.PreyControls.Enable();
+        _playerInput.HunterControls.Enable();
     }
 
     void OnDisable()
     {
-        _playerInput.PreyControls.Disable();
+        _playerInput.HunterControls.Disable();
     }
 
 

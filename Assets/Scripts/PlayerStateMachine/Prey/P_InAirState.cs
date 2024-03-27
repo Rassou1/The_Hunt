@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 
 public class P_InAirState : P_BaseState
 {
+
+    
+
     public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
         IsRootState = true;
@@ -11,6 +15,7 @@ public class P_InAirState : P_BaseState
     {
         InitializeSubState();
         _ctx.Animator.SetBool(_ctx.IsFallingHash, true);
+        
     }
 
     public override void UpdateState()
@@ -21,7 +26,7 @@ public class P_InAirState : P_BaseState
 
     public override void ExitState()
     {
-
+        
     }
 
     public override void CheckSwitchState()
@@ -52,14 +57,14 @@ public class P_InAirState : P_BaseState
 
     void HandleGravity()
     {
-        bool goingDown = _ctx.CurrentMovementY <= 0.0f || !_ctx.IsJumpPressed;
-        float fallMultiplier = 2.0f;
+        bool goingDown = _ctx.CurrentMovementY <= 2.0f || !_ctx.IsJumpPressed;
+        float fallMultiplier = 2f;
         
         if (goingDown)
         {
             float previousYVelocity = _ctx.CurrentMovementY;
             _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * fallMultiplier * Time.deltaTime);
-            _ctx.AppliedMovementY = Mathf.Max((previousYVelocity + _ctx.CurrentMovementY) * .5f, -30.0f);
+            _ctx.AppliedMovementY = Mathf.Max((previousYVelocity + _ctx.CurrentMovementY) * .5f, -6.0f);
         }
         else
         {

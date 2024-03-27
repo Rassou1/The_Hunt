@@ -24,7 +24,7 @@ public class P_IdleState : P_BaseState
 
     public override void ExitState()
     {
-
+        
     }
 
     public override void CheckSwitchState()
