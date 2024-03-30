@@ -44,7 +44,7 @@ public class P_StateManager : MonoBehaviour
     bool _isSlidePressed;
 
     float _gravity = -8f;
-    float _groundedGravity = -.05f;
+    float _groundedGravity = -8f;
 
     public float _moveSpeed;
     public float _sprintMultiplier;

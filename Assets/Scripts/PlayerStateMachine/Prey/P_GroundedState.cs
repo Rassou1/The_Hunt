@@ -48,8 +48,8 @@ public class P_GroundedState : P_BaseState
     {
         if (_ctx.IsJumpPressed)
         {
-            _ctx.CurrentMovementY += 8;
-            _ctx.AppliedMovementY += 8;
+            _ctx.CurrentMovementY += 14;
+            _ctx.AppliedMovementY += 14;
             SwitchState(_factory.Air());
         }
         else if (!_ctx.CharacterController.isGrounded)
