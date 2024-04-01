@@ -31,7 +31,7 @@ public class P_InAirState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        if (_ctx.CharacterController.isGrounded)
+        if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Ground());
         }
@@ -59,12 +59,12 @@ public class P_InAirState : P_BaseState
     {
         bool goingDown = _ctx.CurrentMovementY <= 2.0f || !_ctx.IsJumpPressed;
         float fallMultiplier = 2f;
-        
+
         if (goingDown)
         {
             float previousYVelocity = _ctx.CurrentMovementY;
             _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * fallMultiplier * Time.deltaTime);
-            _ctx.AppliedMovementY = Mathf.Max((previousYVelocity + _ctx.CurrentMovementY) * .5f, -6.0f);
+            _ctx.AppliedMovementY = Mathf.Max((previousYVelocity + _ctx.CurrentMovementY) * .5f, -10.0f);
         }
         else
         {

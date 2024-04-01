@@ -29,8 +29,11 @@ public class P_WalkingState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        
-        if (!_ctx.IsMovementPressed)
+        if (_ctx.IsSlidePressed)
+        {
+            SwitchState(_factory.Slide());
+        }
+        else if (!_ctx.IsMovementPressed)
         {
             SwitchState(_factory.Idle());
         }

@@ -17,7 +17,6 @@ public class P_SlidingState : P_BaseState
 
     public override void UpdateState()
     {
-
         CheckSwitchState();
     }
 

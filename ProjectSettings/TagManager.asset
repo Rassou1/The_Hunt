@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - baseGround
-  - NetworkManager
   layers:
   - Default
   - TransparentFX
@@ -18,7 +17,7 @@ TagManager:
   - 
   - 
   - whatIsGround
-  - temp(dont use)
+  - _groundMask
   - 
   - 
   - 

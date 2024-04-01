@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,10 +8,13 @@ public class P_StateManager : MonoBehaviour
 {
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
-    CharacterController _characterController;
-    Animator _animator;
     
+    
+    CapsuleCollider _capsuleCollider;
+    LayerMask whatIsGround;
+
     public float _mouseSens;
+    
     
 
     int _isWalkingHash;
@@ -29,7 +33,9 @@ public class P_StateManager : MonoBehaviour
     Vector3 _appliedMovement;
     Vector2 _currentLookInput;
 
+    public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
+    public Animator _animator;
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -43,8 +49,10 @@ public class P_StateManager : MonoBehaviour
     bool _isJumpPressed;
     bool _isSlidePressed;
 
+    bool _isGrounded = false;
+
     float _gravity = -8f;
-    float _groundedGravity = -.05f;
+    float _groundedGravity = -8f;
 
     public float _moveSpeed;
     public float _sprintMultiplier;
@@ -52,7 +60,7 @@ public class P_StateManager : MonoBehaviour
 
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
-    public CharacterController CharacterController { get { return _characterController; } }
+    public Rigidbody Rigidbody { get { return _rigidbody; } }
     public Animator Animator { get { return _animator; } }
     public int IsWalkingHash { get { return _isWalkingHash; } }
     public int IsSprintingHash { get { return _isSprintingHash; } }
@@ -79,6 +87,7 @@ public class P_StateManager : MonoBehaviour
     public bool IsJumpPressed { get { return _isJumpPressed; } }
     public bool IsSlidePressed { get { return _isSlidePressed; } }
 
+    public bool IsGrounded {  get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
     public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
@@ -99,8 +108,9 @@ public class P_StateManager : MonoBehaviour
     {
 
         _playerInput = new PlayerInput();
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        //_rigidbody = GetComponent<Rigidbody>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
+        //_animator = GetComponent<Animator>();
 
 
         _isWalkingHash = Animator.StringToHash("isWalking");
@@ -141,21 +151,43 @@ public class P_StateManager : MonoBehaviour
         if (!_avatar.IsMe)
             return;
 
+        _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.2f);
+        Debug.Log("_isGrounded: " + _isGrounded);
         _currentState.UpdateStates();
         SetCameraOrientation();
         RotateBodyY();
         RelativeMovement();
-        _characterController.Move(_appliedMovement * Time.deltaTime);
+        _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
     }
 
+
     
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == _capsuleCollider.gameObject)
+        {
+            return;
+        }
+        _isGrounded = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == _capsuleCollider.gameObject)
+        {
+            return;
+        }
+        _isGrounded = false;
+    }
+
     void RelativeMovement()
     {
-        
         float preRelativeY = _appliedMovement.y;
+        
         _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
         _appliedMovement.y = preRelativeY;
-        //Debug.Log("applied movement final: " + _appliedMovement);
+        Debug.Log("applied movement final: " + _appliedMovement);
     }
 
     void OnJump(InputAction.CallbackContext context)
@@ -207,9 +239,13 @@ public class P_StateManager : MonoBehaviour
         //Will add some kind of "only rotate when angle above x or moving" if case when i understand Quaternions
         var forward = _cameraOrientation.forward;
         forward.y = 0;
-        transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
+        _rigidbody.transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
     }
 
+    void CheckGrounded()
+    {
+        
+    }
 
     //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
     IEnumerator WallRunBuffer()

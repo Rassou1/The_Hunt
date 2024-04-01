@@ -10,8 +10,12 @@ public class P_GroundedState : P_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        _ctx.CurrentMovementY = _ctx.GroundedGravity;
-        _ctx.AppliedMovementY = _ctx.GroundedGravity;
+        //_ctx.CurrentMovementY = _ctx.GroundedGravity;
+        //_ctx.AppliedMovementY = _ctx.GroundedGravity;
+
+        _ctx.CurrentMovementY = 0f;
+        _ctx.AppliedMovementY = 0f;
+
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
 
@@ -48,11 +52,11 @@ public class P_GroundedState : P_BaseState
     {
         if (_ctx.IsJumpPressed)
         {
-            _ctx.CurrentMovementY += 8;
-            _ctx.AppliedMovementY += 8;
+            _ctx.CurrentMovementY += 5;
+            _ctx.AppliedMovementY += 5;
             SwitchState(_factory.Air());
         }
-        else if (!_ctx.CharacterController.isGrounded)
+        else if (!_ctx.IsGrounded)
         {
             SwitchState(_factory.Air());
         }
