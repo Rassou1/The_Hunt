@@ -82,14 +82,22 @@ public class P_StateManager : MonoBehaviour
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
     public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
-
-    //void Start()
-    //{
-
-    //}
-
-    private void Awake()
+    //multiplayer stuff (ask tyron)
+    private Alteruna.Avatar _avatar;
+    void Start()
     {
+        //multiplayer stuff (ask tyron)
+        _avatar = GetComponent<Alteruna.Avatar>();
+        if (!_avatar.IsMe)
+            return;
+    }
+
+
+
+
+        private void Awake()
+    {
+
         _playerInput = new PlayerInput();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
@@ -129,6 +137,10 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
+        //multiplayer stuff (ask tyron)
+        if (!_avatar.IsMe)
+            return;
+
         _currentState.UpdateStates();
         SetCameraOrientation();
         RotateBodyY();
