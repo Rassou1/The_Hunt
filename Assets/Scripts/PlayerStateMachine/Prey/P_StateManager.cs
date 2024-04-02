@@ -157,7 +157,7 @@ public class P_StateManager : MonoBehaviour
 
         _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.3f);
         //GroundStuck();
-        DetectWall();
+        //DetectWall();
 
         Debug.Log("Right Wall: " + _wallRight);
         Debug.Log("Left Wall: " + _wallLeft);
@@ -169,6 +169,8 @@ public class P_StateManager : MonoBehaviour
         _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
     }
 
+
+    //I don't think I cooked here, probably just design the level so there's no spots that goes from fitting a character to not fitting one vertically
     void GroundStuck()
     {
         _isStuck = Physics.Raycast(_capsuleCollider.transform.position + new Vector3(0, 1, 0), Vector3.down, 1f);
@@ -178,14 +180,12 @@ public class P_StateManager : MonoBehaviour
         }
     }
     
-
+    //Could use colliders attached to the character to detect walls instead. Also the direction isn't correct yet
     void DetectWall()
     {
-
         //The direction isn't correct yet, but it's getting there...
         _wallRight = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.right, new Vector3(_mouseRotationX, _mouseRotationY, 0f)), 0.3f);
         _wallLeft = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.left, new Vector3(_mouseRotationX, _mouseRotationY)), 0.3f);
-
 
     }
 
