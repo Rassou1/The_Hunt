@@ -50,6 +50,10 @@ public class P_StateManager : MonoBehaviour
     bool _isSlidePressed;
 
     bool _isGrounded = false;
+    bool _isStuck = false;
+    bool _wallRight = false;
+    bool _wallLeft = false;
+
 
     float _gravity = -8f;
     float _groundedGravity = -8f;
@@ -92,14 +96,14 @@ public class P_StateManager : MonoBehaviour
     public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
     //multiplayer stuff (ask tyron)
-    private Alteruna.Avatar _avatar;
-    void Start()
-    {
-        //multiplayer stuff (ask tyron)
-        _avatar = GetComponent<Alteruna.Avatar>();
-        if (!_avatar.IsMe)
-            return;
-    }
+    //private Alteruna.Avatar _avatar;
+    //void Start()
+    //{
+    //    //multiplayer stuff (ask tyron)
+    //    _avatar = GetComponent<Alteruna.Avatar>();
+    //    if (!_avatar.IsMe)
+    //        return;
+    //}
 
 
 
@@ -148,11 +152,16 @@ public class P_StateManager : MonoBehaviour
     void Update()
     {
         //multiplayer stuff (ask tyron)
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
 
-        _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.2f);
-        Debug.Log("_isGrounded: " + _isGrounded);
+        _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.3f);
+        //GroundStuck();
+        //DetectWall();
+
+        Debug.Log("Right Wall: " + _wallRight);
+        Debug.Log("Left Wall: " + _wallLeft);
+
         _currentState.UpdateStates();
         SetCameraOrientation();
         RotateBodyY();
@@ -161,7 +170,25 @@ public class P_StateManager : MonoBehaviour
     }
 
 
+    //I don't think I cooked here, probably just design the level so there's no spots that goes from fitting a character to not fitting one vertically
+    void GroundStuck()
+    {
+        _isStuck = Physics.Raycast(_capsuleCollider.transform.position + new Vector3(0, 1, 0), Vector3.down, 1f);
+        if (_isStuck)
+        {
+            _rigidbody.transform.position += new Vector3(0, 0.1f, 0);
+        }
+    }
     
+    //Could use colliders attached to the character to detect walls instead. Also the direction isn't correct yet
+    void DetectWall()
+    {
+        //The direction isn't correct yet, but it's getting there...
+        _wallRight = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.right, new Vector3(_mouseRotationX, _mouseRotationY, 0f)), 0.3f);
+        _wallLeft = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.left, new Vector3(_mouseRotationX, _mouseRotationY)), 0.3f);
+
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
