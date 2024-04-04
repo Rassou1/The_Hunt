@@ -562,7 +562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114635606570717398, guid: 62c936eb2f7ddb640927fbd160b6574d, type: 3}
       propertyPath: newGameSceneName
-      value: Ibrahim
+      value: VerticalSlice1
       objectReference: {fileID: 0}
     - target: {fileID: 114994525251877866, guid: 62c936eb2f7ddb640927fbd160b6574d, type: 3}
       propertyPath: m_Enabled
