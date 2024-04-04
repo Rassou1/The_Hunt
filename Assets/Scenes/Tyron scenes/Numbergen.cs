@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Numbergen : MonoBehaviour, IInteractable
+using Alteruna;
+public class Numbergen : AttributesSync,IInteractable
 {
+
+    [SynchronizableField]
+    private bool isActive;
+
+    [SynchronizableField]
+    GameObject[] players;
     public void Interact()
     {
-        gameObject.SetActive(false);
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        isActive = false;
+        gameObject.SetActive(isActive);
+
+         players = GameObject.FindGameObjectsWithTag("Player");
 
         if (players.Length > 0)
         {
