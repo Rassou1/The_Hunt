@@ -235,10 +235,10 @@ public class P_StateManager : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
-        //_currentMovement.x = _currentMovementInput.x * _moveSpeed;
-        //_currentMovement.z = _currentMovementInput.y * _moveSpeed;
-        //_currentSprintMovement.x = _currentMovement.x * _sprintMultiplier;
-        //_currentSprintMovement.z = _currentMovement.y * _sprintMultiplier;  //We set z=y here since we're getting a Vector2 as the input and z is sideways in Vector3
+        _currentMovement.x = _currentMovementInput.x * _moveSpeed;
+        _currentMovement.z = _currentMovementInput.y * _moveSpeed;
+        _currentSprintMovement.x = _currentMovement.x * _sprintMultiplier;
+        _currentSprintMovement.z = _currentMovement.y * _sprintMultiplier;  //We set z=y here since we're getting a Vector2 as the input and z is sideways in Vector3
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
         Debug.Log("Current movement in input: " + _currentMovement);
     }
