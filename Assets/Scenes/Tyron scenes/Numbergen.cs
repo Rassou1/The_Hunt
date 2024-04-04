@@ -5,18 +5,14 @@ using Alteruna;
 public class Numbergen : AttributesSync,IInteractable
 {
 
-    [SynchronizableField]
-    private bool isActive;
 
-    [SynchronizableField]
-    GameObject[] players;
-    public void Interact()
+
+     public void Interact()
     {
 
-        isActive = false;
-        gameObject.SetActive(isActive);
+        gameObject.SetActive(false);
 
-         players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         if (players.Length > 0)
         {
