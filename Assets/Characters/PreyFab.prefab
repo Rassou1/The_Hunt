@@ -141,8 +141,8 @@ MonoBehaviour:
   _rigidbody: {fileID: 452407247307090497}
   _cameraOrientation: {fileID: 3325855989254018833}
   _animator: {fileID: 4619789070643299287}
-  _moveSpeed: 2
-  _sprintMultiplier: 3
+  _moveSpeed: 5
+  _sprintMultiplier: 2
 --- !u!136 &7928494486813170457
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -352,8 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db10a0c97f27ac145b2be0d7eac216be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hunterTag: Hunter
-  preyTag: Prey
 --- !u!114 &6231191100716215948
 MonoBehaviour:
   m_ObjectHideFlags: 0
