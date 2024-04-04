@@ -166,6 +166,7 @@ public class P_StateManager : MonoBehaviour
         _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
     }
 
+  
 
     //I don't think I cooked here, probably just design the level so there's no spots that goes from fitting a character to not fitting one vertically
     void GroundStuck()
