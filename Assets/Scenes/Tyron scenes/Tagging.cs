@@ -10,7 +10,7 @@ public class InteractablePlayer : MonoBehaviour, IInteractable
         string interactedPlayerTag = gameObject.tag;
 
         // Get the tag of the interacting player
-        string interactingPlayerTag = interactor.tag;
+        //string interactingPlayerTag = interactor.tag;
 
         // Check if the interacted player is tagged as "prey" and the interacting player is tagged as "hunter"
         if (interactedPlayerTag == "prey" && interactingPlayerTag == "hunter")
