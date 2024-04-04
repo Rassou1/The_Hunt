@@ -6,16 +6,23 @@ using UnityEngine.InputSystem;
 
 public class P_StateManager : MonoBehaviour
 {
-    private Alteruna.Avatar _avatar;
+    //private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
     
     
     CapsuleCollider _capsuleCollider;
+    Bounds _bounds;
+    
+    int _maxBounces = 5;
+    float _skindWidth = 0.015f;
+
     LayerMask whatIsGround;
 
+
+
     public float _mouseSens;
-    
+    public float _maxSlopeAngle;
     
 
     int _isWalkingHash;
@@ -51,7 +58,6 @@ public class P_StateManager : MonoBehaviour
     bool _isSlidePressed;
 
     bool _isGrounded = false;
-    bool _isStuck = false;
     bool _wallRight = false;
     bool _wallLeft = false;
 
@@ -96,11 +102,11 @@ public class P_StateManager : MonoBehaviour
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
     public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
-    void Start()
-    {
-        _avatar  = GetComponentInParent<Alteruna.Avatar>();
+    //void Start()
+    //{
+    //    _avatar  = GetComponentInParent<Alteruna.Avatar>();
 
-    }
+    //}
 
 
 
@@ -113,6 +119,9 @@ public class P_StateManager : MonoBehaviour
         //_rigidbody = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         //_animator = GetComponent<Animator>();
+        
+        _bounds = _capsuleCollider.bounds;
+        _bounds.Expand(-2 * _skindWidth);
 
 
         _isWalkingHash = Animator.StringToHash("isWalking");
@@ -147,35 +156,100 @@ public class P_StateManager : MonoBehaviour
 
     }
 
+    
+
+
     void Update()
     {
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
 
-        _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.3f);
-        //GroundStuck();
-        //DetectWall();
+        
+        
 
-        Debug.Log("Right Wall: " + _wallRight);
-        Debug.Log("Left Wall: " + _wallLeft);
+        //Debug.Log("Right Wall: " + _wallRight);
+        //Debug.Log("Left Wall: " + _wallLeft);
 
         _currentState.UpdateStates();
         SetCameraOrientation();
         RotateBodyY();
         RelativeMovement();
-        _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
+        Debug.Log("applied movement pre: " + _appliedMovement);
+        Debug.Log("IsGrounded: " + _isGrounded);
+        _appliedMovement *= Time.deltaTime;
+        _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+        _appliedMovement += CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position + _appliedMovement, 0, true, new Vector3(0, _appliedMovement.y,0));
+        _rigidbody.transform.position += _appliedMovement;
+        //Debug.Log("applied movement final: " + _bounds.extents.x);
+        _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.02f);
     }
 
 
-    //I don't think I cooked here, probably just design the level so there's no spots that goes from fitting a character to not fitting one vertically
-    void GroundStuck()
+    //This function is based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
+    Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
-        _isStuck = Physics.Raycast(_capsuleCollider.transform.position + new Vector3(0, 1, 0), Vector3.down, 1f);
-        if (_isStuck)
+        Vector3 botSphere = startPos + new Vector3(0, _capsuleCollider.radius, 0);
+        Vector3 topSphere = startPos + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
+        //Debug.Log("StartPos: " + startPos);
+        //Debug.Log("BotSphere: " + botSphere);
+        //Debug.Log("TopSphere: " + topSphere);
+        if (depth >= _maxBounces)
         {
-            _rigidbody.transform.position += new Vector3(0, 0.1f, 0);
+            return Vector3.zero;
         }
+        float dist = vel.magnitude + _skindWidth;
+        RaycastHit hit;
+        //Debug.Log("Direction: " + vel.normalized);
+        //Debug.Log("Distance: " + dist);
+        if (Physics.CapsuleCast(botSphere, topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
+        {
+            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
+            Vector3 leftover = vel - snapToSurface;
+            float angle = Vector3.Angle(Vector3.up, hit.normal);
+
+            if (snapToSurface.magnitude <= _skindWidth)
+            {
+                snapToSurface = Vector3.zero;
+            }
+
+            if (angle <= _maxSlopeAngle) //Normal ground / slope
+            {
+                if (gravityPass)
+                {
+                    return snapToSurface;
+                }
+                leftover = ProjectAndScale(leftover, hit.normal);
+            }
+            else //Wall or steep slope
+            {
+                float scale = 1 - Vector3.Dot(new Vector3(hit.normal.x, 0, hit.normal.z).normalized, -new Vector3(velInit.x, 0, velInit.z).normalized);
+
+                if (_isGrounded && !gravityPass)
+                {
+                    leftover = ProjectAndScale(new Vector3(leftover.x, 0, leftover.z), new Vector3(hit.normal.x, 0, hit.normal.z)).normalized;
+                    leftover *= scale;
+                }
+                else
+                {
+                    leftover = ProjectAndScale(leftover, hit.normal) * scale;
+                }
+            }
+
+            return snapToSurface + CollideAndSlide(leftover, startPos + snapToSurface, depth + 1, gravityPass, velInit);
+        }
+
+        return vel;
     }
+    //Part of CollideAndSlide
+    Vector3 ProjectAndScale(Vector3 vec, Vector3 normal)
+    {
+        float magnitude = vec.magnitude;
+        vec = Vector3.ProjectOnPlane(vec, normal).normalized;
+        vec *= magnitude;
+        return vec;
+    }
+
+
     
     //Could use colliders attached to the character to detect walls instead. Also the direction isn't correct yet
     void DetectWall()
@@ -210,8 +284,8 @@ public class P_StateManager : MonoBehaviour
         float preRelativeY = _appliedMovement.y;
         
         _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
+        
         _appliedMovement.y = preRelativeY;
-        Debug.Log("applied movement final: " + _appliedMovement);
     }
 
     void OnJump(InputAction.CallbackContext context)
@@ -266,10 +340,10 @@ public class P_StateManager : MonoBehaviour
         _rigidbody.transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
     }
 
-    void CheckGrounded()
-    {
-        
-    }
+
+    
+    
+    
 
     //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
     IEnumerator WallRunBuffer()
