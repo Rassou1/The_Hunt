@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tagging : MonoBehaviour, IInteractable
+public class InteractablePlayer : MonoBehaviour, IInteractable
 {
-    public string hunterTag = "Hunter";
-    public string preyTag = "Prey";
-
     public void Interact()
     {
-        // Check if the interacting player is tagged as "Hunter" and if the interacted player is tagged as "Prey"
-        if (gameObject.CompareTag(hunterTag) && transform.CompareTag(preyTag))
+        // Check if the interacting player is tagged as "hunter"
+        if (gameObject.CompareTag("hunter"))
         {
-            Debug.Log("Hunter interacted with Prey!");
-            // Perform actions for when the hunter interacts with prey here
+            // Get the tag of the interacted player
+            string interactedPlayerTag = gameObject.tag;
+
+            // Check if the interacted player is tagged as "prey"
+            if (interactedPlayerTag == "prey")
+            {
+                // Teleport the prey player to the specified position
+                transform.position = new Vector3(63.7f, 10.58f, -17.28f);
+            }
         }
     }
 }
