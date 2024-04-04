@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.SearchService;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +8,7 @@ public class MainMenuController : MonoBehaviour {
 
     Animator anim;
 
-    public string newGameSceneName = "Ibrahim";
+    public string newGameSceneName;
     public int quickSaveSlotID;
 
     [Header("Options Panel")]
