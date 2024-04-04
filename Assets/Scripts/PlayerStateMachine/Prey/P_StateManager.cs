@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class P_StateManager : MonoBehaviour
 {
+    private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
     
@@ -95,21 +96,18 @@ public class P_StateManager : MonoBehaviour
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
     public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
-    //multiplayer stuff (ask tyron)
-    //private Alteruna.Avatar _avatar;
-    //void Start()
-    //{
-    //    //multiplayer stuff (ask tyron)
-    //    _avatar = GetComponent<Alteruna.Avatar>();
-    //    if (!_avatar.IsMe)
-    //        return;
-    //}
-
-
-
-
-        private void Awake()
+    void Start()
     {
+        _avatar  = GetComponentInParent<Alteruna.Avatar>();
+
+    }
+
+
+
+
+    private void Awake()
+    {
+
 
         _playerInput = new PlayerInput();
         //_rigidbody = GetComponent<Rigidbody>();
@@ -151,9 +149,8 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
-        //multiplayer stuff (ask tyron)
-        //if (!_avatar.IsMe)
-        //    return;
+        if (!_avatar.IsMe)
+            return;
 
         _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.3f);
         //GroundStuck();
