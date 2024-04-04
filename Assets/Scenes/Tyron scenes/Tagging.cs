@@ -13,10 +13,10 @@ public class InteractablePlayer : MonoBehaviour, IInteractable
         //string interactingPlayerTag = interactor.tag;
 
         // Check if the interacted player is tagged as "prey" and the interacting player is tagged as "hunter"
-        if (interactedPlayerTag == "prey" && interactingPlayerTag == "hunter")
-        {
-            // Teleport the prey player to the specified position
-            transform.position = new Vector3(63.7f, 10.58f, -17.28f);
-        }
+        //if (interactedPlayerTag == "prey" && interactingPlayerTag == "hunter")
+        //{
+        //    // Teleport the prey player to the specified position
+        //    transform.position = new Vector3(63.7f, 10.58f, -17.28f);
+        //}
     }
 }
