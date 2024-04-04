@@ -49,12 +49,13 @@ public class P_StateManager : MonoBehaviour
     bool _isSprintPressed;
     bool _isJumpPressed;
     bool _isSlidePressed;
+    bool _isResetPressed = false;
+
 
     bool _isGrounded = false;
     bool _isStuck = false;
     bool _wallRight = false;
     bool _wallLeft = false;
-
 
     float _gravity = -8f;
     float _groundedGravity = -8f;
@@ -134,7 +135,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
-
+        _playerInput.PreyControls.Reset.started += OnResetInput;
+        _playerInput.PreyControls.Reset.canceled += OnResetInput;
 
         //setup state
         _states = new P_StateFactory(this);
@@ -165,6 +167,11 @@ public class P_StateManager : MonoBehaviour
         RotateBodyY();
         RelativeMovement();
         _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
+
+        if(_isResetPressed)
+        {
+            _rigidbody.transform.position = new Vector3(32, 6, -29);
+        }
     }
 
   
@@ -231,6 +238,11 @@ public class P_StateManager : MonoBehaviour
         _isSlidePressed = context.ReadValueAsButton();
     }
 
+    void OnResetInput(InputAction.CallbackContext context)
+    {
+        _isResetPressed = context.ReadValueAsButton();
+
+    }
 
     void OnMovementInput(InputAction.CallbackContext context)
     {
