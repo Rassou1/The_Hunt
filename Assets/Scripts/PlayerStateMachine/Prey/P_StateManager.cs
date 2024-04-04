@@ -149,6 +149,7 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
+        
         if (!_avatar.IsMe)
             return;
 
