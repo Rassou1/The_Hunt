@@ -304,9 +304,9 @@ public class P_StateManager : MonoBehaviour
 
 
 
-    public void SwitchState(P_BaseState state)
-    {
-        _currentState = state;
-        state.EnterState();
-    }
+    //public void SwitchState(P_BaseState state)
+    //{
+    //    _currentState = state;
+    //    state.EnterState();
+    //}
 }
