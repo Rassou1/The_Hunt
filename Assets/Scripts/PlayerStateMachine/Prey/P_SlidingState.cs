@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class P_SlidingState : P_BaseState
 {
-    public float momentumMultiplierMax = 10f;
+    public float momentumMultiplierMax = 8f;
     //PLACEHOLDER MAXIMUM POSSIBLE multiplier  for the momentum gain and loss.
     public float momentumFadeTimer = 3f;
     //PLACEHOLDER Time taken for momentum multiplier to fade down to 1.
