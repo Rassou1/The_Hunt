@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 452407247307090497}
   - component: {fileID: 4311599249812463511}
   - component: {fileID: 7884172207469220021}
+  - component: {fileID: 6231191100716215948}
   m_Layer: 0
   m_Name: PreyFab
   m_TagString: Player
@@ -338,6 +339,20 @@ MonoBehaviour:
   UseGlobalPosition: 0
   refreshRate: 30
   SyncedAxes: 511
+--- !u!114 &6231191100716215948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5548087739506019292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractorSource: {fileID: 6605274746566338901}
+  InteractRange: 2
 --- !u!1 &5980824139256042929
 GameObject:
   m_ObjectHideFlags: 0
