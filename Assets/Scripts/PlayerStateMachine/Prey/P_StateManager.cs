@@ -49,12 +49,13 @@ public class P_StateManager : MonoBehaviour
     bool _isSprintPressed;
     bool _isJumpPressed;
     bool _isSlidePressed;
+    bool _isResetPressed = false;
+
 
     bool _isGrounded = false;
     bool _isStuck = false;
     bool _wallRight = false;
     bool _wallLeft = false;
-
 
     float _gravity = -8f;
     float _groundedGravity = -8f;
@@ -134,7 +135,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
-
+        _playerInput.PreyControls.Reset.started += OnResetInput;
+        _playerInput.PreyControls.Reset.canceled += OnResetInput;
 
         //setup state
         _states = new P_StateFactory(this);
@@ -165,6 +167,11 @@ public class P_StateManager : MonoBehaviour
         RotateBodyY();
         RelativeMovement();
         _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
+
+        if(_isResetPressed)
+        {
+            _rigidbody.transform.position = new Vector3(32, 6, -29);
+        }
     }
 
   
@@ -231,14 +238,19 @@ public class P_StateManager : MonoBehaviour
         _isSlidePressed = context.ReadValueAsButton();
     }
 
+    void OnResetInput(InputAction.CallbackContext context)
+    {
+        _isResetPressed = context.ReadValueAsButton();
+
+    }
 
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
-        //_currentMovement.x = _currentMovementInput.x * _moveSpeed;
-        //_currentMovement.z = _currentMovementInput.y * _moveSpeed;
-        //_currentSprintMovement.x = _currentMovement.x * _sprintMultiplier;
-        //_currentSprintMovement.z = _currentMovement.y * _sprintMultiplier;  //We set z=y here since we're getting a Vector2 as the input and z is sideways in Vector3
+        _currentMovement.x = _currentMovementInput.x * _moveSpeed;
+        _currentMovement.z = _currentMovementInput.y * _moveSpeed;
+        _currentSprintMovement.x = _currentMovement.x * _sprintMultiplier;
+        _currentSprintMovement.z = _currentMovement.y * _sprintMultiplier;  //We set z=y here since we're getting a Vector2 as the input and z is sideways in Vector3
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
         Debug.Log("Current movement in input: " + _currentMovement);
     }
@@ -304,9 +316,9 @@ public class P_StateManager : MonoBehaviour
 
 
 
-    public void SwitchState(P_BaseState state)
-    {
-        _currentState = state;
-        state.EnterState();
-    }
+    //public void SwitchState(P_BaseState state)
+    //{
+    //    _currentState = state;
+    //    state.EnterState();
+    //}
 }

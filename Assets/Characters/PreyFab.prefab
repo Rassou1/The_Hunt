@@ -141,8 +141,8 @@ MonoBehaviour:
   _rigidbody: {fileID: 452407247307090497}
   _cameraOrientation: {fileID: 3325855989254018833}
   _animator: {fileID: 4619789070643299287}
-  _moveSpeed: 2
-  _sprintMultiplier: 3
+  _moveSpeed: 5
+  _sprintMultiplier: 2
 --- !u!136 &7928494486813170457
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 452407247307090497}
   - component: {fileID: 4311599249812463511}
   - component: {fileID: 7884172207469220021}
+  - component: {fileID: 6452325594440319450}
   - component: {fileID: 6231191100716215948}
   m_Layer: 0
   m_Name: PreyFab
@@ -339,6 +340,18 @@ MonoBehaviour:
   UseGlobalPosition: 0
   refreshRate: 30
   SyncedAxes: 511
+--- !u!114 &6452325594440319450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5548087739506019292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db10a0c97f27ac145b2be0d7eac216be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6231191100716215948
 MonoBehaviour:
   m_ObjectHideFlags: 0

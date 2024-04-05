@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     //The "Header" things are used to create titles in the unity ui for assigning variables
     [Header("Movement")]
-    private float moveSpeed;
+    public float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
 
@@ -71,8 +71,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _avatar= GetComponent<Alteruna.Avatar>();
 
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; //Stop player from falling over
         readyToJump = true;
@@ -83,8 +83,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         //checks if your the avatar or if its someone else (makes it so player1 doesnt control player2)
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
         //Check for ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.1f, whatIsGround);
 
@@ -104,8 +104,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
         MovePlayer();
     }
 
@@ -318,5 +318,8 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
+
+    public float getMoveSpeed() { return moveSpeed; }
+    
 
 }

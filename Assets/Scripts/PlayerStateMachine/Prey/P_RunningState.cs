@@ -14,7 +14,8 @@ public class P_RunningState : P_BaseState
 
     public override void UpdateState()
     {
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * _ctx._moveSpeed * _ctx._sprintMultiplier; //Switch the float out for some momentum math. Probably have the math be done in StateManager and then applied in the correct state, with each state changing the numbers used in StateManager
+        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * _ctx._moveSpeed * _ctx._sprintMultiplier; 
+        //Switch the float out for some momentum math. Probably have the math be done in StateManager and then applied in the correct state, with each state changing the numbers used in StateManager
         _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * _ctx._moveSpeed * _ctx._sprintMultiplier;
         CheckSwitchState();
     }
@@ -28,6 +29,7 @@ public class P_RunningState : P_BaseState
     {
         if (_ctx.IsSlidePressed)
         {
+            ExitState();
             SwitchState(_factory.Slide());
         }
         else if (!_ctx.IsMovementPressed)
@@ -43,6 +45,6 @@ public class P_RunningState : P_BaseState
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+       
     }
 }

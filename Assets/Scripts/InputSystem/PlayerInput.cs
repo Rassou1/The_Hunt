@@ -71,6 +71,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""0196034f-106f-4a56-a9f3-9d215206ec81"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -170,6 +179,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88bee1a4-3b22-4018-a19e-a8d57dba2bc3"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -317,6 +337,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PreyControls_Sprint = m_PreyControls.FindAction("Sprint", throwIfNotFound: true);
         m_PreyControls_Slide = m_PreyControls.FindAction("Slide", throwIfNotFound: true);
         m_PreyControls_Look = m_PreyControls.FindAction("Look", throwIfNotFound: true);
+        m_PreyControls_Reset = m_PreyControls.FindAction("Reset", throwIfNotFound: true);
         // HunterControls
         m_HunterControls = asset.FindActionMap("HunterControls", throwIfNotFound: true);
         m_HunterControls_Move = m_HunterControls.FindAction("Move", throwIfNotFound: true);
@@ -389,6 +410,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PreyControls_Sprint;
     private readonly InputAction m_PreyControls_Slide;
     private readonly InputAction m_PreyControls_Look;
+    private readonly InputAction m_PreyControls_Reset;
     public struct PreyControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -398,6 +420,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_PreyControls_Sprint;
         public InputAction @Slide => m_Wrapper.m_PreyControls_Slide;
         public InputAction @Look => m_Wrapper.m_PreyControls_Look;
+        public InputAction @Reset => m_Wrapper.m_PreyControls_Reset;
         public InputActionMap Get() { return m_Wrapper.m_PreyControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -422,6 +445,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
         }
 
         private void UnregisterCallbacks(IPreyControlsActions instance)
@@ -441,6 +467,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
         }
 
         public void RemoveCallbacks(IPreyControlsActions instance)
@@ -535,6 +564,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
     public interface IHunterControlsActions
     {

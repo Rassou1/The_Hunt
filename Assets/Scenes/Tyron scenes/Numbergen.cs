@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Alteruna;
-public class Numbergen : AttributesSync,IInteractable
+public class RoleGiver: AttributesSync,IInteractable
 {
 
 
