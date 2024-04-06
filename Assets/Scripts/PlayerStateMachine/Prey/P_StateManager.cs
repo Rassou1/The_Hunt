@@ -23,6 +23,9 @@ public class P_StateManager : MonoBehaviour
 
     public float _mouseSens;
     public float _maxSlopeAngle;
+    public float _softCap;
+    public float _sprintResistance;
+    public float _slideResistance;
 
     int _isWalkingHash;
     int _isSprintingHash;
@@ -63,6 +66,7 @@ public class P_StateManager : MonoBehaviour
 
     //New Stuff
     Vector3 _slopeNormal;
+    float _slopeAngle;
     Vector3 _stateDirection;
     Vector3 _finalHorMovement;
     Vector3 _subStateDirModifier;
@@ -70,7 +74,7 @@ public class P_StateManager : MonoBehaviour
 
     float _stateMagnitude;
     float _finalMagnitude;
-
+    float _actualMagnitude;
 
     float _gravity = -8f;
 
@@ -78,7 +82,6 @@ public class P_StateManager : MonoBehaviour
     float _groundedGravity = -8f;
 
     public float _moveSpeed;
-    public float _sprintMultiplier;
     
 
     //Put a lot of getters and setters here
@@ -95,6 +98,7 @@ public class P_StateManager : MonoBehaviour
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
     public Vector3 SubStateDirModifier { get { return _subStateDirModifier; } set { _subStateDirModifier = value; } }
     public float VertMagnitude { get { return _vertMagnitude; } set { _vertMagnitude = value; } }
+    public float ActualMagnitude { get { return _actualMagnitude; } }
 
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; } }
     public Vector3 CurrentMovement { get { return _currentMovement; } set { _currentMovement = value; } }
@@ -107,6 +111,7 @@ public class P_StateManager : MonoBehaviour
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
     
     public Vector3 SlopeNormal { get { return _slopeNormal; } }
+    public float SlopeAngle { get { return _slopeAngle; } }
 
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsSprintPressed {  get { return _isSprintPressed; } }
@@ -181,33 +186,41 @@ public class P_StateManager : MonoBehaviour
         //    return;
 
 
-        
+
 
         //Debug.Log("Right Wall: " + _wallRight);
         //Debug.Log("Left Wall: " + _wallLeft);
-
-        _currentState.UpdateStates();
+        GroundCheck();
+        
         SetCameraOrientation();
         //Debug.DrawRay(_cameraOrientation.position, CamRelHor(new Vector3(0, 0, 1)), Color.red, Time.deltaTime);
         RotateBodyY();
+        Debug.Log("Slope Angle: " + _slopeAngle);
+        _currentState.UpdateStates();
 
-        _finalHorMovement = _finalHorMovement.normalized + _stateDirection;
+        if (_stateDirection != Vector3.zero)
+        {
+            _finalHorMovement = _finalHorMovement.normalized + _stateDirection;
+        }
+
         _finalMagnitude = (_finalMagnitude + _stateMagnitude) * 0.5f;
 
         _appliedMovement = CamRelHor(_finalHorMovement);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
-        //Debug.Log("applied movement pre: " + _appliedMovement);
+        Debug.Log("Pre Magnitude: " + _finalMagnitude);
+        _actualMagnitude = _finalMagnitude;
         
         _appliedMovement *= Time.deltaTime;
-        _vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -10f);
+        _vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -20f);
         
         _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+        
         _appliedMovement += CollideAndSlide(new Vector3(0, _vertMagnitude, 0) * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, new Vector3(0, _vertMagnitude, 0) * Time.deltaTime);
         _rigidbody.transform.position += _appliedMovement;
-        
-        GroundCheck();
-        Debug.Log("IsGrounded: " + _isGrounded);
+
+
+        Debug.Log("Post Magnitude: " + _actualMagnitude);
     }
 
 
@@ -282,16 +295,19 @@ public class P_StateManager : MonoBehaviour
     {
         Debug.DrawRay(_capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0), (_capsuleCollider.radius + _skindWidth) * Vector3.down, Color.red, Time.deltaTime);
         RaycastHit hit;
-        if(Physics.SphereCast(_capsuleCollider.transform.position + new Vector3(0,_capsuleCollider.radius,0), _capsuleCollider.radius - _skindWidth, Vector3.down, out hit, _capsuleCollider.radius+0.01f))
+        if(Physics.SphereCast(_capsuleCollider.transform.position + new Vector3(0,_capsuleCollider.radius,0), _capsuleCollider.radius - _skindWidth, Vector3.down, out hit, _capsuleCollider.radius+0.01f) && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
         {
             _isGrounded = true;
             _slopeNormal = hit.normal;
+            _slopeAngle = 90f - Vector3.Angle(CamRelHor(Vector3.forward), _slopeNormal);
         }
         else
         {
             _isGrounded = false;
             _slopeNormal = Vector3.zero;
+            _slopeAngle = 0f;
         }
+        
     }
 
     

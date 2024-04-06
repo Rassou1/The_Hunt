@@ -29,6 +29,10 @@ public class P_GroundedState : P_BaseState
 
     public override void InitializeSubState()
     {
+        if (_ctx.IsSlidePressed)
+        {
+            SetSubState(_factory.Slide());
+        }
         if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
@@ -48,12 +52,12 @@ public class P_GroundedState : P_BaseState
     {
         if (_ctx.IsJumpPressed)
         {
-            _ctx.CurrentMovementY += 5;
-            _ctx.AppliedMovementY += 5;
+            _ctx.VertMagnitude = 5f;
             SwitchState(_factory.Air());
         }
         else if (!_ctx.IsGrounded)
         {
+            _ctx.VertMagnitude = 0f;
             SwitchState(_factory.Air());
         }
         

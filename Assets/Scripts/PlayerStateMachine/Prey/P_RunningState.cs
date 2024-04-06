@@ -14,9 +14,14 @@ public class P_RunningState : P_BaseState
 
     public override void UpdateState()
     {
-
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * _ctx._moveSpeed * _ctx._sprintMultiplier;
-        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * _ctx._moveSpeed * _ctx._sprintMultiplier;
+        if(_ctx.SlopeAngle >= 0)
+        {
+            _ctx.StateMagnitude = Mathf.Max((_ctx.SlopeAngle * 0.125f) - _ctx._sprintResistance, 0f) + _ctx._softCap;
+        }
+        else
+        {
+            _ctx.StateMagnitude = Mathf.Min((_ctx.SlopeAngle * 0.125f) + _ctx._sprintResistance, 0f) + _ctx._softCap;
+        }
         CheckSwitchState();
     }
 
@@ -44,6 +49,6 @@ public class P_RunningState : P_BaseState
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 }

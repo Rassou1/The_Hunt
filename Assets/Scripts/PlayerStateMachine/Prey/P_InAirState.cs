@@ -40,8 +40,11 @@ public class P_InAirState : P_BaseState
 
     public override void InitializeSubState()
     {
-        
-        if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
+        if (_ctx.IsSlidePressed)
+        {
+            SetSubState(_factory.Slide());
+        }
+        else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
         }
