@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class P_RunningState : P_BaseState
 {
+    float totalMagnitude;
+    float sprintMagnitude;
     public P_RunningState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
 
@@ -14,13 +16,23 @@ public class P_RunningState : P_BaseState
 
     public override void UpdateState()
     {
-        if(_ctx.SlopeAngle >= 0)
+        totalMagnitude = _ctx.ActualMagnitude;
+        if (!_ctx.IsGrounded)
         {
-            _ctx.StateMagnitude = Mathf.Max((_ctx.SlopeAngle * 0.125f) - _ctx._sprintResistance, 0f) + _ctx._softCap;
+            totalMagnitude += Mathf.Abs(_ctx.VertMagnitude * 0.4f) * Time.deltaTime;
+        }
+
+        if (_ctx.SlopeAngle >= 0)
+        {
+            sprintMagnitude = totalMagnitude + _ctx.SlopeAngle - _ctx._sprintResistance - (_ctx._sprintResistance * totalMagnitude * 0.5f);
+            _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;
+            _ctx.StateMagnitude = Mathf.Max(_ctx.StateMagnitude, _ctx._softCap);
         }
         else
         {
-            _ctx.StateMagnitude = Mathf.Min((_ctx.SlopeAngle * 0.125f) + _ctx._sprintResistance, 0f) + _ctx._softCap;
+            sprintMagnitude = totalMagnitude - _ctx.SlopeAngle + _ctx._sprintResistance;
+            _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;
+            _ctx.StateMagnitude = Mathf.Min(_ctx.StateMagnitude, _ctx._softCap);
         }
         CheckSwitchState();
     }

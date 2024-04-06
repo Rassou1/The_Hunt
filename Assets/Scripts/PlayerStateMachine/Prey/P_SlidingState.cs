@@ -13,32 +13,43 @@ public class P_SlidingState : P_BaseState
     public override void EnterState()
     {
         //IgnoreCollision(this, hunter, true)
-        _ctx.SubStateDirModifier = new Vector3(0.5f, 1, 1);
+        _ctx.SubStateDirSet = new Vector3(0, 0, 2);
+        _ctx.HorMouseMod = 0.2f;
     }
 
     public override void UpdateState()
     {
         totalMagnitude = _ctx.ActualMagnitude;
-        if (!_ctx.IsGrounded)
-        {
-            totalMagnitude += Mathf.Abs(_ctx.VertMagnitude) * Time.deltaTime;
-        }
 
         float slideResult;
-        if (_ctx.SlopeAngle <= 0)
+        if (_ctx.SlopeAngle < 0)
         {
-            _ctx.StateMagnitude = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance * 1.5f) * Time.deltaTime;
-            slideResult = _ctx.SlopeAngle - _ctx._slideResistance * 2;
+            _ctx.StateMagnitude = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
+        }
+        else if (_ctx.SlopeAngle > 0)
+        {
+            _ctx.StateMagnitude = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
         }
         else
         {
-            _ctx.StateMagnitude = Mathf.Min(totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance) * Time.deltaTime, Mathf.Max(_ctx.SlopeAngle * 0.8f, 18f));
-            slideResult = _ctx.SlopeAngle - _ctx._slideResistance;
+            if(totalMagnitude > 0)
+            {
+                _ctx.StateMagnitude = totalMagnitude - (_ctx._slideResistance + _ctx._slideResistance * totalMagnitude * 0.2f) * Time.deltaTime;
+            }
+            else
+            {
+                _ctx.StateMagnitude = totalMagnitude + Mathf.Abs((_ctx._slideResistance - _ctx._slideResistance * totalMagnitude * 0.2f) * Time.deltaTime);
+            }
+            
         }
 
 
+        slideResult = _ctx.SlopeAngle - _ctx._slideResistance;
+
+        //Vector3.Dot(_ctx.RelForward, _ctx.AppliedMovement) >= 0
+
         //_ctx.StateMagnitude = Mathf.Clamp(_ctx.ActualMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance) * Time.deltaTime, 0f, Mathf.Max(_ctx.SlopeAngle * 0.5f, 10f));
-        
+
         //if (_ctx.StateMagnitude <= 0.01f)
         //{
         //    _ctx.StateMagnitude = 0f;
@@ -50,7 +61,8 @@ public class P_SlidingState : P_BaseState
     public override void ExitState()
     {
         //IgnoreCollision(this, hunter, false)
-        _ctx.SubStateDirModifier = new Vector3(1, 1, 1);
+        _ctx.SubStateDirSet = new Vector3(0, 0, 0);
+        _ctx.HorMouseMod = 1f;
     }
 
     public override void CheckSwitchState()

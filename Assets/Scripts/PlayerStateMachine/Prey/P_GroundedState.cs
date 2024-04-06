@@ -17,7 +17,8 @@ public class P_GroundedState : P_BaseState
 
     public override void UpdateState()
     {
-        _ctx.StateDirection = new Vector3(_ctx.SubStateDirModifier.x * _ctx.CurrentMovementInput.x, 0, _ctx.SubStateDirModifier.z * _ctx.CurrentMovementInput.y);
+        _ctx.StateDirection = _ctx.SubStateDirSet;
+        _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
         CheckSwitchState();
     }
 
@@ -33,7 +34,7 @@ public class P_GroundedState : P_BaseState
         {
             SetSubState(_factory.Slide());
         }
-        if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
+        else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
         }
@@ -57,7 +58,7 @@ public class P_GroundedState : P_BaseState
         }
         else if (!_ctx.IsGrounded)
         {
-            _ctx.VertMagnitude = 0f;
+            
             SwitchState(_factory.Air());
         }
         

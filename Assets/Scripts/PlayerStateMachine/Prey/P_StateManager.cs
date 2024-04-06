@@ -69,8 +69,13 @@ public class P_StateManager : MonoBehaviour
     float _slopeAngle;
     Vector3 _stateDirection;
     Vector3 _finalHorMovement;
-    Vector3 _subStateDirModifier;
+    
     float _vertMagnitude;
+    float _gravLerp;
+    float _horMouseMod = 1f;
+    Vector3 _subStateDirSet;
+    Vector3 _relForward;
+
 
     float _stateMagnitude;
     float _finalMagnitude;
@@ -79,7 +84,7 @@ public class P_StateManager : MonoBehaviour
     float _gravity = -8f;
 
 
-    float _groundedGravity = -8f;
+    
 
     public float _moveSpeed;
     
@@ -96,20 +101,26 @@ public class P_StateManager : MonoBehaviour
 
     public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
-    public Vector3 SubStateDirModifier { get { return _subStateDirModifier; } set { _subStateDirModifier = value; } }
+    
+    public Vector3 SubStateDirSet { get { return _subStateDirSet; } set { _subStateDirSet = value; } }
     public float VertMagnitude { get { return _vertMagnitude; } set { _vertMagnitude = value; } }
     public float ActualMagnitude { get { return _actualMagnitude; } }
+
+    public float HorMouseMod { get { return _horMouseMod; } set { _horMouseMod = value; } }
 
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; } }
     public Vector3 CurrentMovement { get { return _currentMovement; } set { _currentMovement = value; } }
     public Vector3 CurrentSprintMovement { get { return _currentSprintMovement; } set { _currentSprintMovement = value; } }
     public Vector3 AppliedMovement {  get { return _appliedMovement; } set { _appliedMovement = value; } }
+    public Vector3 RelForward { get { return _relForward; } }
 
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set {  _appliedMovement.x = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
     
+    
+
     public Vector3 SlopeNormal { get { return _slopeNormal; } }
     public float SlopeAngle { get { return _slopeAngle; } }
 
@@ -120,7 +131,6 @@ public class P_StateManager : MonoBehaviour
 
     public bool IsGrounded {  get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
-    public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
     //void Start()
     //{
@@ -161,6 +171,7 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Jump.canceled += OnJump;
         _playerInput.PreyControls.Slide.started += OnSlide;
         _playerInput.PreyControls.Slide.canceled += OnSlide;
+        _playerInput.PreyControls.Slide.performed += OnSlide;
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
@@ -174,6 +185,8 @@ public class P_StateManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        
 
     }
 
@@ -195,6 +208,7 @@ public class P_StateManager : MonoBehaviour
         SetCameraOrientation();
         //Debug.DrawRay(_cameraOrientation.position, CamRelHor(new Vector3(0, 0, 1)), Color.red, Time.deltaTime);
         RotateBodyY();
+        _relForward = CamRelHor(Vector3.forward);
         Debug.Log("Slope Angle: " + _slopeAngle);
         _currentState.UpdateStates();
 
@@ -212,7 +226,8 @@ public class P_StateManager : MonoBehaviour
         _actualMagnitude = _finalMagnitude;
         
         _appliedMovement *= Time.deltaTime;
-        _vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -20f);
+        _vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
+        
         
         _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
         
@@ -299,7 +314,7 @@ public class P_StateManager : MonoBehaviour
         {
             _isGrounded = true;
             _slopeNormal = hit.normal;
-            _slopeAngle = 90f - Vector3.Angle(CamRelHor(Vector3.forward), _slopeNormal);
+            _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
         }
         else
         {
@@ -381,7 +396,7 @@ public class P_StateManager : MonoBehaviour
     {
         _currentLookInput = context.ReadValue<Vector2>();
         _mouseRotationX -= _currentLookInput.y * Time.deltaTime * _mouseSens;
-        _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens;
+        _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens * _horMouseMod;
         _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f);
     }
 

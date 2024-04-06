@@ -20,7 +20,8 @@ public class P_InAirState : P_BaseState
 
     public override void UpdateState()
     {
-        _ctx.StateDirection = new Vector3(_ctx.SubStateDirModifier.x * _ctx.CurrentMovementInput.x, 0, _ctx.SubStateDirModifier.z * _ctx.CurrentMovementInput.y);
+        _ctx.StateDirection = _ctx.SubStateDirSet;
+        _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
         _ctx.StateDirection *= 0.5f;
         CheckSwitchState();
     }

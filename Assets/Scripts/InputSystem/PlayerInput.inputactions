@@ -120,6 +120,17 @@
                 },
                 {
                     "name": "",
+                    "id": "0049113b-ea48-48d7-97c9-d8bba22dc068",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "24e5b1d1-b2bf-4da9-ab35-091b4b5251bd",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
