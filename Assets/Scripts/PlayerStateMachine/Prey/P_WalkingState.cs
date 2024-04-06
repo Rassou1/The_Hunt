@@ -16,9 +16,8 @@ public class P_WalkingState : P_BaseState
 
     public override void UpdateState()
     {
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * _ctx._moveSpeed;
-        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * _ctx._moveSpeed;
-        //Debug.Log("Current movement in walk: " + _ctx.CurrentMovement);
+        _ctx.StateMagnitude = _ctx._moveSpeed;
+        
         CheckSwitchState();
     }
 
@@ -46,7 +45,7 @@ public class P_WalkingState : P_BaseState
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 
 }

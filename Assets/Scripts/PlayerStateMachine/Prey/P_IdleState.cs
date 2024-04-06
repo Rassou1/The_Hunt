@@ -11,8 +11,7 @@ public class P_IdleState : P_BaseState
     {
         _ctx.Animator.SetBool(_ctx.IsWalkingHash, false);
         _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
-        _ctx.AppliedMovementX = 0f;
-        _ctx.AppliedMovementZ = 0f;
+        _ctx.StateMagnitude = 0;
     }
 
 

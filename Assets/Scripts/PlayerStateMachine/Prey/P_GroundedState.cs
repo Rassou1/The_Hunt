@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class P_GroundedState : P_BaseState
 {
+    
     public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
         IsRootState = true;
@@ -10,17 +11,13 @@ public class P_GroundedState : P_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        //_ctx.CurrentMovementY = _ctx.GroundedGravity;
-        //_ctx.AppliedMovementY = _ctx.GroundedGravity;
-
-        _ctx.CurrentMovementY = 0f;
-        _ctx.AppliedMovementY = 0f;
-
+        
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
 
     public override void UpdateState()
     {
+        _ctx.StateDirection = new Vector3(_ctx.SubStateDirModifier.x * _ctx.CurrentMovementInput.x, 0, _ctx.SubStateDirModifier.z * _ctx.CurrentMovementInput.y);
         CheckSwitchState();
     }
 
@@ -40,7 +37,6 @@ public class P_GroundedState : P_BaseState
         {
             SetSubState(_factory.Run());
         }
-        //else if (wallrunning) -> wallrun
         else
         {
             SetSubState(_factory.Idle());

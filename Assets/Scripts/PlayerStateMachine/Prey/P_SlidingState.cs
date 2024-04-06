@@ -12,7 +12,7 @@ public class P_SlidingState : P_BaseState
 
     public override void EnterState()
     {
-
+        //IgnoreCollision(this, hunter, true)
     }
 
     public override void UpdateState()
@@ -22,7 +22,7 @@ public class P_SlidingState : P_BaseState
 
     public override void ExitState()
     {
-
+        //IgnoreCollision(this, hunter, false)
     }
 
     public override void CheckSwitchState()
