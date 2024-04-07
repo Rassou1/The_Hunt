@@ -1,66 +1,86 @@
-using System.Collections;
 using UnityEngine;
 
 public class P_SlidingState : P_BaseState
 {
-    public float momentumMultiplierMax = 8f;
-    //PLACEHOLDER MAXIMUM POSSIBLE multiplier  for the momentum gain and loss.
-    public float momentumFadeTimer = 3f;
-    //PLACEHOLDER Time taken for momentum multiplier to fade down to 1.
-    public Vector3 inputDirection;
-    //PLACEHOLDER direction of input during slide.
-    public Vector3 movementDir;
-    //PLACEHOLDER direction of current movement.
-    public bool fading;
-    //if the momentum mult should fade or not. MAYBE NEEDS TO BE ACCESSIBLE ELSEWHERE TO MAKE TRUE!
-    public float momentumMultiplierCurrent = 2f;
-    //current multiplier on momentum.
 
-    //Make sliding into a sub-sub state, since it's just a modifier on how you lose and gain momentum
+    float totalMagnitude;
 
     public P_SlidingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
-        
+
     }
 
     public override void EnterState()
     {
-        _ctx.Animator.SetBool(_ctx.IsWalkingHash, false);
-        _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
-        _ctx.Animator.SetBool(_ctx.IsSlidingHash, true);
-        fading = true;
-        momentumMultiplierCurrent = momentumMultiplierMax;
-
-        //_ctx._rigidbody.AddForce(new Vector3(_ctx.CurrentMovementInput.x,0,_ctx.CurrentMovementInput.y).normalized * 5, ForceMode.Force);
+        //IgnoreCollision(this, hunter, true)
+        _ctx.SubStateDirSet = new Vector3(0, 0, 2);
+        _ctx.HorMouseMod = 0.2f;
     }
 
     public override void UpdateState()
     {
-        multiplierFade();
-        //_ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * momentumMultiplierCurrent * _ctx._moveSpeed;
-        //_ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * momentumMultiplierCurrent * _ctx._moveSpeed;
+        totalMagnitude = _ctx.ActualMagnitude;
+
+        
+        if (_ctx.SlopeAngle < 0)
+        {
+            _ctx.StateMagnitude = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
+        }
+        else if (_ctx.SlopeAngle > 0)
+        {
+            _ctx.StateMagnitude = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
+        }
+        else
+        {
+            if(totalMagnitude > 0)
+            {
+                _ctx.StateMagnitude = totalMagnitude - (_ctx._slideResistance + _ctx._slideResistance * totalMagnitude * 0.2f) * Time.deltaTime;
+            }
+            else
+            {
+                _ctx.StateMagnitude = totalMagnitude + Mathf.Abs((_ctx._slideResistance - _ctx._slideResistance * totalMagnitude * 0.2f) * Time.deltaTime);
+            }
+            
+        }
+
+
+        
+
+        //Vector3.Dot(_ctx.RelForward, _ctx.AppliedMovement) >= 0
+
+        //_ctx.StateMagnitude = Mathf.Clamp(_ctx.ActualMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance) * Time.deltaTime, 0f, Mathf.Max(_ctx.SlopeAngle * 0.5f, 10f));
+
+        //if (_ctx.StateMagnitude <= 0.01f)
+        //{
+        //    _ctx.StateMagnitude = 0f;
+        //}
+        
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        fading = false;
-        _ctx.Animator.SetBool(_ctx.IsSlidingHash, false);
+        //IgnoreCollision(this, hunter, false)
+        _ctx.SubStateDirSet = new Vector3(0, 0, 0);
+        _ctx.HorMouseMod = 1f;
     }
 
     public override void CheckSwitchState()
     {
-        if (!_ctx.IsSlidePressed && _ctx.IsSprintPressed)
+        if (!_ctx.IsSlidePressed)
         {
-            SwitchState(_factory.Run());
-        }
-        else if (!_ctx.IsMovementPressed)
-        {
-            SwitchState(_factory.Idle());
-        }
-        else if (!_ctx.IsSlidePressed && _ctx.IsMovementPressed && !_ctx.IsSprintPressed)
-        {
-            SwitchState(_factory.Walk());
+            if (!_ctx.IsMovementPressed)
+            {
+                SwitchState(_factory.Idle());
+            }
+            else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
+            {
+                SwitchState(_factory.Walk());
+            }
+            else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
+            {
+                SwitchState(_factory.Run());
+            }
         }
     }
 
@@ -68,21 +88,4 @@ public class P_SlidingState : P_BaseState
     {
 
     }
-
-
-    public void multiplierFade()
-    {
-
-        momentumMultiplierCurrent = Mathf.Lerp(momentumMultiplierCurrent, 3f, 0.01f);
-
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * momentumMultiplierCurrent * _ctx._moveSpeed;
-        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * momentumMultiplierCurrent * _ctx._moveSpeed;
-
-        if (momentumMultiplierCurrent <= 3)
-        {
-            momentumMultiplierCurrent = 3;   
-        }
-    }
-
-
 }

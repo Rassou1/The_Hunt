@@ -20,7 +20,10 @@ public class P_InAirState : P_BaseState
 
     public override void UpdateState()
     {
-        HandleGravity();
+        _ctx.StateDirection = _ctx.SubStateDirSet;
+        _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
+        _ctx.StateDirection *= 0.5f;
+        _ctx.VertMagnitude -= 8f * Time.deltaTime;
         CheckSwitchState();
     }
 
@@ -39,8 +42,11 @@ public class P_InAirState : P_BaseState
 
     public override void InitializeSubState()
     {
-        
-        if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
+        if (_ctx.IsSlidePressed)
+        {
+            SetSubState(_factory.Slide());
+        }
+        else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
         }
@@ -55,22 +61,22 @@ public class P_InAirState : P_BaseState
     }
 
 
-    void HandleGravity()
-    {
-        bool goingDown = _ctx.CurrentMovementY <= 2.0f || !_ctx.IsJumpPressed;
-        float fallMultiplier = 2f;
+    //void HandleGravity()
+    //{
+    //    bool goingDown = _ctx.CurrentMovementY <= 2.0f || !_ctx.IsJumpPressed;
+    //    float fallMultiplier = 2f;
 
-        if (goingDown)
-        {
-            float previousYVelocity = _ctx.CurrentMovementY;
-            _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * fallMultiplier * Time.deltaTime);
-            _ctx.AppliedMovementY = Mathf.Max((previousYVelocity + _ctx.CurrentMovementY) * .5f, -10.0f);
-        }
-        else
-        {
-            float previousYVelocity = _ctx.CurrentMovementY;
-            _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * Time.deltaTime);
-            _ctx.AppliedMovementY = (previousYVelocity + _ctx.CurrentMovementY) * .5f;
-        }
-    }
+    //    if (goingDown)
+    //    {
+    //        float previousYVelocity = _ctx.CurrentMovementY;
+    //        _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * fallMultiplier * Time.deltaTime);
+    //        _ctx.AppliedMovementY = Mathf.Max((previousYVelocity + _ctx.CurrentMovementY) * .5f, -10.0f);
+    //    }
+    //    else
+    //    {
+    //        float previousYVelocity = _ctx.CurrentMovementY;
+    //        _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * Time.deltaTime);
+    //        _ctx.AppliedMovementY = (previousYVelocity + _ctx.CurrentMovementY) * .5f;
+    //    }
+    //}
 }

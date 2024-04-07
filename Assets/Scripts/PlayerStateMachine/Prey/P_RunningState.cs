@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class P_RunningState : P_BaseState
 {
+    float totalMagnitude;
+    float sprintMagnitude;
     public P_RunningState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
 
@@ -14,9 +16,24 @@ public class P_RunningState : P_BaseState
 
     public override void UpdateState()
     {
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * _ctx._moveSpeed * _ctx._sprintMultiplier; 
-        //Switch the float out for some momentum math. Probably have the math be done in StateManager and then applied in the correct state, with each state changing the numbers used in StateManager
-        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * _ctx._moveSpeed * _ctx._sprintMultiplier;
+        totalMagnitude = _ctx.ActualMagnitude;
+        if (!_ctx.IsGrounded)
+        {
+            totalMagnitude += Mathf.Abs(_ctx.VertMagnitude * 0.4f) * Time.deltaTime;
+        }
+
+        if (_ctx.SlopeAngle >= 0)
+        {
+            sprintMagnitude = totalMagnitude + _ctx.SlopeAngle - _ctx._sprintResistance - (_ctx._sprintResistance * totalMagnitude * 0.5f);
+            _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;
+            _ctx.StateMagnitude = Mathf.Max(_ctx.StateMagnitude, _ctx._softCap);
+        }
+        else
+        {
+            sprintMagnitude = totalMagnitude - _ctx.SlopeAngle + _ctx._sprintResistance;
+            _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;
+            _ctx.StateMagnitude = Mathf.Min(_ctx.StateMagnitude, _ctx._softCap);
+        }
         CheckSwitchState();
     }
 
@@ -29,7 +46,6 @@ public class P_RunningState : P_BaseState
     {
         if (_ctx.IsSlidePressed)
         {
-            ExitState();
             SwitchState(_factory.Slide());
         }
         else if (!_ctx.IsMovementPressed)
@@ -45,6 +61,6 @@ public class P_RunningState : P_BaseState
 
     public override void InitializeSubState()
     {
-       
+        
     }
 }
