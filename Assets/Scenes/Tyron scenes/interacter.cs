@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
     interface IInteractable
     {
-        public void Interact();
+        public void Interact(GameObject interactor);
     }
 public class interacter : MonoBehaviour
 {
@@ -30,9 +30,12 @@ public class interacter : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
             {
-                if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
+
+                if (interactObj!=null)
                 {
-                    interactObj.Interact();
+                    Debug.Log("ddd");
+                    interactObj.Interact(gameObject);
                 }
             }
         }

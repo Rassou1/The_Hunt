@@ -7,7 +7,7 @@ public class RoleGiver: AttributesSync,IInteractable
 
 
 
-     public void Interact()
+     public void Interact(GameObject interactor)
     {
 
         gameObject.SetActive(false);

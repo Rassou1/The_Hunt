@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class P_StateManager : MonoBehaviour
 {
-    //private Alteruna.Avatar _avatar;
+    private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
     
@@ -137,11 +137,11 @@ public class P_StateManager : MonoBehaviour
     public bool IsGrounded {  get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
 
-    //void Start()
-    //{
-    //    _avatar  = GetComponentInParent<Alteruna.Avatar>();
+    void Start()
+    {
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
 
-    //}
+    }
 
 
 
@@ -200,8 +200,8 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
-        //if (!_avatar.IsMe)
-        //    return;
+        if (!_avatar.IsMe)
+            return;
 
 
 
@@ -241,8 +241,8 @@ public class P_StateManager : MonoBehaviour
         _appliedMovement += CollideAndSlide(new Vector3(0, _vertMagnitude, 0) * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, new Vector3(0, _vertMagnitude, 0) * Time.deltaTime);
         _rigidbody.transform.position += _appliedMovement;
 
-        Debug.Log("Vert magnitude: " + _vertMagnitude);
-        Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
+        //Debug.Log("Vert magnitude: " + _vertMagnitude);
+        //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
     }
 
 
