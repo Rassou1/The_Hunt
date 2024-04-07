@@ -18,7 +18,7 @@ public class P_WalkingState : P_BaseState
 
     public override void UpdateState()
     {
-        //_ctx.StateMagnitude = _ctx._moveSpeed;
+        
         _ctx.StateMagnitude = Mathf.Lerp(_ctx.ActualMagnitude, _ctx._moveSpeed, lerpTime);
         lerpTime += Time.deltaTime;
 

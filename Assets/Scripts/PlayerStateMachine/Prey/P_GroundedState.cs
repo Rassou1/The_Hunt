@@ -11,7 +11,7 @@ public class P_GroundedState : P_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        
+        //_ctx.VertMagnitude = -2f;
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
 
@@ -53,13 +53,14 @@ public class P_GroundedState : P_BaseState
     {
         if (_ctx.IsJumpPressed)
         {
-            _ctx.VertMagnitude = 5f;
+            _ctx.VertMagnitude = 6f;
             SwitchState(_factory.Air());
         }
         else if (!_ctx.IsGrounded)
         {
             
             SwitchState(_factory.Air());
+            //_ctx.VertMagnitude = -8f;
         }
         
     }

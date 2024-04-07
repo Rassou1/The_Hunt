@@ -60,8 +60,7 @@ public class P_StateManager : MonoBehaviour
     bool _isSlidePressed;
 
     bool _isGrounded = false;
-    bool _wallRight = false;
-    bool _wallLeft = false;
+    
 
 
     //New Stuff
@@ -80,6 +79,9 @@ public class P_StateManager : MonoBehaviour
     float _stateMagnitude;
     float _finalMagnitude;
     float _actualMagnitude;
+
+    Vector3 _botSphere;
+    Vector3 _topSphere;
 
     float _gravity = -8f;
 
@@ -113,6 +115,9 @@ public class P_StateManager : MonoBehaviour
     public Vector3 CurrentSprintMovement { get { return _currentSprintMovement; } set { _currentSprintMovement = value; } }
     public Vector3 AppliedMovement {  get { return _appliedMovement; } set { _appliedMovement = value; } }
     public Vector3 RelForward { get { return _relForward; } }
+
+    public Vector3 BotSphere { get { return _botSphere; } }
+    public Vector3 TopSphere { get { return _topSphere; } }
 
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
@@ -203,13 +208,15 @@ public class P_StateManager : MonoBehaviour
 
         //Debug.Log("Right Wall: " + _wallRight);
         //Debug.Log("Left Wall: " + _wallLeft);
+        _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
+        _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
         GroundCheck();
         
         SetCameraOrientation();
         //Debug.DrawRay(_cameraOrientation.position, CamRelHor(new Vector3(0, 0, 1)), Color.red, Time.deltaTime);
         RotateBodyY();
         _relForward = CamRelHor(Vector3.forward);
-        Debug.Log("Slope Angle: " + _slopeAngle);
+        
         _currentState.UpdateStates();
 
         if (_stateDirection != Vector3.zero)
@@ -222,11 +229,11 @@ public class P_StateManager : MonoBehaviour
         _appliedMovement = CamRelHor(_finalHorMovement);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
-        Debug.Log("Pre Magnitude: " + _finalMagnitude);
+        
         _actualMagnitude = _finalMagnitude;
         
         _appliedMovement *= Time.deltaTime;
-        _vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
+        //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
         
         
         _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
@@ -234,16 +241,15 @@ public class P_StateManager : MonoBehaviour
         _appliedMovement += CollideAndSlide(new Vector3(0, _vertMagnitude, 0) * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, new Vector3(0, _vertMagnitude, 0) * Time.deltaTime);
         _rigidbody.transform.position += _appliedMovement;
 
-
-        Debug.Log("Post Magnitude: " + _actualMagnitude);
+        Debug.Log("Vert magnitude: " + _vertMagnitude);
+        Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
     }
 
 
     //This function is based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
     Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
-        Vector3 botSphere = startPos + new Vector3(0, _capsuleCollider.radius, 0);
-        Vector3 topSphere = startPos + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
+        
         //Debug.Log("StartPos: " + startPos);
         //Debug.Log("BotSphere: " + botSphere);
         //Debug.Log("TopSphere: " + topSphere);
@@ -257,7 +263,7 @@ public class P_StateManager : MonoBehaviour
         //Debug.Log("Distance: " + dist);
         
         
-        if (Physics.CapsuleCast(botSphere, topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
+        if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
         {
             Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
             Vector3 leftover = vel - snapToSurface;
@@ -308,13 +314,15 @@ public class P_StateManager : MonoBehaviour
 
     void GroundCheck()
     {
-        Debug.DrawRay(_capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0), (_capsuleCollider.radius + _skindWidth) * Vector3.down, Color.red, Time.deltaTime);
+        
         RaycastHit hit;
-        if(Physics.SphereCast(_capsuleCollider.transform.position + new Vector3(0,_capsuleCollider.radius,0), _capsuleCollider.radius - _skindWidth, Vector3.down, out hit, _capsuleCollider.radius+0.01f) && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
+        Physics.SphereCast(_botSphere, _bounds.extents.x, Vector3.down, out hit, _capsuleCollider.radius + 0.01f);
+        if (hit.transform != null && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
         {
             _isGrounded = true;
             _slopeNormal = hit.normal;
             _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
+            
         }
         else
         {
@@ -326,33 +334,8 @@ public class P_StateManager : MonoBehaviour
     }
 
     
-    //Could use colliders attached to the character to detect walls instead. Also the direction isn't correct yet
-    void DetectWall()
-    {
-        //The direction isn't correct yet, but it's getting there...
-        _wallRight = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.right, new Vector3(_mouseRotationX, _mouseRotationY, 0f)), 0.3f);
-        _wallLeft = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.left, new Vector3(_mouseRotationX, _mouseRotationY)), 0.3f);
+    
 
-    }
-
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == _capsuleCollider.gameObject)
-        {
-            return;
-        }
-        _isGrounded = true;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == _capsuleCollider.gameObject)
-        {
-            return;
-        }
-        _isGrounded = false;
-    }
 
     void RelativeMovement()
     {
@@ -360,6 +343,8 @@ public class P_StateManager : MonoBehaviour
         _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
         _appliedMovement.y = preRelativeY;
     }
+
+
 
     Vector3 CamRelHor(Vector3 input)
     {

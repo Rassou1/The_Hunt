@@ -48,6 +48,6 @@ public class P_IdleState : P_BaseState
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 }

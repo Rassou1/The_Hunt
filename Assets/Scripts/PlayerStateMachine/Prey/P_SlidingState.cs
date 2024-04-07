@@ -21,7 +21,7 @@ public class P_SlidingState : P_BaseState
     {
         totalMagnitude = _ctx.ActualMagnitude;
 
-        float slideResult;
+        
         if (_ctx.SlopeAngle < 0)
         {
             _ctx.StateMagnitude = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
@@ -44,7 +44,7 @@ public class P_SlidingState : P_BaseState
         }
 
 
-        slideResult = _ctx.SlopeAngle - _ctx._slideResistance;
+        
 
         //Vector3.Dot(_ctx.RelForward, _ctx.AppliedMovement) >= 0
 
@@ -54,7 +54,7 @@ public class P_SlidingState : P_BaseState
         //{
         //    _ctx.StateMagnitude = 0f;
         //}
-        Debug.Log("Slide result: " + slideResult);
+        
         CheckSwitchState();
     }
 
@@ -82,7 +82,6 @@ public class P_SlidingState : P_BaseState
                 SwitchState(_factory.Run());
             }
         }
-        
     }
 
     public override void InitializeSubState()

@@ -23,6 +23,7 @@ public class P_InAirState : P_BaseState
         _ctx.StateDirection = _ctx.SubStateDirSet;
         _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
         _ctx.StateDirection *= 0.5f;
+        _ctx.VertMagnitude -= 8f * Time.deltaTime;
         CheckSwitchState();
     }
 
