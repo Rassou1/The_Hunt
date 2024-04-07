@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InteractorCam: {fileID: 5980824139256042929}
   InteractorSource: {fileID: 6605274746566338901}
   InteractRange: 2
 --- !u!1 &5980824139256042929

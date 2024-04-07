@@ -10,6 +10,7 @@ public class interacter : MonoBehaviour
     // Start is called before the first frame update
 
 
+    public GameObject InteractorCam;
 
     public Transform InteractorSource;
     public float InteractRange;
@@ -21,16 +22,20 @@ public class interacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.green);
+
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Ray r= new Ray(InteractorSource.position, InteractorSource.forward);
-            if (Physics.Raycast(r, out RaycastHit hitInfo, InteractRange))
+            Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
             {
-                if(hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj)) 
+                if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
                     interactObj.Interact();
                 }
             }
         }
     }
+
 }
