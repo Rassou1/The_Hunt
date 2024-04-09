@@ -32,7 +32,8 @@ public class P_StateManager : MonoBehaviour
     int _isFallingHash;
     int _isWallRunningHash;
     int _isSlidingHash;
-
+    int _isClimbingHash;
+    bool _isClimbingPressed;
     P_BaseState _currentState;
     P_StateFactory _states;
 
@@ -58,6 +59,7 @@ public class P_StateManager : MonoBehaviour
     bool _isSprintPressed;
     bool _isJumpPressed;
     bool _isSlidePressed;
+    
 
     bool _isGrounded = false;
     
@@ -89,8 +91,8 @@ public class P_StateManager : MonoBehaviour
     
 
     public float _moveSpeed;
-    
-
+    public float climbspeed;
+    public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
@@ -137,6 +139,8 @@ public class P_StateManager : MonoBehaviour
     public bool IsGrounded {  get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
 
+    public bool IsClimbingPressed { get { return _isClimbingPressed; } }
+
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
@@ -165,7 +169,7 @@ public class P_StateManager : MonoBehaviour
         _isFallingHash = Animator.StringToHash("isFalling");
         _isWallRunningHash = Animator.StringToHash("isWallRunning");
         _isSlidingHash = Animator.StringToHash("isSliding");
-
+        _isClimbingHash = Animator.StringToHash("isClimbing");
         //This gets the inputs from the new input system
         _playerInput.PreyControls.Move.started += OnMovementInput;
         _playerInput.PreyControls.Move.canceled += OnMovementInput;
@@ -243,6 +247,7 @@ public class P_StateManager : MonoBehaviour
 
         //Debug.Log("Vert magnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
+        //CheckClimbingState();
     }
 
 
@@ -415,7 +420,7 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-    
+   
 
 
     void OnEnable()
@@ -435,4 +440,5 @@ public class P_StateManager : MonoBehaviour
         _currentState = state;
         state.EnterState();
     }
+   
 }

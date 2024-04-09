@@ -62,11 +62,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_Name
-      value: Prey Variant
+      value: PreyFab
       objectReference: {fileID: 0}
     - target: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      propertyPath: _uidString
+      value: 0e14e05b-89b4-44bf-a6c9-23d81b06c5b6
       objectReference: {fileID: 0}
     - target: {fileID: 6605274746566338901, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_LocalScale.x

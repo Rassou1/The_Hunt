@@ -10,7 +10,8 @@ enum P_States
     walk,
     run,
     slide,
-    wallRun
+    wallRun,
+    climb
 }
 
 public class P_StateFactory
@@ -28,6 +29,7 @@ public class P_StateFactory
         _states[P_States.run] = new P_RunningState(_context, this);
         _states[P_States.slide] = new P_SlidingState(_context, this);
         _states[P_States.wallRun] = new P_WallRunningState(_context, this);
+        _states[P_States.climb] = new P_ClimbingState(_context, this);
     }
 
     public P_BaseState Ground()
@@ -65,5 +67,8 @@ public class P_StateFactory
         return _states[P_States.wallRun];
     }
 
-
+    public P_BaseState Climb()
+    {
+        return _states[P_States.climb];
+    }
 }
