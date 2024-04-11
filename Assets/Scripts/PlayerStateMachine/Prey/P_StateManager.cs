@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -140,6 +141,8 @@ public class P_StateManager : MonoBehaviour
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
 
     public bool IsClimbingPressed { get { return _isClimbingPressed; } }
+
+    public static P_StateManager Instance { get; internal set; }
 
     void Start()
     {
@@ -440,5 +443,9 @@ public class P_StateManager : MonoBehaviour
         _currentState = state;
         state.EnterState();
     }
-   
+
+    internal void SetState(P_ClimbingState climbingState)
+    {
+        throw new NotImplementedException();
+    }
 }

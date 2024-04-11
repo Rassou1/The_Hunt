@@ -4,11 +4,13 @@ using UnityEngine;
 public class P_ClimbingState : P_BaseState
 {
     private bool _isClimbing = false;
+    private P_StateManager instance;
 
     public P_ClimbingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
         _ctx = currentContext;
     }
+
 
     public override void EnterState()
     {
