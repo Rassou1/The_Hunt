@@ -187,6 +187,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
+        //_playerInput.PreyControls.Climb.started += OnClimbStarted;
+        //_playerInput.PreyControls.Climb.canceled += OnClimbCanceled;
 
 
         //setup state
@@ -375,6 +377,14 @@ public class P_StateManager : MonoBehaviour
     void OnSlide(InputAction.CallbackContext context)
     {
         _isSlidePressed = context.ReadValueAsButton();
+    }
+    void OnClimbStarted(InputAction.CallbackContext context)
+    {
+        _isClimbingPressed= context.ReadValueAsButton();
+    }
+    void OnClimbCanceled(InputAction.CallbackContext context)
+    {
+        _isClimbingPressed = context.ReadValueAsButton();
     }
 
 

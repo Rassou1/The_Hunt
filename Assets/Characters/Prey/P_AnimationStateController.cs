@@ -30,7 +30,7 @@ public class P_AnimationStateController : MonoBehaviour
 
         bool forwardPressed = Input.GetKey("w");
         bool runPressed = Input.GetKey("left shift");
-        bool climbPressed = stateManager.IsClimbingPressed;
+        bool climbPressed = Input.GetKey("e");
 
         if (!isWalking && forwardPressed)
         {

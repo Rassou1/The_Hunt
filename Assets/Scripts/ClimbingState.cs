@@ -1,61 +1,67 @@
-using UnityEngine;
+﻿using UnityEngine;
+
 
 
 public class P_ClimbingState : P_BaseState
 {
-    private bool _isClimbing = false;
-    private P_StateManager instance;
+    float lerpTime;
+    //private P_StateManager stateManager;
 
-    public P_ClimbingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_ClimbingState(P_StateManager stateManager, P_StateFactory p_StateFactory) : base(stateManager, p_StateFactory)
     {
-        _ctx = currentContext;
+        this._ctx = stateManager;
+       
     }
 
+   
 
     public override void EnterState()
     {
         _ctx.Animator.SetBool(_ctx.IsClimbingHash, true);
-        _isClimbing = true;
+        lerpTime = 0f;
+       
+        // Eğer tırmanırken yerçekimi veya diğer fiziksel etkileri değiştirmeniz gerekiyorsa, burada yapabilirsiniz.
     }
 
     public override void UpdateState()
     {
-        if (_isClimbing)
+        // Tırmanma hareketi ve hızının lerp edilmesi
+        // Bu örnek tırmanma için basit bir yukarı hareket varsayar. İhtiyacınıza göre ayarlayın.
+        if (Input.GetKey(KeyCode.E)) // Yukarı ok tuşu ile tırmanma örneği
         {
-            float verticalInput = _ctx.CurrentMovementInput.y;
-            Vector3 movement = Vector3.up * verticalInput * _ctx.climbspeed * Time.deltaTime;
-            _ctx.Rigidbody.MovePosition(_ctx.Rigidbody.position + movement);
-        }
+            float verticalInput = 1f; // Veya Input.GetAxis("Vertical") kullanılabilir
+            Vector3 move = Vector3.up * verticalInput * _ctx.climbspeed * Time.deltaTime;
+            _ctx.Rigidbody.MovePosition(_ctx.transform.position + move);
 
+            _ctx.StateMagnitude = Mathf.Lerp(_ctx.ActualMagnitude, _ctx.climbspeed, lerpTime);
+            lerpTime += Time.deltaTime;
+        }
+        else
+        {
+            CheckSwitchState();
+        }
     }
 
     public override void ExitState()
     {
         _ctx.Animator.SetBool(_ctx.IsClimbingHash, false);
-        _isClimbing = false;
+        // Tırmanmayı bitirdiğinizde yerçekimi veya diğer fiziksel etkileri eski haline getirin.
     }
 
     public override void CheckSwitchState()
     {
-        
-        Collider[] colliders = Physics.OverlapSphere(_ctx.transform.position, 0.5f, LayerMask.GetMask("Ladder"));
-
-        if (colliders.Length == 0)
+        // Durum geçişi koşulları. Örneğin, tırmanma bitirme koşulu.
+        if (_ctx.IsClimbingPressed) // Tırmanma tuşuna basılmadığında tırmanmayı durdur.
         {
-           
-            SwitchState(_factory.Idle());
+            SwitchState(_factory.Idle()); // Tırmanma durdurulduğunda Idle durumuna geç.
         }
-
-       
-        if (!_ctx.IsClimbingPressed || !_isClimbing)
-        {
-            
-            SwitchState(_factory.Ground());
-        }
+        // Diğer durum geçişleri koşulları burada eklenebilir.
     }
 
     public override void InitializeSubState()
     {
-
+        // Tırmanma durumu için alt durumların başlatılmasına gerek yoksa, bu boş bırakılabilir.
     }
 }
+
+
