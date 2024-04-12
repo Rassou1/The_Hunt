@@ -348,6 +348,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: _uidString
       value: 0e14e05b-89b4-44bf-a6c9-23d81b06c5b6
       objectReference: {fileID: 0}
@@ -512,6 +516,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: -607181359439849324}
+    - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8943952741972446164}
     - targetCorrespondingSourceObject: {fileID: 659606187995861540, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4948544677176268397}
@@ -545,6 +552,7 @@ MonoBehaviour:
   _cameraOrientation: {fileID: 4045374355579123734}
   _animator: {fileID: 6205704390062304464}
   _moveSpeed: 4
+  climbspeed: 0
 --- !u!136 &8611927541161921040
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -725,3 +733,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8943952741972446164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556425815845184731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa02b739e5dc964c85335d1e21e4fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

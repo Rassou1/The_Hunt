@@ -17,8 +17,6 @@ public class PlayerWalking : MonoBehaviour
     {
         AudioManager = GetComponent<AudioSource>();
         Footsteps = Resources.LoadAll<AudioClip>("Sounds/Footsteps/Footsteps_Grass/Walk");
-        
-
     }
 
     // Update is called once per frame
@@ -40,15 +38,10 @@ public class PlayerWalking : MonoBehaviour
             }
 
         }
-
     }
-
-    
 
     public void PlayWalkSound()
     {
-        
-
         int footstep = Random.Range(0, Footsteps.Length);
         Debug.Log($"Played Walking sound number {footstep}");
         if (!AudioManager.isPlaying)

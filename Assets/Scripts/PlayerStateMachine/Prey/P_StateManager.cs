@@ -209,11 +209,13 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
+        //Add a Way so a remote avatar still makes sounds
+
         if (!_avatar.IsMe)
             return;
 
 
-        if (_isMovementPressed)
+        if (_isMovementPressed && _isGrounded)
         {
             walking.PlayWalkSound();
         }
