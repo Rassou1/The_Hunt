@@ -1,3 +1,4 @@
+using Alteruna.Scoreboard;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class P_StateManager : MonoBehaviour
 {
-    private Alteruna.Avatar _avatar;
+    //private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
     
@@ -34,7 +35,7 @@ public class P_StateManager : MonoBehaviour
     int _isWallRunningHash;
     int _isSlidingHash;
     int _isClimbingHash;
-    bool _isClimbingPressed;
+    
     P_BaseState _currentState;
     P_StateFactory _states;
 
@@ -140,15 +141,15 @@ public class P_StateManager : MonoBehaviour
     public bool IsGrounded {  get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
 
-    public bool IsClimbingPressed { get { return _isClimbingPressed; } }
+    
 
     public static P_StateManager Instance { get; internal set; }
 
-    void Start()
-    {
-        _avatar = GetComponentInParent<Alteruna.Avatar>();
+    //void Start()
+    //{
+    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
 
-    }
+    //}
 
 
 
@@ -172,7 +173,8 @@ public class P_StateManager : MonoBehaviour
         _isFallingHash = Animator.StringToHash("isFalling");
         _isWallRunningHash = Animator.StringToHash("isWallRunning");
         _isSlidingHash = Animator.StringToHash("isSliding");
-        _isClimbingHash = Animator.StringToHash("isClimbing");
+        
+
         //This gets the inputs from the new input system
         _playerInput.PreyControls.Move.started += OnMovementInput;
         _playerInput.PreyControls.Move.canceled += OnMovementInput;
@@ -187,8 +189,7 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
-        //_playerInput.PreyControls.Climb.started += OnClimbStarted;
-        //_playerInput.PreyControls.Climb.canceled += OnClimbCanceled;
+        
 
 
         //setup state
@@ -211,19 +212,19 @@ public class P_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
 
 
-        if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-        {
-            walking.PlayWalkSound();
-        }
+        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        //{
+        //    walking.PlayWalkSound();
+        //}
 
-        if (_isMovementPressed && _isGrounded && _isSprintPressed)
-        {
-            walking.PlayRunSound();
-        }
+        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        //{
+        //    walking.PlayRunSound();
+        //}
 
         //Debug.Log("Right Wall: " + _wallRight);
         //Debug.Log("Left Wall: " + _wallLeft);
@@ -232,10 +233,18 @@ public class P_StateManager : MonoBehaviour
         GroundCheck();
         
         SetCameraOrientation();
-        //Debug.DrawRay(_cameraOrientation.position, CamRelHor(new Vector3(0, 0, 1)), Color.red, Time.deltaTime);
+        
         RotateBodyY();
         _relForward = CamRelHor(Vector3.forward);
-        
+        //SlopeRelative();
+        Vector3 testRelForward = _relForward;
+        testRelForward = Quaternion.AngleAxis(Quaternion.Angle(Quaternion.FromToRotation(testRelForward, _slopeNormal), testRelForward) , testRelForward) ;
+
+        //NEED TO ROTATE THE Y AXIS OF THE MOVEMENT TO THE Y AXIS OF THE SLOPE
+
+        //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
+        Debug.DrawRay(_cameraOrientation.position - new Vector3(0,0.2f,0), _slopeNormal, Color.blue, Time.deltaTime);
+        Debug.DrawRay(_cameraOrientation.position - new Vector3(0, 0.2f, 0), testRight, Color.green, Time.deltaTime);
         _currentState.UpdateStates();
 
         if (_stateDirection != Vector3.zero)
@@ -287,6 +296,7 @@ public class P_StateManager : MonoBehaviour
         {
             Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
             Vector3 leftover = vel - snapToSurface;
+
             float angle = Vector3.Angle(Vector3.up, hit.normal);
 
             if (snapToSurface.magnitude <= _skindWidth)
@@ -350,20 +360,45 @@ public class P_StateManager : MonoBehaviour
             _slopeNormal = Vector3.zero;
             _slopeAngle = 0f;
         }
+    }
+
+
+
+
+    //Replaced by CamRelHor
+    //void RelativeMovement()
+    //{
+    //    float preRelativeY = _appliedMovement.y;
+    //    _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
+    //    _appliedMovement.y = preRelativeY;
+    //}
+
+
+    Vector3 testForward;
+    Vector3 testRight;
+
+    void SlopeRelative()
+    {
+        testForward = _moveForward;
+        testRight = _moveRight;
+        
         
     }
 
-    
-    
-
-
-    void RelativeMovement()
+    void RotateToSlope()
     {
-        float preRelativeY = _appliedMovement.y;
-        _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
-        _appliedMovement.y = preRelativeY;
+        Vector3 testForward;
+        Vector3 testRight;
+
     }
 
+    Vector3 TestCamRel(Vector3 input)
+    {
+        Vector3 camRelativeHor;
+        //input = new Vector3(input.x, 0, input.z);
+        camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x + _slopeNormal * input.y;
+        return camRelativeHor;
+    }
 
 
     Vector3 CamRelHor(Vector3 input)
@@ -388,14 +423,7 @@ public class P_StateManager : MonoBehaviour
     {
         _isSlidePressed = context.ReadValueAsButton();
     }
-    void OnClimbStarted(InputAction.CallbackContext context)
-    {
-        _isClimbingPressed= context.ReadValueAsButton();
-    }
-    void OnClimbCanceled(InputAction.CallbackContext context)
-    {
-        _isClimbingPressed = context.ReadValueAsButton();
-    }
+    
 
 
     void OnMovementInput(InputAction.CallbackContext context)
@@ -422,6 +450,8 @@ public class P_StateManager : MonoBehaviour
         _moveRight.y = 0;
     }
 
+
+
     void RotateBodyY()
     {
         //Will add some kind of "only rotate when angle above x or moving" if case when i understand Quaternions
@@ -431,6 +461,14 @@ public class P_StateManager : MonoBehaviour
     }
 
 
+
+    //Will be used to rotate the orientation of the rigidbody to allow us to switch the direction of gravity
+    void RotateBodyXZ()
+    {
+        var forward = _cameraOrientation.forward;
+
+        //_rigidbody.transform.rotation = 
+    }
     
     
     
@@ -457,15 +495,4 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-
-    public void SwitchState(P_BaseState state)
-    {
-        _currentState = state;
-        state.EnterState();
-    }
-
-    internal void SetState(P_ClimbingState climbingState)
-    {
-        throw new NotImplementedException();
-    }
 }

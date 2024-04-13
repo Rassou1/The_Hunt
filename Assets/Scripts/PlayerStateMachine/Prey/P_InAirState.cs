@@ -38,10 +38,7 @@ public class P_InAirState : P_BaseState
         {
             SwitchState(_factory.Ground());
         }
-        else if (_ctx.IsClimbingPressed)
-        {
-            SwitchState(_factory.Climb());
-        }
+        
     }
 
     public override void InitializeSubState()
