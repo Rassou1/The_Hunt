@@ -8,6 +8,8 @@ TagManager:
   - NetworkManager
   - groundRock
   - groundGrass
+  - groundMetal
+  - groundTile
   layers:
   - Default
   - TransparentFX

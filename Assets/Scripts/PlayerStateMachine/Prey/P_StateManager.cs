@@ -89,7 +89,7 @@ public class P_StateManager : MonoBehaviour
     float _gravity = -8f;
 
 
-    
+    PlayerWalking walking;
 
     public float _moveSpeed;
     public float climbspeed;
@@ -156,7 +156,7 @@ public class P_StateManager : MonoBehaviour
     private void Awake()
     {
 
-
+        walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         //_rigidbody = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -209,11 +209,21 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
+        //Add a Way so a remote avatar still makes sounds
+
         if (!_avatar.IsMe)
             return;
 
 
+        if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        {
+            walking.PlayWalkSound();
+        }
 
+        if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        {
+            walking.PlayRunSound();
+        }
 
         //Debug.Log("Right Wall: " + _wallRight);
         //Debug.Log("Left Wall: " + _wallLeft);
