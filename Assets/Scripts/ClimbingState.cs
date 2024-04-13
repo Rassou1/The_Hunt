@@ -20,16 +20,15 @@ public class P_ClimbingState : P_BaseState
         _ctx.Animator.SetBool(_ctx.IsClimbingHash, true);
         lerpTime = 0f;
        
-        // Eğer tırmanırken yerçekimi veya diğer fiziksel etkileri değiştirmeniz gerekiyorsa, burada yapabilirsiniz.
+       
     }
 
     public override void UpdateState()
     {
-        // Tırmanma hareketi ve hızının lerp edilmesi
-        // Bu örnek tırmanma için basit bir yukarı hareket varsayar. İhtiyacınıza göre ayarlayın.
-        if (Input.GetKey(KeyCode.E)) // Yukarı ok tuşu ile tırmanma örneği
+        
+        if (Input.GetKey(KeyCode.E)) 
         {
-            float verticalInput = 1f; // Veya Input.GetAxis("Vertical") kullanılabilir
+            float verticalInput = 1f; 
             Vector3 move = Vector3.up * verticalInput * _ctx.climbspeed * Time.deltaTime;
             _ctx.Rigidbody.MovePosition(_ctx.transform.position + move);
 
@@ -45,22 +44,22 @@ public class P_ClimbingState : P_BaseState
     public override void ExitState()
     {
         _ctx.Animator.SetBool(_ctx.IsClimbingHash, false);
-        // Tırmanmayı bitirdiğinizde yerçekimi veya diğer fiziksel etkileri eski haline getirin.
+       
     }
 
     public override void CheckSwitchState()
     {
-        // Durum geçişi koşulları. Örneğin, tırmanma bitirme koşulu.
-        if (_ctx.IsClimbingPressed) // Tırmanma tuşuna basılmadığında tırmanmayı durdur.
+        
+        if (_ctx.IsClimbingPressed) 
         {
-            SwitchState(_factory.Idle()); // Tırmanma durdurulduğunda Idle durumuna geç.
+            SwitchState(_factory.Idle()); 
         }
-        // Diğer durum geçişleri koşulları burada eklenebilir.
+        
     }
 
     public override void InitializeSubState()
     {
-        // Tırmanma durumu için alt durumların başlatılmasına gerek yoksa, bu boş bırakılabilir.
+        
     }
 }
 
