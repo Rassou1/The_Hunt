@@ -238,9 +238,13 @@ public class P_StateManager : MonoBehaviour
         _relForward = CamRelHor(Vector3.forward);
         //SlopeRelative();
         Vector3 testRelForward = _relForward;
-        testRelForward = Quaternion.AngleAxis(Quaternion.Angle(Quaternion.FromToRotation(testRelForward, _slopeNormal), testRelForward) , testRelForward) ;
+        //testRelForward = Quaternion.AngleAxis(Quaternion.Angle(Quaternion.FromToRotation(testRelForward, _slopeNormal), testRelForward) , testRelForward) ;
 
         //NEED TO ROTATE THE Y AXIS OF THE MOVEMENT TO THE Y AXIS OF THE SLOPE
+        //transform.rotation = Quaternion.Euler(0, y, 0);
+        //testRelForward = Quaternion.FromToRotation(_relForward, _slopeNormal);
+
+        transform.rotation = Quaternion.FromToRotation(_relForward, _slopeNormal);
 
         //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
         Debug.DrawRay(_cameraOrientation.position - new Vector3(0,0.2f,0), _slopeNormal, Color.blue, Time.deltaTime);
