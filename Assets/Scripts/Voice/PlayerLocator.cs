@@ -19,7 +19,7 @@ public class PlayerLocator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_avatar.IsMe)
+        if (_avatar.IsMe && VivoxService.Instance != null && VivoxService.Instance.IsLoggedIn)
         {
             if (Time.time > _nextPosUpdate)
             {
