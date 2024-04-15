@@ -271,6 +271,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4619789070643299287, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:RightHandIndex2'\n\tTransform
+        'mixamorig:LeftHandMiddle1'\n\tTransform 'mixamorig:LeftHandRing1'\n\tTransform
+        'mixamorig:RightFoot'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:Spine'\n\tTransform
+        'mixamorig:RightHandRing2'\n\tTransform 'mixamorig:LeftHandIndex2'\n\tTransform
+        'mixamorig:LeftArm'\n\tand more ...\n\tFrom animation clip 'Climbing Ladder
+        1'"
+      objectReference: {fileID: 0}
     - target: {fileID: 4639058888278512595, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -351,6 +362,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      propertyPath: _transform
+      value: 
+      objectReference: {fileID: 3575953641446863454}
     - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: _uidString
       value: 0e14e05b-89b4-44bf-a6c9-23d81b06c5b6
@@ -519,6 +534,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8943952741972446164}
+    - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -973169364673700984}
     - targetCorrespondingSourceObject: {fileID: 659606187995861540, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4948544677176268397}
@@ -576,6 +594,11 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!4 &3575953641446863454 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2856276163769638233, guid: 66963bf08487ea643b651794066756a5, type: 3}
+  m_PrefabInstance: {fileID: 1586356606110789383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4045374355579123734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3325855989254018833, guid: 66963bf08487ea643b651794066756a5, type: 3}
@@ -745,3 +768,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa02b739e5dc964c85335d1e21e4fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-973169364673700984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556425815845184731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2107530592, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 59f36b34-6b8d-43a8-b79d-e501ee378cf2
+  Reliability: 1
+  LocalMethodBehavior: 1
