@@ -16,6 +16,8 @@ public class PlayerLocator : MonoBehaviour
         multiplayer = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<Multiplayer>();
     }
 
+    //Make a event that enables a bool to broadcast the player position to prevent a bunch of errors when starting
+
     // Update is called once per frame
     void Update()
     {
