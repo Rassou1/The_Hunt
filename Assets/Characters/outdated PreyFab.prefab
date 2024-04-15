@@ -138,11 +138,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mouseSens: 50
+  _maxSlopeAngle: 0
+  _softCap: 0
+  _sprintResistance: 0
+  _slideResistance: 0
   _rigidbody: {fileID: 452407247307090497}
   _cameraOrientation: {fileID: 3325855989254018833}
   _animator: {fileID: 4619789070643299287}
   _moveSpeed: 5
-  _sprintMultiplier: 2
 --- !u!136 &7928494486813170457
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -352,6 +355,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db10a0c97f27ac145b2be0d7eac216be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: af02e0ff-d6a0-40f4-969d-0a06118e2daa
+  Reliability: 1
+  LocalMethodBehavior: 1
+  tagged: 0
+  syncedPosition: {x: 63.7, y: 10.58, z: -17.28}
 --- !u!114 &6231191100716215948
 MonoBehaviour:
   m_ObjectHideFlags: 0

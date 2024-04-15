@@ -31,8 +31,11 @@ public class P_IdleState : P_BaseState
 
     public override void CheckSwitchState()
     {
-
-        if (_ctx.IsSlidePressed)
+        if (_ctx.IsClimbingPressed)
+        {
+            SwitchState(_factory.Climb());
+        }
+        else if (_ctx.IsSlidePressed)
         {
             SwitchState(_factory.Slide());
         }

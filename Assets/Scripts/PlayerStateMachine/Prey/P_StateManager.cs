@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -32,7 +33,8 @@ public class P_StateManager : MonoBehaviour
     int _isFallingHash;
     int _isWallRunningHash;
     int _isSlidingHash;
-
+    int _isClimbingHash;
+    bool _isClimbingPressed;
     P_BaseState _currentState;
     P_StateFactory _states;
 
@@ -58,6 +60,7 @@ public class P_StateManager : MonoBehaviour
     bool _isSprintPressed;
     bool _isJumpPressed;
     bool _isSlidePressed;
+    
 
     bool _isGrounded = false;
     
@@ -86,11 +89,11 @@ public class P_StateManager : MonoBehaviour
     float _gravity = -8f;
 
 
-    
+    PlayerWalking walking;
 
     public float _moveSpeed;
-    
-
+    public float climbspeed;
+    public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
@@ -137,6 +140,10 @@ public class P_StateManager : MonoBehaviour
     public bool IsGrounded {  get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
 
+    public bool IsClimbingPressed { get { return _isClimbingPressed; } }
+
+    public static P_StateManager Instance { get; internal set; }
+
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
@@ -149,7 +156,7 @@ public class P_StateManager : MonoBehaviour
     private void Awake()
     {
 
-
+        walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         //_rigidbody = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -165,7 +172,7 @@ public class P_StateManager : MonoBehaviour
         _isFallingHash = Animator.StringToHash("isFalling");
         _isWallRunningHash = Animator.StringToHash("isWallRunning");
         _isSlidingHash = Animator.StringToHash("isSliding");
-
+        _isClimbingHash = Animator.StringToHash("isClimbing");
         //This gets the inputs from the new input system
         _playerInput.PreyControls.Move.started += OnMovementInput;
         _playerInput.PreyControls.Move.canceled += OnMovementInput;
@@ -180,6 +187,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
+        //_playerInput.PreyControls.Climb.started += OnClimbStarted;
+        //_playerInput.PreyControls.Climb.canceled += OnClimbCanceled;
 
 
         //setup state
@@ -200,11 +209,21 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
+        //Add a Way so a remote avatar still makes sounds
+
         if (!_avatar.IsMe)
             return;
 
 
+        if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        {
+            walking.PlayWalkSound();
+        }
 
+        if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        {
+            walking.PlayRunSound();
+        }
 
         //Debug.Log("Right Wall: " + _wallRight);
         //Debug.Log("Left Wall: " + _wallLeft);
@@ -243,6 +262,7 @@ public class P_StateManager : MonoBehaviour
 
         //Debug.Log("Vert magnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
+        //CheckClimbingState();
     }
 
 
@@ -368,6 +388,14 @@ public class P_StateManager : MonoBehaviour
     {
         _isSlidePressed = context.ReadValueAsButton();
     }
+    void OnClimbStarted(InputAction.CallbackContext context)
+    {
+        _isClimbingPressed= context.ReadValueAsButton();
+    }
+    void OnClimbCanceled(InputAction.CallbackContext context)
+    {
+        _isClimbingPressed = context.ReadValueAsButton();
+    }
 
 
     void OnMovementInput(InputAction.CallbackContext context)
@@ -415,7 +443,7 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-    
+   
 
 
     void OnEnable()
@@ -434,5 +462,10 @@ public class P_StateManager : MonoBehaviour
     {
         _currentState = state;
         state.EnterState();
+    }
+
+    internal void SetState(P_ClimbingState climbingState)
+    {
+        throw new NotImplementedException();
     }
 }
