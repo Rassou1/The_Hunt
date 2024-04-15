@@ -926,10 +926,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: tunel
       objectReference: {fileID: 0}
-    - target: {fileID: 1604908963751126680, guid: e5d7b87d422ee0f478ee09eb32e24f4e, type: 3}
-      propertyPath: m_TagString
-      value: groundRock
-      objectReference: {fileID: 0}
     - target: {fileID: 2093637950428003362, guid: e5d7b87d422ee0f478ee09eb32e24f4e, type: 3}
       propertyPath: m_LocalScale.x
       value: 151.33656
@@ -5442,10 +5438,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stairs_650_400_300_Prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 7561066613761435406, guid: 50a0925b0c22af146a2d15615f815a1c, type: 3}
-      propertyPath: m_TagString
-      value: groundTile
-      objectReference: {fileID: 0}
     - target: {fileID: 8642225304373351647, guid: 50a0925b0c22af146a2d15615f815a1c, type: 3}
       propertyPath: m_LocalScale.x
       value: 30.40079
@@ -6636,7 +6628,7 @@ GameObject:
   - component: {fileID: 515272871}
   m_Layer: 0
   m_Name: New Game Object
-  m_TagString: groundGrass
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10328,7 +10320,7 @@ GameObject:
   - component: {fileID: 843647869}
   m_Layer: 0
   m_Name: New Game Object
-  m_TagString: groundMetal
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17329,50 +17321,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8642225304373351647, guid: 50a0925b0c22af146a2d15615f815a1c, type: 3}
   m_PrefabInstance: {fileID: 1274111802}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1291089923
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1291089924}
-  - component: {fileID: 1291089925}
-  m_Layer: 0
-  m_Name: VoiceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1291089924
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291089923}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.588005, y: 0.4570533, z: -20.57587}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1291089925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291089923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4894b2fa43668274f929dd6fc7d55cd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &1308128024
 Mesh:
   m_ObjectHideFlags: 0
@@ -19011,10 +18959,6 @@ PrefabInstance:
     - target: {fileID: 7561066613761435406, guid: 50a0925b0c22af146a2d15615f815a1c, type: 3}
       propertyPath: m_Name
       value: Stairs_650_400_300_Prefab (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7561066613761435406, guid: 50a0925b0c22af146a2d15615f815a1c, type: 3}
-      propertyPath: m_TagString
-      value: groundTile
       objectReference: {fileID: 0}
     - target: {fileID: 8642225304373351647, guid: 50a0925b0c22af146a2d15615f815a1c, type: 3}
       propertyPath: m_LocalScale.x
@@ -25399,5 +25343,4 @@ SceneRoots:
   - {fileID: 1046663091}
   - {fileID: 490071841}
   - {fileID: 969508398}
-  - {fileID: 1291089924}
   - {fileID: 1935359475}
