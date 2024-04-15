@@ -215,15 +215,15 @@ public class P_StateManager : MonoBehaviour
             return;
 
 
-        if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-        {
-            walking.PlayWalkSound();
-        }
+        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        //{
+        //    walking.PlayWalkSound();
+        //}
 
-        if (_isMovementPressed && _isGrounded && _isSprintPressed)
-        {
-            walking.PlayRunSound();
-        }
+        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        //{
+        //    walking.PlayRunSound();
+        //}
 
         //Debug.Log("Right Wall: " + _wallRight);
         //Debug.Log("Left Wall: " + _wallLeft);
