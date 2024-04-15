@@ -62,19 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_Name
-      value: Preyfab
+      value: Prey Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
-      propertyPath: _transform
-      value: 
-      objectReference: {fileID: 8892896448621199282}
-    - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
-      propertyPath: _uidString
-      value: ebfc6d80-5e0c-44f8-9c9e-cd662eea334b
       objectReference: {fileID: 0}
     - target: {fileID: 6605274746566338901, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_LocalScale.x
@@ -246,14 +238,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &8892896448621199282 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7884172207469220021, guid: 66963bf08487ea643b651794066756a5, type: 3}
-  m_PrefabInstance: {fileID: 1586356606110789383}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6556425815845184731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1312809854, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
