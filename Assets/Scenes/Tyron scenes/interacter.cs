@@ -34,7 +34,7 @@ public class interacter : MonoBehaviour
 
                 if (interactObj!=null)
                 {
-                    Debug.Log("ddd");
+                    Debug.Log(interactObj+" has been interacted with by "+ gameObject);
                     interactObj.Interact(gameObject);
                 }
             }
