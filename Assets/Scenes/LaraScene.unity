@@ -7477,6 +7477,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tunel
       objectReference: {fileID: 0}
+    - target: {fileID: 1604908963751126680, guid: e5d7b87d422ee0f478ee09eb32e24f4e, type: 3}
+      propertyPath: m_TagString
+      value: groundRock
+      objectReference: {fileID: 0}
     - target: {fileID: 2093637950428003362, guid: e5d7b87d422ee0f478ee09eb32e24f4e, type: 3}
       propertyPath: m_LocalScale.x
       value: 151.33656
@@ -9600,7 +9604,7 @@ MonoBehaviour:
     Users: 
   _maxPlayers: 10
   AvatarSpawning: 1
-  AvatarPrefab: {fileID: 4311599249812463511, guid: 66963bf08487ea643b651794066756a5, type: 3}
+  AvatarPrefab: {fileID: 3302895826299941008, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
   AvatarSpawnLocation: {fileID: 1962504129}
   SpawnAvatarPerIndex: 0
   AvatarSpawnLocations: []
@@ -15076,7 +15080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8763101912591529871, guid: 5a577542a281e0a448dc3b383023e1f2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000030517578
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 8763101912917073179, guid: 5a577542a281e0a448dc3b383023e1f2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -16157,7 +16161,7 @@ GameObject:
   - component: {fileID: 1297459168}
   m_Layer: 0
   m_Name: New Game Object
-  m_TagString: Untagged
+  m_TagString: groundGrass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19408,6 +19412,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PTK_Ladder_Large
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
       propertyPath: m_LocalScale.x
       value: 26.624142
@@ -19460,10 +19472,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.7739868
       objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      propertyPath: m_CookingOptions
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1523268473}
   m_SourcePrefab: {fileID: 100100000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
 --- !u!4 &1359087314 stripped
 Transform:
@@ -20868,6 +20903,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 832575519}
   m_LocalEulerAnglesHint: {x: -0.553, y: 0, z: 0}
+--- !u!1 &1523268469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 3ba09df563495414ca3fcf8ea9989169, type: 3}
+  m_PrefabInstance: {fileID: 1359087313}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1523268473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523268469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e6ead0e24f43d438b510ecd7f5fe49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1529974922
 GameObject:
   m_ObjectHideFlags: 0
@@ -24396,6 +24448,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 8497650616581704069, guid: 9eb847ab97b24024588682c8601254cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 140846f5c4c7f1541908b81487851b75, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -62,7 +62,10 @@ public class P_GroundedState : P_BaseState
             SwitchState(_factory.Air());
             //_ctx.VertMagnitude = -8f;
         }
-        
+        else if (_ctx.IsClimbingPressed)
+        {
+            SwitchState(_factory.Climb());
+        }
     }
 
 }
