@@ -7,8 +7,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
 {
     public bool tagged = false; // Boolean to track if the prey is tagged
 
-    // This field will be synchronized if it's properly configured with your networking framework
-    public Vector3 prisonPosition = new Vector3(63.7f, 10.58f, -17.28f);
+     public Vector3 prisonPosition = new Vector3(63.7f, 10.58f, -17.28f);
     public Alteruna.Avatar _avatar;
 
     public void Start()
@@ -18,17 +17,18 @@ public class InteractablePlayer : AttributesSync, IInteractable
     }
     public void Interact(GameObject interactor)
     {
-        if (gameObject.layer == LayerMask.NameToLayer("Prey") && interactor.layer == LayerMask.NameToLayer("Hunter"))
-        {
-            if (!_avatar.IsMe)
-                return;
+        //if (gameObject.layer == LayerMask.NameToLayer("Prey") && interactor.layer == LayerMask.NameToLayer("Hunter"))
+        //{
+        //    if (!_avatar.IsMe)
+        //        return;
 
-            // Set the synchronized position
-            transform.position = prisonPosition;
+        //    transform.position = prisonPosition;
 
-            // Update the tagged state
-            tagged = true;
-        }
+        //    tagged = true;
+        //}
+
+        Debug.Log(gameObject.name+" is "+gameObject.layer);
+        Debug.Log(interactor.name + " is " + interactor.layer);
     }
 
     public void Update()
