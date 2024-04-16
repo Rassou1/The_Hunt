@@ -4,10 +4,12 @@ using UnityEngine;
 using Alteruna;
 public class RoleGiver: AttributesSync,IInteractable
 {
+    public GameObject GiveObject()
+    {
+        throw new System.NotImplementedException();
+    }
 
-
-
-     public void Interact(GameObject interactor)
+    public void Interact(GameObject interactor)
     {
 
         gameObject.SetActive(false);
