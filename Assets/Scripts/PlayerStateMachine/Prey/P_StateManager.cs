@@ -266,14 +266,15 @@ public class P_StateManager : MonoBehaviour
         
         _appliedMovement *= Time.deltaTime;
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
+        Vector3 tempTestVect = _appliedMovement;
+        _appliedMovement = CollideAndSlide(new Vector3(0, _vertMagnitude, 0) * Time.deltaTime, _capsuleCollider.transform.position, 0, true, new Vector3(0, _vertMagnitude, 0) * Time.deltaTime);
+        _appliedMovement += CollideAndSlide(tempTestVect, _capsuleCollider.transform.position + _appliedMovement, 0, false, tempTestVect);
         
         
-        _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
-        
-        _appliedMovement += CollideAndSlide(new Vector3(0, _vertMagnitude, 0) * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, new Vector3(0, _vertMagnitude, 0) * Time.deltaTime);
         _rigidbody.transform.position += _appliedMovement;
 
-        //Debug.Log("Vert magnitude: " + _vertMagnitude);
+        Debug.Log("Grounded: " + _isGrounded);
+        Debug.Log("VertMagnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
         //CheckClimbingState();
     }

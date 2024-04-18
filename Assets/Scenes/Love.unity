@@ -5689,9 +5689,25 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 71841642876974762, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499175637554195728, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 3302895826299941008, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3575953641446863454, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045374355579123734, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4646164122328629643, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
       propertyPath: m_Enabled
@@ -5741,9 +5757,24 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6205704390062304464, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:RightHandIndex2'\n\tTransform
+        'mixamorig:LeftHandMiddle1'\n\tTransform 'mixamorig:LeftHandRing1'\n\tTransform
+        'mixamorig:RightFoot'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:Spine'\n\tTransform
+        'mixamorig:RightHandRing2'\n\tTransform 'mixamorig:LeftHandIndex2'\n\tTransform
+        'mixamorig:LeftArm'\n\tand more ...\n\tFrom animation clip 'Climbing Ladder
+        1'"
+      objectReference: {fileID: 0}
     - target: {fileID: 6556425815845184731, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
       propertyPath: m_Name
       value: Prey
+      objectReference: {fileID: 0}
+    - target: {fileID: 6761510758411781801, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.548
       objectReference: {fileID: 0}
     - target: {fileID: 8892896448621199282, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
       propertyPath: m_Enabled
