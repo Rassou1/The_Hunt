@@ -244,7 +244,9 @@ public class P_StateManager : MonoBehaviour
         //transform.rotation = Quaternion.Euler(0, y, 0);
         //testRelForward = Quaternion.FromToRotation(_relForward, _slopeNormal);
 
-        transform.rotation = Quaternion.FromToRotation(_relForward, _slopeNormal);
+        transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, _slopeNormal);
+        Debug.Log("Orientation rotation: " + transform.rotation.eulerAngles);
+        Debug.Log("Slope normal: " + _slopeNormal);
 
         //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
         Debug.DrawRay(_cameraOrientation.position - new Vector3(0,0.2f,0), _slopeNormal, Color.blue, Time.deltaTime);
@@ -273,8 +275,8 @@ public class P_StateManager : MonoBehaviour
         
         _rigidbody.transform.position += _appliedMovement;
 
-        Debug.Log("Grounded: " + _isGrounded);
-        Debug.Log("VertMagnitude: " + _vertMagnitude);
+        //Debug.Log("Grounded: " + _isGrounded);
+        //Debug.Log("VertMagnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
         //CheckClimbingState();
     }
@@ -302,7 +304,9 @@ public class P_StateManager : MonoBehaviour
             Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
             Vector3 leftover = vel - snapToSurface;
 
-            float angle = Vector3.Angle(Vector3.up, hit.normal);
+            Debug.DrawLine(hit.point, hit.normal);
+
+            float angle = Vector3.Angle(transform.up, hit.normal);  //Make this relative to your current alignment
 
             if (snapToSurface.magnitude <= _skindWidth)
             {
@@ -462,7 +466,7 @@ public class P_StateManager : MonoBehaviour
         //Will add some kind of "only rotate when angle above x or moving" if case when i understand Quaternions
         var forward = _cameraOrientation.forward;
         forward.y = 0;
-        _rigidbody.transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
+        _rigidbody.transform.rotation = Quaternion.LookRotation(forward, _rigidbody.transform.up);
     }
 
 
