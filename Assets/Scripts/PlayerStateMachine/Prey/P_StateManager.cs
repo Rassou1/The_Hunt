@@ -10,8 +10,8 @@ public class P_StateManager : MonoBehaviour
     private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
-    
-    
+
+    //CheckLadderCollision ladderCollision;
     CapsuleCollider _capsuleCollider;
     Bounds _bounds;
     
@@ -19,6 +19,7 @@ public class P_StateManager : MonoBehaviour
     float _skindWidth = 0.01f;
 
     LayerMask whatIsGround;
+    public P_StateFactory _stateFactory { get; private set; }
 
 
 
@@ -60,7 +61,6 @@ public class P_StateManager : MonoBehaviour
     bool _isSprintPressed;
     bool _isJumpPressed;
     bool _isSlidePressed;
-    
 
     bool _isGrounded = false;
     
@@ -142,7 +142,7 @@ public class P_StateManager : MonoBehaviour
 
     public bool IsClimbingPressed { get { return _isClimbingPressed; } }
 
-    public static P_StateManager Instance { get; internal set; }
+    //public static P_StateManager Instance { get; internal set; }
 
     void Start()
     {
@@ -187,13 +187,14 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
-        //_playerInput.PreyControls.Climb.started += OnClimbStarted;
-        //_playerInput.PreyControls.Climb.canceled += OnClimbCanceled;
+        _playerInput.PreyControls.Climb.started += OnClimb;
+        _playerInput.PreyControls.Climb.canceled += OnClimb;
+        //_playerInput.PreyControls.Climb.performed += Climb_performed;
 
 
         //setup state
         _states = new P_StateFactory(this);
-
+        _stateFactory = new P_StateFactory(this);
         _currentState = _states.Ground();
         _currentState.EnterState();
 
@@ -204,8 +205,10 @@ public class P_StateManager : MonoBehaviour
 
     }
 
-    
-
+    private void Climb_performed(InputAction.CallbackContext obj)
+    {
+        throw new NotImplementedException();
+    }
 
     void Update()
     {
@@ -253,7 +256,7 @@ public class P_StateManager : MonoBehaviour
         
         _appliedMovement *= Time.deltaTime;
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
-        
+        //ladderCollision.GetComponent<Rigidbody>().velocity = _appliedMovement;
         
         _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
         
@@ -388,15 +391,27 @@ public class P_StateManager : MonoBehaviour
     {
         _isSlidePressed = context.ReadValueAsButton();
     }
-    void OnClimbStarted(InputAction.CallbackContext context)
-    {
-        _isClimbingPressed= context.ReadValueAsButton();
-    }
-    void OnClimbCanceled(InputAction.CallbackContext context)
+    //void OnClimbStarted(InputAction.CallbackContext context)
+    //{
+    //    _isClimbingPressed = true;
+    //    Debug.Log("Climb Started: " + _isClimbingPressed);
+    //}
+
+    //void OnClimbCanceled(InputAction.CallbackContext context)
+    //{
+    //    //_isClimbingPressed = false;
+    //    Debug.Log("Climb Canceled: " + _isClimbingPressed);
+    //}
+    void OnClimb(InputAction.CallbackContext context)
     {
         _isClimbingPressed = context.ReadValueAsButton();
     }
 
+    //void Climb_performed(InputAction.CallbackContext context)
+    //{
+    //    _isClimbingPressed = false;
+    //    Debug.Log("Climb Can: " + _isClimbingPressed);
+    //}
 
     void OnMovementInput(InputAction.CallbackContext context)
     {
@@ -464,8 +479,8 @@ public class P_StateManager : MonoBehaviour
         state.EnterState();
     }
 
-    internal void SetState(P_ClimbingState climbingState)
-    {
-        throw new NotImplementedException();
-    }
+    //internal void SetState(P_ClimbingState climbingState)
+    //{
+    //    throw new NotImplementedException();
+    //}
 }

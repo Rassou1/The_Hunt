@@ -2,24 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CheckLadderCollision : MonoBehaviour
 {
+
+    public bool isTouchingLadder;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        // Burada hem tag hem de layer kontrolü yapılıyor.
+        if (other.CompareTag("Player") && other.gameObject.layer == LayerMask.NameToLayer("Ladder"))
         {
-            // Oyuncu ladder nesnesine temas ettiğinde tırmanma işlevselliğini etkinleştir
-            other.GetComponent<PlayerMovement>().climbing = true;
+            P_StateManager stateManager = other.GetComponent<P_StateManager>();
+            Debug.Log("collinision");
+            if (stateManager != null)
+            {
+                isTouchingLadder = true;
+                
+                //stateManager.SwitchState(stateManager._stateFactory.Climb());
+            }
+
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.gameObject.layer != LayerMask.NameToLayer("Ladder"))
         {
-            // Oyuncu ladder nesnesinden ayrıldığında tırmanma işlevselliğini devre dışı bırak
-            other.GetComponent<PlayerMovement>().climbing = false;
+            P_StateManager stateManager = other.GetComponent<P_StateManager>();
+            if (stateManager != null)
+            {
+                isTouchingLadder = false;
+                //stateManager.SwitchState(stateManager._stateFactory.Idle());
+            }
         }
     }
 }

@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class P_GroundedState : P_BaseState
 {
-    
+    public CheckLadderCollision cl = new CheckLadderCollision();
     public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
         IsRootState = true;
+        
     }
 
     public override void EnterState()
@@ -62,10 +63,11 @@ public class P_GroundedState : P_BaseState
             SwitchState(_factory.Air());
             //_ctx.VertMagnitude = -8f;
         }
-        else if (_ctx.IsClimbingPressed)
-        {
-            SwitchState(_factory.Climb());
-        }
+        //if (cl.isTouchingLadder && _ctx.IsClimbingPressed)
+        //{
+        //    SwitchState(_factory.Climb());
+        //}
+
     }
 
 }
