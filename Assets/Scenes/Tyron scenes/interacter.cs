@@ -4,6 +4,7 @@ using UnityEngine;
     interface IInteractable
     {
         public void Interact(GameObject interactor);
+        public GameObject GiveObject();
     }
 public class interacter : MonoBehaviour
 {
@@ -32,9 +33,14 @@ public class interacter : MonoBehaviour
             {
                 IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
+
+
                 if (interactObj!=null)
                 {
-                    Debug.Log("ddd");
+                    interactObj.Interact(gameObject);
+
+
+                    Debug.Log(gameObject.name+" interacted with " + interactObj.GiveObject().name);
                     interactObj.Interact(gameObject);
                 }
             }
