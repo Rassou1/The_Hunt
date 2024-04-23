@@ -30,6 +30,6 @@ public class P_WallRunningState : P_BaseState
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 }
