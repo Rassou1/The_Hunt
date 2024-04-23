@@ -77,10 +77,7 @@ public class P_SlidingState : P_BaseState
             {
                 SwitchState(_factory.Walk());
             }
-            else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
-            {
-                SwitchState(_factory.Run());
-            }
+            
         }
     }
 

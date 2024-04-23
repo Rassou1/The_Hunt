@@ -38,10 +38,7 @@ public class P_InAirState : P_BaseState
         {
             SwitchState(_factory.Ground());
         }
-        else if (_ctx.IsClimbingPressed)
-        {
-            SwitchState(_factory.Climb());
-        }
+        
     }
 
     public override void InitializeSubState()
@@ -53,10 +50,6 @@ public class P_InAirState : P_BaseState
         else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
-        }
-        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
-        {
-            SetSubState(_factory.Run());
         }
         else
         {

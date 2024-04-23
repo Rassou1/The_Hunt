@@ -40,10 +40,7 @@ public class P_WalkingState : P_BaseState
         {
             SwitchState(_factory.Idle());
         }
-        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
-        {
-            SwitchState(_factory.Run());
-        }
+        
         
 
     }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class P_GroundedState : P_BaseState
 {
-    public CheckLadderCollision cl = new CheckLadderCollision();
     public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
         IsRootState = true;
@@ -39,10 +38,6 @@ public class P_GroundedState : P_BaseState
         {
             SetSubState(_factory.Walk());
         }
-        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
-        {
-            SetSubState(_factory.Run());
-        }
         else
         {
             SetSubState(_factory.Idle());
@@ -61,12 +56,8 @@ public class P_GroundedState : P_BaseState
         {
             
             SwitchState(_factory.Air());
-            //_ctx.VertMagnitude = -8f;
         }
-        //if (cl.isTouchingLadder && _ctx.IsClimbingPressed)
-        //{
-        //    SwitchState(_factory.Climb());
-        //}
+        
 
     }
 

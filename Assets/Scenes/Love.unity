@@ -5575,6 +5575,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -973169364673700984, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -607181359439849324, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3302895826299941008, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4646164122328629643, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5596136569349211730, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
       propertyPath: m_LocalPosition.x
       value: -252.6
@@ -5615,9 +5631,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5731003272057401053, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6556425815845184731, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
       propertyPath: m_Name
       value: Prey
+      objectReference: {fileID: 0}
+    - target: {fileID: 8892896448621199282, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943952741972446164, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

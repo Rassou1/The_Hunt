@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class P_StateManager : MonoBehaviour
 {
-    private Alteruna.Avatar _avatar;
+    //private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
 
@@ -144,11 +144,11 @@ public class P_StateManager : MonoBehaviour
 
     //public static P_StateManager Instance { get; internal set; }
 
-    void Start()
-    {
-        _avatar = GetComponentInParent<Alteruna.Avatar>();
+    //void Start()
+    //{
+    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
 
-    }
+    //}
 
 
 
@@ -205,17 +205,14 @@ public class P_StateManager : MonoBehaviour
 
     }
 
-    private void Climb_performed(InputAction.CallbackContext obj)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     void Update()
     {
         //Add a Way so a remote avatar still makes sounds
 
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
 
 
         //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
@@ -391,27 +388,13 @@ public class P_StateManager : MonoBehaviour
     {
         _isSlidePressed = context.ReadValueAsButton();
     }
-    //void OnClimbStarted(InputAction.CallbackContext context)
-    //{
-    //    _isClimbingPressed = true;
-    //    Debug.Log("Climb Started: " + _isClimbingPressed);
-    //}
-
-    //void OnClimbCanceled(InputAction.CallbackContext context)
-    //{
-    //    //_isClimbingPressed = false;
-    //    Debug.Log("Climb Canceled: " + _isClimbingPressed);
-    //}
+    
     void OnClimb(InputAction.CallbackContext context)
     {
         _isClimbingPressed = context.ReadValueAsButton();
     }
 
-    //void Climb_performed(InputAction.CallbackContext context)
-    //{
-    //    _isClimbingPressed = false;
-    //    Debug.Log("Climb Can: " + _isClimbingPressed);
-    //}
+    
 
     void OnMovementInput(InputAction.CallbackContext context)
     {
@@ -446,21 +429,6 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-    
-    
-    
-
-    //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
-    IEnumerator WallRunBuffer()
-    {
-        yield return new WaitForSeconds(2f);
-        //getNoMomentumLoss = true
-    }
-
-
-   
-
-
     void OnEnable()
     {
         _playerInput.PreyControls.Enable();
@@ -472,15 +440,10 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-
     public void SwitchState(P_BaseState state)
     {
         _currentState = state;
         state.EnterState();
     }
 
-    //internal void SetState(P_ClimbingState climbingState)
-    //{
-    //    throw new NotImplementedException();
-    //}
 }

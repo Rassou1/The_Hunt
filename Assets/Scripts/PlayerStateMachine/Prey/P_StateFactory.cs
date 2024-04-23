@@ -8,10 +8,8 @@ enum P_States
     air,
     idle,
     walk,
-    run,
     slide,
     wallRun,
-    climb
 }
 
 public class P_StateFactory
@@ -26,10 +24,8 @@ public class P_StateFactory
         _states[P_States.air] = new P_InAirState(_context, this);
         _states[P_States.idle] = new P_IdleState(_context, this);
         _states[P_States.walk] = new P_WalkingState(_context, this);
-        _states[P_States.run] = new P_RunningState(_context, this);
         _states[P_States.slide] = new P_SlidingState(_context, this);
         _states[P_States.wallRun] = new P_WallRunningState(_context, this);
-        _states[P_States.climb] = new P_ClimbingState(_context, this);
     }
 
     public P_BaseState Ground()
@@ -52,10 +48,7 @@ public class P_StateFactory
         return _states[P_States.walk];
     }
 
-    public P_BaseState Run()
-    {
-        return _states[P_States.run];
-    }
+    
 
     public P_BaseState Slide()
     {
@@ -67,8 +60,5 @@ public class P_StateFactory
         return _states[P_States.wallRun];
     }
 
-    public P_BaseState Climb()
-    {
-        return _states[P_States.climb];
-    }
+    
 }
