@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Alteruna;
     interface IInteractable
     {
-        public void Interact(GameObject interactor);
+        public void Interact(GameObject interactor, Alteruna.Avatar interactorAvatar);
         public GameObject GiveObject();
     }
+
 public class interacter : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Alteruna.Avatar _avatar;
 
 
     public GameObject InteractorCam;
@@ -17,7 +20,8 @@ public class interacter : MonoBehaviour
     public float InteractRange;
     void Start()
     {
-        
+        _avatar = gameObject.GetComponent<Alteruna.Avatar>();
+
     }
 
     // Update is called once per frame
@@ -33,18 +37,16 @@ public class interacter : MonoBehaviour
             {
                 IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
-
-
-                if (interactObj!=null)
+                if (interactObj != null)//check not me
                 {
-                    interactObj.Interact(gameObject);
-
-
-                    Debug.Log(gameObject.name+" interacted with " + interactObj.GiveObject().name);
-                    interactObj.Interact(gameObject);
+                    interactObj.Interact(gameObject,_avatar);
+                    Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
+                }
+                else
+                {
+                    Debug.Log("No interactable object found!");
                 }
             }
         }
     }
-
 }
