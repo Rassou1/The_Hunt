@@ -9,7 +9,7 @@ public class RoleGiver: AttributesSync,IInteractable
         throw new System.NotImplementedException();
     }
 
-    public void Interact(GameObject interactor)
+    public void Interact(GameObject interactor, Alteruna.Avatar interactorAvatar)
     {
 
         gameObject.SetActive(false);
