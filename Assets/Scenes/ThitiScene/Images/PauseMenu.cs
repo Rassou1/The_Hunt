@@ -23,15 +23,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("Moms Spaghetti" +
-                      "He's nurvess" +
-                      "but on the serfes he looks calm and ready" +
-                      "to drop booms" +
-                      "but he keeps on forgetting " +
-                      "what he wrote down, the whole crowd grows so loud" +
-                      "he opens his mouth, but the words wont come out " +
-                      "his choking out, everybodys joking now the clocks run out, times over , plow" +
-                      "snap back to reality, ow there ");
+            Debug.Log("mom's spaghetti\r\nHe's nervous, but on the surface he looks calm and ready\r\nto drops bombs, but he keeps on forgetting\r\nwhat he wrote down, the whole crowd goes so loud\r\nHe opens his mouth but the words won't come out\r\nHe's chokin, how? Everybody's jokin now\r\nThe clock's run out, time's up, over - BLAOW!\r\nSnap back to reality, OHH! there goes gravity\r\nOHH! there goes Rabbit, he choked\r\nHe's so mad, but he won't\r\nGive up that easy nope, he won't have it\r\nHe knows, his whole back's to these ropes\r\nIt don't matter, he's dope\r\nHe knows that, but he's broke\r\nHe's so sad that he knows\r\nwhen he goes back to this mobile home, that's when it's\r\nback to the lab again, yo, this whole rap shift\r\nHe better go capture this moment and hope it don't pass him");
             if (isPaused) 
             {
                 Resume();
@@ -47,7 +39,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.active = true;
         UnlockMouse();
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         isPaused = true;
     }
 
