@@ -1,18 +1,20 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private Animator Dooranim;
+    
+    public IEnumerator StopDoor()
     {
-        
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Coroutine started, attempting to close door.");
+        Dooranim.SetBool("Open", false);
+        Dooranim.enabled = false;
+        Debug.Log("Door should be closed now.");
+
     }
 }
+

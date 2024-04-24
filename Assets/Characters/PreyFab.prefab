@@ -541,6 +541,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: -973169364673700984}
+    - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8715449501532167877}
     - targetCorrespondingSourceObject: {fileID: 659606187995861540, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4948544677176268397}
@@ -788,3 +791,24 @@ MonoBehaviour:
   _uidString: 59f36b34-6b8d-43a8-b79d-e501ee378cf2
   Reliability: 1
   LocalMethodBehavior: 1
+--- !u!135 &8715449501532167877
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556425815845184731}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}

@@ -52,6 +52,10 @@ public class P_GroundedState : P_BaseState
 
     public override void CheckSwitchState()
     {
+        if (cl.isTouchingLadder && _ctx.IsClimbingPressed)
+        {
+            SwitchState(_factory.Climb());
+        }
         if (_ctx.IsJumpPressed)
         {
             _ctx.VertMagnitude = 6f;
@@ -63,10 +67,7 @@ public class P_GroundedState : P_BaseState
             SwitchState(_factory.Air());
             //_ctx.VertMagnitude = -8f;
         }
-        //if (cl.isTouchingLadder && _ctx.IsClimbingPressed)
-        //{
-        //    SwitchState(_factory.Climb());
-        //}
+       
 
     }
 

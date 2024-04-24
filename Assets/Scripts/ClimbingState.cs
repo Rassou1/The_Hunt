@@ -48,10 +48,10 @@ public class P_ClimbingState : P_BaseState
             Debug.Log("Is in climb" + _ctx.StateDirection);
             Debug.Log("gravity" + _ctx.Gravity);
             //CheckSwitchState();
-            if (_ctx.IsSlidePressed)
-            {
-                ExitState();
-            }
+            //if (_ctx._IsClimbPressed)
+            //{
+            //    ExitState();
+            //}
     }
 
 
@@ -66,7 +66,7 @@ public class P_ClimbingState : P_BaseState
     public override void CheckSwitchState()
     {
         
-
+        
 
     }
 
