@@ -5,7 +5,7 @@ public class P_SlidingState : P_BaseState
 
     float totalMagnitude;
 
-    public P_SlidingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_SlidingState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
 
     }

@@ -5,6 +5,7 @@ public abstract class P_BaseState
     private bool _isRootState = false;
     protected P_StateManager _ctx;
     protected P_StateFactory _factory;
+    protected SCR_abilityManager _pow;
     private P_BaseState _currentSubState;
     private P_BaseState _currentSuperState;
 
@@ -12,10 +13,11 @@ public abstract class P_BaseState
     //protected P_StateManager Ctx { get { return _ctx; } }
     //protected P_StateFactory Factory { get { return _factory; } }
 
-    public P_BaseState(P_StateManager currentContext, P_StateFactory p_StateFactory)
+    public P_BaseState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow)
     {
         _ctx = currentContext;
         _factory = p_StateFactory;
+        _pow = scr_pow;
     }
 
     public abstract void EnterState();

@@ -89,6 +89,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""5ff59ccd-4986-496d-962d-cc4f9bd64c7a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -221,6 +230,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d24ad93-dcdb-40e5-a77e-ec5c414d341a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -370,6 +390,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PreyControls_Look = m_PreyControls.FindAction("Look", throwIfNotFound: true);
         m_PreyControls_Reset = m_PreyControls.FindAction("Reset", throwIfNotFound: true);
         m_PreyControls_Climb = m_PreyControls.FindAction("Climb", throwIfNotFound: true);
+        m_PreyControls_Dash = m_PreyControls.FindAction("Dash", throwIfNotFound: true);
         // HunterControls
         m_HunterControls = asset.FindActionMap("HunterControls", throwIfNotFound: true);
         m_HunterControls_Move = m_HunterControls.FindAction("Move", throwIfNotFound: true);
@@ -444,6 +465,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PreyControls_Look;
     private readonly InputAction m_PreyControls_Reset;
     private readonly InputAction m_PreyControls_Climb;
+    private readonly InputAction m_PreyControls_Dash;
     public struct PreyControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -455,6 +477,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_PreyControls_Look;
         public InputAction @Reset => m_Wrapper.m_PreyControls_Reset;
         public InputAction @Climb => m_Wrapper.m_PreyControls_Climb;
+        public InputAction @Dash => m_Wrapper.m_PreyControls_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PreyControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -485,6 +508,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Climb.started += instance.OnClimb;
             @Climb.performed += instance.OnClimb;
             @Climb.canceled += instance.OnClimb;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IPreyControlsActions instance)
@@ -510,6 +536,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Climb.started -= instance.OnClimb;
             @Climb.performed -= instance.OnClimb;
             @Climb.canceled -= instance.OnClimb;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IPreyControlsActions instance)
@@ -606,6 +635,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
     public interface IHunterControlsActions
     {

@@ -6,7 +6,7 @@ public class P_InAirState : P_BaseState
 
     
 
-    public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
         IsRootState = true;
     }
@@ -25,6 +25,7 @@ public class P_InAirState : P_BaseState
         _ctx.StateDirection *= 0.5f;
         _ctx.VertMagnitude -= 8f * Time.deltaTime;
         CheckSwitchState();
+        _pow.CheckDoubleJump(ref _ctx);
     }
 
     public override void ExitState()
@@ -37,6 +38,7 @@ public class P_InAirState : P_BaseState
         if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Ground());
+            _pow.ResetJumps();
         }
         
     }
@@ -56,7 +58,6 @@ public class P_InAirState : P_BaseState
             SetSubState(_factory.Idle());
         }
     }
-
 
     //void HandleGravity()
     //{

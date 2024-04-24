@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class P_GroundedState : P_BaseState
 {
-    public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
         IsRootState = true;
         
@@ -13,6 +13,7 @@ public class P_GroundedState : P_BaseState
         InitializeSubState();
         //_ctx.VertMagnitude = -2f;
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
+        _ctx._pow.AB_canDoubleJump = true;
     }
 
     public override void UpdateState()
