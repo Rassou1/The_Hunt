@@ -260,7 +260,7 @@ public class P_StateManager : MonoBehaviour
         {
             _finalHorMovement = _finalHorMovement.normalized + _stateDirection;
         }
-        _finalMagnitude = (_finalMagnitude + _stateMagnitude + _dashFactor) * 0.5f;
+        _finalMagnitude = (_finalMagnitude + _stateMagnitude) * _dashFactor;
 
         _appliedMovement = CamRelHor(_finalHorMovement);
         _appliedMovement = _appliedMovement.normalized;

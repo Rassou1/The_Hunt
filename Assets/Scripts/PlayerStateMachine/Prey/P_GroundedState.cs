@@ -13,7 +13,7 @@ public class P_GroundedState : P_BaseState
         InitializeSubState();
         //_ctx.VertMagnitude = -2f;
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
-        _ctx._pow.AB_canDoubleJump = true;
+        _ctx._pow.AB_jumpsLeft = _ctx._pow.AB_jumpsTotal;
     }
 
     public override void UpdateState()

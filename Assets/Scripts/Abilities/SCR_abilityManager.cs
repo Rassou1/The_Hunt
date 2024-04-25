@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SCR_abilityManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class SCR_abilityManager : MonoBehaviour
     // All Dash variables
     public bool AB_canDash = true;
 
+    [SerializeField]
     public int AB_dashCharges = 5;
 
     // Start is called before the first frame update
@@ -44,11 +47,12 @@ public class SCR_abilityManager : MonoBehaviour
     {
         if (_ctx.IsDashPressed && _ctx.IsDashReleased && _ctx._pow.AB_dashCharges > 0 && _ctx._pow.AB_canDash)
         {
-            _ctx._dashFactor = 3;
+            _ctx._dashFactor = 15;
+            _ctx._pow.AB_dashCharges--;
         }
         else
         {
-            _ctx._dashFactor = 0;
+            _ctx._dashFactor = 0.5f;
         }
         //Debug.Log($"{_ctx.IsDashPressed} {_ctx.IsDashReleased} {_ctx._pow.AB_dashCharges}");
     }
