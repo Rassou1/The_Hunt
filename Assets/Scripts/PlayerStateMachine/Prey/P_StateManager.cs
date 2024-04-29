@@ -264,7 +264,7 @@ public class P_StateManager : MonoBehaviour
         _finalMagnitude = (_finalMagnitude + _stateMagnitude) * 0.5f;
 
         _appliedMovement = CamRelHor(_finalHorMovement);
-        _appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
+        //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
         

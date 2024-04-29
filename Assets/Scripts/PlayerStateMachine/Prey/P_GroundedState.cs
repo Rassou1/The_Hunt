@@ -17,8 +17,9 @@ public class P_GroundedState : P_BaseState
 
     public override void UpdateState()
     {
-        //_ctx.StateDirection = _ctx.SubStateDirSet;
+        _ctx.StateDirection = _ctx.SubStateDirSet;
         _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
+        _ctx.StateDirection = Vector3.ProjectOnPlane(_ctx.StateDirection, _ctx.SlopeNormal);
         CheckSwitchState();
     }
 
