@@ -1,3 +1,5 @@
+using Alteruna.Scoreboard;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,23 +8,34 @@ using UnityEngine.InputSystem;
 
 public class P_StateManager : MonoBehaviour
 {
+    //private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
     
     
     CapsuleCollider _capsuleCollider;
+    Bounds _bounds;
+    
+    int _maxBounces = 5;
+    float _skindWidth = 0.1f;
+
     LayerMask whatIsGround;
 
+
+
     public float _mouseSens;
-    
-    
+    public float _maxSlopeAngle;
+    public float _softCap;
+    public float _sprintResistance;
+    public float _slideResistance;
 
     int _isWalkingHash;
     int _isSprintingHash;
     int _isFallingHash;
     int _isWallRunningHash;
     int _isSlidingHash;
-
+    int _isClimbingHash;
+    
     P_BaseState _currentState;
     P_StateFactory _states;
 
@@ -35,6 +48,7 @@ public class P_StateManager : MonoBehaviour
 
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
+    public Transform _cameraPostion;
     public Animator _animator;
     //Transform _thisCharacter;
 
@@ -48,20 +62,41 @@ public class P_StateManager : MonoBehaviour
     bool _isSprintPressed;
     bool _isJumpPressed;
     bool _isSlidePressed;
-
-    bool _isGrounded = false;
-    bool _isStuck = false;
-    bool _wallRight = false;
-    bool _wallLeft = false;
-
-
-    float _gravity = -8f;
-    float _groundedGravity = -8f;
-
-    public float _moveSpeed;
-    public float _sprintMultiplier;
     
 
+    bool _isGrounded = false;
+    
+
+
+    //New Stuff
+    Vector3 _slopeNormal;
+    float _slopeAngle;
+    Vector3 _stateDirection;
+    Vector3 _finalHorMovement;
+    
+    float _vertMagnitude;
+    float _gravLerp;
+    float _horMouseMod = 1f;
+    Vector3 _subStateDirSet;
+    Vector3 _relForward;
+
+
+    float _stateMagnitude;
+    float _finalMagnitude;
+    float _actualMagnitude;
+
+    Vector3 _botSphere;
+    Vector3 _topSphere;
+
+    float _gravity = -8f;
+    Vector3 _gravDir = Vector3.down;
+
+
+    PlayerWalking walking;
+
+    public float _moveSpeed;
+    public float climbspeed;
+    public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
@@ -72,12 +107,23 @@ public class P_StateManager : MonoBehaviour
     public int IsWallRunningHash { get { return _isWallRunningHash; } }
     public int IsSlidingHash {  get { return _isSlidingHash; } }
 
+    public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
+    public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
+    
+    public Vector3 SubStateDirSet { get { return _subStateDirSet; } set { _subStateDirSet = value; } }
+    public float VertMagnitude { get { return _vertMagnitude; } set { _vertMagnitude = value; } }
+    public float ActualMagnitude { get { return _actualMagnitude; } }
 
+    public float HorMouseMod { get { return _horMouseMod; } set { _horMouseMod = value; } }
 
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; } }
     public Vector3 CurrentMovement { get { return _currentMovement; } set { _currentMovement = value; } }
     public Vector3 CurrentSprintMovement { get { return _currentSprintMovement; } set { _currentSprintMovement = value; } }
     public Vector3 AppliedMovement {  get { return _appliedMovement; } set { _appliedMovement = value; } }
+    public Vector3 RelForward { get { return _relForward; } }
+
+    public Vector3 BotSphere { get { return _botSphere; } }
+    public Vector3 TopSphere { get { return _topSphere; } }
 
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
@@ -86,6 +132,9 @@ public class P_StateManager : MonoBehaviour
     
     
 
+    public Vector3 SlopeNormal { get { return _slopeNormal; } }
+    public float SlopeAngle { get { return _slopeAngle; } }
+
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsSprintPressed {  get { return _isSprintPressed; } }
     public bool IsJumpPressed { get { return _isJumpPressed; } }
@@ -93,35 +142,41 @@ public class P_StateManager : MonoBehaviour
 
     public bool IsGrounded {  get { return _isGrounded; } }
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
-    public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
 
-    //multiplayer stuff (ask tyron)
-    //private Alteruna.Avatar _avatar;
+    
+    public Vector3 GravDirection { get { return _gravDir; } set { _gravDir = value; } }
+
+    public static P_StateManager Instance { get; internal set; }
+
     //void Start()
     //{
-    //    //multiplayer stuff (ask tyron)
-    //    _avatar = GetComponent<Alteruna.Avatar>();
-    //    if (!_avatar.IsMe)
-    //        return;
+    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
+
     //}
 
 
 
 
-        private void Awake()
+    private void Awake()
     {
 
+        walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         //_rigidbody = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         //_animator = GetComponent<Animator>();
 
+        
+
+        _bounds = _capsuleCollider.bounds;
+        _bounds.Expand(-2 * _skindWidth);
 
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isSprintingHash = Animator.StringToHash("isRunning");
         _isFallingHash = Animator.StringToHash("isFalling");
         _isWallRunningHash = Animator.StringToHash("isWallRunning");
         _isSlidingHash = Animator.StringToHash("isSliding");
+        
 
         //This gets the inputs from the new input system
         _playerInput.PreyControls.Move.started += OnMovementInput;
@@ -133,9 +188,11 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Jump.canceled += OnJump;
         _playerInput.PreyControls.Slide.started += OnSlide;
         _playerInput.PreyControls.Slide.canceled += OnSlide;
+        _playerInput.PreyControls.Slide.performed += OnSlide;
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
+        
 
 
         //setup state
@@ -147,74 +204,223 @@ public class P_StateManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        
+
     }
+
+    
+
 
     void Update()
     {
-        //multiplayer stuff (ask tyron)
+        //Add a Way so a remote avatar still makes sounds
+
         //if (!_avatar.IsMe)
         //    return;
 
-        _isGrounded = Physics.Raycast(_capsuleCollider.transform.position, Vector3.down, 0.3f);
-        //GroundStuck();
-        DetectWall();
 
-        Debug.Log("Right Wall: " + _wallRight);
-        Debug.Log("Left Wall: " + _wallLeft);
+        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        //{
+        //    walking.PlayWalkSound();
+        //}
 
-        _currentState.UpdateStates();
-        SetCameraOrientation();
-        RotateBodyY();
-        RelativeMovement();
-        _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
-    }
+        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        //{
+        //    walking.PlayRunSound();
+        //}
 
-    void GroundStuck()
-    {
-        _isStuck = Physics.Raycast(_capsuleCollider.transform.position + new Vector3(0, 1, 0), Vector3.down, 1f);
-        if (_isStuck)
-        {
-            _rigidbody.transform.position += new Vector3(0, 0.1f, 0);
-        }
-    }
-    
-
-    void DetectWall()
-    {
-
-        //The direction isn't correct yet, but it's getting there...
-        _wallRight = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.right, new Vector3(_mouseRotationX, _mouseRotationY, 0f)), 0.3f);
-        _wallLeft = Physics.CapsuleCast(_capsuleCollider.transform.position + new Vector3(0, .5f, 0), _capsuleCollider.transform.position + new Vector3(0, 2.5f, 0), 0.25f, Vector3.Scale(Vector3.left, new Vector3(_mouseRotationX, _mouseRotationY)), 0.3f);
-
-
-    }
-
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == _capsuleCollider.gameObject)
-        {
-            return;
-        }
-        _isGrounded = true;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == _capsuleCollider.gameObject)
-        {
-            return;
-        }
-        _isGrounded = false;
-    }
-
-    void RelativeMovement()
-    {
-        float preRelativeY = _appliedMovement.y;
+        //Debug.Log("Right Wall: " + _wallRight);
+        //Debug.Log("Left Wall: " + _wallLeft);
+        _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
+        _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
+        GroundCheck();
         
-        _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
-        _appliedMovement.y = preRelativeY;
-        Debug.Log("applied movement final: " + _appliedMovement);
+        SetCameraOrientation();
+        
+        RotateBodyY();
+        _relForward = CamRelHor(Vector3.forward);
+        //SlopeRelative();
+        Vector3 testRelForward = _relForward;
+        //testRelForward = Quaternion.AngleAxis(Quaternion.Angle(Quaternion.FromToRotation(testRelForward, _slopeNormal), testRelForward) , testRelForward) ;
+
+        //NEED TO ROTATE THE Y AXIS OF THE MOVEMENT TO THE Y AXIS OF THE SLOPE
+        //transform.rotation = Quaternion.Euler(0, y, 0);
+        //testRelForward = Quaternion.FromToRotation(_relForward, _slopeNormal);
+
+        //_rigidbody.transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, _slopeNormal);
+
+        Debug.Log("Orientation rotation: " + transform.rotation.eulerAngles);
+        Debug.Log("Slope normal: " + _slopeNormal);
+
+        //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
+        
+        _currentState.UpdateStates();
+
+        if (_stateDirection != Vector3.zero)
+        {
+            _finalHorMovement = _finalHorMovement.normalized + _stateDirection;
+        }
+
+        _finalMagnitude = (_finalMagnitude + _stateMagnitude) * 0.5f;
+
+        _appliedMovement = CamRelHor(_finalHorMovement);
+        //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
+        _appliedMovement = _appliedMovement.normalized;
+        _appliedMovement *= _finalMagnitude;
+        
+        _actualMagnitude = _finalMagnitude;
+        
+        _appliedMovement *= Time.deltaTime;
+        //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
+        Vector3 tempTestVect = _appliedMovement;
+        _appliedMovement = CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
+        _appliedMovement += CollideAndSlide(tempTestVect, _capsuleCollider.transform.position + _appliedMovement, 0, false, tempTestVect);
+        
+        
+        _rigidbody.transform.position += _appliedMovement;
+
+        //Debug.Log("Grounded: " + _isGrounded);
+        //Debug.Log("VertMagnitude: " + _vertMagnitude);
+        //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
+        //CheckClimbingState();
+    }
+
+
+    //This function is based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
+    Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
+    {
+        
+        //Debug.Log("StartPos: " + startPos);
+        //Debug.Log("BotSphere: " + botSphere);
+        //Debug.Log("TopSphere: " + topSphere);
+        if (depth >= _maxBounces)
+        {
+            return Vector3.zero;
+        }
+        float dist = vel.magnitude + _skindWidth;
+        RaycastHit hit;
+        //Debug.Log("Direction: " + vel.normalized);
+        //Debug.Log("Distance: " + dist);
+
+        
+
+        if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
+        {
+            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
+            Vector3 leftover = vel - snapToSurface;
+            
+            
+
+            float angle = Vector3.Angle(transform.up, hit.normal);  //Make this relative to your current alignment
+
+            if (snapToSurface.magnitude <= _skindWidth)
+            {
+                snapToSurface = Vector3.zero;
+            }
+
+            if (angle <= _maxSlopeAngle) //Normal ground / slope
+            {
+                if (gravityPass)
+                {
+                    return snapToSurface;
+                }
+                leftover = ProjectAndScale(leftover, hit.normal);
+            }
+            else //Wall or steep slope
+            {
+                float scale = 1 - Vector3.Dot(new Vector3(hit.normal.x, 0, hit.normal.z).normalized, -new Vector3(velInit.x, 0, velInit.z).normalized);
+                
+                if (_isGrounded && !gravityPass)
+                {
+                    leftover = ProjectAndScale(new Vector3(leftover.x, 0, leftover.z), new Vector3(hit.normal.x, 0, hit.normal.z))/*.normalized*/;
+                    leftover *= scale;
+                }
+                else
+                {
+                    leftover = ProjectAndScale(leftover, hit.normal) * scale;
+                }
+            }
+
+            return snapToSurface + CollideAndSlide(leftover, startPos + snapToSurface, depth + 1, gravityPass, velInit);
+        }
+
+        return vel;
+    }
+    //Part of CollideAndSlide
+    Vector3 ProjectAndScale(Vector3 vec, Vector3 normal)
+    {
+        float magnitude = vec.magnitude;
+        vec = Vector3.ProjectOnPlane(vec, normal).normalized;
+        vec *= magnitude;
+        return vec;
+    }
+
+
+    void GroundCheck()
+    {
+        
+        RaycastHit hit;
+        Physics.SphereCast(_botSphere, _bounds.extents.x, Vector3.down, out hit, _capsuleCollider.radius + 0.01f);
+        if (hit.transform != null && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
+        {
+            _isGrounded = true;
+            _slopeNormal = hit.normal;
+            _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
+            
+        }
+        else
+        {
+            _isGrounded = false;
+            _slopeNormal = Vector3.zero;
+            _slopeAngle = 0f;
+        }
+    }
+
+
+
+
+    //Replaced by CamRelHor
+    //void RelativeMovement()
+    //{
+    //    float preRelativeY = _appliedMovement.y;
+    //    _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
+    //    _appliedMovement.y = preRelativeY;
+    //}
+
+
+    Vector3 testForward;
+    Vector3 testRight;
+
+    void SlopeRelative()
+    {
+        testForward = _moveForward;
+        testRight = _moveRight;
+        
+        
+    }
+
+    void RotateToSlope()
+    {
+        Vector3 testForward;
+        Vector3 testRight;
+
+    }
+
+    Vector3 TestCamRel(Vector3 input)
+    {
+        Vector3 camRelativeHor;
+        //input = new Vector3(input.x, 0, input.z);
+        camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x + _slopeNormal * input.y;
+        return camRelativeHor;
+    }
+
+
+    Vector3 CamRelHor(Vector3 input)
+    {
+        Vector3 camRelativeHor;
+        input = new Vector3(input.x, 0, input.z);
+        camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x;
+        return camRelativeHor;
     }
 
     void OnJump(InputAction.CallbackContext context)
@@ -233,22 +439,21 @@ public class P_StateManager : MonoBehaviour
     }
 
 
+    
+
+
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
-        _currentMovement.x = _currentMovementInput.x * _moveSpeed;
-        _currentMovement.z = _currentMovementInput.y * _moveSpeed;
-        _currentSprintMovement.x = _currentMovement.x * _sprintMultiplier;
-        _currentSprintMovement.z = _currentMovement.y * _sprintMultiplier;  //We set z=y here since we're getting a Vector2 as the input and z is sideways in Vector3
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
-        Debug.Log("Current movement in input: " + _currentMovement);
+        
     }
 
     void OnLookInput(InputAction.CallbackContext context)
     {
         _currentLookInput = context.ReadValue<Vector2>();
         _mouseRotationX -= _currentLookInput.y * Time.deltaTime * _mouseSens;
-        _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens;
+        _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens * _horMouseMod;
         _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f);
     }
 
@@ -261,18 +466,28 @@ public class P_StateManager : MonoBehaviour
         _moveRight.y = 0;
     }
 
+
+
     void RotateBodyY()
     {
         //Will add some kind of "only rotate when angle above x or moving" if case when i understand Quaternions
         var forward = _cameraOrientation.forward;
         forward.y = 0;
-        _rigidbody.transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
+        _rigidbody.transform.rotation = Quaternion.LookRotation(forward, _rigidbody.transform.up);
     }
 
-    void CheckGrounded()
+
+
+    //Will be used to rotate the orientation of the rigidbody to allow us to switch the direction of gravity
+    void RotateBodyXZ()
     {
-        
+        var forward = _cameraOrientation.forward;
+
+        //_rigidbody.transform.rotation = 
     }
+    
+    
+    
 
     //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
     IEnumerator WallRunBuffer()
@@ -282,15 +497,7 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-    void CalculateMomentumGrounded()
-    {
-        //Switch name to just "CalculateMomentum" if we remove CalculateMomentumAir
-    }
-
-    void CalculateMomentumAir()
-    {
-        //If we want to calculate momentum in the air in an entierly different way. If we're just switching the values of some numbers we can remove this and just change the numbers using the P_InAirState script
-    }
+   
 
 
     void OnEnable()
@@ -304,10 +511,4 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-
-    public void SwitchState(P_BaseState state)
-    {
-        _currentState = state;
-        state.EnterState();
-    }
 }

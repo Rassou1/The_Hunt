@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4245008704514712}
   - component: {fileID: 33049867654296072}
   - component: {fileID: 23227177273163202}
+  - component: {fileID: 95083309674306073}
   m_Layer: 0
   m_Name: PTK_Ladder_Large
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &95083309674306073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364681191018424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e6ead0e24f43d438b510ecd7f5fe49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

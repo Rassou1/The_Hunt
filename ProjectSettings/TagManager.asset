@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - baseGround
+  - NetworkManager
+  - groundRock
+  - groundGrass
+  - groundMetal
+  - groundTile
+  - 'Collactable '
   layers:
   - Default
   - TransparentFX
@@ -14,11 +20,11 @@ TagManager:
   - UI
   - Hunter
   - Prey
-  - 
+  - keypadUI
   - 
   - whatIsGround
   - _groundMask
-  - 
+  - Ladder
   - 
   - 
   - 

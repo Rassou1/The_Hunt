@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class P_WalkingState : P_BaseState
 {
+    float lerpTime;
     public P_WalkingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
 
@@ -12,13 +13,15 @@ public class P_WalkingState : P_BaseState
     {
         _ctx.Animator.SetBool(_ctx.IsWalkingHash, true);
         _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
+        lerpTime = 0f;
     }
 
     public override void UpdateState()
     {
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * _ctx._moveSpeed;
-        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * _ctx._moveSpeed;
-        //Debug.Log("Current movement in walk: " + _ctx.CurrentMovement);
+        
+        _ctx.StateMagnitude = Mathf.Lerp(_ctx.ActualMagnitude, _ctx._moveSpeed, lerpTime);
+        lerpTime += Time.deltaTime;
+
         CheckSwitchState();
     }
 
@@ -29,10 +32,10 @@ public class P_WalkingState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        //if (_ctx.IsSlidePressed)
-        //{
-        //    SwitchState(_factory.Slide());
-        //}
+        if (_ctx.IsSlidePressed)
+        {
+            SwitchState(_factory.Slide());
+        }
         if (!_ctx.IsMovementPressed)
         {
             SwitchState(_factory.Idle());
@@ -41,12 +44,13 @@ public class P_WalkingState : P_BaseState
         {
             SwitchState(_factory.Run());
         }
+        
 
     }
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 
 }

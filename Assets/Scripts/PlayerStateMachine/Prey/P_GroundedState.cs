@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class P_GroundedState : P_BaseState
 {
+    
     public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
         IsRootState = true;
@@ -10,17 +11,15 @@ public class P_GroundedState : P_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        //_ctx.CurrentMovementY = _ctx.GroundedGravity;
-        //_ctx.AppliedMovementY = _ctx.GroundedGravity;
-
-        _ctx.CurrentMovementY = 0f;
-        _ctx.AppliedMovementY = 0f;
-
+        _ctx.VertMagnitude = -2f;
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
 
     public override void UpdateState()
     {
+        _ctx.StateDirection = _ctx.SubStateDirSet;
+        _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
+        _ctx.StateDirection = Vector3.ProjectOnPlane(_ctx.StateDirection, _ctx.SlopeNormal);
         CheckSwitchState();
     }
 
@@ -32,7 +31,11 @@ public class P_GroundedState : P_BaseState
 
     public override void InitializeSubState()
     {
-        if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
+        if (_ctx.IsSlidePressed)
+        {
+            SetSubState(_factory.Slide());
+        }
+        else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
         }
@@ -40,7 +43,6 @@ public class P_GroundedState : P_BaseState
         {
             SetSubState(_factory.Run());
         }
-        //else if (wallrunning) -> wallrun
         else
         {
             SetSubState(_factory.Idle());
@@ -52,13 +54,14 @@ public class P_GroundedState : P_BaseState
     {
         if (_ctx.IsJumpPressed)
         {
-            _ctx.CurrentMovementY += 5;
-            _ctx.AppliedMovementY += 5;
+            _ctx.VertMagnitude = 6f;
             SwitchState(_factory.Air());
         }
         else if (!_ctx.IsGrounded)
         {
+            
             SwitchState(_factory.Air());
+            //_ctx.VertMagnitude = -8f;
         }
         
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,18 +26,21 @@ public class PlayerMovement : MonoBehaviour
     private float lastDesiredMoveSpeed;
     public float slideSpeed;
     public bool sliding;
-
+    public float climbSpeed;
     public float wallrunSpeed;
     public bool wallrunning;
+    public bool climbing;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.C;
+    public KeyCode climbkey = KeyCode.E;
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
+    public LayerMask Ladder;
     bool grounded;
 
     [Header("Slope")]
@@ -64,7 +68,8 @@ public class PlayerMovement : MonoBehaviour
         wallrunning,
         crouching,
         sliding,
-        air
+        air,
+        climbing
     }
 
     private void Start()
@@ -100,6 +105,17 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.drag = 0; //drag in air here, 0 for now
         }
+
+        //if (climbing)
+        //{
+        //    // Kör klättringsfunktioner här
+        //    Climb();
+        //}
+        //else
+        //{
+        //    // Kör vanliga rörelsefunktioner här
+        //    RegularMovement();
+        //}
     }
 
     private void FixedUpdate()
@@ -115,6 +131,12 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         //jump
+        if (climbing)
+        {
+            state = MovementState.climbing;
+            desiredMoveSpeed = climbSpeed;
+        }
+
         if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
@@ -133,7 +155,14 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
-
+        if (Input.GetKeyDown(climbkey))
+        {
+            climbing = true;
+        }
+        //else if (Input.GetKeyUp(climbkey))
+        //{
+        //    climbing = false;
+        //}
     }
 
     private void MovePlayer()
@@ -215,7 +244,12 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
         }
-
+        //else if (climbing && Input.GetKey(climbkey) )// Lägger till en kontroll för klättringsstatus
+        //{
+        //    // Klättrar om klättringsstatus är satt
+        //    state = MovementState.climbing;
+        //    desiredMoveSpeed = climbSpeed;
+        //}
 
         //else
         else 
@@ -320,6 +354,49 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public float getMoveSpeed() { return moveSpeed; }
-    
 
+    void Climb()
+    {
+        // Implementera klättringsfunktioner här
+        // Exempel:
+        Vector3 climbInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
+        Vector3 climbVelocity = climbInput * climbSpeed * Time.deltaTime;
+        rb.MovePosition(transform.position + climbVelocity);
+    }
+
+    void RegularMovement()
+    {
+        // Implementera vanliga rörelsefunktioner här
+        // Exempel:
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        Vector3 moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        if (grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
+        else if (!grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+
+        // Övrig rörelselogik...
+    }
+
+    // Övriga funktioner...
+
+    public void StartClimbing()
+    {
+        climbing = true;
+        // Eventuell annan logik vid start av klättring...
+    }
+
+    public void StopClimbing()
+    {
+        climbing = false;
+        // Eventuell annan logik vid slut av klättring...
+    }
 }
+

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class P_IdleState : P_BaseState
 {
+    float lerpTime;
     public P_IdleState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
 
@@ -11,14 +12,15 @@ public class P_IdleState : P_BaseState
     {
         _ctx.Animator.SetBool(_ctx.IsWalkingHash, false);
         _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
-        _ctx.AppliedMovementX = 0f;
-        _ctx.AppliedMovementZ = 0f;
+        lerpTime = 0f;
     }
 
 
 
     public override void UpdateState()
     {
+        _ctx.StateMagnitude = Mathf.Lerp(_ctx.ActualMagnitude, 0, lerpTime);
+        lerpTime += Time.deltaTime;
         CheckSwitchState();
     }
 
@@ -29,7 +31,11 @@ public class P_IdleState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
+        if (_ctx.IsSlidePressed)
+        {
+            SwitchState(_factory.Slide());
+        }
+        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
         {
             SwitchState(_factory.Run());
         }
@@ -41,6 +47,6 @@ public class P_IdleState : P_BaseState
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 }
