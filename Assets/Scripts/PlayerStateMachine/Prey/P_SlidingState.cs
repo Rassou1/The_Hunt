@@ -4,6 +4,7 @@ public class P_SlidingState : P_BaseState
 {
 
     float totalMagnitude;
+    
 
     public P_SlidingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
@@ -12,9 +13,11 @@ public class P_SlidingState : P_BaseState
 
     public override void EnterState()
     {
+        _ctx._cameraPostion.transform.position -= new Vector3(0, 0.8f, 0);
         //IgnoreCollision(this, hunter, true)
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
         _ctx.HorMouseMod = 0.2f;
+        _ctx.Animator.SetBool(_ctx.IsSlidingHash, true);
     }
 
     public override void UpdateState()
@@ -61,8 +64,10 @@ public class P_SlidingState : P_BaseState
     public override void ExitState()
     {
         //IgnoreCollision(this, hunter, false)
+        _ctx._cameraPostion.transform.position += new Vector3(0, 0.8f, 0);
         _ctx.SubStateDirSet = new Vector3(0, 0, 0);
         _ctx.HorMouseMod = 1f;
+        _ctx.Animator.SetBool(_ctx.IsSlidingHash, false);
     }
 
     public override void CheckSwitchState()
