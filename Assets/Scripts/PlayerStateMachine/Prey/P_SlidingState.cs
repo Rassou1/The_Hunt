@@ -18,13 +18,12 @@ public class P_SlidingState : P_BaseState
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
         _ctx.HorMouseMod = 0.2f;
         _ctx.Animator.SetBool(_ctx.IsSlidingHash, true);
+        
     }
 
     public override void UpdateState()
     {
         totalMagnitude = _ctx.ActualMagnitude;
-
-        
         if (_ctx.SlopeAngle < 0)
         {
             _ctx.StateMagnitude = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
