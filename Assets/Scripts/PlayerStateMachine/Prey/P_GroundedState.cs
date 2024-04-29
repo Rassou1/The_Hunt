@@ -11,13 +11,13 @@ public class P_GroundedState : P_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        //_ctx.VertMagnitude = -2f;
+        _ctx.VertMagnitude = -2f;
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
     }
 
     public override void UpdateState()
     {
-        _ctx.StateDirection = _ctx.SubStateDirSet;
+        //_ctx.StateDirection = _ctx.SubStateDirSet;
         _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
         CheckSwitchState();
     }

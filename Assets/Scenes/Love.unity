@@ -7394,6 +7394,7 @@ MonoBehaviour:
   _slideResistance: 2
   _rigidbody: {fileID: 7917244563619864831}
   _cameraOrientation: {fileID: 4700896237555488221}
+  _cameraPostion: {fileID: 2651855497273961314}
   _animator: {fileID: 3388934465044431131}
   _moveSpeed: 4
   climbspeed: 0

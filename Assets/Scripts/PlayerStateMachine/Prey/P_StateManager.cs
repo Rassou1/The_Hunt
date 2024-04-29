@@ -17,7 +17,7 @@ public class P_StateManager : MonoBehaviour
     Bounds _bounds;
     
     int _maxBounces = 5;
-    float _skindWidth = 0.01f;
+    float _skindWidth = 0.1f;
 
     LayerMask whatIsGround;
 
@@ -48,6 +48,7 @@ public class P_StateManager : MonoBehaviour
 
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
+    public Transform _cameraPostion;
     public Animator _animator;
     //Transform _thisCharacter;
 
@@ -88,6 +89,7 @@ public class P_StateManager : MonoBehaviour
     Vector3 _topSphere;
 
     float _gravity = -8f;
+    Vector3 _gravDir = Vector3.down;
 
 
     PlayerWalking walking;
@@ -142,6 +144,7 @@ public class P_StateManager : MonoBehaviour
     public float Gravity { get { return _gravity; } set { _gravity = value; } }
 
     
+    public Vector3 GravDirection { get { return _gravDir; } set { _gravDir = value; } }
 
     public static P_StateManager Instance { get; internal set; }
 
@@ -244,13 +247,13 @@ public class P_StateManager : MonoBehaviour
         //transform.rotation = Quaternion.Euler(0, y, 0);
         //testRelForward = Quaternion.FromToRotation(_relForward, _slopeNormal);
 
-        transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, _slopeNormal);
+        //_rigidbody.transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, _slopeNormal);
+
         Debug.Log("Orientation rotation: " + transform.rotation.eulerAngles);
         Debug.Log("Slope normal: " + _slopeNormal);
 
         //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
-        Debug.DrawRay(_cameraOrientation.position - new Vector3(0,0.2f,0), _slopeNormal, Color.blue, Time.deltaTime);
-        Debug.DrawRay(_cameraOrientation.position - new Vector3(0, 0.2f, 0), testRight, Color.green, Time.deltaTime);
+        
         _currentState.UpdateStates();
 
         if (_stateDirection != Vector3.zero)
@@ -261,6 +264,7 @@ public class P_StateManager : MonoBehaviour
         _finalMagnitude = (_finalMagnitude + _stateMagnitude) * 0.5f;
 
         _appliedMovement = CamRelHor(_finalHorMovement);
+        _appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
         
@@ -269,7 +273,7 @@ public class P_StateManager : MonoBehaviour
         _appliedMovement *= Time.deltaTime;
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
         Vector3 tempTestVect = _appliedMovement;
-        _appliedMovement = CollideAndSlide(new Vector3(0, _vertMagnitude, 0) * Time.deltaTime, _capsuleCollider.transform.position, 0, true, new Vector3(0, _vertMagnitude, 0) * Time.deltaTime);
+        _appliedMovement = CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
         _appliedMovement += CollideAndSlide(tempTestVect, _capsuleCollider.transform.position + _appliedMovement, 0, false, tempTestVect);
         
         
@@ -297,14 +301,15 @@ public class P_StateManager : MonoBehaviour
         RaycastHit hit;
         //Debug.Log("Direction: " + vel.normalized);
         //Debug.Log("Distance: " + dist);
+
         
-        
+
         if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
         {
             Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
             Vector3 leftover = vel - snapToSurface;
-
-            Debug.DrawLine(hit.point, hit.normal);
+            
+            
 
             float angle = Vector3.Angle(transform.up, hit.normal);  //Make this relative to your current alignment
 
@@ -432,6 +437,8 @@ public class P_StateManager : MonoBehaviour
     {
         _isSlidePressed = context.ReadValueAsButton();
     }
+
+
     
 
 
