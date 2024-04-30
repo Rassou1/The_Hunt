@@ -7,7 +7,7 @@ public class CollectItems : MonoBehaviour
     [SerializeField] private Animator Dooranim;
     public GameObject Diamonds;
     private static int diamondsCollected = 0;  // diamonds counter
-    private int requiredDiamonds = 2;   // Required diamonds to open the door
+    private int requiredDiamonds = 4;   // Required diamonds to open the door
     private bool isCollected = false;
 
     void Start()
