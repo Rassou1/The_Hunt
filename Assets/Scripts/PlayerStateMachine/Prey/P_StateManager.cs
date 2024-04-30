@@ -149,6 +149,8 @@ public class P_StateManager : MonoBehaviour
 
     public static P_StateManager Instance { get; internal set; }
 
+    public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
+
     //void Start()
     //{
     //    _avatar = GetComponentInParent<Alteruna.Avatar>();
