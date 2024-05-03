@@ -29,16 +29,16 @@ public class P_ClimbingState : P_BaseState
     {
         if (cl.isTouchingLadder)
         {
-            Vector3 climbVelocity = Vector3.up * 5f; // Örneğin saniyede 5 birim yukarı
+            Vector3 climbVelocity = Vector3.up * 5f; 
             _ctx.Rigidbody.MovePosition(_ctx.Rigidbody.position + climbVelocity * Time.deltaTime);
             Debug.Log("Climbing... Current position: " + _ctx.Rigidbody.position);
             CheckSwitchState();
             //Vector3 climbDirection = Vector3.up * 5f; // Tırmanma hızını ayarlayın
             //_ctx.Rigidbody.MovePosition(_ctx.Rigidbody.position + climbDirection * Time.deltaTime);
-            //Vector3 climbDirection = Vector3.up * 5f; // Yukarı yön, hızı ayarlayabilirsiniz.
+            //Vector3 climbDirection = Vector3.up * 5f; 
             //_ctx.StateDirection = climbDirection;
 
-            //// Rigidbody'i kullanarak karakterin pozisyonunu güncelleyin
+        
             //_ctx.Rigidbody.MovePosition(_ctx.Rigidbody.position + _ctx.StateDirection * Time.deltaTime);
             //Debug.Log("Is in climb: " + climbDirection);
             //Debug.Log("gravity: " + _ctx.Gravity);
