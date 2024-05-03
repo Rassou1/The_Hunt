@@ -4,7 +4,7 @@ using UnityEngine;
 public class P_InAirState : P_BaseState
 {
 
-    
+    Vector3 direction;
 
     public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
@@ -20,11 +20,12 @@ public class P_InAirState : P_BaseState
 
     public override void UpdateState()
     {
-        _ctx.StateDirection = _ctx.SubStateDirSet;
-        _ctx.StateDirection += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
-        _ctx.StateDirection *= 0.5f;
-        _ctx.VertMagnitude -= 8f * Time.deltaTime;
         CheckSwitchState();
+        direction = _ctx.AppliedMovement;
+        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
+        //direction *= 0.5f;
+        _ctx.StateDirection = direction;
+        _ctx.VertMagnitude -= 10f * Time.deltaTime;
     }
 
     public override void ExitState()
@@ -38,10 +39,7 @@ public class P_InAirState : P_BaseState
         {
             SwitchState(_factory.Ground());
         }
-        else if (_ctx.IsClimbingPressed)
-        {
-            SwitchState(_factory.Climb());
-        }
+        
     }
 
     public override void InitializeSubState()

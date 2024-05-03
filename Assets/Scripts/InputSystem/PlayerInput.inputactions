@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CarryItem",
+                    "type": "Button",
+                    "id": "ecaa6f12-8fda-4e4b-bed9-2011c7c25d4e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -199,6 +208,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ce84c56-4911-45f8-acdf-04e84dfe355b",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CarryItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
