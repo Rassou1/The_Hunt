@@ -5,6 +5,8 @@ using Alteruna;
     interface IInteractable
     {
         public void Interact(GameObject interactor, Alteruna.Avatar interactorAvatar);
+        
+        
         public GameObject GiveObject();
     }
 
@@ -15,6 +17,7 @@ public class interacter : MonoBehaviour
 
 
     public GameObject InteractorCam;
+    public GameObject roleGiver;
 
     public Transform InteractorSource;
     public float InteractRange;
@@ -37,9 +40,12 @@ public class interacter : MonoBehaviour
             {
                 IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
+
                 if (interactObj != null)//check not me
                 {
                     interactObj.Interact(gameObject,_avatar);
+                    roleGiver.GetComponentInParent<RoleGiver>().Tag(gameObject, interactObj.GiveObject());
+
                     Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
                 }
                 else
