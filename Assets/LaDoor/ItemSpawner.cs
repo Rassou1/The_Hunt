@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,8 +21,10 @@ public class ItemSpawner : MonoBehaviour
     // Update is called once per frame
     void RandomizeItem()
     {
-        Vector3 randpos = new Vector3(Random.Range(-iXspread, iXspread), Random.Range(-iYspread,iYspread), Random.Range(-iZspread, iZspread));
-        GameObject clone = Instantiate(items, randpos, Quaternion.identity);
-        clone.transform.localScale = items.transform.localScale; // Orijinal �l�e?i koruyun
+        Vector3 randPos = new Vector3(Random.Range(-iXspread, iXspread), Random.Range(-iYspread, iYspread), Random.Range(-iZspread, iZspread));
+        GameObject clone = Instantiate(items, randPos, Quaternion.identity);
+        clone.SetActive(true);
+        //clone.transform.localScale = new Vector3(1f, 1f, 1f); // Tüm objeler için sabit bir ölçek değeri ayarla
+        //clone.SetActive(false);
     }
 }

@@ -400,15 +400,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6605274746566338901, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -252.6
+      value: 59
       objectReference: {fileID: 0}
     - target: {fileID: 6605274746566338901, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1344.6
+      value: -52
       objectReference: {fileID: 0}
     - target: {fileID: 6605274746566338901, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1618.3
+      value: 313
       objectReference: {fileID: 0}
     - target: {fileID: 6605274746566338901, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -579,6 +579,7 @@ MonoBehaviour:
   _slideResistance: 2
   _rigidbody: {fileID: 1497250372971384116}
   _cameraOrientation: {fileID: 4045374355579123734}
+  _cameraPostion: {fileID: 0}
   _animator: {fileID: 6205704390062304464}
   _moveSpeed: 4
   climbspeed: 0

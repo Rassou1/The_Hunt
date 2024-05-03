@@ -46,7 +46,7 @@ public class P_ClimbingState : P_BaseState
             ////_ctx.StateDirection = new Vector3(0, 5f, 0).normalized;
             ///
             Debug.Log("Is in climb" + _ctx.StateDirection);
-            Debug.Log("gravity" + _ctx.Gravity);
+            Debug.Log("gravity" + _ctx.Rigidbody.useGravity);
             //CheckSwitchState();
             //if (_ctx._IsClimbPressed)
             //{
