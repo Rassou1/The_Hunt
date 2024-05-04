@@ -4,6 +4,8 @@ using UnityEngine;
 using Alteruna;
 public class RoleGiver: AttributesSync,IInteractable
 {
+
+    public GameObject hunterc;
     public GameObject GiveObject()
     {
         throw new System.NotImplementedException();
@@ -32,6 +34,12 @@ public class RoleGiver: AttributesSync,IInteractable
                 }
             }
         }
+    }
+
+    public void Tag(GameObject tagger, GameObject tagged) 
+    {
+        tagged.transform.position = new Vector3(63.7f, 10.58f, -17.28f);
+
     }
 
     void Start()

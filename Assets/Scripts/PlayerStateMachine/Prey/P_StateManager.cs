@@ -2,6 +2,7 @@ using Alteruna.Scoreboard;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,7 +18,7 @@ public class P_StateManager : MonoBehaviour
     Bounds _bounds;
     
     int _maxBounces = 5;
-    float _skindWidth = 0.1f;
+    float _skindWidth = 0.05f;
 
     LayerMask whatIsGround;
 
@@ -71,9 +72,11 @@ public class P_StateManager : MonoBehaviour
     //New Stuff
     Vector3 _slopeNormal;
     float _slopeAngle;
+    float _realSlopeAngle;
     Vector3 _stateDirection;
     Vector3 _finalHorMovement;
-    
+    Vector3 _preCollideMovement;
+
     float _vertMagnitude;
     float _gravLerp;
     float _horMouseMod = 1f;
@@ -88,7 +91,6 @@ public class P_StateManager : MonoBehaviour
     Vector3 _botSphere;
     Vector3 _topSphere;
 
-    float _gravity = -8f;
     Vector3 _gravDir = Vector3.down;
 
 
@@ -112,7 +114,7 @@ public class P_StateManager : MonoBehaviour
     
     public Vector3 SubStateDirSet { get { return _subStateDirSet; } set { _subStateDirSet = value; } }
     public float VertMagnitude { get { return _vertMagnitude; } set { _vertMagnitude = value; } }
-    public float ActualMagnitude { get { return _actualMagnitude; } }
+    public float ActualMagnitude { get { return _actualMagnitude; } set { _actualMagnitude = value; } }
 
     public float HorMouseMod { get { return _horMouseMod; } set { _horMouseMod = value; } }
 
@@ -140,13 +142,14 @@ public class P_StateManager : MonoBehaviour
     public bool IsJumpPressed { get { return _isJumpPressed; } }
     public bool IsSlidePressed { get { return _isSlidePressed; } }
 
-    public bool IsGrounded {  get { return _isGrounded; } }
-    public float Gravity { get { return _gravity; } set { _gravity = value; } }
+    public bool IsGrounded {  get { return _isGrounded; } set { _isGrounded = value; } }
 
     
     public Vector3 GravDirection { get { return _gravDir; } set { _gravDir = value; } }
 
     public static P_StateManager Instance { get; internal set; }
+
+    public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
 
     //void Start()
     //{
@@ -240,43 +243,39 @@ public class P_StateManager : MonoBehaviour
         RotateBodyY();
         _relForward = CamRelHor(Vector3.forward);
         //SlopeRelative();
-        Vector3 testRelForward = _relForward;
         //testRelForward = Quaternion.AngleAxis(Quaternion.Angle(Quaternion.FromToRotation(testRelForward, _slopeNormal), testRelForward) , testRelForward) ;
 
         //NEED TO ROTATE THE Y AXIS OF THE MOVEMENT TO THE Y AXIS OF THE SLOPE
         //transform.rotation = Quaternion.Euler(0, y, 0);
         //testRelForward = Quaternion.FromToRotation(_relForward, _slopeNormal);
 
-        //_rigidbody.transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, _slopeNormal);
-
-        Debug.Log("Orientation rotation: " + transform.rotation.eulerAngles);
-        Debug.Log("Slope normal: " + _slopeNormal);
+        
+        //Debug.Log("Slope normal: " + _slopeNormal);
 
         //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
         
         _currentState.UpdateStates();
 
-        if (_stateDirection != Vector3.zero)
-        {
-            _finalHorMovement = _finalHorMovement.normalized + _stateDirection;
-        }
+        
 
-        _finalMagnitude = (_finalMagnitude + _stateMagnitude) * 0.5f;
-
-        _appliedMovement = CamRelHor(_finalHorMovement);
+        _finalMagnitude = _stateMagnitude;
+        
+        Debug.DrawRay(_rigidbody.transform.position, _stateDirection, Color.green, Time.deltaTime);
+        _appliedMovement = CamRelHor(_stateDirection);
         //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
         
         _actualMagnitude = _finalMagnitude;
-        
+        Debug.Log("SlopeAngle: " + _realSlopeAngle);
         _appliedMovement *= Time.deltaTime;
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
-        Vector3 tempTestVect = _appliedMovement;
-        _appliedMovement = CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
-        _appliedMovement += CollideAndSlide(tempTestVect, _capsuleCollider.transform.position + _appliedMovement, 0, false, tempTestVect);
         
-        
+        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
+        _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+        _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
+        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
+
         _rigidbody.transform.position += _appliedMovement;
 
         //Debug.Log("Grounded: " + _isGrounded);
@@ -306,7 +305,7 @@ public class P_StateManager : MonoBehaviour
 
         if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
         {
-            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
+            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth * 2f);
             Vector3 leftover = vel - snapToSurface;
             
             
@@ -317,7 +316,7 @@ public class P_StateManager : MonoBehaviour
             {
                 snapToSurface = Vector3.zero;
             }
-
+            
             if (angle <= _maxSlopeAngle) //Normal ground / slope
             {
                 if (gravityPass)
@@ -358,26 +357,30 @@ public class P_StateManager : MonoBehaviour
 
     void GroundCheck()
     {
-        
         RaycastHit hit;
-        Physics.SphereCast(_botSphere, _bounds.extents.x, Vector3.down, out hit, _capsuleCollider.radius + 0.01f);
+        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _capsuleCollider.radius + 0.05f);
         if (hit.transform != null && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
         {
             _isGrounded = true;
             _slopeNormal = hit.normal;
             _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
-            
+            _realSlopeAngle = Vector3.Angle(-_gravDir, _slopeNormal);
         }
         else
         {
             _isGrounded = false;
             _slopeNormal = Vector3.zero;
             _slopeAngle = 0f;
+            //_realSlopeAngle = 0f;
         }
     }
 
 
-
+    public Vector3 AlignToSlope(Vector3 inputDirection)
+    {
+        var slopeRotation = Quaternion.AngleAxis(_slopeAngle, Vector3.right);
+        return slopeRotation * inputDirection;
+    }
 
     //Replaced by CamRelHor
     //void RelativeMovement()
@@ -418,8 +421,9 @@ public class P_StateManager : MonoBehaviour
     Vector3 CamRelHor(Vector3 input)
     {
         Vector3 camRelativeHor;
-        input = new Vector3(input.x, 0, input.z);
+        //input = new Vector3(input.x, 0, input.z);
         camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x;
+        camRelativeHor = camRelativeHor + new Vector3(0,input.y,0);
         return camRelativeHor;
     }
 
