@@ -98,6 +98,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""bcab9862-6af7-424a-85d3-9aae151767b2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -241,6 +250,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CarryItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""405c7b55-5b8d-45ba-bbf2-91505c60ba9c"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -391,6 +411,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PreyControls_Reset = m_PreyControls.FindAction("Reset", throwIfNotFound: true);
         m_PreyControls_Climb = m_PreyControls.FindAction("Climb", throwIfNotFound: true);
         m_PreyControls_CarryItem = m_PreyControls.FindAction("CarryItem", throwIfNotFound: true);
+        m_PreyControls_Dash = m_PreyControls.FindAction("Dash", throwIfNotFound: true);
         // HunterControls
         m_HunterControls = asset.FindActionMap("HunterControls", throwIfNotFound: true);
         m_HunterControls_Move = m_HunterControls.FindAction("Move", throwIfNotFound: true);
@@ -466,6 +487,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PreyControls_Reset;
     private readonly InputAction m_PreyControls_Climb;
     private readonly InputAction m_PreyControls_CarryItem;
+    private readonly InputAction m_PreyControls_Dash;
     public struct PreyControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -478,6 +500,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Reset => m_Wrapper.m_PreyControls_Reset;
         public InputAction @Climb => m_Wrapper.m_PreyControls_Climb;
         public InputAction @CarryItem => m_Wrapper.m_PreyControls_CarryItem;
+        public InputAction @Dash => m_Wrapper.m_PreyControls_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PreyControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -511,6 +534,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @CarryItem.started += instance.OnCarryItem;
             @CarryItem.performed += instance.OnCarryItem;
             @CarryItem.canceled += instance.OnCarryItem;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IPreyControlsActions instance)
@@ -539,6 +565,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @CarryItem.started -= instance.OnCarryItem;
             @CarryItem.performed -= instance.OnCarryItem;
             @CarryItem.canceled -= instance.OnCarryItem;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IPreyControlsActions instance)
@@ -636,6 +665,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnReset(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
         void OnCarryItem(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
     public interface IHunterControlsActions
     {

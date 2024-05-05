@@ -54,6 +54,10 @@ public class P_InAirState : P_BaseState
         {
             SetSubState(_factory.Walk());
         }
+        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
+        {
+            SetSubState(_factory.Run());
+        }
         else
         {
             SetSubState(_factory.Idle());
