@@ -6,7 +6,7 @@ public class P_InAirState : P_BaseState
 
     Vector3 direction;
 
-    public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
         IsRootState = true;
     }
@@ -26,6 +26,7 @@ public class P_InAirState : P_BaseState
         //direction *= 0.5f;
         _ctx.StateDirection = direction;
         _ctx.VertMagnitude -= 10f * Time.deltaTime;
+        _pow.CheckDoubleJump(ref _ctx);
     }
 
     public override void ExitState()
@@ -38,6 +39,7 @@ public class P_InAirState : P_BaseState
         if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Ground());
+            _pow.ResetJumps();
         }
         
     }
@@ -52,16 +54,11 @@ public class P_InAirState : P_BaseState
         {
             SetSubState(_factory.Walk());
         }
-        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
-        {
-            SetSubState(_factory.Run());
-        }
         else
         {
             SetSubState(_factory.Idle());
         }
     }
-
 
     //void HandleGravity()
     //{

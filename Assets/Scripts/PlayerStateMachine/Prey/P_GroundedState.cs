@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class P_GroundedState : P_BaseState
 {
-
     Vector3 direction;
     
-    public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_GroundedState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
         IsRootState = true;
     }
@@ -16,6 +15,8 @@ public class P_GroundedState : P_BaseState
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
         _ctx.ActualMagnitude += Mathf.Abs(_ctx.VertMagnitude);
         _ctx.VertMagnitude = -0.1f;
+        
+        _ctx._pow.AB_jumpsLeft = _ctx._pow.AB_jumpsTotal;
     }
 
     public override void UpdateState()
@@ -41,10 +42,6 @@ public class P_GroundedState : P_BaseState
         else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
-        }
-        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
-        {
-            SetSubState(_factory.Run());
         }
         else
         {

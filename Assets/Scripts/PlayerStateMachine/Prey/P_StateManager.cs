@@ -21,6 +21,7 @@ public class P_StateManager : MonoBehaviour
     float _skindWidth = 0.05f;
 
     LayerMask whatIsGround;
+    public SCR_abilityManager _pow { get; private set; }
 
 
 
@@ -62,6 +63,9 @@ public class P_StateManager : MonoBehaviour
     bool _isMovementPressed;
     bool _isSprintPressed;
     bool _isJumpPressed;
+    bool _isJumpReleased;
+    bool _isDashPressed;
+    bool _isDashReleased;
     bool _isSlidePressed;
     
 
@@ -76,6 +80,7 @@ public class P_StateManager : MonoBehaviour
     Vector3 _stateDirection;
     Vector3 _finalHorMovement;
     Vector3 _preCollideMovement;
+    public float _dashFactor; // This manages the character's dash value and applies it to the character speed
 
     float _vertMagnitude;
     float _gravLerp;
@@ -85,8 +90,8 @@ public class P_StateManager : MonoBehaviour
 
 
     float _stateMagnitude;
-    float _finalMagnitude;
-    float _actualMagnitude;
+    public float _finalMagnitude;
+    public float _actualMagnitude;
 
     Vector3 _botSphere;
     Vector3 _topSphere;
@@ -140,6 +145,9 @@ public class P_StateManager : MonoBehaviour
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsSprintPressed {  get { return _isSprintPressed; } }
     public bool IsJumpPressed { get { return _isJumpPressed; } }
+    public bool IsJumpReleased { get { return _isJumpReleased; } }
+    public bool IsDashPressed{ get { return _isDashPressed; } }
+    public bool IsDashReleased { get { return _isDashReleased; } }
     public bool IsSlidePressed { get { return _isSlidePressed; } }
 
     public bool IsGrounded {  get { return _isGrounded; } set { _isGrounded = value; } }
@@ -174,6 +182,8 @@ public class P_StateManager : MonoBehaviour
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
+        _dashFactor = 1;
+
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isSprintingHash = Animator.StringToHash("isRunning");
         _isFallingHash = Animator.StringToHash("isFalling");
@@ -187,8 +197,10 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
         _playerInput.PreyControls.Sprint.started += OnSprint;
         _playerInput.PreyControls.Sprint.canceled += OnSprint;
-        _playerInput.PreyControls.Jump.started += OnJump;
-        _playerInput.PreyControls.Jump.canceled += OnJump;
+        _playerInput.PreyControls.Jump.started += OnJumpPress;
+        _playerInput.PreyControls.Jump.canceled += OnJumpRelease;
+        _playerInput.PreyControls.Dash.started += OnDashPress;
+        _playerInput.PreyControls.Dash.canceled += OnDashRelease;
         _playerInput.PreyControls.Slide.started += OnSlide;
         _playerInput.PreyControls.Slide.canceled += OnSlide;
         _playerInput.PreyControls.Slide.performed += OnSlide;
@@ -199,10 +211,11 @@ public class P_StateManager : MonoBehaviour
 
 
         //setup state
-        _states = new P_StateFactory(this);
-
+        _pow = new SCR_abilityManager();
+        _states = new P_StateFactory(this, _pow);
         _currentState = _states.Ground();
         _currentState.EnterState();
+
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -212,7 +225,6 @@ public class P_StateManager : MonoBehaviour
     }
 
     
-
 
     void Update()
     {
@@ -237,6 +249,9 @@ public class P_StateManager : MonoBehaviour
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
         GroundCheck();
+
+        // Update ability manager
+        _pow.Update();
         
         SetCameraOrientation();
         
@@ -258,7 +273,7 @@ public class P_StateManager : MonoBehaviour
 
         
 
-        _finalMagnitude = _stateMagnitude;
+        _finalMagnitude = _stateMagnitude * _dashFactor;
         
         Debug.DrawRay(_rigidbody.transform.position, _stateDirection, Color.green, Time.deltaTime);
         _appliedMovement = CamRelHor(_stateDirection);
@@ -282,10 +297,15 @@ public class P_StateManager : MonoBehaviour
         //Debug.Log("VertMagnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
         //CheckClimbingState();
+        // Reset params
+        _isJumpPressed = false;
+        _isJumpReleased = false;
+        _isDashPressed = false;
+        _isDashReleased = false;
     }
 
 
-    //This function is based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
+    //This function  based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
     Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
         
@@ -427,11 +447,26 @@ public class P_StateManager : MonoBehaviour
         return camRelativeHor;
     }
 
-    void OnJump(InputAction.CallbackContext context)
+    public void OnJumpPress(InputAction.CallbackContext context)
     {
-        _isJumpPressed = context.ReadValueAsButton();
+        _isJumpPressed = context.started;
+        _isJumpReleased = true;
     }
-
+    public void OnJumpRelease(InputAction.CallbackContext context)
+    {
+        _isJumpReleased = context.started;
+        _isJumpPressed = false;
+    }
+    public void OnDashPress(InputAction.CallbackContext context)
+    {
+        _isDashPressed = context.started;
+        _isDashReleased = true;
+    }
+    public void OnDashRelease(InputAction.CallbackContext context)
+    {
+        _isDashReleased=context.started;
+        _isDashPressed = false;
+    }
     void OnSprint(InputAction.CallbackContext context)
     {
         _isSprintPressed = context.ReadValueAsButton();

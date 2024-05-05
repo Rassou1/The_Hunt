@@ -9,7 +9,7 @@ public class P_ClimbingState : P_BaseState
     //private P_StateManager stateManager;
     public CheckLadderCollision cl = new CheckLadderCollision();
 
-    public P_ClimbingState(P_StateManager stateManager, P_StateFactory p_StateFactory) : base(stateManager, p_StateFactory)
+    public P_ClimbingState(P_StateManager stateManager, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(stateManager, p_StateFactory, scr_pow)
     {
         IsRootState = true;
         

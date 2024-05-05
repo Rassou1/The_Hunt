@@ -3,7 +3,7 @@ using UnityEngine;
 public class P_IdleState : P_BaseState
 {
     float lerpTime;
-    public P_IdleState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_IdleState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
 
     }
@@ -34,10 +34,6 @@ public class P_IdleState : P_BaseState
         if (_ctx.IsSlidePressed)
         {
             SwitchState(_factory.Slide());
-        }
-        else if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
-        {
-            SwitchState(_factory.Run());
         }
         else if (_ctx.IsMovementPressed)
         {
