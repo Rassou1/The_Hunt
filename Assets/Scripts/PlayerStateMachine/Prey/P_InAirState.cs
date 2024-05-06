@@ -26,7 +26,7 @@ public class P_InAirState : P_BaseState
         //direction *= 0.5f;
         _ctx.StateDirection = direction;
         _ctx.VertMagnitude -= 10f * Time.deltaTime;
-        _pow.CheckDoubleJump(ref _ctx);
+        _ctx.Pow.CheckDoubleJump(ref _ctx);
     }
 
     public override void ExitState()
@@ -39,7 +39,7 @@ public class P_InAirState : P_BaseState
         if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Ground());
-            _pow.ResetJumps();
+            Pow.ResetJumps();
         }
         
     }

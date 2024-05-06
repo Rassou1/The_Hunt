@@ -36,24 +36,24 @@ public class SCR_abilityManager : MonoBehaviour
     }
     public void CheckDoubleJump(ref P_StateManager _ctx)
     {
-        if (_ctx.IsJumpPressed && _ctx._pow.AB_jumpsLeft > 0 && _ctx._pow.AB_canDoubleJump)
+        if (_ctx.IsJumpPressed && _ctx.Pow.AB_jumpsLeft > 0 && _ctx.Pow.AB_canDoubleJump)
         {
             _ctx.VertMagnitude = AB_jumpHeight;
-            _ctx._pow.AB_jumpsLeft--;
+            _ctx.Pow.AB_jumpsLeft--;
         }
 
     }
     public void CheckDash(ref P_StateManager _ctx)
     {
-        if (_ctx.IsDashPressed && _ctx.IsDashReleased && _ctx._pow.AB_dashCharges > 0 && _ctx._pow.AB_canDash)
+        if (_ctx.IsDashPressed && _ctx.IsDashReleased && _ctx.Pow.AB_dashCharges > 0 && _ctx.Pow.AB_canDash)
         {
             _ctx._dashFactor = 15;
-            _ctx._pow.AB_dashCharges--;
+            _ctx.Pow.AB_dashCharges--;
         }
         else
         {
             _ctx._dashFactor = 0.5f;
         }
-        //Debug.Log($"{_ctx.IsDashPressed} {_ctx.IsDashReleased} {_ctx._pow.AB_dashCharges}");
+        //Debug.Log($"{_ctx.IsDashPressed} {_ctx.IsDashReleased} {_ctx.Pow.AB_dashCharges}");
     }
 }

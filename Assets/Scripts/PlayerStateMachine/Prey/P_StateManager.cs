@@ -12,16 +12,16 @@ public class P_StateManager : MonoBehaviour
     //private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
-    
-    
+
+
     CapsuleCollider _capsuleCollider;
     Bounds _bounds;
-    
+
     int _maxBounces = 5;
     float _skindWidth = 0.05f;
 
     LayerMask whatIsGround;
-    public SCR_abilityManager _pow { get; private set; }
+     
 
 
 
@@ -37,7 +37,7 @@ public class P_StateManager : MonoBehaviour
     int _isWallRunningHash;
     int _isSlidingHash;
     int _isClimbingHash;
-    
+
     P_BaseState _currentState;
     P_StateFactory _states;
 
@@ -67,10 +67,10 @@ public class P_StateManager : MonoBehaviour
     bool _isDashPressed;
     bool _isDashReleased;
     bool _isSlidePressed;
-    
+
 
     bool _isGrounded = false;
-    
+
 
 
     //New Stuff
@@ -99,6 +99,8 @@ public class P_StateManager : MonoBehaviour
     Vector3 _gravDir = Vector3.down;
 
 
+    SCR_abilityManager _pow = new SCR_abilityManager();
+
     PlayerWalking walking;
 
     public float _moveSpeed;
@@ -112,11 +114,11 @@ public class P_StateManager : MonoBehaviour
     public int IsSprintingHash { get { return _isSprintingHash; } }
     public int IsFallingHash { get { return _isFallingHash; } }
     public int IsWallRunningHash { get { return _isWallRunningHash; } }
-    public int IsSlidingHash {  get { return _isSlidingHash; } }
+    public int IsSlidingHash { get { return _isSlidingHash; } }
 
     public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
-    
+
     public Vector3 SubStateDirSet { get { return _subStateDirSet; } set { _subStateDirSet = value; } }
     public float VertMagnitude { get { return _vertMagnitude; } set { _vertMagnitude = value; } }
     public float ActualMagnitude { get { return _actualMagnitude; } set { _actualMagnitude = value; } }
@@ -126,7 +128,7 @@ public class P_StateManager : MonoBehaviour
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; } }
     public Vector3 CurrentMovement { get { return _currentMovement; } set { _currentMovement = value; } }
     public Vector3 CurrentSprintMovement { get { return _currentSprintMovement; } set { _currentSprintMovement = value; } }
-    public Vector3 AppliedMovement {  get { return _appliedMovement; } set { _appliedMovement = value; } }
+    public Vector3 AppliedMovement { get { return _appliedMovement; } set { _appliedMovement = value; } }
     public Vector3 RelForward { get { return _relForward; } }
 
     public Vector3 BotSphere { get { return _botSphere; } }
@@ -134,10 +136,12 @@ public class P_StateManager : MonoBehaviour
 
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
-    public float AppliedMovementX { get { return _appliedMovement.x; } set {  _appliedMovement.x = value; } }
+    public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
-    
-    
+
+
+    public SCR_abilityManager Pow { get { return _pow; } private set { _pow = value; }}
+
 
     public Vector3 SlopeNormal { get { return _slopeNormal; } }
     public float SlopeAngle { get { return _slopeAngle; } }
@@ -211,8 +215,8 @@ public class P_StateManager : MonoBehaviour
 
 
         //setup state
-        _pow = new SCR_abilityManager();
-        _states = new P_StateFactory(this, _pow);
+        Pow = new SCR_abilityManager();
+        _states = new P_StateFactory(this, Pow);
         _currentState = _states.Ground();
         _currentState.EnterState();
 
@@ -251,7 +255,7 @@ public class P_StateManager : MonoBehaviour
         GroundCheck();
 
         // Update ability manager
-        _pow.Update();
+        Pow.Update();
         
         SetCameraOrientation();
         
