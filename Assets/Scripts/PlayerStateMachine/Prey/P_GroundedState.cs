@@ -16,7 +16,7 @@ public class P_GroundedState : P_BaseState
         _ctx.ActualMagnitude += Mathf.Abs(_ctx.VertMagnitude);
         _ctx.VertMagnitude = -0.1f;
         
-        _ctx._pow.AB_jumpsLeft = _ctx._pow.AB_jumpsTotal;
+        _ctx.Pow.AB_jumpsLeft = _ctx.Pow.AB_jumpsTotal;
     }
 
     public override void UpdateState()

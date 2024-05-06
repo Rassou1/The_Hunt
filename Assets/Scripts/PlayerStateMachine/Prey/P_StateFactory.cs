@@ -17,21 +17,21 @@ enum P_States
 public class P_StateFactory
 {
     P_StateManager _context;
-    SCR_abilityManager _pow;
+    SCR_abilityManager Pow;
     Dictionary<P_States, P_BaseState> _states = new Dictionary<P_States, P_BaseState>();
 
     public P_StateFactory(P_StateManager currentContext, SCR_abilityManager scr_pow)
     {
         _context = currentContext;
-        _states[P_States.ground] = new P_GroundedState(_context, this, _pow);
-        _states[P_States.air] = new P_InAirState(_context, this, _pow);
-        _states[P_States.idle] = new P_IdleState(_context, this, _pow);
-        _states[P_States.walk] = new P_WalkingState(_context, this, _pow);
-        _states[P_States.run] = new P_RunningState(_context, this, _pow);
-        _states[P_States.slide] = new P_SlidingState(_context, this, _pow);
-        _states[P_States.wallRun] = new P_WallRunningState(_context, this, _pow);
-        _states[P_States.onWall] = new P_OnWallState(_context, this, _pow);
-        _pow = scr_pow;
+        _states[P_States.ground] = new P_GroundedState(_context, this, Pow);
+        _states[P_States.air] = new P_InAirState(_context, this, Pow);
+        _states[P_States.idle] = new P_IdleState(_context, this, Pow);
+        _states[P_States.walk] = new P_WalkingState(_context, this, Pow);
+        _states[P_States.run] = new P_RunningState(_context, this, Pow);
+        _states[P_States.slide] = new P_SlidingState(_context, this, Pow);
+        _states[P_States.wallRun] = new P_WallRunningState(_context, this, Pow);
+        _states[P_States.onWall] = new P_OnWallState(_context, this, Pow);
+        Pow = scr_pow;
     }
 
     public P_BaseState Ground()
