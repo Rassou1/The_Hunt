@@ -66,6 +66,7 @@ public class P_StateManager : MonoBehaviour
     
 
     bool _isGrounded = false;
+    bool _rightWall;
     bool _touchingWall = false;
     
 
@@ -156,6 +157,8 @@ public class P_StateManager : MonoBehaviour
 
     public static P_StateManager Instance { get; internal set; }
 
+    public bool RightWall { get { return _rightWall; } }
+
     public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
 
     //void Start()
@@ -238,9 +241,6 @@ public class P_StateManager : MonoBehaviour
         //{
         //    walking.PlayRunSound();
         //}
-
-        //Debug.Log("Right Wall: " + _wallRight);
-        //Debug.Log("Left Wall: " + _wallLeft);
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
         GroundCheck();
@@ -264,6 +264,7 @@ public class P_StateManager : MonoBehaviour
         
         _currentState.UpdateStates();
 
+        Debug.DrawRay(_capsuleCollider.transform.position + new Vector3(0, 1, 0), _cameraOrientation.right, Color.magenta, 10f);
         
 
         _finalMagnitude = _stateMagnitude;
@@ -386,9 +387,11 @@ public class P_StateManager : MonoBehaviour
     private void CheckForWall()
     {
         RaycastHit hitRight;
-        if (Physics.Raycast(_capsuleCollider.transform.position, _cameraOrientation.right, out hitRight, 10f, whatIsWall))
+        Physics.Raycast(_capsuleCollider.transform.position + new Vector3(0, 1, 0), _cameraOrientation.right, out hitRight, 30f, whatIsWall);
+        if (hitRight.transform != null)
         {
             Debug.Log("Hit wall to the right: " + hitRight.collider.gameObject.name);
+            _rightWall = true;
             // Handle collision on the right side
         }
 
@@ -397,6 +400,7 @@ public class P_StateManager : MonoBehaviour
         if (Physics.Raycast(_capsuleCollider.transform.position, -_cameraOrientation.right, out hitLeft, 10f, whatIsWall))
         {
             Debug.Log("Hit wall to the left: " + hitLeft.collider.gameObject.name);
+            _rightWall = false;
             // Handle collision on the left side
         }
     }
