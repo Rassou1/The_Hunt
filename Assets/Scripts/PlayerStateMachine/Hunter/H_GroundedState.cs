@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class H_GroundedState : H_BaseState
 {
+
+    Vector3 direction;
+    
     public H_GroundedState(H_StateManager currentContext, H_StateFactory h_StateFactory) : base(currentContext, h_StateFactory)
     {
         IsRootState = true;
@@ -10,14 +13,17 @@ public class H_GroundedState : H_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        _ctx.CurrentMovementY = _ctx.GroundedGravity;
-        _ctx.AppliedMovementY = _ctx.GroundedGravity;
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
+        _ctx.ActualMagnitude += Mathf.Abs(_ctx.VertMagnitude);
+        _ctx.VertMagnitude = -0.1f;
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
+        direction = _ctx.SubStateDirSet;
+        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
+        _ctx.StateDirection = _ctx.AlignToSlope(direction);
     }
 
     public override void ExitState()
@@ -28,6 +34,7 @@ public class H_GroundedState : H_BaseState
 
     public override void InitializeSubState()
     {
+       
         if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {
             SetSubState(_factory.Walk());
@@ -36,7 +43,6 @@ public class H_GroundedState : H_BaseState
         {
             SetSubState(_factory.Run());
         }
-        //else if (wallrunning) -> wallrun
         else
         {
             SetSubState(_factory.Idle());
@@ -48,15 +54,15 @@ public class H_GroundedState : H_BaseState
     {
         if (_ctx.IsJumpPressed)
         {
-            _ctx.CurrentMovementY += 6;
-            _ctx.AppliedMovementY += 6;
+            _ctx.VertMagnitude = 7f;
+            _ctx.IsGrounded = false;
             SwitchState(_factory.Air());
         }
-        else if (!_ctx.CharacterController.isGrounded)
+        else if (!_ctx.IsGrounded)
         {
             SwitchState(_factory.Air());
         }
-
+        
     }
 
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class H_IdleState : H_BaseState
 {
+    float lerpTime;
     public H_IdleState(H_StateManager currentContext, H_StateFactory h_StateFactory) : base(currentContext, h_StateFactory)
     {
 
@@ -11,25 +12,26 @@ public class H_IdleState : H_BaseState
     {
         _ctx.Animator.SetBool(_ctx.IsWalkingHash, false);
         _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
-        _ctx.AppliedMovementX = 0f;
-        _ctx.AppliedMovementZ = 0f;
+        lerpTime = 0f;
     }
 
 
 
     public override void UpdateState()
     {
+        _ctx.StateMagnitude = Mathf.Lerp(_ctx.ActualMagnitude, 0, lerpTime);
+        lerpTime += Time.deltaTime;
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
-
+        
     }
 
     public override void CheckSwitchState()
     {
-        if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
+       if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
         {
             SwitchState(_factory.Run());
         }
@@ -41,6 +43,6 @@ public class H_IdleState : H_BaseState
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 }

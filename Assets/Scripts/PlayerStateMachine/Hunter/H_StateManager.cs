@@ -1,25 +1,42 @@
+using Alteruna.Scoreboard;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-//THIS HAS JUST BEEN STRAIGHT UP COPIED FROM THE PREY STATEMANAGER, SAME FOR THE OTHER HUNTER SCRIPTS.
-//It's just kinda placeholder for now
-
 public class H_StateManager : MonoBehaviour
 {
+    //private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
-    CharacterController _characterController;
-    Animator _animator;
+    
+    
+    CapsuleCollider _capsuleCollider;
+    Bounds _bounds;
+    
+    int _maxBounces = 5;
+    float _skindWidth = 0.05f;
+
+    LayerMask whatIsGround;
+
+
+
+    public float _mouseSens;
+    public float _maxSlopeAngle;
+    public float _softCap;
+    public float _sprintResistance;
+    public float _slideResistance;
 
     int _isWalkingHash;
     int _isSprintingHash;
     int _isFallingHash;
     int _isWallRunningHash;
     int _isSlidingHash;
-
+    int _isClimbingHash;
+    
     H_BaseState _currentState;
     H_StateFactory _states;
 
@@ -28,76 +45,157 @@ public class H_StateManager : MonoBehaviour
     Vector3 _currentMovement;
     Vector3 _currentSprintMovement;
     Vector3 _appliedMovement;
+    Vector2 _currentLookInput;
+
+    public Rigidbody _rigidbody;
+    public Transform _cameraOrientation;
+    public Transform _cameraPostion;
+    public Animator _animator;
+    //Transform _thisCharacter;
+
+    float _mouseRotationX;
+    float _mouseRotationY;
+
+    Vector3 _moveForward;
+    Vector3 _moveRight;
 
     bool _isMovementPressed;
     bool _isSprintPressed;
     bool _isJumpPressed;
     bool _isSlidePressed;
+    
 
-    float _gravity = -12f;
-    float _groundedGravity = -.05f;
+    bool _isGrounded = false;
+    
 
-    float _rotationFactorPerFrame = 10f;
-    float _sprintMultiplier = 3f;
 
+    //New Stuff
+    Vector3 _slopeNormal;
+    float _slopeAngle;
+    float _realSlopeAngle;
+    Vector3 _stateDirection;
+    Vector3 _finalHorMovement;
+    Vector3 _preCollideMovement;
+
+    float _vertMagnitude;
+    float _gravLerp;
+    float _horMouseMod = 1f;
+    Vector3 _subStateDirSet;
+    Vector3 _relForward;
+
+
+    float _stateMagnitude;
+    float _finalMagnitude;
+    float _actualMagnitude;
+
+    Vector3 _botSphere;
+    Vector3 _topSphere;
+
+    Vector3 _gravDir = Vector3.down;
+
+
+    PlayerWalking walking;
+
+    public float _moveSpeed;
+    public float climbspeed;
+    public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
     public H_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
-    public CharacterController CharacterController { get { return _characterController; } }
+    public Rigidbody Rigidbody { get { return _rigidbody; } }
     public Animator Animator { get { return _animator; } }
     public int IsWalkingHash { get { return _isWalkingHash; } }
     public int IsSprintingHash { get { return _isSprintingHash; } }
     public int IsFallingHash { get { return _isFallingHash; } }
     public int IsWallRunningHash { get { return _isWallRunningHash; } }
-    public int IsSlidingHash { get { return _isSlidingHash; } }
+    public int IsSlidingHash {  get { return _isSlidingHash; } }
 
+    public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
+    public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
+    
+    public Vector3 SubStateDirSet { get { return _subStateDirSet; } set { _subStateDirSet = value; } }
+    public float VertMagnitude { get { return _vertMagnitude; } set { _vertMagnitude = value; } }
+    public float ActualMagnitude { get { return _actualMagnitude; } set { _actualMagnitude = value; } }
 
+    public float HorMouseMod { get { return _horMouseMod; } set { _horMouseMod = value; } }
 
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; } }
     public Vector3 CurrentMovement { get { return _currentMovement; } set { _currentMovement = value; } }
     public Vector3 CurrentSprintMovement { get { return _currentSprintMovement; } set { _currentSprintMovement = value; } }
-    public Vector3 AppliedMovement { get { return _appliedMovement; } set { _appliedMovement = value; } }
+    public Vector3 AppliedMovement {  get { return _appliedMovement; } set { _appliedMovement = value; } }
+    public Vector3 RelForward { get { return _relForward; } }
+
+    public Vector3 BotSphere { get { return _botSphere; } }
+    public Vector3 TopSphere { get { return _topSphere; } }
 
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
-    public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
+    public float AppliedMovementX { get { return _appliedMovement.x; } set {  _appliedMovement.x = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
+    
+    
+
+    public Vector3 SlopeNormal { get { return _slopeNormal; } }
+    public float SlopeAngle { get { return _slopeAngle; } }
 
     public bool IsMovementPressed { get { return _isMovementPressed; } }
-    public bool IsSprintPressed { get { return _isSprintPressed; } }
+    public bool IsSprintPressed {  get { return _isSprintPressed; } }
     public bool IsJumpPressed { get { return _isJumpPressed; } }
     public bool IsSlidePressed { get { return _isSlidePressed; } }
 
-    public float Gravity { get { return _gravity; } set { _gravity = value; } }
-    public float GroundedGravity { get { return _groundedGravity; } set { _groundedGravity = value; } }
+    public bool IsGrounded {  get { return _isGrounded; } set { _isGrounded = value; } }
 
+    
+    public Vector3 GravDirection { get { return _gravDir; } set { _gravDir = value; } }
+
+    public static H_StateManager Instance { get; internal set; }
+
+    public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
 
     //void Start()
     //{
+    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
 
     //}
 
+
+
+
     private void Awake()
     {
+
+        walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        //_rigidbody = GetComponent<Rigidbody>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
+        //_animator = GetComponent<Animator>();
+
+        
+
+        _bounds = _capsuleCollider.bounds;
+        _bounds.Expand(-2 * _skindWidth);
 
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isSprintingHash = Animator.StringToHash("isRunning");
         _isFallingHash = Animator.StringToHash("isFalling");
         _isWallRunningHash = Animator.StringToHash("isWallRunning");
         _isSlidingHash = Animator.StringToHash("isSliding");
+        
 
-        //This get's the inputs from the new input system
-        _playerInput.HunterControls.Move.started += OnMovementInput;
-        _playerInput.HunterControls.Move.canceled += OnMovementInput;
-        _playerInput.HunterControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
-        _playerInput.HunterControls.Sprint.started += OnSprint;
-        _playerInput.HunterControls.Sprint.canceled += OnSprint;
-        _playerInput.HunterControls.Jump.started += OnJump;
-        _playerInput.HunterControls.Jump.canceled += OnJump;
-        _playerInput.HunterControls.Slide.started += OnSlide;
-        _playerInput.HunterControls.Slide.canceled += OnSlide;
+        //This gets the inputs from the new input system
+        _playerInput.PreyControls.Move.started += OnMovementInput;
+        _playerInput.PreyControls.Move.canceled += OnMovementInput;
+        _playerInput.PreyControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
+        _playerInput.PreyControls.Sprint.started += OnSprint;
+        _playerInput.PreyControls.Sprint.canceled += OnSprint;
+        _playerInput.PreyControls.Jump.started += OnJump;
+        _playerInput.PreyControls.Jump.canceled += OnJump;
+        _playerInput.PreyControls.Slide.started += OnSlide;
+        _playerInput.PreyControls.Slide.canceled += OnSlide;
+        _playerInput.PreyControls.Slide.performed += OnSlide;
+        _playerInput.PreyControls.Look.started += OnLookInput;
+        _playerInput.PreyControls.Look.canceled += OnLookInput;
+        _playerInput.PreyControls.Look.performed += OnLookInput;
+        
 
 
         //setup state
@@ -106,37 +204,228 @@ public class H_StateManager : MonoBehaviour
         _currentState = _states.Ground();
         _currentState.EnterState();
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        
+
     }
+
+    
+
 
     void Update()
     {
-        HandleRotation();
-        _characterController.Move(_appliedMovement * Time.deltaTime);
+        //Add a Way so a remote avatar still makes sounds
+
+        //if (!_avatar.IsMe)
+        //    return;
+
+
+        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        //{
+        //    walking.PlayWalkSound();
+        //}
+
+        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        //{
+        //    walking.PlayRunSound();
+        //}
+
+        //Debug.Log("Right Wall: " + _wallRight);
+        //Debug.Log("Left Wall: " + _wallLeft);
+        _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
+        _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
+        GroundCheck();
+        
+        SetCameraOrientation();
+        
+        RotateBodyY();
+        _relForward = CamRelHor(Vector3.forward);
+        //SlopeRelative();
+        //testRelForward = Quaternion.AngleAxis(Quaternion.Angle(Quaternion.FromToRotation(testRelForward, _slopeNormal), testRelForward) , testRelForward) ;
+
+        //NEED TO ROTATE THE Y AXIS OF THE MOVEMENT TO THE Y AXIS OF THE SLOPE
+        //transform.rotation = Quaternion.Euler(0, y, 0);
+        //testRelForward = Quaternion.FromToRotation(_relForward, _slopeNormal);
+
+        
+        //Debug.Log("Slope normal: " + _slopeNormal);
+
+        //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
+        
         _currentState.UpdateStates();
+
+        
+
+        _finalMagnitude = _stateMagnitude;
+        
+        Debug.DrawRay(_rigidbody.transform.position, _stateDirection, Color.green, Time.deltaTime);
+        _appliedMovement = CamRelHor(_stateDirection);
+        //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
+        _appliedMovement = _appliedMovement.normalized;
+        _appliedMovement *= 3; //Mathf.SmoothStep(0, _finalMagnitude, 1000f);
+        Debug.Log(_appliedMovement.magnitude);
+        
+        _actualMagnitude = _finalMagnitude;
+        //Debug.Log("SlopeAngle: " + _realSlopeAngle);
+        _appliedMovement *= Time.deltaTime;
+        //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
+        
+        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
+        _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+        _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
+        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
+
+        _rigidbody.transform.position += _appliedMovement;
+
+        //Debug.Log("Grounded: " + _isGrounded);
+        //Debug.Log("VertMagnitude: " + _vertMagnitude);
+        //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
+        //CheckClimbingState();
     }
 
 
-    public void GetCameraInput()
+    //This function is based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
+    Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
-
-    }
-
-    void HandleRotation()
-    {
-        Vector3 positionToLookAt;
-
-        positionToLookAt.x = _currentMovement.x;
-        positionToLookAt.y = 0.0f;
-        positionToLookAt.z = _currentMovement.z;
-
-        Quaternion currentRotation = transform.rotation;
-
-        if (_isMovementPressed)
+        
+        //Debug.Log("StartPos: " + startPos);
+        //Debug.Log("BotSphere: " + botSphere);
+        //Debug.Log("TopSphere: " + topSphere);
+        if (depth >= _maxBounces)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
+            return Vector3.zero;
+        }
+        float dist = vel.magnitude + _skindWidth;
+        RaycastHit hit;
+        //Debug.Log("Direction: " + vel.normalized);
+        //Debug.Log("Distance: " + dist);
+
+        
+
+        if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
+        {
+            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth * 2f);
+            Vector3 leftover = vel - snapToSurface;
+            
+            
+
+            float angle = Vector3.Angle(transform.up, hit.normal);  //Make this relative to your current alignment
+
+            if (snapToSurface.magnitude <= _skindWidth)
+            {
+                snapToSurface = Vector3.zero;
+            }
+            
+            if (angle <= _maxSlopeAngle) //Normal ground / slope
+            {
+                if (gravityPass)
+                {
+                    return snapToSurface;
+                }
+                leftover = ProjectAndScale(leftover, hit.normal);
+            }
+            else //Wall or steep slope
+            {
+                float scale = 1 - Vector3.Dot(new Vector3(hit.normal.x, 0, hit.normal.z).normalized, -new Vector3(velInit.x, 0, velInit.z).normalized);
+                
+                if (_isGrounded && !gravityPass)
+                {
+                    leftover = ProjectAndScale(new Vector3(leftover.x, 0, leftover.z), new Vector3(hit.normal.x, 0, hit.normal.z))/*.normalized*/;
+                    leftover *= scale;
+                }
+                else
+                {
+                    leftover = ProjectAndScale(leftover, hit.normal) * scale;
+                }
+            }
+
+            return snapToSurface + CollideAndSlide(leftover, startPos + snapToSurface, depth + 1, gravityPass, velInit);
         }
 
+        return vel;
+    }
+    //Part of CollideAndSlide
+    Vector3 ProjectAndScale(Vector3 vec, Vector3 normal)
+    {
+        float magnitude = vec.magnitude;
+        vec = Vector3.ProjectOnPlane(vec, normal).normalized;
+        vec *= magnitude;
+        return vec;
+    }
+
+
+    void GroundCheck()
+    {
+        RaycastHit hit;
+        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _capsuleCollider.radius + 0.05f);
+        if (hit.transform != null && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
+        {
+            _isGrounded = true;
+            _slopeNormal = hit.normal;
+            _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
+            _realSlopeAngle = Vector3.Angle(-_gravDir, _slopeNormal);
+        }
+        else
+        {
+            _isGrounded = false;
+            _slopeNormal = Vector3.zero;
+            _slopeAngle = 0f;
+            //_realSlopeAngle = 0f;
+        }
+    }
+
+
+    public Vector3 AlignToSlope(Vector3 inputDirection)
+    {
+        var slopeRotation = Quaternion.AngleAxis(_slopeAngle, Vector3.right);
+        return slopeRotation * inputDirection;
+    }
+
+    //Replaced by CamRelHor
+    //void RelativeMovement()
+    //{
+    //    float preRelativeY = _appliedMovement.y;
+    //    _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
+    //    _appliedMovement.y = preRelativeY;
+    //}
+
+
+    Vector3 testForward;
+    Vector3 testRight;
+
+    void SlopeRelative()
+    {
+        testForward = _moveForward;
+        testRight = _moveRight;
+        
+        
+    }
+
+    void RotateToSlope()
+    {
+        Vector3 testForward;
+        Vector3 testRight;
+
+    }
+
+    Vector3 TestCamRel(Vector3 input)
+    {
+        Vector3 camRelativeHor;
+        //input = new Vector3(input.x, 0, input.z);
+        camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x + _slopeNormal * input.y;
+        return camRelativeHor;
+    }
+
+
+    Vector3 CamRelHor(Vector3 input)
+    {
+        Vector3 camRelativeHor;
+        //input = new Vector3(input.x, 0, input.z);
+        camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x;
+        camRelativeHor = camRelativeHor + new Vector3(0,input.y,0);
+        return camRelativeHor;
     }
 
     void OnJump(InputAction.CallbackContext context)
@@ -154,15 +443,56 @@ public class H_StateManager : MonoBehaviour
         _isSlidePressed = context.ReadValueAsButton();
     }
 
+
+    
+
+
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
-        _currentMovement.x = _currentMovementInput.x;
-        _currentMovement.z = _currentMovementInput.y;
-        _currentSprintMovement.x = _currentMovementInput.x * _sprintMultiplier;
-        _currentSprintMovement.z = _currentMovementInput.y * _sprintMultiplier;  //We set z=y here since we're getting a Vector2 as the input and z is sideways in Vector3
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
+        
     }
+
+    void OnLookInput(InputAction.CallbackContext context)
+    {
+        _currentLookInput = context.ReadValue<Vector2>();
+        _mouseRotationX -= _currentLookInput.y * Time.deltaTime * _mouseSens;
+        _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens * _horMouseMod;
+        _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f);
+    }
+
+    public void SetCameraOrientation()
+    {
+        _cameraOrientation.rotation = Quaternion.Euler(_mouseRotationX, _mouseRotationY, 0);
+        _moveForward = _cameraOrientation.forward;
+        _moveRight = _cameraOrientation.right;
+        _moveForward.y = 0;
+        _moveRight.y = 0;
+    }
+
+
+
+    void RotateBodyY()
+    {
+        //Will add some kind of "only rotate when angle above x or moving" if case when i understand Quaternions
+        var forward = _cameraOrientation.forward;
+        forward.y = 0;
+        _rigidbody.transform.rotation = Quaternion.LookRotation(forward, _rigidbody.transform.up);
+    }
+
+
+
+    //Will be used to rotate the orientation of the rigidbody to allow us to switch the direction of gravity
+    void RotateBodyXZ()
+    {
+        var forward = _cameraOrientation.forward;
+
+        //_rigidbody.transform.rotation = 
+    }
+    
+    
+    
 
     //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
     IEnumerator WallRunBuffer()
@@ -172,32 +502,18 @@ public class H_StateManager : MonoBehaviour
     }
 
 
-    void CalculateMomentumGrounded()
-    {
-        //Switch name to just "CalculateMomentum" if we remove CalculateMomentumAir
-    }
-
-    void CalculateMomentumAir()
-    {
-        //If we want to calculate momentum in the air in an entierly different way. If we're just switching the values of some numbers we can remove this and just change the numbers using the H_InAirState script
-    }
+   
 
 
     void OnEnable()
     {
-        _playerInput.HunterControls.Enable();
+        _playerInput.PreyControls.Enable();
     }
 
     void OnDisable()
     {
-        _playerInput.HunterControls.Disable();
+        _playerInput.PreyControls.Disable();
     }
 
 
-
-    public void SwitchState(H_BaseState state)
-    {
-        _currentState = state;
-        state.EnterState();
-    }
 }
