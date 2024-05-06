@@ -47,6 +47,7 @@ public class P_InAirState : P_BaseState
         if (_ctx.IsSlidePressed)
         {
             SetSubState(_factory.Slide());
+            //someone explain why we can slide while in air
         }
         else if (_ctx.IsMovementPressed && !_ctx.IsSprintPressed)
         {

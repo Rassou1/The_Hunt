@@ -28,7 +28,7 @@ public class P_StateFactory
         _states[P_States.walk] = new P_WalkingState(_context, this);
         _states[P_States.run] = new P_RunningState(_context, this);
         _states[P_States.slide] = new P_SlidingState(_context, this);
-        _states[P_States.wallRun] = new P_WallRunningState(_context, this);
+        _states[P_States.wallRun] = new P_WallrunState(_context, this);
         _states[P_States.onWall] = new P_OnWallState(_context, this);
     }
 

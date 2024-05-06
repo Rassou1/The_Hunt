@@ -21,7 +21,7 @@ TagManager:
   - Hunter
   - Prey
   - keypadUI
-  - 
+  - whatIsWall
   - whatIsGround
   - _groundMask
   - Ladder

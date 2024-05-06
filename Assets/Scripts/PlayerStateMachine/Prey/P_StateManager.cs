@@ -21,7 +21,7 @@ public class P_StateManager : MonoBehaviour
     float _skindWidth = 0.05f;
 
     LayerMask whatIsGround;
-
+    LayerMask whatIsWall;
 
 
     public float _mouseSens;
@@ -66,6 +66,7 @@ public class P_StateManager : MonoBehaviour
     
 
     bool _isGrounded = false;
+    bool _touchingWall = false;
     
 
 
@@ -92,6 +93,12 @@ public class P_StateManager : MonoBehaviour
     Vector3 _topSphere;
 
     Vector3 _gravDir = Vector3.down;
+
+    //Wallrunning variables
+    RaycastHit wallRight;
+    RaycastHit wallLeft;
+    bool wallRightHit;
+    bool wallLeftHit;
 
 
     PlayerWalking walking;
@@ -237,6 +244,7 @@ public class P_StateManager : MonoBehaviour
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
         GroundCheck();
+        CheckForWall();
         
         SetCameraOrientation();
         
@@ -375,6 +383,23 @@ public class P_StateManager : MonoBehaviour
         }
     }
 
+    private void CheckForWall()
+    {
+        RaycastHit hitRight;
+        if (Physics.Raycast(_capsuleCollider.transform.position, _cameraOrientation.right, out hitRight, 10f, whatIsWall))
+        {
+            Debug.Log("Hit wall to the right: " + hitRight.collider.gameObject.name);
+            // Handle collision on the right side
+        }
+
+        // Cast a ray to the left
+        RaycastHit hitLeft;
+        if (Physics.Raycast(_capsuleCollider.transform.position, -_cameraOrientation.right, out hitLeft, 10f, whatIsWall))
+        {
+            Debug.Log("Hit wall to the left: " + hitLeft.collider.gameObject.name);
+            // Handle collision on the left side
+        }
+    }
 
     public Vector3 AlignToSlope(Vector3 inputDirection)
     {
