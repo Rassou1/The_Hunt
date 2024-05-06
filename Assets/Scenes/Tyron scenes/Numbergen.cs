@@ -4,8 +4,12 @@ using UnityEngine;
 using Alteruna;
 public class RoleGiver: AttributesSync,IInteractable
 {
+    public GameObject hunterCanvas;
+    public GameObject preyCanvas;
 
-    public GameObject hunterc;
+
+
+
     public GameObject GiveObject()
     {
         throw new System.NotImplementedException();
@@ -24,13 +28,19 @@ public class RoleGiver: AttributesSync,IInteractable
 
             for (int i = 0; i < players.Length; i++)
             {
+
                 if (i == hunterIndex)
                 {
                     players[i].layer = LayerMask.NameToLayer("Hunter");
+                    hunterCanvas.SetActive(true);
+                   
+
+
                 }
                 else
                 {
                     players[i].layer = LayerMask.NameToLayer("Prey");
+                    preyCanvas.SetActive(true);
                 }
             }
         }
