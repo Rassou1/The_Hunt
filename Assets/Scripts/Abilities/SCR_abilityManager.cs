@@ -34,15 +34,14 @@ public class SCR_abilityManager : MonoBehaviour
     {
         AB_jumpsLeft = AB_jumpsTotal;
     }
-    public void CheckDoubleJump(ref P_StateManager _ctx)
-    {
-        if (_ctx.IsJumpPressed && _ctx.Pow.AB_jumpsLeft > 0 && _ctx.Pow.AB_canDoubleJump)
-        {
-            _ctx.VertMagnitude = AB_jumpHeight;
-            _ctx.Pow.AB_jumpsLeft--;
-        }
-
-    }
+    //public void CheckDoubleJump(ref P_StateManager _ctx)
+    //{
+    //    if (_ctx.IsJumpPressed && _ctx.Pow.AB_jumpsLeft > 0 && _ctx.Pow.AB_canDoubleJump)
+    //    {
+    //        _ctx.VertMagnitude = AB_jumpHeight;
+    //        _ctx.Pow.AB_jumpsLeft--;
+    //    }
+    //}
     public void CheckDash(ref P_StateManager _ctx)
     {
         if (_ctx.IsDashPressed && _ctx.IsDashReleased && _ctx.Pow.AB_dashCharges > 0 && _ctx.Pow.AB_canDash)

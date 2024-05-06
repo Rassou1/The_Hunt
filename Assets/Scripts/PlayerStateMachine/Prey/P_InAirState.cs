@@ -5,6 +5,8 @@ public class P_InAirState : P_BaseState
 {
 
     Vector3 direction;
+    bool hasDoubleJumped;
+    bool buttonReleased;
 
     public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
@@ -15,18 +17,29 @@ public class P_InAirState : P_BaseState
     {
         InitializeSubState();
         _ctx.Animator.SetBool(_ctx.IsFallingHash, true);
-        
+        hasDoubleJumped = false;
+        buttonReleased = false;
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
         direction = _ctx.AppliedMovement;
-        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
-        //direction *= 0.5f;
+        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y) * 0.2f;
+        
         _ctx.StateDirection = direction;
         _ctx.VertMagnitude -= 10f * Time.deltaTime;
-        _ctx.Pow.CheckDoubleJump(ref _ctx);
+
+        if (!_ctx.IsJumpPressed)
+        {
+            buttonReleased = true;
+        }
+
+        if (!hasDoubleJumped && _ctx.IsJumpPressed && buttonReleased)
+        {
+            _ctx.VertMagnitude = 5f;
+            hasDoubleJumped = true;
+        }
     }
 
     public override void ExitState()

@@ -34,6 +34,7 @@ public class P_RunningState : P_BaseState
             _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;
             _ctx.StateMagnitude = Mathf.Min(_ctx.StateMagnitude, _ctx._softCap);
         }
+
         CheckSwitchState();
     }
 

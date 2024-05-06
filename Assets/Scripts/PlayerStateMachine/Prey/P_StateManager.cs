@@ -202,7 +202,7 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Sprint.started += OnSprint;
         _playerInput.PreyControls.Sprint.canceled += OnSprint;
         _playerInput.PreyControls.Jump.started += OnJumpPress;
-        _playerInput.PreyControls.Jump.canceled += OnJumpRelease;
+        _playerInput.PreyControls.Jump.canceled += OnJumpPress;
         _playerInput.PreyControls.Dash.started += OnDashPress;
         _playerInput.PreyControls.Dash.canceled += OnDashRelease;
         _playerInput.PreyControls.Slide.started += OnSlide;
@@ -301,11 +301,13 @@ public class P_StateManager : MonoBehaviour
         //Debug.Log("VertMagnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
         //CheckClimbingState();
-        // Reset params
-        _isJumpPressed = false;
-        _isJumpReleased = false;
-        _isDashPressed = false;
-        _isDashReleased = false;
+        
+        
+        //Reset params
+        //_isJumpPressed = false;
+        //_isJumpReleased = false;
+        //_isDashPressed = false;
+        //_isDashReleased = false;
     }
 
 
@@ -329,7 +331,7 @@ public class P_StateManager : MonoBehaviour
 
         if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
         {
-            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth * 2f);
+            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth/* * 2f*/);
             Vector3 leftover = vel - snapToSurface;
             
             
@@ -382,7 +384,7 @@ public class P_StateManager : MonoBehaviour
     void GroundCheck()
     {
         RaycastHit hit;
-        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _capsuleCollider.radius + 0.05f);
+        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _skindWidth*2);
         if (hit.transform != null && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
         {
             _isGrounded = true;
@@ -398,6 +400,7 @@ public class P_StateManager : MonoBehaviour
             //_realSlopeAngle = 0f;
         }
     }
+
 
 
     public Vector3 AlignToSlope(Vector3 inputDirection)
@@ -453,24 +456,22 @@ public class P_StateManager : MonoBehaviour
 
     public void OnJumpPress(InputAction.CallbackContext context)
     {
-        _isJumpPressed = context.started;
-        _isJumpReleased = true;
+        _isJumpPressed = context.ReadValueAsButton();
     }
-    public void OnJumpRelease(InputAction.CallbackContext context)
-    {
-        _isJumpReleased = context.started;
-        _isJumpPressed = false;
-    }
+
+
     public void OnDashPress(InputAction.CallbackContext context)
     {
         _isDashPressed = context.started;
         _isDashReleased = true;
     }
+
     public void OnDashRelease(InputAction.CallbackContext context)
     {
         _isDashReleased=context.started;
         _isDashPressed = false;
     }
+
     void OnSprint(InputAction.CallbackContext context)
     {
         _isSprintPressed = context.ReadValueAsButton();
