@@ -39,7 +39,7 @@ public class P_InAirState : P_BaseState
         if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Ground());
-            Pow.ResetJumps();
+            _ctx.Pow.ResetJumps();
         }
         
     }
