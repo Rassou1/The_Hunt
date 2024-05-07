@@ -6,7 +6,7 @@ public abstract class P_BaseState
     protected P_StateManager _ctx;
     protected P_StateFactory _factory;
     protected SCR_abilityManager Pow;
-    private P_BaseState _currentSubState;
+    protected P_BaseState _currentSubState;
     private P_BaseState _currentSuperState;
 
     protected bool IsRootState { set { _isRootState = value; } }

@@ -134,6 +134,8 @@ public class P_StateManager : MonoBehaviour
     public Vector3 BotSphere { get { return _botSphere; } }
     public Vector3 TopSphere { get { return _topSphere; } }
 
+    public Vector3 PreCollideMovement { get { return _preCollideMovement; } }
+
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
@@ -253,9 +255,13 @@ public class P_StateManager : MonoBehaviour
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
         GroundCheck();
+        if (!_isGrounded)
+        {
+            AntiClipCheck();
+        }
 
         // Update ability manager
-        Pow.Update();
+        //Pow.Update();
         
         SetCameraOrientation();
         
@@ -275,12 +281,12 @@ public class P_StateManager : MonoBehaviour
         
         _currentState.UpdateStates();
 
+        _appliedMovement = AlignToSlope(_stateDirection);
+        _preCollideMovement = _appliedMovement;
+        _finalMagnitude = _stateMagnitude/* * _dashFactor*/;
         
-
-        _finalMagnitude = _stateMagnitude * _dashFactor;
-        
-        Debug.DrawRay(_rigidbody.transform.position, _stateDirection, Color.green, Time.deltaTime);
-        _appliedMovement = CamRelHor(_stateDirection);
+        Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
+        _appliedMovement = CamRelHor(_appliedMovement);
         //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
@@ -288,6 +294,7 @@ public class P_StateManager : MonoBehaviour
         _actualMagnitude = _finalMagnitude;
         Debug.Log("SlopeAngle: " + _realSlopeAngle);
         _appliedMovement *= Time.deltaTime;
+        
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
         
         Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
@@ -331,12 +338,12 @@ public class P_StateManager : MonoBehaviour
 
         if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
         {
-            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth/* * 2f*/);
+            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
             Vector3 leftover = vel - snapToSurface;
             
             
 
-            float angle = Vector3.Angle(transform.up, hit.normal);  //Make this relative to your current alignment
+            float angle = Vector3.Angle(_gravDir * -1, hit.normal);
 
             if (snapToSurface.magnitude <= _skindWidth)
             {
@@ -384,7 +391,7 @@ public class P_StateManager : MonoBehaviour
     void GroundCheck()
     {
         RaycastHit hit;
-        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _skindWidth*2);
+        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _skindWidth * 2f);
         if (hit.transform != null && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
         {
             _isGrounded = true;
@@ -401,7 +408,19 @@ public class P_StateManager : MonoBehaviour
         }
     }
 
-
+    void AntiClipCheck()
+    {
+        RaycastHit hit;
+        Physics.Raycast(_rigidbody.transform.position, _gravDir, out hit, _capsuleCollider.height / 2);
+        if (hit.transform != null)
+        {
+            _rigidbody.transform.position = hit.point + _gravDir.normalized * -1 * (0.05f + _capsuleCollider.height / 2f);
+            _isGrounded = true;
+            _slopeNormal = hit.normal;
+            _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
+            _realSlopeAngle = Vector3.Angle(-_gravDir, _slopeNormal);
+        }
+    }
 
     public Vector3 AlignToSlope(Vector3 inputDirection)
     {
@@ -418,31 +437,7 @@ public class P_StateManager : MonoBehaviour
     //}
 
 
-    Vector3 testForward;
-    Vector3 testRight;
-
-    void SlopeRelative()
-    {
-        testForward = _moveForward;
-        testRight = _moveRight;
-        
-        
-    }
-
-    void RotateToSlope()
-    {
-        Vector3 testForward;
-        Vector3 testRight;
-
-    }
-
-    Vector3 TestCamRel(Vector3 input)
-    {
-        Vector3 camRelativeHor;
-        //input = new Vector3(input.x, 0, input.z);
-        camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x + _slopeNormal * input.y;
-        return camRelativeHor;
-    }
+    
 
 
     Vector3 CamRelHor(Vector3 input)
@@ -450,7 +445,7 @@ public class P_StateManager : MonoBehaviour
         Vector3 camRelativeHor;
         //input = new Vector3(input.x, 0, input.z);
         camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x;
-        camRelativeHor = camRelativeHor + new Vector3(0,input.y,0);
+        camRelativeHor = new Vector3(camRelativeHor.x, input.y, camRelativeHor.z);
         return camRelativeHor;
     }
 
@@ -521,14 +516,6 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-
-    //Will be used to rotate the orientation of the rigidbody to allow us to switch the direction of gravity
-    void RotateBodyXZ()
-    {
-        var forward = _cameraOrientation.forward;
-
-        //_rigidbody.transform.rotation = 
-    }
     
     
     

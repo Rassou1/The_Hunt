@@ -19,23 +19,28 @@ public class P_InAirState : P_BaseState
         _ctx.Animator.SetBool(_ctx.IsFallingHash, true);
         hasDoubleJumped = false;
         buttonReleased = false;
+        direction = _ctx.PreCollideMovement;
+        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y) * 0.5f;
+
+        _ctx.StateDirection = direction;
+        _ctx.VertMagnitude -= 14f * Time.deltaTime;
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
-        direction = _ctx.AppliedMovement;
-        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y) * 0.2f;
-        
+        direction = _ctx.StateDirection;
+        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y) * 0.5f;
+
         _ctx.StateDirection = direction;
-        _ctx.VertMagnitude -= 10f * Time.deltaTime;
+        _ctx.VertMagnitude -= 14f * Time.deltaTime;
 
         if (!_ctx.IsJumpPressed)
         {
             buttonReleased = true;
         }
 
-        if (!hasDoubleJumped && _ctx.IsJumpPressed && buttonReleased)
+        if (!hasDoubleJumped && _ctx.IsJumpPressed && buttonReleased && _currentSubState != _factory.Slide())
         {
             _ctx.VertMagnitude = 5f;
             hasDoubleJumped = true;
@@ -52,9 +57,7 @@ public class P_InAirState : P_BaseState
         if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Ground());
-            _ctx.Pow.ResetJumps();
         }
-        
     }
 
     public override void InitializeSubState()

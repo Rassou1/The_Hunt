@@ -13,10 +13,13 @@ public class P_GroundedState : P_BaseState
     {
         InitializeSubState();
         _ctx.Animator.SetBool(_ctx.IsFallingHash, false);
-        _ctx.ActualMagnitude += Mathf.Abs(_ctx.VertMagnitude);
-        _ctx.VertMagnitude = -0.1f;
+        _ctx.ActualMagnitude = _ctx.AppliedMovement.magnitude / Time.deltaTime;
         
-        _ctx.Pow.AB_jumpsLeft = _ctx.Pow.AB_jumpsTotal;
+        _ctx.VertMagnitude = -0.1f;
+
+        direction = _ctx.SubStateDirSet;
+        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
+        _ctx.StateDirection = direction;
     }
 
     public override void UpdateState()
@@ -24,7 +27,7 @@ public class P_GroundedState : P_BaseState
         CheckSwitchState();
         direction = _ctx.SubStateDirSet;
         direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y);
-        _ctx.StateDirection = _ctx.AlignToSlope(direction);
+        _ctx.StateDirection = direction;
     }
 
     public override void ExitState()
@@ -56,7 +59,7 @@ public class P_GroundedState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        if (_ctx.IsJumpPressed)
+        if (_ctx.IsJumpPressed && _currentSubState != _factory.Slide())
         {
             _ctx.VertMagnitude = 5f;
             _ctx.IsGrounded = false;
@@ -64,6 +67,7 @@ public class P_GroundedState : P_BaseState
         }
         else if (!_ctx.IsGrounded)
         {
+            _ctx.VertMagnitude = -3f;
             SwitchState(_factory.Air());
         }
         
