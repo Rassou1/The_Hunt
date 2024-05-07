@@ -12,15 +12,16 @@ public class P_StateManager : MonoBehaviour
     //private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
-    
-    
+
+
     CapsuleCollider _capsuleCollider;
     Bounds _bounds;
-    
+
     int _maxBounces = 5;
     float _skindWidth = 0.05f;
 
     LayerMask whatIsGround;
+     
 
 
 
@@ -36,7 +37,7 @@ public class P_StateManager : MonoBehaviour
     int _isWallRunningHash;
     int _isSlidingHash;
     int _isClimbingHash;
-    
+
     P_BaseState _currentState;
     P_StateFactory _states;
 
@@ -62,11 +63,14 @@ public class P_StateManager : MonoBehaviour
     bool _isMovementPressed;
     bool _isSprintPressed;
     bool _isJumpPressed;
+    bool _isJumpReleased;
+    bool _isDashPressed;
+    bool _isDashReleased;
     bool _isSlidePressed;
-    
+
 
     bool _isGrounded = false;
-    
+
 
 
     //New Stuff
@@ -76,6 +80,7 @@ public class P_StateManager : MonoBehaviour
     Vector3 _stateDirection;
     Vector3 _finalHorMovement;
     Vector3 _preCollideMovement;
+    public float _dashFactor; // This manages the character's dash value and applies it to the character speed
 
     float _vertMagnitude;
     float _gravLerp;
@@ -85,14 +90,16 @@ public class P_StateManager : MonoBehaviour
 
 
     float _stateMagnitude;
-    float _finalMagnitude;
-    float _actualMagnitude;
+    public float _finalMagnitude;
+    public float _actualMagnitude;
 
     Vector3 _botSphere;
     Vector3 _topSphere;
 
     Vector3 _gravDir = Vector3.down;
 
+
+    SCR_abilityManager _pow = new SCR_abilityManager();
 
     PlayerWalking walking;
 
@@ -107,11 +114,11 @@ public class P_StateManager : MonoBehaviour
     public int IsSprintingHash { get { return _isSprintingHash; } }
     public int IsFallingHash { get { return _isFallingHash; } }
     public int IsWallRunningHash { get { return _isWallRunningHash; } }
-    public int IsSlidingHash {  get { return _isSlidingHash; } }
+    public int IsSlidingHash { get { return _isSlidingHash; } }
 
     public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
-    
+
     public Vector3 SubStateDirSet { get { return _subStateDirSet; } set { _subStateDirSet = value; } }
     public float VertMagnitude { get { return _vertMagnitude; } set { _vertMagnitude = value; } }
     public float ActualMagnitude { get { return _actualMagnitude; } set { _actualMagnitude = value; } }
@@ -121,18 +128,22 @@ public class P_StateManager : MonoBehaviour
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; } }
     public Vector3 CurrentMovement { get { return _currentMovement; } set { _currentMovement = value; } }
     public Vector3 CurrentSprintMovement { get { return _currentSprintMovement; } set { _currentSprintMovement = value; } }
-    public Vector3 AppliedMovement {  get { return _appliedMovement; } set { _appliedMovement = value; } }
+    public Vector3 AppliedMovement { get { return _appliedMovement; } set { _appliedMovement = value; } }
     public Vector3 RelForward { get { return _relForward; } }
 
     public Vector3 BotSphere { get { return _botSphere; } }
     public Vector3 TopSphere { get { return _topSphere; } }
 
+    public Vector3 PreCollideMovement { get { return _preCollideMovement; } }
+
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
-    public float AppliedMovementX { get { return _appliedMovement.x; } set {  _appliedMovement.x = value; } }
+    public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
-    
-    
+
+
+    public SCR_abilityManager Pow { get { return _pow; } private set { _pow = value; }}
+
 
     public Vector3 SlopeNormal { get { return _slopeNormal; } }
     public float SlopeAngle { get { return _slopeAngle; } }
@@ -140,6 +151,9 @@ public class P_StateManager : MonoBehaviour
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsSprintPressed {  get { return _isSprintPressed; } }
     public bool IsJumpPressed { get { return _isJumpPressed; } }
+    public bool IsJumpReleased { get { return _isJumpReleased; } }
+    public bool IsDashPressed{ get { return _isDashPressed; } }
+    public bool IsDashReleased { get { return _isDashReleased; } }
     public bool IsSlidePressed { get { return _isSlidePressed; } }
 
     public bool IsGrounded {  get { return _isGrounded; } set { _isGrounded = value; } }
@@ -174,6 +188,8 @@ public class P_StateManager : MonoBehaviour
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
+        _dashFactor = 1;
+
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isSprintingHash = Animator.StringToHash("isRunning");
         _isFallingHash = Animator.StringToHash("isFalling");
@@ -187,8 +203,10 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
         _playerInput.PreyControls.Sprint.started += OnSprint;
         _playerInput.PreyControls.Sprint.canceled += OnSprint;
-        _playerInput.PreyControls.Jump.started += OnJump;
-        _playerInput.PreyControls.Jump.canceled += OnJump;
+        _playerInput.PreyControls.Jump.started += OnJumpPress;
+        _playerInput.PreyControls.Jump.canceled += OnJumpPress;
+        _playerInput.PreyControls.Dash.started += OnDashPress;
+        _playerInput.PreyControls.Dash.canceled += OnDashRelease;
         _playerInput.PreyControls.Slide.started += OnSlide;
         _playerInput.PreyControls.Slide.canceled += OnSlide;
         _playerInput.PreyControls.Slide.performed += OnSlide;
@@ -199,10 +217,11 @@ public class P_StateManager : MonoBehaviour
 
 
         //setup state
-        _states = new P_StateFactory(this);
-
+        Pow = new SCR_abilityManager();
+        _states = new P_StateFactory(this, Pow);
         _currentState = _states.Ground();
         _currentState.EnterState();
+
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -212,7 +231,6 @@ public class P_StateManager : MonoBehaviour
     }
 
     
-
 
     void Update()
     {
@@ -237,6 +255,13 @@ public class P_StateManager : MonoBehaviour
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
         GroundCheck();
+        if (!_isGrounded)
+        {
+            AntiClipCheck();
+        }
+
+        // Update ability manager
+        //Pow.Update();
         
         SetCameraOrientation();
         
@@ -256,12 +281,12 @@ public class P_StateManager : MonoBehaviour
         
         _currentState.UpdateStates();
 
+        _appliedMovement = AlignToSlope(_stateDirection);
+        _preCollideMovement = _appliedMovement;
+        _finalMagnitude = _stateMagnitude/* * _dashFactor*/;
         
-
-        _finalMagnitude = _stateMagnitude;
-        
-        Debug.DrawRay(_rigidbody.transform.position, _stateDirection, Color.green, Time.deltaTime);
-        _appliedMovement = CamRelHor(_stateDirection);
+        Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
+        _appliedMovement = CamRelHor(_appliedMovement);
         //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
@@ -269,6 +294,7 @@ public class P_StateManager : MonoBehaviour
         _actualMagnitude = _finalMagnitude;
         Debug.Log("SlopeAngle: " + _realSlopeAngle);
         _appliedMovement *= Time.deltaTime;
+        
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
         
         Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
@@ -282,10 +308,17 @@ public class P_StateManager : MonoBehaviour
         //Debug.Log("VertMagnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
         //CheckClimbingState();
+        
+        
+        //Reset params
+        //_isJumpPressed = false;
+        //_isJumpReleased = false;
+        //_isDashPressed = false;
+        //_isDashReleased = false;
     }
 
 
-    //This function is based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
+    //This function  based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
     Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
         
@@ -305,12 +338,12 @@ public class P_StateManager : MonoBehaviour
 
         if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
         {
-            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth * 2f);
+            Vector3 snapToSurface = vel.normalized * (hit.distance - _skindWidth);
             Vector3 leftover = vel - snapToSurface;
             
             
 
-            float angle = Vector3.Angle(transform.up, hit.normal);  //Make this relative to your current alignment
+            float angle = Vector3.Angle(_gravDir * -1, hit.normal);
 
             if (snapToSurface.magnitude <= _skindWidth)
             {
@@ -358,7 +391,7 @@ public class P_StateManager : MonoBehaviour
     void GroundCheck()
     {
         RaycastHit hit;
-        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _capsuleCollider.radius + 0.05f);
+        Physics.SphereCast(_botSphere, _bounds.extents.x, _gravDir, out hit, _skindWidth * 2f);
         if (hit.transform != null && Vector3.Angle(hit.normal, Vector3.up) <= _maxSlopeAngle)
         {
             _isGrounded = true;
@@ -375,6 +408,19 @@ public class P_StateManager : MonoBehaviour
         }
     }
 
+    void AntiClipCheck()
+    {
+        RaycastHit hit;
+        Physics.Raycast(_rigidbody.transform.position, _gravDir, out hit, _capsuleCollider.height / 2);
+        if (hit.transform != null)
+        {
+            _rigidbody.transform.position = hit.point + _gravDir.normalized * -1 * (0.05f + _capsuleCollider.height / 2f);
+            _isGrounded = true;
+            _slopeNormal = hit.normal;
+            _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
+            _realSlopeAngle = Vector3.Angle(-_gravDir, _slopeNormal);
+        }
+    }
 
     public Vector3 AlignToSlope(Vector3 inputDirection)
     {
@@ -391,31 +437,7 @@ public class P_StateManager : MonoBehaviour
     //}
 
 
-    Vector3 testForward;
-    Vector3 testRight;
-
-    void SlopeRelative()
-    {
-        testForward = _moveForward;
-        testRight = _moveRight;
-        
-        
-    }
-
-    void RotateToSlope()
-    {
-        Vector3 testForward;
-        Vector3 testRight;
-
-    }
-
-    Vector3 TestCamRel(Vector3 input)
-    {
-        Vector3 camRelativeHor;
-        //input = new Vector3(input.x, 0, input.z);
-        camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x + _slopeNormal * input.y;
-        return camRelativeHor;
-    }
+    
 
 
     Vector3 CamRelHor(Vector3 input)
@@ -423,13 +445,26 @@ public class P_StateManager : MonoBehaviour
         Vector3 camRelativeHor;
         //input = new Vector3(input.x, 0, input.z);
         camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x;
-        camRelativeHor = camRelativeHor + new Vector3(0,input.y,0);
+        camRelativeHor = new Vector3(camRelativeHor.x, input.y, camRelativeHor.z);
         return camRelativeHor;
     }
 
-    void OnJump(InputAction.CallbackContext context)
+    public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
+    }
+
+
+    public void OnDashPress(InputAction.CallbackContext context)
+    {
+        _isDashPressed = context.started;
+        _isDashReleased = true;
+    }
+
+    public void OnDashRelease(InputAction.CallbackContext context)
+    {
+        _isDashReleased=context.started;
+        _isDashPressed = false;
     }
 
     void OnSprint(InputAction.CallbackContext context)
@@ -481,14 +516,6 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-
-    //Will be used to rotate the orientation of the rigidbody to allow us to switch the direction of gravity
-    void RotateBodyXZ()
-    {
-        var forward = _cameraOrientation.forward;
-
-        //_rigidbody.transform.rotation = 
-    }
     
     
     

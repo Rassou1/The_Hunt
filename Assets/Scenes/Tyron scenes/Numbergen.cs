@@ -7,6 +7,9 @@ public class RoleGiver: AttributesSync,IInteractable
     public GameObject hunterCanvas;
     public GameObject preyCanvas;
 
+
+
+
     public GameObject GiveObject()
     {
         throw new System.NotImplementedException();
@@ -25,42 +28,37 @@ public class RoleGiver: AttributesSync,IInteractable
 
             for (int i = 0; i < players.Length; i++)
             {
-               
+
                 if (i == hunterIndex)
                 {
-                   
                     players[i].layer = LayerMask.NameToLayer("Hunter");
                     hunterCanvas.SetActive(true);
-
                    
-
 
 
                 }
                 else
                 {
-                    
                     players[i].layer = LayerMask.NameToLayer("Prey");
                     preyCanvas.SetActive(true);
-                    
                 }
             }
         }
+    }
 
-      
-
-
-
+    public void Tag(GameObject tagger, GameObject tagged) 
+    {
+        tagged.transform.position = new Vector3(63.7f, 10.58f, -17.28f);
 
     }
 
     void Start()
     {
-       
+
     }
 
     void Update()
     {
-      
+
     }
 }

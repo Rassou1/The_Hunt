@@ -4,7 +4,7 @@ public class P_RunningState : P_BaseState
 {
     float totalMagnitude;
     float sprintMagnitude;
-    public P_RunningState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
+    public P_RunningState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
 
     }
@@ -34,6 +34,7 @@ public class P_RunningState : P_BaseState
             _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;
             _ctx.StateMagnitude = Mathf.Min(_ctx.StateMagnitude, _ctx._softCap);
         }
+
         CheckSwitchState();
     }
 
