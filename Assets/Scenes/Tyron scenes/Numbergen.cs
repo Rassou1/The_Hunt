@@ -18,6 +18,7 @@ public class RoleGiver: AttributesSync,IInteractable
 
     public void InitInteract(string interactor)
     {
+        players = GameObject.FindGameObjectsWithTag("Player");
         BroadcastRemoteMethod("Interact", interactor);
 
     }
@@ -40,7 +41,7 @@ public class RoleGiver: AttributesSync,IInteractable
                 {
                     players[i].layer = LayerMask.NameToLayer("Hunter");
 
-                    if (avatar.IsMe)
+                    if (!avatar.IsMe)
                         return;
                     hunterCanvas.SetActive(true);
 
@@ -52,7 +53,7 @@ public class RoleGiver: AttributesSync,IInteractable
 
                     players[i].layer = LayerMask.NameToLayer("Prey");
 
-                    if (avatar.IsMe)
+                    if (!avatar.IsMe)
                         return;
                     preyCanvas.SetActive(true);
                 }

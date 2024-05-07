@@ -32,10 +32,9 @@ public class InteractablePlayer : AttributesSync, IInteractable
     }
     public void InitInteract(string interactor)
     {
-        if (_avatar.IsMe)
-        {
-            //BroadcastRemoteMethod("Interact", interactor);
-        }
+
+            BroadcastRemoteMethod("Interact", interactor);
+        
     }
     GameObject _interactor;
 
@@ -54,12 +53,13 @@ public class InteractablePlayer : AttributesSync, IInteractable
             }
         }
         // Check if both the interactor and the player are on specific layers
-        //if (interactor.layer == LayerMask.NameToLayer("Hunter") && gameObject.layer == LayerMask.NameToLayer("Prey"))
-        //{
-        // Teleport the player to the prison position
-        gameObject.transform.position = prisonPosition;
+        if (_interactor.layer == LayerMask.NameToLayer("Hunter") && gameObject.layer == LayerMask.NameToLayer("Prey"))
+        {
+            // Teleport the player to the prison position
+            GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
             GotTagged = true;
-        //}
+        }
+        Debug.Log("");
     }
 
     //private void GetTP()

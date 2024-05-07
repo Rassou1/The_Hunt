@@ -9793,7 +9793,7 @@ MonoBehaviour:
   LocalMethodBehavior: 1
   hunterCanvas: {fileID: 1537400929}
   preyCanvas: {fileID: 1813374679}
-  mult: {fileID: 0}
+  players: []
 --- !u!114 &619922851
 MonoBehaviour:
   m_ObjectHideFlags: 0
