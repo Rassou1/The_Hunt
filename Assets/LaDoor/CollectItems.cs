@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 //public class CollectItems : MonoBehaviour
 //{
 //    [SerializeField] private Animator Dooranim;
@@ -130,7 +130,7 @@ public class CollectItems : MonoBehaviour
     private static int diamondsCollected = 0;
     private int requiredDiamonds = 2;
     private bool isCollected = false;
-
+    public Text diamondCountText;
     private Renderer _renderer;
     private Collider _collider;
 
@@ -142,6 +142,7 @@ public class CollectItems : MonoBehaviour
         {
             Diamonds.SetActive(true);  // Ensure the diamond is visible and interactable at the start
         }
+        UpdateDiamondText();
     }
 
     private void OnTriggerStay(Collider other)
@@ -162,11 +163,15 @@ public class CollectItems : MonoBehaviour
         //{
         //    _collider.enabled = false;  // Disable the collider
         //}
-        Destroy(gameObject);
-        isCollected = true;  // Mark the diamond as collected
-        diamondsCollected++;
+        if (!isCollected)
+        {
 
-        CheckDiamondsCollected();
+            Destroy(gameObject);
+            isCollected = true;  // Mark the diamond as collected
+            diamondsCollected++;
+            UpdateDiamondText();
+            CheckDiamondsCollected();
+        }
     }
     private void CheckDiamondsCollected()
     {
@@ -179,17 +184,59 @@ public class CollectItems : MonoBehaviour
             }
         }
     }
+    void UpdateDiamondText()
+    {
+        if (diamondCountText != null)
+        {
+            diamondCountText.text = "Diamonds: " + diamondsCollected;  // Metni güncelle
+        }
+    }
 }
+//public class CollectItems : MonoBehaviour
+//{
+//    [SerializeField] private Animator Dooranim;
+//    public GameObject Diamonds;
+//    private static int diamondsCollected = 0;
+//    private int requiredDiamonds = 2;
+//    private bool isCollected = false;
+//    public Text diamondCountText;  // Text elementi için bir referans
+
+//    void Start()
+//    {
+//        if (Diamonds != null)
+//        {
+//            Diamonds.SetActive(true);
+//        }
+//        UpdateDiamondText();  // Başlangıçta metni güncelle
+//    }
+
+//    private void OnTriggerStay(Collider other)
+//    {
+//        if (other.gameObject.tag == "Player" && Input.GetKey(KeyCode.Q) && !isCollected)
+//        {
+//            CollectDiamond();
+//        }
+//    }
+
+//    private void CollectDiamond()
+//    {
+//        Destroy(gameObject);
+//        isCollected = true;
+//        diamondsCollected++;
+//        UpdateDiamondText();  // Her toplamadan sonra metni güncelle
+//        CheckDiamondsCollected();
+//    }
+
 //    private void CheckDiamondsCollected()
 //    {
 //        if (diamondsCollected >= requiredDiamonds)
 //        {
-//            Dooranim.SetBool("Open", true);
 //            DoorController doorController = Dooranim.GetComponent<DoorController>();
 //            if (doorController != null)
 //            {
-//                StartCoroutine(doorController.StopDoor());
+//                doorController.OpenDoor();
 //            }
 //        }
 //    }
-//}
+
+    
