@@ -581,6 +581,9 @@ MonoBehaviour:
   _cameraOrientation: {fileID: 4045374355579123734}
   _cameraPostion: {fileID: 0}
   _animator: {fileID: 6205704390062304464}
+  _dashFactor: 0
+  _finalMagnitude: 0
+  _actualMagnitude: 0
   _moveSpeed: 4
   climbspeed: 0
 --- !u!136 &8611927541161921040

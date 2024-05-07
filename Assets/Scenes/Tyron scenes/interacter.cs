@@ -2,29 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Alteruna;
-    interface IInteractable
-    {
-        public void Interact(GameObject interactor, Alteruna.Avatar interactorAvatar);
-        
-        
-        public GameObject GiveObject();
-    }
+using System;
+using Unity.VisualScripting;
 
+interface IInteractable
+{
+    public void Interact(string interactor);
+
+    public void InitInteract(string interactor);
+
+    public GameObject GiveObject();
+}
 public class interacter : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Alteruna.Avatar _avatar;
+    private Alteruna.Avatar _avatar;
 
 
     public GameObject InteractorCam;
-    public GameObject roleGiver;
 
     public Transform InteractorSource;
     public float InteractRange;
+
+    [SerializeField] private GameObject me;
+
     void Start()
     {
         _avatar = gameObject.GetComponent<Alteruna.Avatar>();
-
+        me = gameObject;
     }
 
     // Update is called once per frame
@@ -41,10 +46,9 @@ public class interacter : MonoBehaviour
                 IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
 
-                if (interactObj != null)//check not me
+                if (interactObj != null)
                 {
-                    interactObj.Interact(gameObject,_avatar);
-                    roleGiver.GetComponentInParent<RoleGiver>().Tag(gameObject, interactObj.GiveObject());
+                    interactObj.InitInteract(me.name);
 
                     Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
                 }

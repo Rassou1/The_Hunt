@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.040259514, g: 0.57794255, b: 0.59351, a: 1}
+  m_IndirectSpecularColor: {r: 0.04025992, g: 0.57794255, b: 0.59351003, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28823,7 +28823,7 @@ MonoBehaviour:
   _uidString: d6e7d052-9507-40eb-80f8-e3eef7ae059f
   Reliability: 1
   LocalMethodBehavior: 1
-  hunterCanvas: {fileID: 2130171877}
+  hunterCanvas: {fileID: 1749986812}
   preyCanvas: {fileID: 2130171877}
 --- !u!114 &1503500081
 MonoBehaviour:

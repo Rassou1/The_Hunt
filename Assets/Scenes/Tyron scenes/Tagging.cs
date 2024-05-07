@@ -20,7 +20,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
     {
         if (GotTagged)
         {
-            GetTP();
+            //GetTP();
 
         }
     }
@@ -30,26 +30,40 @@ public class InteractablePlayer : AttributesSync, IInteractable
     {
         return gameObject;
     }
+    public void InitInteract(string interactor)
+    {
+        if (_avatar.IsMe)
+        {
+            //BroadcastRemoteMethod("Interact", interactor);
+        }
+    }
+    GameObject _interactor;
 
     [SynchronizableMethod]
-     
-    public void Interact(GameObject interactor, Alteruna.Avatar interactorAvatar)
+    public void Interact(string interactor)
     {
-        if (!_avatar.IsMe)
-            return;
+        _interactor = FindAnyObjectByType<GameObject>();
 
+       GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            if (player.name == interactor)
+            {
+                _interactor = player;
+            }
+        }
         // Check if both the interactor and the player are on specific layers
         //if (interactor.layer == LayerMask.NameToLayer("Hunter") && gameObject.layer == LayerMask.NameToLayer("Prey"))
         //{
         // Teleport the player to the prison position
-        //GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
-        //GotTagged = true;
-        Alteruna.Multiplayer.Destroy(_avatar);
+        gameObject.transform.position = prisonPosition;
+            GotTagged = true;
         //}
     }
 
-    private void GetTP()
-    {
-        GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
-    }
+    //private void GetTP()
+    //{
+    //    GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
+    //}
 }

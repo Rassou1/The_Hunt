@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 public class P_StateManager : MonoBehaviour
 {
-    //private Alteruna.Avatar _avatar;
+    private Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
 
@@ -165,11 +165,11 @@ public class P_StateManager : MonoBehaviour
 
     public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
 
-    //void Start()
-    //{
-    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
+    void Start()
+    {
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
 
-    //}
+    }
 
 
 
@@ -236,8 +236,8 @@ public class P_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        //if (!_avatar.IsMe)
-        //    return;
+        if (!_avatar.IsMe)
+            return;
 
 
         //if (_isMovementPressed && _isGrounded && !_isSprintPressed)

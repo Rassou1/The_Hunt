@@ -2,48 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Alteruna;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 public class RoleGiver: AttributesSync,IInteractable
 {
     public GameObject hunterCanvas;
     public GameObject preyCanvas;
 
-
-
+    public GameObject[] players;
 
     public GameObject GiveObject()
     {
-        throw new System.NotImplementedException();
+        return gameObject;
     }
 
-    public void Interact(GameObject interactor, Alteruna.Avatar interactorAvatar)
+    public void InitInteract(string interactor)
+    {
+        BroadcastRemoteMethod("Interact", interactor);
+
+    }
+
+    [SynchronizableMethod] 
+    public void Interact(string interactor)
     {
 
-        gameObject.SetActive(false);
-
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
+       
+            
         if (players.Length > 0)
         {
             int hunterIndex = Random.Range(0, players.Length);
 
             for (int i = 0; i < players.Length; i++)
             {
+                Alteruna.Avatar avatar = players[i].GetComponent<Alteruna.Avatar>();
 
                 if (i == hunterIndex)
                 {
                     players[i].layer = LayerMask.NameToLayer("Hunter");
-                    hunterCanvas.SetActive(true);
-                   
 
+                    if (avatar.IsMe)
+                        return;
+                    hunterCanvas.SetActive(true);
+
+                    
 
                 }
                 else
                 {
+
                     players[i].layer = LayerMask.NameToLayer("Prey");
+
+                    if (avatar.IsMe)
+                        return;
                     preyCanvas.SetActive(true);
                 }
             }
         }
+        gameObject.SetActive(false);
+
     }
 
     public void Tag(GameObject tagger, GameObject tagged) 

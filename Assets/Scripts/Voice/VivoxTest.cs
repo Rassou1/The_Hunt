@@ -41,7 +41,7 @@ public class VivoxTest : MonoBehaviour
     {
         Channel3DProperties props = new Channel3DProperties(64,10,1.0f, AudioFadeModel.InverseByDistance);
         await VivoxService.Instance.JoinPositionalChannelAsync(name,ChatCapability.AudioOnly,props);
-        Debug.LogError("Joined Channel: " + name);
+        //Debug.LogError("Joined Channel: " + name);
     }
 
     // Update is called once per frame
