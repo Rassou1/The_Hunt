@@ -78,12 +78,10 @@ public class P_StateManager : MonoBehaviour
     float _slopeAngle;
     float _realSlopeAngle;
     Vector3 _stateDirection;
-    Vector3 _finalHorMovement;
     Vector3 _preCollideMovement;
     public float _dashFactor; // This manages the character's dash value and applies it to the character speed
 
     float _vertMagnitude;
-    float _gravLerp;
     float _horMouseMod = 1f;
     Vector3 _subStateDirSet;
     Vector3 _relForward;
@@ -97,6 +95,8 @@ public class P_StateManager : MonoBehaviour
     Vector3 _topSphere;
 
     Vector3 _gravDir = Vector3.down;
+
+    Vector3 _dashDirection = Vector3.zero;
 
 
     SCR_abilityManager _pow = new SCR_abilityManager();
@@ -165,6 +165,7 @@ public class P_StateManager : MonoBehaviour
     public static P_StateManager Instance { get; internal set; }
 
     public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
+    public Vector3 OrientationPos { get { return transform.position; } set { transform.position = value; } }
 
     void Start()
     {
@@ -207,7 +208,7 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Jump.started += OnJumpPress;
         _playerInput.PreyControls.Jump.canceled += OnJumpPress;
         _playerInput.PreyControls.Dash.started += OnDashPress;
-        _playerInput.PreyControls.Dash.canceled += OnDashRelease;
+        _playerInput.PreyControls.Dash.canceled += OnDashPress;
         _playerInput.PreyControls.Slide.started += OnSlide;
         _playerInput.PreyControls.Slide.canceled += OnSlide;
         _playerInput.PreyControls.Slide.performed += OnSlide;
@@ -291,9 +292,10 @@ public class P_StateManager : MonoBehaviour
         //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
-        
+
+        _appliedMovement += _dashDirection;
         _actualMagnitude = _finalMagnitude;
-        Debug.Log("SlopeAngle: " + _realSlopeAngle);
+        Debug.Log("DashDir: " + _dashDirection);
         _appliedMovement *= Time.deltaTime;
         
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
@@ -456,15 +458,20 @@ public class P_StateManager : MonoBehaviour
 
     public void OnDashPress(InputAction.CallbackContext context)
     {
-        _isDashPressed = context.started;
-        _isDashReleased = true;
+        
+        if (context.ReadValueAsButton())
+        {
+            _dashDirection = CamRelHor(new Vector3(0, 0, 20f));
+            _vertMagnitude = 0f;
+        }
+        else
+        {
+            _dashDirection = Vector3.zero;
+        }
+        
     }
 
-    public void OnDashRelease(InputAction.CallbackContext context)
-    {
-        _isDashReleased=context.started;
-        _isDashPressed = false;
-    }
+    
 
     void OnSprint(InputAction.CallbackContext context)
     {
