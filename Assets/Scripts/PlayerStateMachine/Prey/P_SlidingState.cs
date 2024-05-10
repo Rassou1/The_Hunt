@@ -13,8 +13,9 @@ public class P_SlidingState : P_BaseState
 
     public override void EnterState()
     {
-        _ctx._cameraPostion.transform.position -= new Vector3(0, 0.8f, 0);
+        _ctx._cameraPostion.transform.position -= new Vector3(0, 0.7f, 0);
         _ctx.CapsuleColliderHeight -= 0.8f;
+        
         //IgnoreCollision(this, hunter, true)
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
         _ctx.HorMouseMod = 0.2f;
@@ -63,8 +64,9 @@ public class P_SlidingState : P_BaseState
     public override void ExitState()
     {
         //IgnoreCollision(this, hunter, false)
-        _ctx._cameraPostion.transform.position += new Vector3(0, 0.8f, 0);
+        _ctx._cameraPostion.transform.position += new Vector3(0, 0.7f, 0);
         _ctx.CapsuleColliderHeight += 0.8f;
+        
         _ctx.SubStateDirSet = new Vector3(0, 0, 0);
         _ctx.HorMouseMod = 1f;
         _ctx.Animator.SetBool(_ctx.IsSlidingHash, false);

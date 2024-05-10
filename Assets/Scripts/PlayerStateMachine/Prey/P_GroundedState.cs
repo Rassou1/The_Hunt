@@ -67,7 +67,7 @@ public class P_GroundedState : P_BaseState
         }
         else if (!_ctx.IsGrounded)
         {
-            _ctx.VertMagnitude = -3f;
+            _ctx.VertMagnitude = -Vector3.Project(_ctx.AppliedMovement / Time.deltaTime, _ctx.GravDirection).magnitude;
             SwitchState(_factory.Air());
         }
         
