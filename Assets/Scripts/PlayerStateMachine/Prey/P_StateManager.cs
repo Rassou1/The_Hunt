@@ -147,6 +147,7 @@ public class P_StateManager : MonoBehaviour
 
     public Vector3 SlopeNormal { get { return _slopeNormal; } }
     public float SlopeAngle { get { return _slopeAngle; } }
+    public float RealSlopeAngle { get { return _realSlopeAngle; } }
 
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsSprintPressed {  get { return _isSprintPressed; } }
@@ -236,8 +237,8 @@ public class P_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
 
 
         //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
@@ -304,7 +305,7 @@ public class P_StateManager : MonoBehaviour
 
         _rigidbody.transform.position += _appliedMovement;
 
-        //Debug.Log("Grounded: " + _isGrounded);
+        Debug.Log("Vert mag: " + Vector3.Project(_appliedMovement / Time.deltaTime, _gravDir).magnitude);
         //Debug.Log("VertMagnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
         //CheckClimbingState();
@@ -404,7 +405,7 @@ public class P_StateManager : MonoBehaviour
             _isGrounded = false;
             _slopeNormal = Vector3.zero;
             _slopeAngle = 0f;
-            //_realSlopeAngle = 0f;
+            _realSlopeAngle = 0f;
         }
     }
 
@@ -436,8 +437,6 @@ public class P_StateManager : MonoBehaviour
     //    _appliedMovement.y = preRelativeY;
     //}
 
-
-    
 
 
     Vector3 CamRelHor(Vector3 input)

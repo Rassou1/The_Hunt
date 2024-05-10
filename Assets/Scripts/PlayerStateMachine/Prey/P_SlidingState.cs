@@ -24,13 +24,13 @@ public class P_SlidingState : P_BaseState
     public override void UpdateState()
     {
         totalMagnitude = _ctx.ActualMagnitude;
-        if (_ctx.SlopeAngle < 0)
+        if (_ctx.RealSlopeAngle < 0)
         {
-            stateMag = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
+            stateMag = totalMagnitude + (_ctx.RealSlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
         }
-        else if (_ctx.SlopeAngle > 0)
+        else if (_ctx.RealSlopeAngle > 0)
         {
-            stateMag = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
+            stateMag = totalMagnitude + (_ctx.RealSlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.2f)) * Time.deltaTime;
         }
         else
         {
