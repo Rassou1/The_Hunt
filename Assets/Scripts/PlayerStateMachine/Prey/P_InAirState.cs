@@ -42,7 +42,7 @@ public class P_InAirState : P_BaseState
 
         if (!hasDoubleJumped && _ctx.IsJumpPressed && buttonReleased && _currentSubState != _factory.Slide())
         {
-            _ctx.VertMagnitude = 5f;
+            _ctx.VertMagnitude = 7.5f;
             hasDoubleJumped = true;
         }
     }
