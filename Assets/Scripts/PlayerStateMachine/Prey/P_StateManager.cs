@@ -21,7 +21,7 @@ public class P_StateManager : MonoBehaviour
     float _skindWidth = 0.05f;
 
     LayerMask whatIsGround;
-     
+
 
 
 
@@ -71,7 +71,7 @@ public class P_StateManager : MonoBehaviour
 
     bool _isGrounded = false;
 
-
+    bool _dashCoolingDown;
 
     //New Stuff
     Vector3 _slopeNormal;
@@ -98,6 +98,8 @@ public class P_StateManager : MonoBehaviour
 
     Vector3 _dashDirection = Vector3.zero;
 
+    IEnumerator _dashCooldownCoroutine;
+    IEnumerator _dashDurationCoroutine;
 
     SCR_abilityManager _pow = new SCR_abilityManager();
 
@@ -208,7 +210,7 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Jump.started += OnJumpPress;
         _playerInput.PreyControls.Jump.canceled += OnJumpPress;
         _playerInput.PreyControls.Dash.started += OnDashPress;
-        _playerInput.PreyControls.Dash.canceled += OnDashPress;
+        //_playerInput.PreyControls.Dash.canceled += OnDashPress;
         _playerInput.PreyControls.Slide.started += OnSlide;
         _playerInput.PreyControls.Slide.canceled += OnSlide;
         _playerInput.PreyControls.Slide.performed += OnSlide;
@@ -285,7 +287,7 @@ public class P_StateManager : MonoBehaviour
 
         _appliedMovement = AlignToSlope(_stateDirection);
         _preCollideMovement = _appliedMovement;
-        _finalMagnitude = _stateMagnitude/* * _dashFactor*/;
+        _finalMagnitude = _stateMagnitude;
         
         Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
         _appliedMovement = CamRelHor(_appliedMovement);
@@ -295,7 +297,6 @@ public class P_StateManager : MonoBehaviour
 
         _appliedMovement += _dashDirection;
         _actualMagnitude = _finalMagnitude;
-        Debug.Log("DashDir: " + _dashDirection);
         _appliedMovement *= Time.deltaTime;
         
         //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
@@ -307,7 +308,7 @@ public class P_StateManager : MonoBehaviour
 
         _rigidbody.transform.position += _appliedMovement;
 
-        Debug.Log("Vert mag: " + Vector3.Project(_appliedMovement / Time.deltaTime, _gravDir).magnitude);
+        
         //Debug.Log("VertMagnitude: " + _vertMagnitude);
         //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
         //CheckClimbingState();
@@ -458,17 +459,16 @@ public class P_StateManager : MonoBehaviour
 
     public void OnDashPress(InputAction.CallbackContext context)
     {
-        
-        if (context.ReadValueAsButton())
-        {
-            _dashDirection = CamRelHor(new Vector3(0, 0, 20f));
-            _vertMagnitude = 0f;
-        }
-        else
-        {
-            _dashDirection = Vector3.zero;
-        }
-        
+        if (_dashCoolingDown) return;
+        _dashDirection = CamRelHor(new Vector3(0, 0, 20f));
+        _vertMagnitude = 0f;
+        _actualMagnitude += 20f;
+        _currentState.HasDoubleJumped = false;
+        _dashCoolingDown = true;
+        _dashCooldownCoroutine = DashCooldown();
+        _dashDurationCoroutine = DashDuration();
+        StartCoroutine(_dashCooldownCoroutine);
+        StartCoroutine(_dashDurationCoroutine);
     }
 
     
@@ -527,15 +527,21 @@ public class P_StateManager : MonoBehaviour
     
 
     //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
-    IEnumerator WallRunBuffer()
+    IEnumerator DashCooldown()
     {
-        yield return new WaitForSeconds(2f);
-        //getNoMomentumLoss = true
+        Debug.Log("Dash cooldown started");
+        yield return new WaitForSeconds(5f);
+        _dashCoolingDown = false;
+        Debug.Log("Dash cooldown ended");
     }
 
-
-   
-
+    IEnumerator DashDuration()
+    {
+        Debug.Log("Dash duration started");
+        yield return new WaitForSeconds(0.2f);
+        _dashDirection = Vector3.zero;
+        Debug.Log("Dash duration ended");
+    }
 
     void OnEnable()
     {

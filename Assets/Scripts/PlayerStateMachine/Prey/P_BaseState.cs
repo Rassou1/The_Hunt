@@ -9,6 +9,8 @@ public abstract class P_BaseState
     protected P_BaseState _currentSubState;
     private P_BaseState _currentSuperState;
 
+    protected bool hasDoubleJumped;
+    public bool HasDoubleJumped { get { return hasDoubleJumped; } set { hasDoubleJumped = value; } }
     protected bool IsRootState { set { _isRootState = value; } }
     //protected P_StateManager Ctx { get { return _ctx; } }
     //protected P_StateFactory Factory { get { return _factory; } }

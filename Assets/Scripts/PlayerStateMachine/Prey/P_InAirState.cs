@@ -5,8 +5,9 @@ public class P_InAirState : P_BaseState
 {
 
     Vector3 direction;
-    bool hasDoubleJumped;
     bool buttonReleased;
+
+    
 
     public P_InAirState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
     {
