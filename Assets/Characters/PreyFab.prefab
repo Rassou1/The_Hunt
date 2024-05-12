@@ -380,15 +380,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: prisonPosition.x
-      value: 58.51
+      value: 27.917
       objectReference: {fileID: 0}
     - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: prisonPosition.y
-      value: 23.843365
+      value: 2.182
       objectReference: {fileID: 0}
     - target: {fileID: 6452325594440319450, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: prisonPosition.z
-      value: -22.8
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: 6510141261612911054, guid: 66963bf08487ea643b651794066756a5, type: 3}
       propertyPath: m_Layer
