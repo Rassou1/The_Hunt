@@ -179,6 +179,7 @@ public class P_StateManager : MonoBehaviour
     public Vector3 OrientationPos { get { return transform.position; } set { transform.position = value; } }
 
     public int RemainingDashCooldown { get { return _remainingDashCooldown;} }
+    public bool DashCoolingDown { get { return _dashCoolingDown; } }
 
     void Start()
     {
