@@ -82,18 +82,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Climb"",
+                    ""name"": ""Set Reset"",
                     ""type"": ""Button"",
                     ""id"": ""f3a578ca-3cfe-4192-90ee-d1055cc7bcff"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""CarryItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""ecaa6f12-8fda-4e4b-bed9-2011c7c25d4e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -223,7 +214,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""88bee1a4-3b22-4018-a19e-a8d57dba2bc3"",
-                    ""path"": ""<Keyboard>/backspace"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -234,22 +225,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e3bb5ee2-15ad-4ac8-adaf-aa0257122804"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/o"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Climb"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7ce84c56-4911-45f8-acdf-04e84dfe355b"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": ""Tap"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CarryItem"",
+                    ""action"": ""Set Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -268,12 +248,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         },
         {
             ""name"": ""HunterControls"",
-            ""id"": ""0c4b8e2b-9fcd-4dc0-9788-c4a47887fe1e"",
+            ""id"": ""9b0c46ab-4a2f-403f-8909-a6aaddd4a720"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
-                    ""id"": ""05d3dd15-afb6-42c3-9f66-cbeca145e587"",
+                    ""id"": ""161c7a4e-4173-495c-a638-50cf9e7f1f20"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
@@ -282,7 +262,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
-                    ""id"": ""a7397ec0-9bf2-424b-85ad-21d31849237f"",
+                    ""id"": ""3ff93736-6751-4a28-9631-f0f7d8453578"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -291,7 +271,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
-                    ""id"": ""676c086e-5e9a-4124-852d-0ffe31803e91"",
+                    ""id"": ""64923673-cce4-4b3b-9467-4b4e659ec308"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -300,7 +280,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Slide"",
                     ""type"": ""Button"",
-                    ""id"": ""c7c4131a-918f-4914-957b-3ce1f0298377"",
+                    ""id"": ""ba20d036-c1aa-4637-8221-4108ceffa043"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""1d8ce68a-450f-430a-89ee-2d557602a8af"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""88b0d620-49f4-480a-8e05-027f22313e90"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Set Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c98b795-fba6-4045-be99-a344e0cebb3a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""a08de8c2-f5be-442d-94b0-ecaca07d0f0c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""d15e70de-dbe1-46fb-ab78-5d514177065a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -310,7 +335,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": ""2D Vector"",
-                    ""id"": ""85201a4c-bf2e-47ee-9bf7-efc7f8fa285b"",
+                    ""id"": ""c05a26a5-3450-4ba2-945b-b1a5c793b5f8"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -321,7 +346,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""4248113f-dbc0-4650-b00f-aeef2bd70cd2"",
+                    ""id"": ""09eb4d54-0ff2-4045-a86e-f081d08ec002"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -332,7 +357,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""e6dd0ec6-879b-4f3c-ab5f-34bd69a8c103"",
+                    ""id"": ""bc4f5ef6-56da-4c91-8f61-7767c7f00b13"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -343,7 +368,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""cf93b67f-efe9-4921-857f-8b8631f25855"",
+                    ""id"": ""1a7e0c15-be47-4958-b2ca-393835c71246"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -354,7 +379,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""52fae577-9e23-42f4-ba6d-055675cd9c06"",
+                    ""id"": ""c44367be-29e4-4b97-8af8-28156bfe93b3"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -365,18 +390,29 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a495ea1f-f1bd-4e9f-afe2-c61a6cb11c53"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""c7d12512-3cf4-427c-bfde-08ab48e3bcc2"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jump"",
+                    ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fdd18fd3-0ae2-4fa6-9ce6-79c3fe47ecf3"",
+                    ""id"": ""e3eda8b8-3c1e-4043-9abc-cdda13d0c3e4"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3dc50b7-3f0a-4ae5-9f8c-eefc2afe0722"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -387,12 +423,67 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a2ff3286-d7c6-404e-9ec7-ecb31eb3c2cd"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""id"": ""a8b74c3f-6dcd-43e0-b410-77e80ff4659b"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Slide"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f5611df-4063-4a39-b9cd-786de7eafa6a"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9167e8ab-dbd8-4d3f-9d3f-7a97b17f5edc"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33f56d3e-c16f-4056-a234-2aea20617e69"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Set Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b55c50f-e5f8-4994-ac13-28db2f2c0e23"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad5aa7b0-322d-4c1b-89ea-6e4272f943ca"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -409,8 +500,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PreyControls_Slide = m_PreyControls.FindAction("Slide", throwIfNotFound: true);
         m_PreyControls_Look = m_PreyControls.FindAction("Look", throwIfNotFound: true);
         m_PreyControls_Reset = m_PreyControls.FindAction("Reset", throwIfNotFound: true);
-        m_PreyControls_Climb = m_PreyControls.FindAction("Climb", throwIfNotFound: true);
-        m_PreyControls_CarryItem = m_PreyControls.FindAction("CarryItem", throwIfNotFound: true);
+        m_PreyControls_SetReset = m_PreyControls.FindAction("Set Reset", throwIfNotFound: true);
         m_PreyControls_Dash = m_PreyControls.FindAction("Dash", throwIfNotFound: true);
         // HunterControls
         m_HunterControls = asset.FindActionMap("HunterControls", throwIfNotFound: true);
@@ -418,6 +508,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_HunterControls_Jump = m_HunterControls.FindAction("Jump", throwIfNotFound: true);
         m_HunterControls_Sprint = m_HunterControls.FindAction("Sprint", throwIfNotFound: true);
         m_HunterControls_Slide = m_HunterControls.FindAction("Slide", throwIfNotFound: true);
+        m_HunterControls_Look = m_HunterControls.FindAction("Look", throwIfNotFound: true);
+        m_HunterControls_Reset = m_HunterControls.FindAction("Reset", throwIfNotFound: true);
+        m_HunterControls_SetReset = m_HunterControls.FindAction("Set Reset", throwIfNotFound: true);
+        m_HunterControls_Dash = m_HunterControls.FindAction("Dash", throwIfNotFound: true);
+        m_HunterControls_Attack = m_HunterControls.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -485,8 +580,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PreyControls_Slide;
     private readonly InputAction m_PreyControls_Look;
     private readonly InputAction m_PreyControls_Reset;
-    private readonly InputAction m_PreyControls_Climb;
-    private readonly InputAction m_PreyControls_CarryItem;
+    private readonly InputAction m_PreyControls_SetReset;
     private readonly InputAction m_PreyControls_Dash;
     public struct PreyControlsActions
     {
@@ -498,8 +592,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Slide => m_Wrapper.m_PreyControls_Slide;
         public InputAction @Look => m_Wrapper.m_PreyControls_Look;
         public InputAction @Reset => m_Wrapper.m_PreyControls_Reset;
-        public InputAction @Climb => m_Wrapper.m_PreyControls_Climb;
-        public InputAction @CarryItem => m_Wrapper.m_PreyControls_CarryItem;
+        public InputAction @SetReset => m_Wrapper.m_PreyControls_SetReset;
         public InputAction @Dash => m_Wrapper.m_PreyControls_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PreyControls; }
         public void Enable() { Get().Enable(); }
@@ -528,12 +621,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Reset.started += instance.OnReset;
             @Reset.performed += instance.OnReset;
             @Reset.canceled += instance.OnReset;
-            @Climb.started += instance.OnClimb;
-            @Climb.performed += instance.OnClimb;
-            @Climb.canceled += instance.OnClimb;
-            @CarryItem.started += instance.OnCarryItem;
-            @CarryItem.performed += instance.OnCarryItem;
-            @CarryItem.canceled += instance.OnCarryItem;
+            @SetReset.started += instance.OnSetReset;
+            @SetReset.performed += instance.OnSetReset;
+            @SetReset.canceled += instance.OnSetReset;
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
@@ -559,12 +649,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Reset.started -= instance.OnReset;
             @Reset.performed -= instance.OnReset;
             @Reset.canceled -= instance.OnReset;
-            @Climb.started -= instance.OnClimb;
-            @Climb.performed -= instance.OnClimb;
-            @Climb.canceled -= instance.OnClimb;
-            @CarryItem.started -= instance.OnCarryItem;
-            @CarryItem.performed -= instance.OnCarryItem;
-            @CarryItem.canceled -= instance.OnCarryItem;
+            @SetReset.started -= instance.OnSetReset;
+            @SetReset.performed -= instance.OnSetReset;
+            @SetReset.canceled -= instance.OnSetReset;
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
@@ -593,6 +680,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_HunterControls_Jump;
     private readonly InputAction m_HunterControls_Sprint;
     private readonly InputAction m_HunterControls_Slide;
+    private readonly InputAction m_HunterControls_Look;
+    private readonly InputAction m_HunterControls_Reset;
+    private readonly InputAction m_HunterControls_SetReset;
+    private readonly InputAction m_HunterControls_Dash;
+    private readonly InputAction m_HunterControls_Attack;
     public struct HunterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -601,6 +693,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_HunterControls_Jump;
         public InputAction @Sprint => m_Wrapper.m_HunterControls_Sprint;
         public InputAction @Slide => m_Wrapper.m_HunterControls_Slide;
+        public InputAction @Look => m_Wrapper.m_HunterControls_Look;
+        public InputAction @Reset => m_Wrapper.m_HunterControls_Reset;
+        public InputAction @SetReset => m_Wrapper.m_HunterControls_SetReset;
+        public InputAction @Dash => m_Wrapper.m_HunterControls_Dash;
+        public InputAction @Attack => m_Wrapper.m_HunterControls_Attack;
         public InputActionMap Get() { return m_Wrapper.m_HunterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -622,6 +719,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Slide.started += instance.OnSlide;
             @Slide.performed += instance.OnSlide;
             @Slide.canceled += instance.OnSlide;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
+            @SetReset.started += instance.OnSetReset;
+            @SetReset.performed += instance.OnSetReset;
+            @SetReset.canceled += instance.OnSetReset;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         private void UnregisterCallbacks(IHunterControlsActions instance)
@@ -638,6 +750,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Slide.started -= instance.OnSlide;
             @Slide.performed -= instance.OnSlide;
             @Slide.canceled -= instance.OnSlide;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
+            @SetReset.started -= instance.OnSetReset;
+            @SetReset.performed -= instance.OnSetReset;
+            @SetReset.canceled -= instance.OnSetReset;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         public void RemoveCallbacks(IHunterControlsActions instance)
@@ -663,8 +790,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSlide(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
-        void OnClimb(InputAction.CallbackContext context);
-        void OnCarryItem(InputAction.CallbackContext context);
+        void OnSetReset(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
     }
     public interface IHunterControlsActions
@@ -673,5 +799,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
+        void OnSetReset(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

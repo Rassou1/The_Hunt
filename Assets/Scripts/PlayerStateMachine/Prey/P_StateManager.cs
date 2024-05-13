@@ -104,6 +104,7 @@ public class P_StateManager : MonoBehaviour
     IEnumerator _dashCooldownCoroutine;
     IEnumerator _dashDurationCoroutine;
 
+    Vector3 _resetPosition;
 
     PlayerWalking walking;
 
@@ -228,6 +229,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.started += OnLookInput;
         _playerInput.PreyControls.Look.canceled += OnLookInput;
         _playerInput.PreyControls.Look.performed += OnLookInput;
+        _playerInput.PreyControls.SetReset.started += OnSetReset;
+        _playerInput.PreyControls.Reset.started += OnReset;
         
 
 
@@ -241,7 +244,7 @@ public class P_StateManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        
+        _resetPosition =  _rigidbody.transform.position;
 
     }
 
@@ -476,6 +479,19 @@ public class P_StateManager : MonoBehaviour
         _mouseRotationX -= _currentLookInput.y * Time.deltaTime * _mouseSens;
         _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens * _horMouseMod;
         _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f);
+    }
+
+    void OnSetReset(InputAction.CallbackContext context)
+    {
+        _resetPosition = _rigidbody.transform.position;
+    }
+
+    void OnReset(InputAction.CallbackContext context)
+    {
+        _actualMagnitude = 0;
+        _appliedMovement = Vector3.zero;
+        _preCollideMovement = Vector3.zero;
+        _rigidbody.transform.position = _resetPosition;
     }
 
     public void SetCameraOrientation()

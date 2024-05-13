@@ -5,17 +5,21 @@ public abstract class H_BaseState
     private bool _isRootState = false;
     protected H_StateManager _ctx;
     protected H_StateFactory _factory;
-    private H_BaseState _currentSubState;
+    protected H_BaseState _currentSubState;
     private H_BaseState _currentSuperState;
 
+    protected bool hasDoubleJumped;
+    public bool HasDoubleJumped { get { return hasDoubleJumped; } set { hasDoubleJumped = value; } }
     protected bool IsRootState { set { _isRootState = value; } }
+    public H_BaseState CurrentSubState { get { return _currentSubState; } }
     //protected H_StateManager Ctx { get { return _ctx; } }
     //protected H_StateFactory Factory { get { return _factory; } }
 
-    public H_BaseState(H_StateManager currentContext, H_StateFactory h_StateFactory)
+    public H_BaseState(H_StateManager currentContext, H_StateFactory p_StateFactory)
     {
         _ctx = currentContext;
-        _factory = h_StateFactory;
+        _factory = p_StateFactory;
+        
     }
 
     public abstract void EnterState();
