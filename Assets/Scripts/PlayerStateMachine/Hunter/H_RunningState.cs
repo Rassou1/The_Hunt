@@ -14,8 +14,8 @@ public class H_RunningState : H_BaseState
 
     public override void UpdateState()
     {
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * 4f; //Switch the float out for some momentum math. Probably have the math be done in StateManager and then applied in the correct state, with each state changing the numbers used in StateManager
-        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * 4f;
+        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x * 6f; //Switch the float out for some momentum math. Probably have the math be done in StateManager and then applied in the correct state, with each state changing the numbers used in StateManager
+        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y * 6f;
         CheckSwitchState();
     }
 

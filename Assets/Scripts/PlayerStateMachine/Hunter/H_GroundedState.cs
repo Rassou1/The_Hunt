@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 
 public class H_GroundedState : H_BaseState
 {
@@ -48,8 +48,8 @@ public class H_GroundedState : H_BaseState
     {
         if (_ctx.IsJumpPressed)
         {
-            _ctx.CurrentMovementY += 6;
-            _ctx.AppliedMovementY += 6;
+            _ctx.CurrentMovementY += 10;
+            _ctx.AppliedMovementY += 10;
             SwitchState(_factory.Air());
         }
         else if (!_ctx.CharacterController.isGrounded)
