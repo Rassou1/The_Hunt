@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class H_WalkingState : H_BaseState
 {
-    public H_WalkingState(H_StateManager currentContext, H_StateFactory h_StateFactory) : base(currentContext, h_StateFactory)
+    float lerpTime;
+    public H_WalkingState(H_StateManager currentContext, H_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
 
     }
@@ -12,12 +13,14 @@ public class H_WalkingState : H_BaseState
     {
         _ctx.Animator.SetBool(_ctx.IsWalkingHash, true);
         _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
+        lerpTime = 0f;
     }
 
     public override void UpdateState()
     {
-        _ctx.AppliedMovementX = _ctx.CurrentMovementInput.x;
-        _ctx.AppliedMovementZ = _ctx.CurrentMovementInput.y;
+        
+        _ctx.StateMagnitude = Mathf.Lerp(_ctx.ActualMagnitude, _ctx._moveSpeed, lerpTime);
+        lerpTime += Time.deltaTime;
 
         CheckSwitchState();
     }
@@ -29,6 +32,10 @@ public class H_WalkingState : H_BaseState
 
     public override void CheckSwitchState()
     {
+        if (_ctx.IsSlidePressed)
+        {
+            SwitchState(_factory.Slide());
+        }
         if (!_ctx.IsMovementPressed)
         {
             SwitchState(_factory.Idle());
@@ -37,11 +44,13 @@ public class H_WalkingState : H_BaseState
         {
             SwitchState(_factory.Run());
         }
+        
+
     }
 
     public override void InitializeSubState()
     {
-        //if (slide) -> slide
+        
     }
 
 }

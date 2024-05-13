@@ -9,8 +9,7 @@ enum H_States
     idle,
     walk,
     run,
-    slide,
-    wallClimb
+    slide
 }
 
 public class H_StateFactory
@@ -27,7 +26,7 @@ public class H_StateFactory
         _states[H_States.walk] = new H_WalkingState(_context, this);
         _states[H_States.run] = new H_RunningState(_context, this);
         _states[H_States.slide] = new H_SlidingState(_context, this);
-        _states[H_States.wallClimb] = new H_WallClimbingState(_context, this);
+        
     }
 
     public H_BaseState Ground()
@@ -59,11 +58,5 @@ public class H_StateFactory
     {
         return _states[H_States.slide];
     }
-
-    public H_BaseState WallRun()
-    {
-        return _states[H_States.wallClimb];
-    }
-
-
+    
 }
