@@ -4,8 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 
 public class P_StateManager : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class P_StateManager : MonoBehaviour
     int _maxBounces = 5;
     float _skindWidth = 0.05f;
 
-    LayerMask whatIsGround;
+    //LayerMask whatIsGround;
 
 
 
@@ -79,13 +81,14 @@ public class P_StateManager : MonoBehaviour
     float _realSlopeAngle;
     Vector3 _stateDirection;
     Vector3 _preCollideMovement;
-    public float _dashFactor; // This manages the character's dash value and applies it to the character speed
+    
 
     float _vertMagnitude;
     float _horMouseMod = 1f;
     Vector3 _subStateDirSet;
     Vector3 _relForward;
 
+    int _remainingDashCooldown;
 
     float _stateMagnitude;
     public float _finalMagnitude;
@@ -101,12 +104,18 @@ public class P_StateManager : MonoBehaviour
     IEnumerator _dashCooldownCoroutine;
     IEnumerator _dashDurationCoroutine;
 
-    SCR_abilityManager _pow = new SCR_abilityManager();
 
     PlayerWalking walking;
 
+
+    public int _dashCooldown;
+    public float _dashDuraiton;
+    public float _dashSpeed;
+
     public float _moveSpeed;
     public float climbspeed;
+
+
     public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -144,7 +153,7 @@ public class P_StateManager : MonoBehaviour
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
 
 
-    public SCR_abilityManager Pow { get { return _pow; } private set { _pow = value; }}
+    
 
 
     public Vector3 SlopeNormal { get { return _slopeNormal; } }
@@ -169,6 +178,8 @@ public class P_StateManager : MonoBehaviour
     public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
     public Vector3 OrientationPos { get { return transform.position; } set { transform.position = value; } }
 
+    public int RemainingDashCooldown { get { return _remainingDashCooldown;} }
+
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
@@ -192,7 +203,7 @@ public class P_StateManager : MonoBehaviour
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
-        _dashFactor = 1;
+        
 
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isSprintingHash = Animator.StringToHash("isRunning");
@@ -210,7 +221,6 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Jump.started += OnJumpPress;
         _playerInput.PreyControls.Jump.canceled += OnJumpPress;
         _playerInput.PreyControls.Dash.started += OnDashPress;
-        //_playerInput.PreyControls.Dash.canceled += OnDashPress;
         _playerInput.PreyControls.Slide.started += OnSlide;
         _playerInput.PreyControls.Slide.canceled += OnSlide;
         _playerInput.PreyControls.Slide.performed += OnSlide;
@@ -221,8 +231,8 @@ public class P_StateManager : MonoBehaviour
 
 
         //setup state
-        Pow = new SCR_abilityManager();
-        _states = new P_StateFactory(this, Pow);
+        
+        _states = new P_StateFactory(this);
         _currentState = _states.Ground();
         _currentState.EnterState();
 
@@ -240,8 +250,8 @@ public class P_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        //if (!_avatar.IsMe)
-        //    return;
+        if (!_avatar.IsMe)
+            return;
 
 
         //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
@@ -254,8 +264,7 @@ public class P_StateManager : MonoBehaviour
         //    walking.PlayRunSound();
         //}
 
-        //Debug.Log("Right Wall: " + _wallRight);
-        //Debug.Log("Left Wall: " + _wallLeft);
+
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
         GroundCheck();
@@ -264,24 +273,13 @@ public class P_StateManager : MonoBehaviour
             AntiClipCheck();
         }
 
-        // Update ability manager
-        //Pow.Update();
+        
         
         SetCameraOrientation();
         
         RotateBodyY();
         _relForward = CamRelHor(Vector3.forward);
-        //SlopeRelative();
-        //testRelForward = Quaternion.AngleAxis(Quaternion.Angle(Quaternion.FromToRotation(testRelForward, _slopeNormal), testRelForward) , testRelForward) ;
-
-        //NEED TO ROTATE THE Y AXIS OF THE MOVEMENT TO THE Y AXIS OF THE SLOPE
-        //transform.rotation = Quaternion.Euler(0, y, 0);
-        //testRelForward = Quaternion.FromToRotation(_relForward, _slopeNormal);
-
         
-        //Debug.Log("Slope normal: " + _slopeNormal);
-
-        //Debug.DrawRay(_cameraOrientation.position, TestCamRel(), Color.red, Time.deltaTime);
         
         _currentState.UpdateStates();
 
@@ -291,7 +289,7 @@ public class P_StateManager : MonoBehaviour
         
         Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
         _appliedMovement = CamRelHor(_appliedMovement);
-        //_appliedMovement = Vector3.ProjectOnPlane(_appliedMovement, _slopeNormal);
+        
         _appliedMovement = _appliedMovement.normalized;
         _appliedMovement *= _finalMagnitude;
 
@@ -299,7 +297,7 @@ public class P_StateManager : MonoBehaviour
         _actualMagnitude = _finalMagnitude;
         _appliedMovement *= Time.deltaTime;
         
-        //_vertMagnitude = Mathf.Max(_vertMagnitude + (_gravity * Time.deltaTime), -200f);
+        
         
         Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
         _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
@@ -309,16 +307,6 @@ public class P_StateManager : MonoBehaviour
         _rigidbody.transform.position += _appliedMovement;
 
         
-        //Debug.Log("VertMagnitude: " + _vertMagnitude);
-        //Debug.Log("Movement magnitude: " + _appliedMovement.magnitude / Time.deltaTime);
-        //CheckClimbingState();
-        
-        
-        //Reset params
-        //_isJumpPressed = false;
-        //_isJumpReleased = false;
-        //_isDashPressed = false;
-        //_isDashReleased = false;
     }
 
 
@@ -326,18 +314,12 @@ public class P_StateManager : MonoBehaviour
     Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
         
-        //Debug.Log("StartPos: " + startPos);
-        //Debug.Log("BotSphere: " + botSphere);
-        //Debug.Log("TopSphere: " + topSphere);
         if (depth >= _maxBounces)
         {
             return Vector3.zero;
         }
         float dist = vel.magnitude + _skindWidth;
         RaycastHit hit;
-        //Debug.Log("Direction: " + vel.normalized);
-        //Debug.Log("Distance: " + dist);
-
         
 
         if (Physics.CapsuleCast(_botSphere, _topSphere, _bounds.extents.x, vel.normalized, out hit, dist))
@@ -368,7 +350,7 @@ public class P_StateManager : MonoBehaviour
                 
                 if (_isGrounded && !gravityPass)
                 {
-                    leftover = ProjectAndScale(new Vector3(leftover.x, 0, leftover.z), new Vector3(hit.normal.x, 0, hit.normal.z))/*.normalized*/;
+                    leftover = ProjectAndScale(new Vector3(leftover.x, 0, leftover.z), new Vector3(hit.normal.x, 0, hit.normal.z));
                     leftover *= scale;
                 }
                 else
@@ -432,13 +414,6 @@ public class P_StateManager : MonoBehaviour
         return slopeRotation * inputDirection;
     }
 
-    //Replaced by CamRelHor
-    //void RelativeMovement()
-    //{
-    //    float preRelativeY = _appliedMovement.y;
-    //    _appliedMovement = _moveForward.normalized * _appliedMovement.z + _moveRight.normalized * _appliedMovement.x;
-    //    _appliedMovement.y = preRelativeY;
-    //}
 
 
 
@@ -460,9 +435,9 @@ public class P_StateManager : MonoBehaviour
     public void OnDashPress(InputAction.CallbackContext context)
     {
         if (_dashCoolingDown) return;
-        _dashDirection = CamRelHor(new Vector3(0, 0, 20f));
+        _dashDirection = CamRelHor(new Vector3(0, 0, _dashSpeed));
         _vertMagnitude = 0f;
-        _actualMagnitude += 20f;
+        _actualMagnitude += _dashSpeed;
         _currentState.HasDoubleJumped = false;
         _dashCoolingDown = true;
         _dashCooldownCoroutine = DashCooldown();
@@ -515,32 +490,29 @@ public class P_StateManager : MonoBehaviour
 
     void RotateBodyY()
     {
-        //Will add some kind of "only rotate when angle above x or moving" if case when i understand Quaternions
         var forward = _cameraOrientation.forward;
         forward.y = 0;
         _rigidbody.transform.rotation = Quaternion.LookRotation(forward, _rigidbody.transform.up);
     }
 
 
-    
-    
-    
+    //Usíng coroutines for the dash cooldown and duration. I don't know if it actually is an appropriate thing to do but it seems to work. Dash Cooldown has to be in
 
-    //Use this as a cooldown for the mechanic of not losing momentum for a little bit when first entering a wallrun
     IEnumerator DashCooldown()
     {
-        Debug.Log("Dash cooldown started");
-        yield return new WaitForSeconds(5f);
+        _remainingDashCooldown = _dashCooldown;
+        for (int i = 0; i < _dashCooldown; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            _remainingDashCooldown -= 1;
+        }
         _dashCoolingDown = false;
-        Debug.Log("Dash cooldown ended");
     }
 
     IEnumerator DashDuration()
     {
-        Debug.Log("Dash duration started");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(_dashDuraiton);
         _dashDirection = Vector3.zero;
-        Debug.Log("Dash duration ended");
     }
 
     void OnEnable()

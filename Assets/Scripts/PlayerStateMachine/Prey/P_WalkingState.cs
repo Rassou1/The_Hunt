@@ -4,7 +4,7 @@ using UnityEngine;
 public class P_WalkingState : P_BaseState
 {
     float lerpTime;
-    public P_WalkingState(P_StateManager currentContext, P_StateFactory p_StateFactory, SCR_abilityManager scr_pow) : base(currentContext, p_StateFactory, scr_pow)
+    public P_WalkingState(P_StateManager currentContext, P_StateFactory p_StateFactory) : base(currentContext, p_StateFactory)
     {
 
     }

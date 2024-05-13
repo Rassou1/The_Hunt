@@ -42,17 +42,17 @@ public class SCR_abilityManager : MonoBehaviour
     //        _ctx.Pow.AB_jumpsLeft--;
     //    }
     //}
-    public void CheckDash(ref P_StateManager _ctx)
-    {
-        if (_ctx.IsDashPressed && _ctx.IsDashReleased && _ctx.Pow.AB_dashCharges > 0 && _ctx.Pow.AB_canDash)
-        {
-            _ctx._dashFactor = 15;
-            _ctx.Pow.AB_dashCharges--;
-        }
-        else
-        {
-            _ctx._dashFactor = 0.5f;
-        }
-        //Debug.Log($"{_ctx.IsDashPressed} {_ctx.IsDashReleased} {_ctx.Pow.AB_dashCharges}");
-    }
+    //public void CheckDash(ref P_StateManager _ctx)
+    //{
+    //    if (_ctx.IsDashPressed && _ctx.IsDashReleased && _ctx.Pow.AB_dashCharges > 0 && _ctx.Pow.AB_canDash)
+    //    {
+    //        _ctx._dashFactor = 15;
+    //        _ctx.Pow.AB_dashCharges--;
+    //    }
+    //    else
+    //    {
+    //        _ctx._dashFactor = 0.5f;
+    //    }
+    //    //Debug.Log($"{_ctx.IsDashPressed} {_ctx.IsDashReleased} {_ctx.Pow.AB_dashCharges}");
+    //}
 }

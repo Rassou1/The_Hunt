@@ -19,6 +19,6 @@ public class SCR_dashCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dashCount.text = $"{playerScript.Pow.AB_dashCharges}X";
+        //dashCount.text = $"{playerScript.Pow.AB_dashCharges}X";
     }
 }
