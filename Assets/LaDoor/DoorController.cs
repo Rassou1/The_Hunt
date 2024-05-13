@@ -17,32 +17,32 @@ using UnityEngine;
 
 //    }
 //}
-using UnityEngine;
+
 
 public class DoorController : MonoBehaviour
 {
-    public float raiseHeight = 1.5f;  // Kapının kalkacağı yükseklik
-    public float raiseSpeed = 2f;   // Kapının kalkma hızı (metre/saniye)
+    public float raiseHeight = 1.5f;  
+    public float raiseSpeed = 2f;   
     private Vector3 originalPosition;
     private Vector3 targetPosition;
     private bool doorOpened = false;
 
     void Start()
     {
-        originalPosition = transform.position;  // Başlangıç pozisyonunu kaydet
+        originalPosition = transform.position;  
         targetPosition = new Vector3(originalPosition.x, originalPosition.y + raiseHeight, originalPosition.z);
     }
 
     void Update()
     {
-        // Kapıyı yavaşça hedef pozisyona taşı
+     
         if (doorOpened)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, raiseSpeed * Time.deltaTime);
         }
     }
 
-    // Kapıyı açma işlemi için bir method
+
     public void OpenDoor()
     {
         doorOpened = true;
