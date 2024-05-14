@@ -8,7 +8,7 @@ public class CollectItems : MonoBehaviour
     [SerializeField] private Animator Dooranim;
     public GameObject Diamonds;
     private static int diamondsCollected = 0;
-    private int requiredDiamonds = 2;
+    private int requiredDiamonds = 10;
     private bool isCollected = false;
     public Text diamondCountText;
     private Renderer _renderer;
@@ -60,7 +60,7 @@ public class CollectItems : MonoBehaviour
             DoorController doorController = Dooranim.GetComponent<DoorController>();
             if (doorController != null)
             {
-                doorController.OpenDoor();  // Kapıyı aç
+                doorController.OpenDoor();  
             }
         }
     }
@@ -68,7 +68,7 @@ public class CollectItems : MonoBehaviour
     {
         if (diamondCountText != null)
         {
-            diamondCountText.text = "Diamonds: " + diamondsCollected;  // Metni güncelle
+            diamondCountText.text = "Diamonds: " + diamondsCollected; 
         }
     }
 }
