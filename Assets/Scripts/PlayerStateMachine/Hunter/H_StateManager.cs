@@ -82,6 +82,7 @@ public class H_StateManager : MonoBehaviour
     float _realSlopeAngle;
     Vector3 _stateDirection;
     Vector3 _preCollideMovement;
+
     
 
     float _vertMagnitude;
@@ -110,6 +111,7 @@ public class H_StateManager : MonoBehaviour
 
     PlayerWalking walking;
 
+    int _caughtPrey;
 
     public int _dashCooldown;
     public float _dashDuraiton;
@@ -118,6 +120,7 @@ public class H_StateManager : MonoBehaviour
     public float _moveSpeed;
     public float climbspeed;
 
+    public float finalAngle;
 
     public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
@@ -156,8 +159,6 @@ public class H_StateManager : MonoBehaviour
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
 
 
-    
-
 
     public Vector3 SlopeNormal { get { return _slopeNormal; } }
     public float SlopeAngle { get { return _slopeAngle; } }
@@ -184,6 +185,7 @@ public class H_StateManager : MonoBehaviour
     public int RemainingDashCooldown { get { return _remainingDashCooldown;} }
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     public bool IsAttacking { get { return _isAttacking; } }
+    public int CaughtPrey { get { return _caughtPrey; } }
 
     //void Start()
     //{
@@ -249,7 +251,7 @@ public class H_StateManager : MonoBehaviour
         Cursor.visible = false;
 
         _resetPosition =  _rigidbody.transform.position;
-
+        
     }
 
     
@@ -311,7 +313,6 @@ public class H_StateManager : MonoBehaviour
         _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
         _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
         Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
-
         _rigidbody.transform.position += _appliedMovement;
 
         
@@ -392,6 +393,8 @@ public class H_StateManager : MonoBehaviour
             _slopeNormal = hit.normal;
             _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
             _realSlopeAngle = Vector3.Angle(-_gravDir, _slopeNormal);
+            finalAngle = _slopeAngle;
+            Debug.Log("slope angle" + _slopeAngle);
         }
         else
         {
@@ -423,8 +426,6 @@ public class H_StateManager : MonoBehaviour
     }
 
 
-
-
     Vector3 CamRelHor(Vector3 input)
     {
         Vector3 camRelativeHor;
@@ -433,6 +434,13 @@ public class H_StateManager : MonoBehaviour
         camRelativeHor = new Vector3(camRelativeHor.x, input.y, camRelativeHor.z);
         return camRelativeHor;
     }
+
+    
+    public void ResetHunterStats()
+    {
+        _caughtPrey = 0;
+    }
+
 
     public void OnJumpPress(InputAction.CallbackContext context)
     {
@@ -496,11 +504,11 @@ public class H_StateManager : MonoBehaviour
 
     void OnAttack(InputAction.CallbackContext context)
     {
-        //if(_currentState.CurrentSubState = _factory.Slide())
-        _attackDurationCoroutine = AttackDuration();
-        StartCoroutine(_attackDurationCoroutine);
+        if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
         _isAttacking = true;
         Animator.SetBool(_isPunchingHash, true);
+        _attackDurationCoroutine = AttackDuration();
+        StartCoroutine(_attackDurationCoroutine);
     }
 
     public void SetCameraOrientation()
@@ -520,7 +528,6 @@ public class H_StateManager : MonoBehaviour
         forward.y = 0;
         _rigidbody.transform.rotation = Quaternion.LookRotation(forward, _rigidbody.transform.up);
     }
-
 
 
     //Usíng coroutines for the dash cooldown and duration. I don't know if it actually is an appropriate thing to do but it seems to work. Dash Cooldown has to be in
@@ -544,8 +551,9 @@ public class H_StateManager : MonoBehaviour
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(0.5f);
-        _isAttacking = false;
         Animator.SetBool(_isPunchingHash, false);
+        yield return new WaitForSeconds(0.45f);
+        _isAttacking = false;
     }
 
     void OnEnable()

@@ -45,9 +45,9 @@ public class H_SlidingState : H_BaseState
             }
             
         }
-
-        _ctx.StateMagnitude = Mathf.Clamp(stateMag, -40f, 40f);
         
+        _ctx.StateMagnitude = Mathf.Clamp(stateMag, -40f, 40f);
+
 
         //Vector3.Dot(_ctx.RelForward, _ctx.AppliedMovement) >= 0
 
@@ -57,7 +57,7 @@ public class H_SlidingState : H_BaseState
         //{
         //    _ctx.StateMagnitude = 0f;
         //}
-        
+
         CheckSwitchState();
     }
 

@@ -67,7 +67,10 @@ public class H_GroundedState : H_BaseState
         }
         else if (!_ctx.IsGrounded)
         {
+
+            Debug.Log("Ground to air AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             _ctx.VertMagnitude = -Vector3.Project(_ctx.AppliedMovement / Time.deltaTime, _ctx.GravDirection).magnitude;
+            
             SwitchState(_factory.Air());
         }
         

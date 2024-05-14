@@ -108,6 +108,8 @@ public class P_StateManager : MonoBehaviour
 
     PlayerWalking walking;
 
+    bool _escaped;
+    bool _caught;
 
     public int _dashCooldown;
     public float _dashDuraiton;
@@ -181,7 +183,8 @@ public class P_StateManager : MonoBehaviour
 
     public int RemainingDashCooldown { get { return _remainingDashCooldown;} }
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
-
+    public bool Escaped { get { return _escaped; } }
+    public bool Caught { get { return _caught; } }
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
@@ -245,7 +248,7 @@ public class P_StateManager : MonoBehaviour
         Cursor.visible = false;
 
         _resetPosition =  _rigidbody.transform.position;
-
+        
     }
 
     
@@ -307,7 +310,7 @@ public class P_StateManager : MonoBehaviour
         _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
         _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
         Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
-
+        
         _rigidbody.transform.position += _appliedMovement;
 
         
@@ -419,8 +422,6 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-
-
     Vector3 CamRelHor(Vector3 input)
     {
         Vector3 camRelativeHor;
@@ -428,6 +429,12 @@ public class P_StateManager : MonoBehaviour
         camRelativeHor = _moveForward.normalized * input.z + _moveRight.normalized * input.x;
         camRelativeHor = new Vector3(camRelativeHor.x, input.y, camRelativeHor.z);
         return camRelativeHor;
+    }
+
+    public void ResetPreyStats()
+    {
+        _escaped = false;
+        _caught = false;
     }
 
     public void OnJumpPress(InputAction.CallbackContext context)

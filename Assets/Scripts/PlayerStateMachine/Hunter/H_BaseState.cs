@@ -12,6 +12,7 @@ public abstract class H_BaseState
     public bool HasDoubleJumped { get { return hasDoubleJumped; } set { hasDoubleJumped = value; } }
     protected bool IsRootState { set { _isRootState = value; } }
     public H_BaseState CurrentSubState { get { return _currentSubState; } }
+    
     //protected H_StateManager Ctx { get { return _ctx; } }
     //protected H_StateFactory Factory { get { return _factory; } }
 
@@ -19,7 +20,6 @@ public abstract class H_BaseState
     {
         _ctx = currentContext;
         _factory = p_StateFactory;
-        
     }
 
     public abstract void EnterState();
