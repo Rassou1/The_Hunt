@@ -3069,7 +3069,7 @@ MonoBehaviour:
   Reliability: 1
   LocalMethodBehavior: 1
   tagged: 0
-  prisonPosition: {x: 63.7, y: 10.58, z: -17.28}
+  prisonPosition: {x: 27.917, y: 2.182, z: -0.24}
   _avatar: {fileID: 0}
 --- !u!114 &2126047821808780763
 MonoBehaviour:
