@@ -27,7 +27,7 @@ public class CollectItems : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (/*other.gameObject.tag == "Player"/* && Input.GetKey(KeyCode.E) &&*/ !isCollected)
+        if (other.gameObject.tag == "Player" && !isCollected)// && Input.GetKey(KeyCode.E) && )
         {
             CollectDiamond();
         }
