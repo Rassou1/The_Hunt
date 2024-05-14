@@ -17,11 +17,11 @@ public class WinTrigger : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player") 
-        {
+        //if (other.gameObject.tag == "Player") 
+        //{
             youWinText.SetActive(true);
             StartCoroutine(CountDown());
-        }
+        //}
     }
 
     IEnumerator CountDown ()

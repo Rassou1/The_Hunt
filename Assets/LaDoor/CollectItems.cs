@@ -8,7 +8,7 @@ public class CollectItems : MonoBehaviour
     [SerializeField] private Animator Dooranim;
     public GameObject Diamonds;
     private static int diamondsCollected = 0;
-    private int requiredDiamonds = 10;
+    private int requiredDiamonds = 1;
     private bool isCollected = false;
     public Text diamondCountText;
     private Renderer _renderer;
@@ -27,7 +27,7 @@ public class CollectItems : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && Input.GetKey(KeyCode.Q) && !isCollected)
+        if (/*other.gameObject.tag == "Player"/* && Input.GetKey(KeyCode.E) &&*/ !isCollected)
         {
             CollectDiamond();
         }
