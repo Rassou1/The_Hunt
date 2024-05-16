@@ -2062,6 +2062,83 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac12aef7c232b9a4db38ef12c9088dfa, type: 3}
+--- !u!1001 &309769892
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6558446990458858681, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: Dooranim
+      value: 
+      objectReference: {fileID: 880789662}
+    - target: {fileID: 6558446990458858681, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: diamondCountText
+      value: 
+      objectReference: {fileID: 122610501}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.75358206
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.012929061
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6571988
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0060669407
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 82.192
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.498
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111154644025630973, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
+      propertyPath: m_Name
+      value: Diamonds Variant 1 (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
 --- !u!1 &312752659
 GameObject:
   m_ObjectHideFlags: 0
@@ -6097,7 +6174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 996812935391258673, guid: 851bd41608b5aac489a171bc84014408, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8372890897441528334, guid: 851bd41608b5aac489a171bc84014408, type: 3}
       propertyPath: m_Pivot.x
@@ -7504,15 +7581,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 593617236420819291, guid: 6a5ce7361a4c25e4dabff12f8ee0671c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.0194
+      value: 1.7814136
       objectReference: {fileID: 0}
     - target: {fileID: 593617236420819291, guid: 6a5ce7361a4c25e4dabff12f8ee0671c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.0194
+      value: 1.7814136
       objectReference: {fileID: 0}
     - target: {fileID: 593617236420819291, guid: 6a5ce7361a4c25e4dabff12f8ee0671c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.0194
+      value: 1.7814136
       objectReference: {fileID: 0}
     - target: {fileID: 593617236420819291, guid: 6a5ce7361a4c25e4dabff12f8ee0671c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7520,7 +7597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 593617236420819291, guid: 6a5ce7361a4c25e4dabff12f8ee0671c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.89
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 593617236420819291, guid: 6a5ce7361a4c25e4dabff12f8ee0671c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7662,11 +7739,11 @@ PrefabInstance:
     - target: {fileID: 7913791279675350478, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
       propertyPath: Dooranim
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 880789662}
     - target: {fileID: 7913791279675350478, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
       propertyPath: diamondCountText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 122610501}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9620,83 +9697,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1267099691
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2513350340908254916, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_Name
-      value: Diamonds Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 11.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9991068
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.042257547
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2518206588493610980, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7913791279675350478, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: Dooranim
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7913791279675350478, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
-      propertyPath: diamondCountText
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cfb887242b770af4eb38da145ca2b44f, type: 3}
 --- !u!1 &1270200766
 GameObject:
   m_ObjectHideFlags: 0
@@ -11779,11 +11779,11 @@ PrefabInstance:
     - target: {fileID: 6558446990458858681, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
       propertyPath: Dooranim
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 880789662}
     - target: {fileID: 6558446990458858681, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
       propertyPath: diamondCountText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 122610501}
     - target: {fileID: 8108354607158426305, guid: 43b33d734ce9a004cb03edcc791edeeb, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -20120,7 +20120,7 @@ GameObject:
   - component: {fileID: 1762726395}
   - component: {fileID: 1762726394}
   m_Layer: 0
-  m_Name: Cube (21)
+  m_Name: wintrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20220,8 +20220,8 @@ Transform:
   m_GameObject: {fileID: 1762726393}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0060483553, y: -0, z: -0, w: 0.99998176}
-  m_LocalPosition: {x: 20.097, y: 1.647, z: -20.224}
-  m_LocalScale: {x: 4.5496755, y: 1.6141704, z: 3.2755923}
+  m_LocalPosition: {x: 18.183, y: 1.647, z: -20.224}
+  m_LocalScale: {x: 4.4424396, y: 1.5761244, z: 3.1983867}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -22448,9 +22448,9 @@ SceneRoots:
   - {fileID: 14893352}
   - {fileID: 452884}
   - {fileID: 461275303}
-  - {fileID: 1267099691}
   - {fileID: 887789510}
   - {fileID: 1490805366}
+  - {fileID: 309769892}
   - {fileID: 1762726398}
   - {fileID: 1524715191}
   - {fileID: 1673107844}

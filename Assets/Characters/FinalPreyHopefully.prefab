@@ -2974,6 +2974,7 @@ GameObject:
   - component: {fileID: 8668441262186112681}
   - component: {fileID: 7169153678992976860}
   - component: {fileID: 1383538461838075975}
+  - component: {fileID: 6400782734593170754}
   m_Layer: 0
   m_Name: FinalPreyHopefully
   m_TagString: Player
@@ -3236,6 +3237,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa02b739e5dc964c85335d1e21e4fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &6400782734593170754
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927974869979737155}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8948566610803704969
 GameObject:
   m_ObjectHideFlags: 0

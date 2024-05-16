@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CollectItems : MonoBehaviour
 {
-    [SerializeField] private Animator Dooranim;
+    [SerializeField] public Animator Dooranim;
     public GameObject Diamonds;
     private static int diamondsCollected = 0;
     private int requiredDiamonds = 1;
@@ -31,6 +32,21 @@ public class CollectItems : MonoBehaviour
         {
             CollectDiamond();
         }
+    }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        diamondsCollected = 0;  // Reset the diamonds count when the scene is loaded
+        UpdateDiamondText();  // Update the diamond text to reflect the reset count
     }
 
     private void CollectDiamond()
