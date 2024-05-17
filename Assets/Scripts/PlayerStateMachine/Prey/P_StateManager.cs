@@ -1,3 +1,4 @@
+using Alteruna;
 using Alteruna.Scoreboard;
 using System;
 using System.Collections;

@@ -6,6 +6,8 @@ public class PauseMenu : MonoBehaviour
 {
 
     public GameObject pauseMenu;
+    public List<GameObject> lobbyMenu;
+
     public bool isPaused=false;
 
 
@@ -38,6 +40,12 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.active = true;
+
+        foreach (GameObject go in lobbyMenu)
+        {
+            go.active = true;
+        }
+
         UnlockMouse();
         Time.timeScale = 1f;
         isPaused = true;
@@ -46,6 +54,12 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenu.active = false;
+
+        foreach (GameObject go in lobbyMenu)
+        {
+            go.active = false;
+        }
+        LockMouse();
         Time.timeScale = 1f;
         isPaused = false;
 
@@ -55,6 +69,12 @@ public class PauseMenu : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void LockMouse()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
 }

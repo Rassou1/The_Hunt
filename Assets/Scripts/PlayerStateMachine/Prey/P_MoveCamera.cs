@@ -1,13 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Alteruna;
 public class P_MoveCamera : MonoBehaviour
 {
     public Transform cameraPosition;
 
-    private void Update()
+    public Renderer parentRenderer;
+
+    public Alteruna.Avatar avatar;
+    void Start()
     {
-        transform.position = cameraPosition.position;
+        
     }
+
+    void Update()
+    {
+        // Update camera position to match the target position
+        if (cameraPosition != null)
+        {
+            transform.position = cameraPosition.position;
+        }
+
+        if (avatar.IsMe)
+        {
+            parentRenderer.enabled = false;
+        }
+        else
+        {
+            parentRenderer.enabled = true;
+        }
+    }
+
 }

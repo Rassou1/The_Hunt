@@ -24,7 +24,7 @@ public class WinTrigger : MonoBehaviour
         }
     }
 
-    IEnumerator CountDown ()
+    public IEnumerator CountDown ()
     {
         yield return new WaitForSeconds(delay);
         Cursor.lockState = CursorLockMode.None;
