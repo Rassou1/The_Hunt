@@ -26,9 +26,9 @@ public class P_SlidingState : P_BaseState
     public override void UpdateState()
     {
         totalMagnitude = _ctx.ActualMagnitude;
-        if(slideStart )
+        if(slideStart && _ctx.CurrentMovementInput.magnitude != 0)
         {
-            totalMagnitude += 30;
+            totalMagnitude += 20;
             slideStart = false;
         }
         if (_ctx.SlopeAngle < 0)

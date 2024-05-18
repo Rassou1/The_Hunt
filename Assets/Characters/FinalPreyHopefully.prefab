@@ -868,9 +868,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouseSens: 50
   _maxSlopeAngle: 45
-  _softCap: 25
-  _sprintResistance: 3
-  _slideResistance: 1
+  _softCap: 15
+  _sprintResistance: 4
+  _slideResistance: 2
   _rigidbody: {fileID: 2349171850152568103}
   _cameraOrientation: {fileID: 6682285680653867237}
   _cameraPostion: {fileID: 3919543075362687775}
@@ -878,8 +878,8 @@ MonoBehaviour:
   _finalMagnitude: 0
   _actualMagnitude: 0
   _dashCooldown: 3
-  _dashDuraiton: 0.4
-  _dashSpeed: 50
+  _dashDuraiton: 0.3
+  _dashSpeed: 30
   _moveSpeed: 12
   climbspeed: 0
 --- !u!136 &6331486590867822770
