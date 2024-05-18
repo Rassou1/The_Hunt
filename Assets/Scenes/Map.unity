@@ -8424,7 +8424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouseSens: 50
   _maxSlopeAngle: 45
-  _softCap: 8
+  _softCap: 12
   _sprintResistance: 4
   _slideResistance: 2
   _rigidbody: {fileID: 528730284}
@@ -8436,7 +8436,7 @@ MonoBehaviour:
   _dashCooldown: 0
   _dashDuraiton: 0
   _dashSpeed: 0
-  _moveSpeed: 4
+  _moveSpeed: 6
   climbspeed: 0
 --- !u!1 &891767765
 GameObject:

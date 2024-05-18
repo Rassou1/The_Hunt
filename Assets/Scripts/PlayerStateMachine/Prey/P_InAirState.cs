@@ -31,10 +31,10 @@ public class P_InAirState : P_BaseState
     {
         CheckSwitchState();
         direction = _ctx.StateDirection;
-        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y) * 0.5f;
+        direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y) * 0.7f;
 
         _ctx.StateDirection = direction;
-        _ctx.VertMagnitude -= 14f * Time.deltaTime;
+        _ctx.VertMagnitude -= 18f * Time.deltaTime;
         _ctx.VertMagnitude = Mathf.Clamp(_ctx.VertMagnitude, -40, 40);
         if (!_ctx.IsJumpPressed)
         {
