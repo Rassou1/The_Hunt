@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "SensDown",
+                    "type": "Button",
+                    "id": "3abaa8e4-0cd5-44d0-9d62-131258598f6e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SensUp",
+                    "type": "Button",
+                    "id": "e2f8dd25-b152-4eb7-8e32-d55df3bbf104",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "95774ef6-c3ad-444b-8ea3-24c1878a5722",
@@ -221,6 +239,28 @@
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06c0dfcf-34b3-4601-968f-71d3adf91c4d",
+                    "path": "<Keyboard>/pageUp",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SensUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5307de3-bd12-4f98-9c72-75e4db8ef903",
+                    "path": "<Keyboard>/pageDown",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SensDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -304,6 +344,24 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "d15e70de-dbe1-46fb-ab78-5d514177065a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SensUp",
+                    "type": "Button",
+                    "id": "3d952983-19e2-4e5b-a27e-1e24ab9d307b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SensDown",
+                    "type": "Button",
+                    "id": "8e1293a6-9348-4c72-8a03-7ee53ad83b04",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -462,6 +520,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88a02738-4e0e-49ff-8c44-a7536eda29c8",
+                    "path": "<Keyboard>/pageUp",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SensUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a57da9af-9dd5-49c1-a931-0e6e4917a0bd",
+                    "path": "<Keyboard>/pageDown",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SensDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

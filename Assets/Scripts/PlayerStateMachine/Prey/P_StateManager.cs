@@ -235,6 +235,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Look.performed += OnLookInput;
         _playerInput.PreyControls.SetReset.started += OnSetReset;
         _playerInput.PreyControls.Reset.started += OnReset;
+        _playerInput.PreyControls.SensUp.started += OnSensUp;
+        _playerInput.PreyControls.SensDown.started += OnSensDown;
         
 
 
@@ -539,6 +541,19 @@ public class P_StateManager : MonoBehaviour
         yield return new WaitForSeconds(_dashDuraiton);
         _dashDirection = Vector3.zero;
     }
+
+
+
+    void OnSensUp(InputAction.CallbackContext context)
+    {
+        _mouseSens += 5;
+    }
+
+    void OnSensDown(InputAction.CallbackContext context)
+    {
+        _mouseSens -= 5;
+    }
+
 
     void OnEnable()
     {

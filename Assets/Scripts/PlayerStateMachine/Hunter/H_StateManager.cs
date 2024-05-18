@@ -237,6 +237,8 @@ public class H_StateManager : MonoBehaviour
         _playerInput.HunterControls.SetReset.started += OnSetReset;
         _playerInput.HunterControls.Reset.started += OnReset;
         _playerInput.HunterControls.Attack.started += OnAttack;
+        _playerInput.HunterControls.SensUp.started += OnSensUp;
+        _playerInput.HunterControls.SensDown.started += OnSensDown;
         
 
 
@@ -554,6 +556,16 @@ public class H_StateManager : MonoBehaviour
         Animator.SetBool(_isPunchingHash, false);
         yield return new WaitForSeconds(0.45f);
         _isAttacking = false;
+    }
+
+    void OnSensUp(InputAction.CallbackContext context)
+    {
+        _mouseSens += 5;
+    }
+
+    void OnSensDown(InputAction.CallbackContext context)
+    {
+        _mouseSens -= 5;
     }
 
     void OnEnable()

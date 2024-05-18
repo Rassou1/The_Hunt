@@ -37,6 +37,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""SensDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""3abaa8e4-0cd5-44d0-9d62-131258598f6e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SensUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2f8dd25-b152-4eb7-8e32-d55df3bbf104"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""95774ef6-c3ad-444b-8ea3-24c1878a5722"",
@@ -243,6 +261,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06c0dfcf-34b3-4601-968f-71d3adf91c4d"",
+                    ""path"": ""<Keyboard>/pageUp"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SensUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5307de3-bd12-4f98-9c72-75e4db8ef903"",
+                    ""path"": ""<Keyboard>/pageDown"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SensDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -326,6 +366,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""d15e70de-dbe1-46fb-ab78-5d514177065a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SensUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d952983-19e2-4e5b-a27e-1e24ab9d307b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SensDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e1293a6-9348-4c72-8a03-7ee53ad83b04"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -486,6 +544,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88a02738-4e0e-49ff-8c44-a7536eda29c8"",
+                    ""path"": ""<Keyboard>/pageUp"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SensUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a57da9af-9dd5-49c1-a931-0e6e4917a0bd"",
+                    ""path"": ""<Keyboard>/pageDown"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SensDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -495,6 +575,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // PreyControls
         m_PreyControls = asset.FindActionMap("PreyControls", throwIfNotFound: true);
         m_PreyControls_Move = m_PreyControls.FindAction("Move", throwIfNotFound: true);
+        m_PreyControls_SensDown = m_PreyControls.FindAction("SensDown", throwIfNotFound: true);
+        m_PreyControls_SensUp = m_PreyControls.FindAction("SensUp", throwIfNotFound: true);
         m_PreyControls_Jump = m_PreyControls.FindAction("Jump", throwIfNotFound: true);
         m_PreyControls_Sprint = m_PreyControls.FindAction("Sprint", throwIfNotFound: true);
         m_PreyControls_Slide = m_PreyControls.FindAction("Slide", throwIfNotFound: true);
@@ -513,6 +595,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_HunterControls_SetReset = m_HunterControls.FindAction("Set Reset", throwIfNotFound: true);
         m_HunterControls_Dash = m_HunterControls.FindAction("Dash", throwIfNotFound: true);
         m_HunterControls_Attack = m_HunterControls.FindAction("Attack", throwIfNotFound: true);
+        m_HunterControls_SensUp = m_HunterControls.FindAction("SensUp", throwIfNotFound: true);
+        m_HunterControls_SensDown = m_HunterControls.FindAction("SensDown", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -575,6 +659,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PreyControls;
     private List<IPreyControlsActions> m_PreyControlsActionsCallbackInterfaces = new List<IPreyControlsActions>();
     private readonly InputAction m_PreyControls_Move;
+    private readonly InputAction m_PreyControls_SensDown;
+    private readonly InputAction m_PreyControls_SensUp;
     private readonly InputAction m_PreyControls_Jump;
     private readonly InputAction m_PreyControls_Sprint;
     private readonly InputAction m_PreyControls_Slide;
@@ -587,6 +673,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         private @PlayerInput m_Wrapper;
         public PreyControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PreyControls_Move;
+        public InputAction @SensDown => m_Wrapper.m_PreyControls_SensDown;
+        public InputAction @SensUp => m_Wrapper.m_PreyControls_SensUp;
         public InputAction @Jump => m_Wrapper.m_PreyControls_Jump;
         public InputAction @Sprint => m_Wrapper.m_PreyControls_Sprint;
         public InputAction @Slide => m_Wrapper.m_PreyControls_Slide;
@@ -606,6 +694,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @SensDown.started += instance.OnSensDown;
+            @SensDown.performed += instance.OnSensDown;
+            @SensDown.canceled += instance.OnSensDown;
+            @SensUp.started += instance.OnSensUp;
+            @SensUp.performed += instance.OnSensUp;
+            @SensUp.canceled += instance.OnSensUp;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -634,6 +728,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @SensDown.started -= instance.OnSensDown;
+            @SensDown.performed -= instance.OnSensDown;
+            @SensDown.canceled -= instance.OnSensDown;
+            @SensUp.started -= instance.OnSensUp;
+            @SensUp.performed -= instance.OnSensUp;
+            @SensUp.canceled -= instance.OnSensUp;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -685,6 +785,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_HunterControls_SetReset;
     private readonly InputAction m_HunterControls_Dash;
     private readonly InputAction m_HunterControls_Attack;
+    private readonly InputAction m_HunterControls_SensUp;
+    private readonly InputAction m_HunterControls_SensDown;
     public struct HunterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -698,6 +800,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @SetReset => m_Wrapper.m_HunterControls_SetReset;
         public InputAction @Dash => m_Wrapper.m_HunterControls_Dash;
         public InputAction @Attack => m_Wrapper.m_HunterControls_Attack;
+        public InputAction @SensUp => m_Wrapper.m_HunterControls_SensUp;
+        public InputAction @SensDown => m_Wrapper.m_HunterControls_SensDown;
         public InputActionMap Get() { return m_Wrapper.m_HunterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -734,6 +838,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @SensUp.started += instance.OnSensUp;
+            @SensUp.performed += instance.OnSensUp;
+            @SensUp.canceled += instance.OnSensUp;
+            @SensDown.started += instance.OnSensDown;
+            @SensDown.performed += instance.OnSensDown;
+            @SensDown.canceled += instance.OnSensDown;
         }
 
         private void UnregisterCallbacks(IHunterControlsActions instance)
@@ -765,6 +875,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @SensUp.started -= instance.OnSensUp;
+            @SensUp.performed -= instance.OnSensUp;
+            @SensUp.canceled -= instance.OnSensUp;
+            @SensDown.started -= instance.OnSensDown;
+            @SensDown.performed -= instance.OnSensDown;
+            @SensDown.canceled -= instance.OnSensDown;
         }
 
         public void RemoveCallbacks(IHunterControlsActions instance)
@@ -785,6 +901,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IPreyControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnSensDown(InputAction.CallbackContext context);
+        void OnSensUp(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
@@ -804,5 +922,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSetReset(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnSensUp(InputAction.CallbackContext context);
+        void OnSensDown(InputAction.CallbackContext context);
     }
 }
