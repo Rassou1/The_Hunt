@@ -24,7 +24,7 @@ public class P_InAirState : P_BaseState
         direction += new Vector3(_ctx.CurrentMovementInput.x, 0, _ctx.CurrentMovementInput.y) * 0.5f;
 
         _ctx.StateDirection = direction;
-        _ctx.VertMagnitude -= 14f * Time.deltaTime;
+        _ctx.VertMagnitude -= 18f * Time.deltaTime;
     }
 
     public override void UpdateState()

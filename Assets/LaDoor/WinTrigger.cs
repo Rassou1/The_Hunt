@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,20 +10,15 @@ public class WinTrigger : MonoBehaviour
 
     public GameObject youWinText;
     public float delay;
+    public Orientation orientation;
+    public P_StateManager stateManager;
     void Start()
     {
       youWinText.SetActive(false);  
     }
 
     // Update is called once per frame
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            youWinText.SetActive(true);
-            StartCoroutine(CountDown());
-        }
-    }
+    
 
     public IEnumerator CountDown ()
     {
@@ -30,5 +26,17 @@ public class WinTrigger : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    [ExecuteAlways]
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            youWinText.SetActive(true);
+            StartCoroutine(CountDown());
+            stateManager = other.gameObject.GetComponentInChildren<P_StateManager>();
+            stateManager.Escaped = true;
+        }
     }
 }

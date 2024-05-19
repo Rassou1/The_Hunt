@@ -184,7 +184,7 @@ public class P_StateManager : MonoBehaviour
 
     public int RemainingDashCooldown { get { return _remainingDashCooldown;} }
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
-    public bool Escaped { get { return _escaped; } }
+    public bool Escaped { get { return _escaped; } set { _escaped = value; } }
     public bool Caught { get { return _caught; } }
     void Start()
     {
