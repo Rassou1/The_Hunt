@@ -8050,6 +8050,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7550443570142107722, guid: 936ac4e740e91b2438bbb15d9b39b133, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550443570142107722, guid: 936ac4e740e91b2438bbb15d9b39b133, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550443570142107722, guid: 936ac4e740e91b2438bbb15d9b39b133, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8927974869979737155, guid: 936ac4e740e91b2438bbb15d9b39b133, type: 3}
       propertyPath: m_Name
       value: Prey
