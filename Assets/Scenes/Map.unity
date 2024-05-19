@@ -2659,6 +2659,7 @@ MonoBehaviour:
   hunterCanvas: {fileID: 671719153}
   preyCanvas: {fileID: 1364852996}
   players: []
+  newPrefab: {fileID: 2557244760397437280, guid: 37c92aff8462c34459ada52a014095c3, type: 3}
 --- !u!114 &357322188
 MonoBehaviour:
   m_ObjectHideFlags: 0

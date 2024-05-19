@@ -62,8 +62,4 @@ public class InteractablePlayer : AttributesSync, IInteractable
         Debug.Log("");
     }
 
-    //private void GetTP()
-    //{
-    //    GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
-    //}
 }

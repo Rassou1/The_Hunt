@@ -1,6 +1,7 @@
+using Alteruna;
 using UnityEngine;
 
-public abstract class P_BaseState
+public abstract class P_BaseState 
 {
     private bool _isRootState = false;
     protected P_StateManager _ctx;

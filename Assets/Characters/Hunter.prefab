@@ -713,6 +713,10 @@ GameObject:
   - component: {fileID: 9100720902073967107}
   - component: {fileID: 1325185144502167339}
   - component: {fileID: 4320831549731952481}
+  - component: {fileID: 8776662269726789565}
+  - component: {fileID: 8946993901969155920}
+  - component: {fileID: 5353640939556403478}
+  - component: {fileID: 2721879162072327540}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -776,6 +780,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa02b739e5dc964c85335d1e21e4fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8776662269726789565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557244760397437280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2141718255, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  IsPossessor: 0
+  IsPossessed: 0
+  OnPossessed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnpossessed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8946993901969155920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557244760397437280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1312809854, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 2d374df4-d4d3-4a3b-8e57-2ae4c7233203
+  BucketBehaviors:
+  - Name: Min
+    NetLOD: 0
+    Frequency: -1
+  - Name: Low
+    NetLOD: 1
+    Frequency: 0
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 0
+  - Name: High
+    NetLOD: 3
+    Frequency: 0
+  - Name: Max
+    NetLOD: 4
+    Frequency: 120
+  UseGlobalPosition: 0
+  refreshRate: 30
+  SyncedAxes: 511
+--- !u!114 &5353640939556403478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557244760397437280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractorCam: {fileID: 2557244760397437280}
+  InteractorSource: {fileID: 9100720902073967107}
+  InteractRange: 2
+  me: {fileID: 0}
+--- !u!114 &2721879162072327540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557244760397437280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db10a0c97f27ac145b2be0d7eac216be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 44fddc1a-ab0a-46e6-888f-5067a59f1fbe
+  Reliability: 1
+  LocalMethodBehavior: 1
+  tagged: 0
+  prisonPosition: {x: 63.7, y: 10.58, z: -17.28}
+  _avatar: {fileID: 8776662269726789565}
 --- !u!1 &2681727672921862636
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class RoleGiver: AttributesSync,IInteractable
     public GameObject preyCanvas;
 
     public GameObject[] players;
+    public GameObject newPrefab;
 
     public GameObject GiveObject()
     {
@@ -25,10 +26,7 @@ public class RoleGiver: AttributesSync,IInteractable
 
     [SynchronizableMethod] 
     public void Interact(string interactor)
-    {
-
-       
-            
+    {      
         if (players.Length > 0)
         {
             int hunterIndex = Random.Range(0, players.Length);
@@ -43,10 +41,8 @@ public class RoleGiver: AttributesSync,IInteractable
 
                     if (!avatar.IsMe)
                         return;
+                    SwitchPrefab();
                     hunterCanvas.SetActive(true);
-
-                    
-
                 }
                 else
                 {
@@ -61,6 +57,24 @@ public class RoleGiver: AttributesSync,IInteractable
         }
         gameObject.SetActive(false);
 
+    }
+
+    [SynchronizableMethod]public void SwitchPrefab()
+    {
+        // Get the current player's transform
+        Transform currentTransform = transform;
+
+        // Save the position and rotation
+        Vector3 savedPosition = currentTransform.position;
+        Quaternion savedRotation = currentTransform.rotation;
+
+        // Destroy the current player prefab
+        Destroy(gameObject);
+
+        // Instantiate the new prefab at the saved position and rotation
+        GameObject newPlayer = Instantiate(newPrefab, savedPosition, savedRotation);
+
+        
     }
 
     public void Tag(GameObject tagger, GameObject tagged) 
