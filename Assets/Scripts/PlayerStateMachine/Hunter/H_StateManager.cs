@@ -22,10 +22,7 @@ public class H_StateManager : MonoBehaviour
     int _maxBounces = 5;
     float _skindWidth = 0.1f;
 
-    //LayerMask whatIsGround;
-
-
-
+    
 
     public float _mouseSens;
     public float _maxSlopeAngle;
@@ -33,12 +30,6 @@ public class H_StateManager : MonoBehaviour
     public float _sprintResistance;
     public float _slideResistance;
 
-    int _isWalkingHash;
-    int _isSprintingHash;
-    int _isFallingHash;
-    int _isPunchingHash;
-    int _isSlidingHash;
-    int _isClimbingHash;
 
     H_BaseState _currentState;
     H_StateFactory _states;
@@ -53,7 +44,7 @@ public class H_StateManager : MonoBehaviour
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
-    public Animator _animator;
+    public H_Animations _animator;
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -90,7 +81,7 @@ public class H_StateManager : MonoBehaviour
     Vector3 _subStateDirSet;
     Vector3 _relForward;
 
-    int _remainingDashCooldown;
+    float _remainingDashCooldown;
 
     float _stateMagnitude;
     public float _finalMagnitude;
@@ -122,16 +113,12 @@ public class H_StateManager : MonoBehaviour
 
     public float finalAngle;
 
-    public int IsClimbingHash { get { return _isClimbingHash; } }
+    
     //Put a lot of getters and setters here
     public H_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
-    public Animator Animator { get { return _animator; } }
-    public int IsWalkingHash { get { return _isWalkingHash; } }
-    public int IsSprintingHash { get { return _isSprintingHash; } }
-    public int IsFallingHash { get { return _isFallingHash; } }
-    public int IsWallRunningHash { get { return _isPunchingHash; } }
-    public int IsSlidingHash { get { return _isSlidingHash; } }
+    public H_Animations Animator { get { return _animator; } }
+   
 
     public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
@@ -182,7 +169,7 @@ public class H_StateManager : MonoBehaviour
     public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
     public Vector3 OrientationPos { get { return transform.position; } set { transform.position = value; } }
 
-    public int RemainingDashCooldown { get { return _remainingDashCooldown;} }
+    public float RemainingDashCooldown { get { return _remainingDashCooldown;} }
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     public bool IsAttacking { get { return _isAttacking; } }
     public int CaughtPrey { get { return _caughtPrey; } }
@@ -201,23 +188,12 @@ public class H_StateManager : MonoBehaviour
 
         walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
-        //_rigidbody = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
-        //_animator = GetComponent<Animator>();
 
-        
 
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
-        
-
-        _isWalkingHash = Animator.StringToHash("isWalking");
-        _isSprintingHash = Animator.StringToHash("isRunning");
-        _isFallingHash = Animator.StringToHash("isFalling");
-        _isPunchingHash = Animator.StringToHash("isPunching");
-        _isSlidingHash = Animator.StringToHash("isSliding");
-        
 
         //This gets the inputs from the new input system
         _playerInput.HunterControls.Move.started += OnMovementInput;
@@ -508,7 +484,7 @@ public class H_StateManager : MonoBehaviour
     {
         if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
         _isAttacking = true;
-        Animator.SetBool(_isPunchingHash, true);
+        _animator.SetPunching(true);
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
     }
@@ -536,12 +512,12 @@ public class H_StateManager : MonoBehaviour
     IEnumerator DashCooldown()
     {
         _remainingDashCooldown = _dashCooldown;
-        for (int i = 0; i < _dashCooldown; i++)
+        for (float i = 0; i < _dashCooldown; i += Time.deltaTime)
         {
-            yield return new WaitForSeconds(1f);
-            _remainingDashCooldown -= 1;
+            _remainingDashCooldown -= Time.deltaTime;
         }
         _dashCoolingDown = false;
+        yield return new WaitForSeconds(0f);
     }
 
     IEnumerator DashDuration()
@@ -553,7 +529,7 @@ public class H_StateManager : MonoBehaviour
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(0.5f);
-        Animator.SetBool(_isPunchingHash, false);
+        _animator.SetPunching(false);
         yield return new WaitForSeconds(0.45f);
         _isAttacking = false;
     }

@@ -8,6 +8,7 @@ public abstract class H_BaseState
     protected H_BaseState _currentSubState;
     private H_BaseState _currentSuperState;
 
+
     protected bool hasDoubleJumped;
     public bool HasDoubleJumped { get { return hasDoubleJumped; } set { hasDoubleJumped = value; } }
     protected bool IsRootState { set { _isRootState = value; } }

@@ -14,7 +14,7 @@ public class SCR_dash_cooldown : MonoBehaviour
     Outline outline;
 
     private P_StateManager script;
-    private int dash_cooldown;
+    private float dash_cooldown;
 
     bool display_outline = false;
 

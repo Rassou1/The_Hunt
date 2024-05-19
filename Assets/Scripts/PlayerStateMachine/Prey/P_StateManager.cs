@@ -54,7 +54,7 @@ public class P_StateManager : MonoBehaviour
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
-    public Animator _animator;
+    public P_Animations _animator;
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -89,7 +89,7 @@ public class P_StateManager : MonoBehaviour
     Vector3 _subStateDirSet;
     Vector3 _relForward;
 
-    int _remainingDashCooldown;
+    float _remainingDashCooldown;
 
     float _stateMagnitude;
     public float _finalMagnitude;
@@ -124,7 +124,7 @@ public class P_StateManager : MonoBehaviour
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
-    public Animator Animator { get { return _animator; } }
+    public P_Animations Animator { get { return _animator; } }
     public int IsWalkingHash { get { return _isWalkingHash; } }
     public int IsSprintingHash { get { return _isSprintingHash; } }
     public int IsFallingHash { get { return _isFallingHash; } }
@@ -182,7 +182,7 @@ public class P_StateManager : MonoBehaviour
     public float CapsuleColliderHeight { get { return _capsuleCollider.height; } set { _capsuleCollider.height = value; } }
     public Vector3 OrientationPos { get { return transform.position; } set { transform.position = value; } }
 
-    public int RemainingDashCooldown { get { return _remainingDashCooldown;} }
+    public float RemainingDashCooldown { get { return _remainingDashCooldown;} }
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     public bool Escaped { get { return _escaped; } set { _escaped = value; } }
     public bool Caught { get { return _caught; } }
@@ -200,22 +200,13 @@ public class P_StateManager : MonoBehaviour
 
         walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
-        //_rigidbody = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
-        //_animator = GetComponent<Animator>();
 
         
 
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
-        
-
-        _isWalkingHash = Animator.StringToHash("isWalking");
-        _isSprintingHash = Animator.StringToHash("isRunning");
-        _isFallingHash = Animator.StringToHash("isFalling");
-        _isWallRunningHash = Animator.StringToHash("isWallRunning");
-        _isSlidingHash = Animator.StringToHash("isSliding");
         
 
         //This gets the inputs from the new input system
@@ -528,12 +519,12 @@ public class P_StateManager : MonoBehaviour
     IEnumerator DashCooldown()
     {
         _remainingDashCooldown = _dashCooldown;
-        for (int i = 0; i < _dashCooldown; i++)
+        for (float i = 0; i < _dashCooldown; i += Time.deltaTime)
         {
-            yield return new WaitForSeconds(1f);
-            _remainingDashCooldown -= 1;
+            _remainingDashCooldown -= Time.deltaTime;
         }
         _dashCoolingDown = false;
+        yield return new WaitForSeconds(0f);
     }
 
     IEnumerator DashDuration()

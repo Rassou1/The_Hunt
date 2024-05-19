@@ -19,7 +19,7 @@ public class P_SlidingState : P_BaseState
         //IgnoreCollision(this, hunter, true)
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
         _ctx.HorMouseMod = 0.4f;
-        _ctx.Animator.SetBool(_ctx.IsSlidingHash, true);
+        _ctx.Animator.SetSliding(true);
         slideStart = true;
     }
 
@@ -75,7 +75,7 @@ public class P_SlidingState : P_BaseState
         slideStart = true;
         _ctx.SubStateDirSet = new Vector3(0, 0, 0);
         _ctx.HorMouseMod = 1f;
-        _ctx.Animator.SetBool(_ctx.IsSlidingHash, false);
+        _ctx.Animator.SetSliding(false);
     }
 
     public override void CheckSwitchState()

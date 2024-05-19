@@ -10,8 +10,8 @@ public class H_RunningState : H_BaseState
     }
     public override void EnterState()
     {
-        _ctx.Animator.SetBool(_ctx.IsWalkingHash, true);
-        _ctx.Animator.SetBool(_ctx.IsSprintingHash, true);
+        _ctx.Animator.SetWalking(true);
+        _ctx.Animator.SetRunning(true);
     }
 
     public override void UpdateState()

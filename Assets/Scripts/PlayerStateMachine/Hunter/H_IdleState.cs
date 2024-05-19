@@ -10,8 +10,8 @@ public class H_IdleState : H_BaseState
 
     public override void EnterState()
     {
-        _ctx.Animator.SetBool(_ctx.IsWalkingHash, false);
-        _ctx.Animator.SetBool(_ctx.IsSprintingHash, false);
+        _ctx.Animator.SetWalking(false);
+        _ctx.Animator.SetRunning(false);
         lerpTime = 0f;
     }
 

@@ -58,7 +58,7 @@ public class P_ClimbingState : P_BaseState
 }
     public override void ExitState()
     {
-        _ctx.Animator.SetBool(_ctx.IsClimbingHash, false);
+        //_ctx.Animator.SetBool(_ctx.IsClimbingHash, false);
         _ctx.Rigidbody.useGravity = true;
         //Debug.Log("workk");
     }
