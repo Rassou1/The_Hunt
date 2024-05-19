@@ -10,7 +10,6 @@ public class WinTrigger : MonoBehaviour
 
     public GameObject youWinText;
     public float delay;
-    public Orientation orientation;
     public P_StateManager stateManager;
     void Start()
     {
@@ -36,7 +35,11 @@ public class WinTrigger : MonoBehaviour
             youWinText.SetActive(true);
             StartCoroutine(CountDown());
             stateManager = other.gameObject.GetComponentInChildren<P_StateManager>();
-            stateManager.Escaped = true;
+            if (stateManager != null)
+            {
+                stateManager.Escaped = true;
+            }
+            else return;
         }
     }
 }
