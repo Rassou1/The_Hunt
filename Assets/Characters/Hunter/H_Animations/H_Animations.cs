@@ -25,12 +25,12 @@ public class H_Animations : AttributesSync
 
     public void SetSliding(bool setBool)
     {
-        _animator.SetBool("isPunching", setBool);
+        _animator.SetBool("isSliding", setBool);
     }
 
     public void SetPunching(bool setBool)
     {
-        _animator.SetBool("isSliding", setBool);
+        _animator.SetBool("isPunching", setBool);
     }
 
 

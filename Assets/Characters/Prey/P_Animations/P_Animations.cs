@@ -25,7 +25,7 @@ public class P_Animations : AttributesSync
 
     public void SetSliding(bool setBool)
     {
-        _animator.SetBool("isPunching", setBool);
+        _animator.SetBool("isSliding", setBool);
     }
 
 }
