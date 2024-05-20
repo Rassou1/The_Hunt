@@ -58,8 +58,8 @@ public class InteractablePlayer : AttributesSync, IInteractable
             // Teleport the player to the prison position
             GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
             GotTagged = true;
+
         }
         Debug.Log("");
     }
-
 }
