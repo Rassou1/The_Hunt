@@ -186,19 +186,19 @@ public class P_StateManager : MonoBehaviour
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     public bool Escaped { get { return _escaped; } set { _escaped = value; } }
     public bool Caught { get { return _caught; } set { _caught = value; } }
-    
-    //void Start()
-    //{
-    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
 
-    //}
+    void Start()
+    {
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
+
+    }
 
 
 
 
     private void Awake()
     {
-        _avatar = gameObject.GetComponent<Alteruna.Avatar>();
+        //_avatar = gameObject.GetComponent<Alteruna.Avatar>();
         playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -252,8 +252,8 @@ public class P_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        //if (!_avatar.IsMe)
-        //    return;
+        if (!_avatar.IsMe)
+            return;
 
 
         if (_isMovementPressed && _isGrounded && !_isSprintPressed)
