@@ -45,6 +45,7 @@ public class H_StateManager : MonoBehaviour
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
     public H_Animations _animator;
+    public interacter _interacter;
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -119,6 +120,7 @@ public class H_StateManager : MonoBehaviour
     public Rigidbody Rigidbody { get { return _rigidbody; } }
     public H_Animations Animator { get { return _animator; } }
    
+    
 
     public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
@@ -174,11 +176,11 @@ public class H_StateManager : MonoBehaviour
     public bool IsAttacking { get { return _isAttacking; } }
     public int CaughtPrey { get { return _caughtPrey; } }
 
-    //void Start()
-    //{
-    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
+    void Start()
+    {
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
 
-    //}
+    }
 
 
 
@@ -238,8 +240,8 @@ public class H_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        //if (!_avatar.IsMe)
-        //    return;
+        if (!_avatar.IsMe)
+            return;
 
 
         //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
@@ -530,20 +532,25 @@ public class H_StateManager : MonoBehaviour
 
     IEnumerator AttackDuration()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
+        for(float i = 0; i < 0.5f; i += Time.deltaTime)
+        {
+            _interacter.InteractionRay();
+            yield return null;
+        }
         _animator.SetPunching(false);
-        yield return new WaitForSeconds(0.45f);
+        yield return new WaitForSeconds(0.35f);
         _isAttacking = false;
     }
 
     void OnSensUp(InputAction.CallbackContext context)
     {
-        _mouseSens += 5;
+        _mouseSens += 2;
     }
 
     void OnSensDown(InputAction.CallbackContext context)
     {
-        _mouseSens -= 5;
+        _mouseSens -= 2;
     }
 
     void OnEnable()

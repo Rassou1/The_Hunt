@@ -411,7 +411,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5bf6265058b850241b50cef549752db4, type: 2}
+  m_Motion: {fileID: 7400000, guid: 07cf1582dee8fc94ba3bd7f7895596f8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -442,7 +442,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fbb65bf9a569dda4bba843996efeabba, type: 2}
+  m_Motion: {fileID: 7400000, guid: 059812a16f007934a93e4bdcbe03bfb9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -674,7 +674,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 388cbe8c994d3d44d846b5a5389ce304, type: 2}
+  m_Motion: {fileID: 7400000, guid: 63ae85c22116a5c478ae923b02112019, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -900,7 +900,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 286ff2bc20d165c4e80f252f8aca105b, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4374a5ae696f27349aaf5377da4db3ec, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -931,7 +931,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ae907f122ba9b344abf0a4973ee3ccf0, type: 2}
+  m_Motion: {fileID: 7400000, guid: b283677f65519644b899a714473749cf, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1072,7 +1072,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4d88ead0f93182347a1ccf1213a1b599, type: 2}
+  m_Motion: {fileID: 7400000, guid: 71390b41c37493e48bfc208d12484822, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
