@@ -372,7 +372,7 @@ public class H_StateManager : MonoBehaviour
             _slopeAngle = 90f - Vector3.Angle(_relForward, _slopeNormal);
             _realSlopeAngle = Vector3.Angle(-_gravDir, _slopeNormal);
             finalAngle = _slopeAngle;
-            Debug.Log("slope angle" + _slopeAngle);
+            //Debug.Log("slope angle" + _slopeAngle);
         }
         else
         {
@@ -515,9 +515,11 @@ public class H_StateManager : MonoBehaviour
         for (float i = 0; i < _dashCooldown; i += Time.deltaTime)
         {
             _remainingDashCooldown -= Time.deltaTime;
+            yield return null;
+            Debug.Log(_remainingDashCooldown);
         }
+        _remainingDashCooldown = 0;
         _dashCoolingDown = false;
-        yield return new WaitForSeconds(0f);
     }
 
     IEnumerator DashDuration()

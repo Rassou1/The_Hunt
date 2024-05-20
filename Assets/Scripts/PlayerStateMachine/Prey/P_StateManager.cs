@@ -522,9 +522,10 @@ public class P_StateManager : MonoBehaviour
         for (float i = 0; i < _dashCooldown; i += Time.deltaTime)
         {
             _remainingDashCooldown -= Time.deltaTime;
+            yield return null;
         }
+        _remainingDashCooldown = 0;
         _dashCoolingDown = false;
-        yield return new WaitForSeconds(0f);
     }
 
     IEnumerator DashDuration()
