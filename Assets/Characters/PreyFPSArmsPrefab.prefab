@@ -3629,6 +3629,7 @@ GameObject:
   - component: {fileID: 4720876603261728927}
   - component: {fileID: 4722298125024433720}
   - component: {fileID: 2822653831725373966}
+  - component: {fileID: 1630976521167030021}
   m_Layer: 0
   m_Name: PreyFPSArmsPrefab
   m_TagString: Player
@@ -3777,13 +3778,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5547300917286697637}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3fabbe73f17c0e4d9f6ebe9f0b9d6b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Footsteps: []
+  Sounds: []
   footTransform: {fileID: 1308927344786973826}
+  grass: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  gravel: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  wood: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  tile: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  rock: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  mud: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  metal: {fileID: 11400000, guid: 154e9bbe71924144096ba315afaa73bb, type: 2}
 --- !u!82 &39573402222187602
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3791,7 +3799,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5547300917286697637}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -3805,7 +3813,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -3855,7 +3863,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -3933,6 +3941,22 @@ MonoBehaviour:
   LocalMethodBehavior: 1
   _animator: {fileID: 3639016462593882465}
   _armsAnimator: {fileID: 1689196876965377735}
+--- !u!114 &1630976521167030021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5547300917286697637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4528f0bf59977048a7f58e7899b35b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: e66d70e9-4713-42e1-a0f3-324829f9bbfa
+  Reliability: 1
+  LocalMethodBehavior: 1
 --- !u!1 &5610559704835959891
 GameObject:
   m_ObjectHideFlags: 0
@@ -6162,7 +6186,7 @@ Transform:
   m_GameObject: {fileID: 8529093028687342272}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.10998535}
+  m_LocalPosition: {x: 0, y: 0.06, z: 0.10998535}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

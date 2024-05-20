@@ -990,7 +990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1604908963751126680, guid: e5d7b87d422ee0f478ee09eb32e24f4e, type: 3}
       propertyPath: m_TagString
-      value: groundRock
+      value: groundMetal
       objectReference: {fileID: 0}
     - target: {fileID: 2093637950428003362, guid: e5d7b87d422ee0f478ee09eb32e24f4e, type: 3}
       propertyPath: m_LocalScale.x
@@ -4061,7 +4061,7 @@ MonoBehaviour:
     Users: 
   _maxPlayers: 10
   AvatarSpawning: 1
-  AvatarPrefab: {fileID: 3302895826299941008, guid: 0a748674f290c174fa43e363c46bbf08, type: 3}
+  AvatarPrefab: {fileID: 7416088356374885435, guid: bd7928ae1e30d2b418afbb0065fe734d, type: 3}
   AvatarSpawnLocation: {fileID: 111456714}
   SpawnAvatarPerIndex: 0
   AvatarSpawnLocations: []
@@ -9794,6 +9794,7 @@ MonoBehaviour:
   hunterCanvas: {fileID: 1537400929}
   preyCanvas: {fileID: 1813374679}
   players: []
+  newPrefab: {fileID: 0}
 --- !u!114 &619922851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18339,7 +18340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1291089924
 Transform:
   m_ObjectHideFlags: 0

@@ -107,7 +107,7 @@ public class P_StateManager : MonoBehaviour
 
     Vector3 _resetPosition;
 
-    PlayerWalking walking;
+    PlayerWalking playerSounds;
 
     bool _escaped;
     bool _caught;
@@ -198,8 +198,8 @@ public class P_StateManager : MonoBehaviour
 
     private void Awake()
     {
-
-        walking = gameObject.GetComponentInParent<PlayerWalking>();
+        _avatar = gameObject.GetComponent<Alteruna.Avatar>();
+        playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -256,15 +256,15 @@ public class P_StateManager : MonoBehaviour
         //    return;
 
 
-        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-        //{
-        //    walking.PlayWalkSound();
-        //}
+        if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        {
+            playerSounds.PlayWalkSound();
+        }
 
-        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
-        //{
-        //    walking.PlayRunSound();
-        //}
+        if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        {
+            playerSounds.PlayRunSound();
+        }
 
 
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
@@ -435,6 +435,10 @@ public class P_StateManager : MonoBehaviour
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
+        if (context.started)
+        {
+            playerSounds.PlayJumpStartSound();
+        }
     }
 
 
