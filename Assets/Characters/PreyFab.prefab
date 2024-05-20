@@ -548,6 +548,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8715449501532167877}
+    - targetCorrespondingSourceObject: {fileID: 5548087739506019292, guid: 66963bf08487ea643b651794066756a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8068566345661162160}
     - targetCorrespondingSourceObject: {fileID: 659606187995861540, guid: 66963bf08487ea643b651794066756a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4948544677176268397}
@@ -581,9 +584,11 @@ MonoBehaviour:
   _cameraOrientation: {fileID: 4045374355579123734}
   _cameraPostion: {fileID: 0}
   _animator: {fileID: 6205704390062304464}
-  _dashFactor: 0
   _finalMagnitude: 0
   _actualMagnitude: 0
+  _dashCooldown: 0
+  _dashDuraiton: 0
+  _dashSpeed: 0
   _moveSpeed: 4
   climbspeed: 0
 --- !u!136 &8611927541161921040
@@ -679,13 +684,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6556425815845184731}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3fabbe73f17c0e4d9f6ebe9f0b9d6b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Footsteps: []
+  AudioManager: {fileID: -607181359439849324}
+  Sounds: []
   footTransform: {fileID: 1499175637554195728}
+  grass: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  gravel: {fileID: 11400000, guid: cee93107921e5ed46bfb2bcdd9a8b211, type: 2}
+  wood: {fileID: 11400000, guid: 154e9bbe71924144096ba315afaa73bb, type: 2}
+  tile: {fileID: 11400000, guid: 133421915f9cc7a47a4e9abc9d442a92, type: 2}
+  rock: {fileID: 11400000, guid: cee93107921e5ed46bfb2bcdd9a8b211, type: 2}
+  mud: {fileID: 11400000, guid: 1eb17e12f73ae2543ba2aa1bde6c9adf, type: 2}
+  metal: {fileID: 11400000, guid: cb92646ef7ef6344bacb3228f8101a80, type: 2}
 --- !u!82 &-607181359439849324
 AudioSource:
   m_ObjectHideFlags: 0
@@ -831,3 +844,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8068566345661162160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556425815845184731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4528f0bf59977048a7f58e7899b35b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: a43f62af-7a4d-445d-8199-9d2522747446
+  Reliability: 1
+  LocalMethodBehavior: 1

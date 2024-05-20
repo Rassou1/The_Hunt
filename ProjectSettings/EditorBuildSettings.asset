@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ThitiScene/Thiti_Map.unity
     guid: 6fbe429ce5a61ca4c9a65f8f02fb3a2a
+  - enabled: 0
+    path: Assets/Scenes/Map.unity
+    guid: a4ff4ff2954cb0e4d9fa0e6baf3b4906
   m_configObjects: {}
