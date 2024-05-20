@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PT_Buildings_mat
+  m_Shader: {fileID: 4800000, guid: 255b400e6b8ac644588946664da1ff3f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _GRADIENT_ON
+  - _LOCALWORLDSPACE_ON
+  - _METALICON_ON
+  - _METALLICON_ON
+  - _ONOFF_ON
+  - _SMOOTHNESSON_ON
+  - _SNOW_ON
+  - _TRANSPARENCY_SWITCH_ON
+  - _WORLDOBJECTGRADIENT_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Coarofarmstexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Exteriorwallstexture:
+        m_Texture: {fileID: 2800000, guid: f4eb315dde56f204bb13b39760d2f3b1, type: 3}
+        m_Scale: {x: 7.32, y: -2.14}
+        m_Offset: {x: 0.17, y: 0.35}
+    - _Interiorwallstexture:
+        m_Texture: {fileID: 2800000, guid: f4eb315dde56f204bb13b39760d2f3b1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample2:
+        m_Texture: {fileID: 2800000, guid: 34892be16c52f1948b4b5666052d6bf5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample9:
+        m_Texture: {fileID: 2800000, guid: c91055552562c3941a1c318e8d5bc5c5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Ceramic1smoothness: 0.24
+    - _Ceramic2smoothness: 0.247
+    - _Ceramic3smoothness: 0.3
+    - _ExteriortextureOnOff: 0
+    - _Exteriorwallstiling: 0.133
+    - _Float3: 10
+    - _Float4: 0.05
+    - _Gradient: 1
+    - _Gradientposition: 0.062
+    - _Gradientpower: 4.3
+    - _InteriortextureOnOff: 0
+    - _Interiorwallstiling: 0.1
+    - _Keyword0: 0
+    - _Metal1metallic: 0.553
+    - _Metal1smootness: 0.7
+    - _Metal2metallic: 0.65
+    - _Metal2smootness: 0.7
+    - _Metal3metallic: 0.65
+    - _Metal3smootness: 0.7
+    - _MetallicOn: 1
+    - _OnOff: 1
+    - _SmoothnessOn: 1
+    - _Transparency: 1
+    - _WorldObjectposition: 0
+    - __dirty: 0
+    m_Colors:
+    - _Ceramictiles1color: {r: 0.28056598, g: 0, b: 0.37106913, a: 1}
+    - _Ceramictiles2color: {r: 0.63522005, g: 0, b: 0, a: 1}
+    - _Ceramictiles3color: {r: 0, g: 0.99371064, b: 0.4506914, a: 1}
+    - _Coatofarmscolor: {r: 1, g: 0, b: 0, a: 0}
+    - _Exteriorwalls1colour: {r: 0.091671266, g: 0.035294116, b: 1, a: 1}
+    - _Exteriorwalls2color: {r: 0, g: 1, b: 0.28332043, a: 1}
+    - _Exteriorwalls3color: {r: 0, g: 1, b: 0.97442865, a: 1}
+    - _Fabric1color: {r: 0, g: 0.12529337, b: 0.9245283, a: 0}
+    - _Fabric2color: {r: 1, g: 0.0025963476, b: 0, a: 0}
+    - _Fabric3color: {r: 0, g: 1, b: 0.7025502, a: 0}
+    - _Groundcolor: {r: 0, g: 0, b: 0, a: 1}
+    - _Haycolor: {r: 0.764151, g: 0.517899, b: 0.1622019, a: 1}
+    - _Interiorwallscolor: {r: 0, g: 0.48077822, b: 1, a: 0}
+    - _Metal1color: {r: 1, g: 0, b: 0.9525523, a: 0}
+    - _Metal2color: {r: 1.7633113, g: 0.5262238, b: 0, a: 0}
+    - _Metal3color: {r: 1.584906, g: 0.8017758, b: 0, a: 1}
+    - _Mortarcolor: {r: 0.6431373, g: 0.47290623, b: 0.4627451, a: 0}
+    - _Rock1color: {r: 0.08733495, g: 0, b: 0.6289307, a: 0}
+    - _Rock2color: {r: 0.015723169, g: 0.6824912, b: 1, a: 0}
+    - _Ropecolor: {r: 0.28197566, g: 0.8679245, b: 0, a: 1}
+    - _Topcolor: {r: 1, g: 0.98013073, b: 0.9386792, a: 1}
+    - _Wood1color: {r: 0.44968545, g: 1, b: 0.54304844, a: 1}
+    - _Wood2color: {r: 0.6792453, g: 0.032039788, b: 0.085021615, a: 1}
+    - _Wood3color: {r: 0.27450982, g: 0.047058824, b: 0.15577197, a: 1}
+  m_BuildTextureStacks: []
