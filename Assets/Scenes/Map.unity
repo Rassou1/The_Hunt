@@ -9630,6 +9630,8 @@ MonoBehaviour:
   preyCanvas: {fileID: 1364852996}
   players: []
   newPrefab: {fileID: 2557244760397437280, guid: 37c92aff8462c34459ada52a014095c3, type: 3}
+  escapedPlayers: []
+  caughtPlayers: []
 --- !u!114 &357322188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31163,7 +31165,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   youWinText: {fileID: 691985771}
   delay: 3
+<<<<<<< HEAD
   stateManager: {fileID: 0}
+=======
+  roleGiver: {fileID: 357322187}
+>>>>>>> newNewMain
 --- !u!65 &1762726395
 BoxCollider:
   m_ObjectHideFlags: 0

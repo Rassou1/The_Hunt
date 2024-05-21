@@ -107,7 +107,7 @@ public class P_StateManager : MonoBehaviour
 
     Vector3 _resetPosition;
 
-    PlayerWalking walking;
+    PlayerWalking playerSounds;
 
     bool _escaped;
     bool _caught;
@@ -186,20 +186,20 @@ public class P_StateManager : MonoBehaviour
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     public bool Escaped { get { return _escaped; } set { _escaped = value; } }
     public bool Caught { get { return _caught; } set { _caught = value; } }
-    
-    //void Start()
-    //{
-    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
 
-    //}
+    void Start()
+    {
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
+
+    }
 
 
 
 
     private void Awake()
     {
-
-        walking = gameObject.GetComponentInParent<PlayerWalking>();
+        //_avatar = gameObject.GetComponent<Alteruna.Avatar>();
+        playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -252,19 +252,19 @@ public class P_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        //if (!_avatar.IsMe)
-        //    return;
+        if (!_avatar.IsMe)
+            return;
 
 
-        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-        //{
-        //    walking.PlayWalkSound();
-        //}
+        if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+        {
+            playerSounds.PlayWalkSound();
+        }
 
-        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
-        //{
-        //    walking.PlayRunSound();
-        //}
+        if (_isMovementPressed && _isGrounded && _isSprintPressed)
+        {
+            playerSounds.PlayRunSound();
+        }
 
 
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
@@ -435,6 +435,10 @@ public class P_StateManager : MonoBehaviour
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
+        if (context.started)
+        {
+            playerSounds.PlayJumpStartSound();
+        }
     }
 
 
