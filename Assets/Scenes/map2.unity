@@ -9639,7 +9639,9 @@ MonoBehaviour:
   LocalMethodBehavior: 1
   hunterCanvas: {fileID: 671719153}
   preyCanvas: {fileID: 1364852996}
-  players: []
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
   newPrefab: {fileID: 2557244760397437280, guid: 37c92aff8462c34459ada52a014095c3, type: 3}
   escapedPlayers: []
   caughtPlayers: []
@@ -31135,7 +31137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   youWinText: {fileID: 691985771}
   delay: 3
-  roleGiver: {fileID: 0}
+  roleGiver: {fileID: 357322187}
 --- !u!65 &1762726395
 BoxCollider:
   m_ObjectHideFlags: 0
