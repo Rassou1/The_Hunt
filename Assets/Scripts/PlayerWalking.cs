@@ -120,10 +120,10 @@ public class PlayerWalking : MonoBehaviour
         UpdatePlayerSound(SoundType.Walking);
         int amount = Random.Range(0, Sounds.Length);
         Debug.Log($"Played Walking sound number {amount}");
-        if (!AudioManager.isPlaying)
-        {
-            AudioManager.PlayOneShot(Sounds[amount]);
-        }
+        //if (!AudioManager.isPlaying)
+        //{
+        //    AudioManager.PlayOneShot(Sounds[amount]);
+        //}
     }
 
     public void PlayRunSound()
@@ -131,10 +131,10 @@ public class PlayerWalking : MonoBehaviour
         UpdatePlayerSound(SoundType.Running);
         int amount = Random.Range(0, Sounds.Length);
         Debug.Log($"Played Walking sound Number {amount}");
-        if (!AudioManager.isPlaying)
-        {
-            AudioManager.PlayOneShot(Sounds[amount]);
-        }
+        //if (!AudioManager.isPlaying)
+        //{
+        //    AudioManager.PlayOneShot(Sounds[amount]);
+        //}
     }
 
     public void PlayJumpStartSound()
@@ -142,10 +142,10 @@ public class PlayerWalking : MonoBehaviour
         UpdatePlayerSound(SoundType.JumpingStart);
         int amount = Random.Range(0, Sounds.Length);
         //AudioManager.Stop();
-        if (!AudioManager.isPlaying)
-        {
-            AudioManager.PlayOneShot(Sounds[amount]);
-        }
+        //if (!AudioManager.isPlaying)
+        //{
+        //    AudioManager.PlayOneShot(Sounds[amount]);
+        //}
     }
 
     public void PlayJumpEndSound()
@@ -153,10 +153,10 @@ public class PlayerWalking : MonoBehaviour
         UpdatePlayerSound(SoundType.JumpingEnd);
         int amount = Random.Range(0, Sounds.Length);
         //AudioManager.Stop();
-        if (!AudioManager.isPlaying)
-        {
-            AudioManager.PlayOneShot(Sounds[amount]);
-        }
+        //if (!AudioManager.isPlaying)
+        //{
+        //    AudioManager.PlayOneShot(Sounds[amount]);
+        //}
     }
 
     enum SoundType

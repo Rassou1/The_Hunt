@@ -2658,7 +2658,9 @@ MonoBehaviour:
   LocalMethodBehavior: 1
   hunterCanvas: {fileID: 671719153}
   preyCanvas: {fileID: 1364852996}
-  players: []
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
   newPrefab: {fileID: 2557244760397437280, guid: 37c92aff8462c34459ada52a014095c3, type: 3}
   escapedPlayers: []
   caughtPlayers: []
@@ -4774,8 +4776,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3fabbe73f17c0e4d9f6ebe9f0b9d6b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Footsteps: []
+  Sounds: []
   footTransform: {fileID: 928840562}
+  grass: {fileID: 0}
+  gravel: {fileID: 0}
+  wood: {fileID: 0}
+  tile: {fileID: 0}
+  rock: {fileID: 0}
+  mud: {fileID: 0}
+  metal: {fileID: 0}
 --- !u!54 &528730284
 Rigidbody:
   m_ObjectHideFlags: 0

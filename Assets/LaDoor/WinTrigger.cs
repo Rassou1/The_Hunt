@@ -65,8 +65,7 @@ public class WinTrigger : MonoBehaviour
             {
 
                 Debug.Log(other.gameObject);
-                //StartCoroutine(LoadScene(other.gameObject));
-                mp.LoadScene("WinScene");
+                StartCoroutine(LoadScene(other.gameObject));
                 if (stateManager.Escaped)
                 {
                     stateManager.Rigidbody.position = new Vector3(64.5f, 16.44f, 100);
