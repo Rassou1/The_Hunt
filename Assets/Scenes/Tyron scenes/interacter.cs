@@ -32,33 +32,33 @@ public class interacter : MonoBehaviour
         me = gameObject;
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-        
-        
-    //    if (Input.GetKeyDown(KeyCode.E))
-    //    {
-    //        Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
-
-    //        if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
-    //        {
-    //            IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
+   // Update is called once per frame
+    void Update()
+    {
 
 
-    //            if (interactObj != null)
-    //            {
-    //                interactObj.InitInteract(me.name);
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
 
-    //                Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
-    //            }
-    //            else
-    //            {
-    //                Debug.Log("No interactable object found!");
-    //            }
-    //        }
-    //    }
-    //}
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
+            {
+                IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
+
+
+                if (interactObj != null)
+                {
+                    interactObj.InitInteract(me.name);
+
+                    Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
+                }
+                else
+                {
+                    Debug.Log("No interactable object found!");
+                }
+            }
+        }
+    }
 
     public void InteractionRay()
     {

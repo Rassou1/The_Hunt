@@ -486,7 +486,7 @@ public class H_StateManager : MonoBehaviour
     {
         if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
         _isAttacking = true;
-        _animator.SetPunching(true);
+        //_animator.SetPunching(true);
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
     }
@@ -538,7 +538,7 @@ public class H_StateManager : MonoBehaviour
             _interacter.InteractionRay();
             yield return null;
         }
-        _animator.SetPunching(false);
+        //_animator.SetPunching(false);
         yield return new WaitForSeconds(0.35f);
         _isAttacking = false;
     }
