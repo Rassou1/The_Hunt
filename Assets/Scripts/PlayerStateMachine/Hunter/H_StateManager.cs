@@ -8,7 +8,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class H_StateManager : MonoBehaviour
 {
     private Alteruna.Avatar _avatar;
@@ -101,7 +100,7 @@ public class H_StateManager : MonoBehaviour
 
     Vector3 _resetPosition;
 
-    PlayerWalking walking;
+    //PlayerWalking walking;
 
     int _caughtPrey;
 
@@ -188,7 +187,7 @@ public class H_StateManager : MonoBehaviour
     private void Awake()
     {
 
-        walking = gameObject.GetComponentInParent<PlayerWalking>();
+        //walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -263,13 +262,14 @@ public class H_StateManager : MonoBehaviour
             AntiClipCheck();
         }
 
-        
+        Debug.Log(Rigidbody.position);
         
         SetCameraOrientation();
         
         RotateBodyY();
         _relForward = CamRelHor(Vector3.forward);
-        
+
+        Debug.Log("Current Hunter State:" + CurrentState);
         
         _currentState.UpdateStates();
 
