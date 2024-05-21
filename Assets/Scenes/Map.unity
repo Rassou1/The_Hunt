@@ -434,7 +434,7 @@ MonoBehaviour:
     Users: 
   _maxPlayers: 10
   AvatarSpawning: 1
-  AvatarPrefab: {fileID: 8076997524796820353, guid: 936ac4e740e91b2438bbb15d9b39b133, type: 3}
+  AvatarPrefab: {fileID: 3258306898991342688, guid: f61ce76c7756d2a4094d864dd109d28a, type: 3}
   AvatarSpawnLocation: {fileID: 461275303}
   SpawnAvatarPerIndex: 0
   AvatarSpawnLocations: []
@@ -2660,6 +2660,8 @@ MonoBehaviour:
   preyCanvas: {fileID: 1364852996}
   players: []
   newPrefab: {fileID: 2557244760397437280, guid: 37c92aff8462c34459ada52a014095c3, type: 3}
+  escapedPlayers: []
+  caughtPlayers: []
 --- !u!114 &357322188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21447,6 +21449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   youWinText: {fileID: 691985771}
   delay: 3
+  roleGiver: {fileID: 357322187}
 --- !u!65 &1762726395
 BoxCollider:
   m_ObjectHideFlags: 0

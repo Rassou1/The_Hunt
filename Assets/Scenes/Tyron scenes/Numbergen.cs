@@ -12,6 +12,9 @@ public class RoleGiver: AttributesSync,IInteractable
     public GameObject[] players;
     public GameObject newPrefab;
 
+    public List<GameObject> escapedPlayers;
+    public List<GameObject> caughtPlayers;
+
     public GameObject GiveObject()
     {
         return gameObject;
