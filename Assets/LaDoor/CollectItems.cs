@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class CollectItems : MonoBehaviour
 {
     [SerializeField] public Animator Dooranim;
+    [SerializeField] public Animator Dooranim2;
     public GameObject Diamonds;
     private static int diamondsCollected = 0;
-    private int requiredDiamonds = 2;
+    private int requiredDiamonds = 1;
     private bool isCollected = false;
     public Text diamondCountText;
     private Renderer _renderer;
@@ -73,10 +74,17 @@ public class CollectItems : MonoBehaviour
     {
         if (diamondsCollected >= requiredDiamonds)
         {
-            DoorController doorController = Dooranim.GetComponent<DoorController>();
-            if (doorController != null)
+            DoorController doorController1 = Dooranim.GetComponent<DoorController>();
+            DoorController doorController2 = Dooranim2.GetComponent<DoorController>();
+
+            if (doorController1 != null)
             {
-                doorController.OpenDoor();  
+                doorController1.OpenDoor();
+            }
+
+            if (doorController2 != null)
+            {
+                doorController2.OpenDoor();
             }
         }
     }

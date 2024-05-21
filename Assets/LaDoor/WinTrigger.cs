@@ -57,7 +57,7 @@ public class WinTrigger : MonoBehaviour
                 stateManager.Escaped = true;
                 Debug.Log(other.gameObject);
                 roleGiver.escapedPlayers.Add(other.gameObject);
-                Debug.Log($"Statemanager: {stateManager}. Escaped status 1: {stateManager.Escaped}");
+                //Debug.Log($"Statemanager: {stateManager}. Escaped status 1: {stateManager.Escaped}");
             }
             else return;
             //untested
