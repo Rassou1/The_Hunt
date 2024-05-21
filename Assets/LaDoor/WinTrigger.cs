@@ -13,7 +13,7 @@ public class WinTrigger : MonoBehaviour
     public float delay;
     private P_StateManager stateManager;
     public RoleGiver roleGiver;
-    Multiplayer mp = new Multiplayer();
+    //Multiplayer mp = new Multiplayer();
 
     string sceneName = "WinScene";
     void Start()
