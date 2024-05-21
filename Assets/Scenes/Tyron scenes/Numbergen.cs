@@ -4,6 +4,9 @@ using UnityEngine;
 using Alteruna;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem.XR;
+using UnityEditor;
+
 public class RoleGiver: AttributesSync,IInteractable
 {
     public GameObject hunterCanvas;
@@ -27,7 +30,7 @@ public class RoleGiver: AttributesSync,IInteractable
         BroadcastRemoteMethod("Interact", interactor);
 
     }
-
+    
     [SynchronizableMethod] 
     public void Interact(string interactor)
     {
@@ -41,7 +44,7 @@ public class RoleGiver: AttributesSync,IInteractable
                 Alteruna.Avatar avatar = players[i].GetComponent<Alteruna.Avatar>();
 
                 if (i == hunterIndex)
-                {
+                { 
                     players[i].layer = LayerMask.NameToLayer("Hunter");
 
                     if (!avatar.IsMe)
@@ -63,23 +66,40 @@ public class RoleGiver: AttributesSync,IInteractable
         gameObject.SetActive(false);
 
     }
+    
+    
 
-    [SynchronizableMethod]public void SwitchPrefab(int i)
+    [SynchronizableMethod] public void SwitchPrefab(int i)
     {
         // Get the current player's transform
-        Transform currentTransform = transform;
+        Transform currentTransform = transform; //works as intended
 
         // Save the position and rotation
-        Vector3 savedPosition = currentTransform.position;
+        Vector3 savedPosition = currentTransform.position; //works as intended
         Quaternion savedRotation = currentTransform.rotation;
+
+        // Instantiate the new prefab at the saved position and rotation
+        GameObject newPlayer = Instantiate(newPrefab, savedPosition, savedRotation); //works, no avatar though.
+       
+        Alteruna.Avatar newAvatar = players[i].gameObject.GetComponent<Alteruna.Avatar>();
+        User newUser = newAvatar.GetComponent<User>();
+
+        
 
         // Destroy the current player prefab
         Destroy(players[i].gameObject);
 
-        // Instantiate the new prefab at the saved position and rotation
-        GameObject newPlayer = Instantiate(newPrefab, savedPosition, savedRotation);
-        players[i] = newPlayer;
+       
         
+
+        Alteruna.Avatar emptyHunterAvatar = newPlayer.gameObject.GetComponent<Alteruna.Avatar>();
+        emptyHunterAvatar.Possessed(newUser); //please work please i beg you please please please pelase
+
+       // emptyHunterAvatar = newAvatar;
+
+
+        players[i] = newPlayer;
+        Debug.Log(players[i]);
     }
 
     public void Tag(GameObject tagger, GameObject tagged) 
@@ -98,4 +118,10 @@ public class RoleGiver: AttributesSync,IInteractable
     {
 
     }
+
+    //public GameObject InstantiateWithAvatar()
+    //{
+
+    //}
+
 }

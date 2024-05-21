@@ -240,6 +240,7 @@ public class H_StateManager : MonoBehaviour
         //Add a Way so a remote avatar still makes sounds
 
         if (!_avatar.IsMe)
+            throw new Exception("This avatar is not possessed!");
             return;
 
 
@@ -518,7 +519,7 @@ public class H_StateManager : MonoBehaviour
         {
             _remainingDashCooldown -= Time.deltaTime;
             yield return null;
-            Debug.Log(_remainingDashCooldown);
+            //Debug.Log(_remainingDashCooldown);
         }
         _remainingDashCooldown = 0;
         _dashCoolingDown = false;

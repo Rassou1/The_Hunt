@@ -51,7 +51,7 @@ public class interacter : MonoBehaviour
                     interactObj.InitInteract(me.name);
 
                     Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
-                }
+                } 
                 else
                 {
                     Debug.Log("No interactable object found!");
