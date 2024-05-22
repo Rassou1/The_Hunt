@@ -965,6 +965,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455029010}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &456437372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 934016626710282502, guid: e95c53ee9ec55d24189a8a7cb8a309dd, type: 3}
+  m_PrefabInstance: {fileID: 8202527762642444107}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a43938b3ecb1e14caceab769c319fc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &461617036
 GameObject:
   m_ObjectHideFlags: 0
@@ -3680,6 +3691,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1036738411 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7467036617250792224, guid: bd7928ae1e30d2b418afbb0065fe734d, type: 3}
+  m_PrefabInstance: {fileID: 3140429819694933930}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31a29400454b6d4dbb0bdf39894fd38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1039807604
 GameObject:
   m_ObjectHideFlags: 0
@@ -7969,6 +7991,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2822531162735758993, guid: bd7928ae1e30d2b418afbb0065fe734d, type: 3}
+      propertyPath: _playerManager
+      value: 
+      objectReference: {fileID: 1036738411}
     - target: {fileID: 4837504389515123507, guid: bd7928ae1e30d2b418afbb0065fe734d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -8050,6 +8076,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4497821407840973967, guid: e95c53ee9ec55d24189a8a7cb8a309dd, type: 3}
+      propertyPath: _playerManager
+      value: 
+      objectReference: {fileID: 456437372}
     - target: {fileID: 8242663099246113931, guid: e95c53ee9ec55d24189a8a7cb8a309dd, type: 3}
       propertyPath: m_Name
       value: Hunter

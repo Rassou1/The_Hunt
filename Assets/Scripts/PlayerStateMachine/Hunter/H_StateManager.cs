@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class H_StateManager : MonoBehaviour
+public class H_StateManager : PlayerManagerBase
 {
     public Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
@@ -103,7 +103,6 @@ public class H_StateManager : MonoBehaviour
 
     //PlayerWalking walking;
 
-    int _caughtPrey;
 
     public int _dashCooldown;
     public float _dashDuraiton;
@@ -174,12 +173,13 @@ public class H_StateManager : MonoBehaviour
     public float RemainingDashCooldown { get { return _remainingDashCooldown;} }
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     public bool IsAttacking { get { return _isAttacking; } }
-    public int CaughtPrey { get { return _caughtPrey; } }
+    
 
     void Start()    
     {
         //_avatar = GetComponentInParent<Alteruna.Avatar>();
-            }
+        _isPrey = false;
+    }
 
 
 

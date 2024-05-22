@@ -24,6 +24,7 @@ public class interacter : MonoBehaviour
     public Transform InteractorSource;
     public float InteractRange;
 
+
     [SerializeField] private GameObject me;
 
     void Start()
