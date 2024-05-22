@@ -28,7 +28,7 @@ public class interacter : MonoBehaviour
 
     void Start()
     {
-        _avatar = gameObject.GetComponent<Alteruna.Avatar>();
+        _avatar = gameObject.GetComponentInParent<Alteruna.Avatar>();
         me = gameObject;
     }
 

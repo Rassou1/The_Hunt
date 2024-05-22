@@ -18,6 +18,8 @@ public class RoleGiver: AttributesSync,IInteractable
     public List<GameObject> escapedPlayers;
     public List<GameObject> caughtPlayers;
 
+    public Spawner spawner;
+
     public GameObject GiveObject()
     {
         return gameObject;
@@ -78,28 +80,35 @@ public class RoleGiver: AttributesSync,IInteractable
         Vector3 savedPosition = currentTransform.position; //works as intended
         Quaternion savedRotation = currentTransform.rotation;
 
-        // Instantiate the new prefab at the saved position and rotation
-        GameObject newPlayer = Instantiate(newPrefab, savedPosition, savedRotation); //works, no avatar though.
-       
-        Alteruna.Avatar newAvatar = players[i].gameObject.GetComponent<Alteruna.Avatar>();
-        User newUser = newAvatar.GetComponent<User>();
-
-        
-
         // Destroy the current player prefab
         Destroy(players[i].gameObject);
 
+        //Uses Alteruna spawner to spawn a pre-synchronized gameobject.
+        spawner.Spawn(newPrefab.name, savedPosition, savedRotation);
+
+
+       // // Instantiate the new prefab at the saved position and rotation
+       // GameObject newPlayer = Instantiate(newPrefab, savedPosition, savedRotation); //works, no avatar though.
+       
+       // Alteruna.Avatar newAvatar = players[i].gameObject.GetComponent<Alteruna.Avatar>();
+       // User newUser = newAvatar.GetComponent<User>();
+
+        
+
+       // // Destroy the current player prefab
+       // Destroy(players[i].gameObject);
+
        
         
 
-        Alteruna.Avatar emptyHunterAvatar = newPlayer.gameObject.GetComponent<Alteruna.Avatar>();
-        emptyHunterAvatar.Possessed(newUser); //please work please i beg you please please please pelase
+       // Alteruna.Avatar emptyHunterAvatar = newPlayer.gameObject.GetComponent<Alteruna.Avatar>();
+       // emptyHunterAvatar.Possessed(newUser); //please work please i beg you please please please pelase
 
-       // emptyHunterAvatar = newAvatar;
+       //// emptyHunterAvatar = newAvatar;
 
 
-        players[i] = newPlayer;
-        Debug.Log(players[i]);
+       //players[i] = newPlayer;
+       // Debug.Log(players[i]);
     }
 
     public void Tag(GameObject tagger, GameObject tagged) 
@@ -112,6 +121,7 @@ public class RoleGiver: AttributesSync,IInteractable
     {
         hunterCanvas.SetActive(false);
         preyCanvas.SetActive(false);
+        spawner = new Spawner();
     }
 
     void Update()

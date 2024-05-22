@@ -21,7 +21,7 @@ TagManager:
   - Hunter
   - Prey
   - keypadUI
-  - 
+  - parentPlayer
   - whatIsGround
   - _groundMask
   - Ladder

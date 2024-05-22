@@ -198,8 +198,8 @@ GameObject:
   - component: {fileID: 34780570}
   - component: {fileID: 34780569}
   - component: {fileID: 34780568}
-  - component: {fileID: 34780567}
   - component: {fileID: 34780566}
+  - component: {fileID: 34780573}
   m_Layer: 0
   m_Name: RoleGiver
   m_TagString: Untagged
@@ -223,28 +223,6 @@ MonoBehaviour:
   _uidString: 73e41cf3-6d2e-4aca-90b4-f4bf51fa24d6
   Reliability: 1
   LocalMethodBehavior: 1
---- !u!114 &34780567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34780565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef52ba50ea137314aa4e3879797517c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
-  _uidString: d6e7d052-9507-40eb-80f8-e3eef7ae059f
-  Reliability: 1
-  LocalMethodBehavior: 1
-  hunterCanvas: {fileID: 721580613}
-  preyCanvas: {fileID: 1625575297}
-  players: []
-  newPrefab: {fileID: 8242663099246113931, guid: e95c53ee9ec55d24189a8a7cb8a309dd, type: 3}
-  escapedPlayers: []
-  caughtPlayers: []
 --- !u!114 &34780568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +342,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &34780573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34780565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e63889e3a1d314ea9aca3b9b525888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 1969025901}
+  _uidString: 9c43e4a3-f913-4b1b-ba73-c08fce3b510b
+  Reliability: 1
+  LocalMethodBehavior: 1
+  hunterCanvas: {fileID: 721580613}
+  preyCanvas: {fileID: 1625575297}
+  players: []
+  newPrefab: {fileID: 9209242939184243159, guid: 9fdb53ea94717c04eb11ffb7eb6589d7, type: 3}
+  escapedPlayers: []
+  caughtPlayers: []
 --- !u!1001 &90614680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3772,7 +3772,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Multiplayer: {fileID: 1969025901}
-  SpawnableObjects: []
+  SpawnableObjects:
+  - {fileID: 5547300917286697637, guid: bd7928ae1e30d2b418afbb0065fe734d, type: 3}
+  - {fileID: 8242663099246113931, guid: e95c53ee9ec55d24189a8a7cb8a309dd, type: 3}
   OnObjectSpawn:
     m_PersistentCalls:
       m_Calls:
@@ -3823,7 +3825,7 @@ MonoBehaviour:
     Users: 
   _maxPlayers: 10
   AvatarSpawning: 1
-  AvatarPrefab: {fileID: 7416088356374885435, guid: bd7928ae1e30d2b418afbb0065fe734d, type: 3}
+  AvatarPrefab: {fileID: 7566427906986039737, guid: 9fdb53ea94717c04eb11ffb7eb6589d7, type: 3}
   AvatarSpawnLocation: {fileID: 591310748}
   SpawnAvatarPerIndex: 0
   AvatarSpawnLocations: []

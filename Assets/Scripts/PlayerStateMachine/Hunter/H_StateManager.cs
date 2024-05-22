@@ -10,10 +10,11 @@ using UnityEngine.InputSystem;
 
 public class H_StateManager : MonoBehaviour
 {
-    private Alteruna.Avatar _avatar;
+    public Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
 
+    public bool amIHunter;
 
     CapsuleCollider _capsuleCollider;
     Bounds _bounds;
@@ -175,18 +176,17 @@ public class H_StateManager : MonoBehaviour
     public bool IsAttacking { get { return _isAttacking; } }
     public int CaughtPrey { get { return _caughtPrey; } }
 
-    void Start()
+    void Start()    
     {
-        _avatar = GetComponentInParent<Alteruna.Avatar>();
-
-    }
+        //_avatar = GetComponentInParent<Alteruna.Avatar>();
+            }
 
 
 
 
     private void Awake()
     {
-
+        
         //walking = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -241,62 +241,64 @@ public class H_StateManager : MonoBehaviour
 
         if (!_avatar.IsMe)
             throw new Exception("This avatar is not possessed!");
-            return;
-
-
-        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-        //{
-        //    walking.PlayWalkSound();
-        //}
-
-        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
-        //{
-        //    walking.PlayRunSound();
-        //}
-
-
-        _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
-        _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
-        GroundCheck();
-        if (!_isGrounded)
+        else
         {
-            AntiClipCheck();
+
+
+
+            //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+            //{
+            //    walking.PlayWalkSound();
+            //}
+
+            //if (_isMovementPressed && _isGrounded && _isSprintPressed)
+            //{
+            //    walking.PlayRunSound();
+            //}
+
+
+            _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
+            _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
+            GroundCheck();
+            if (!_isGrounded)
+            {
+                AntiClipCheck();
+            }
+
+            Debug.Log(Rigidbody.position);
+
+            SetCameraOrientation();
+
+            RotateBodyY();
+            _relForward = CamRelHor(Vector3.forward);
+
+            Debug.Log("Current Hunter State:" + CurrentState);
+
+            _currentState.UpdateStates();
+
+            _appliedMovement = AlignToSlope(_stateDirection);
+            _preCollideMovement = _appliedMovement;
+            _finalMagnitude = _stateMagnitude;
+
+            Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
+            _appliedMovement = CamRelHor(_appliedMovement);
+
+            _appliedMovement = _appliedMovement.normalized;
+            _appliedMovement *= _finalMagnitude;
+
+            _appliedMovement += _dashDirection;
+            _actualMagnitude = _finalMagnitude;
+            _appliedMovement *= Time.deltaTime;
+
+
+
+            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
+            _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+            _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
+            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
+            _rigidbody.transform.position += _appliedMovement;
+
         }
-
-        Debug.Log(Rigidbody.position);
-        
-        SetCameraOrientation();
-        
-        RotateBodyY();
-        _relForward = CamRelHor(Vector3.forward);
-
-        Debug.Log("Current Hunter State:" + CurrentState);
-        
-        _currentState.UpdateStates();
-
-        _appliedMovement = AlignToSlope(_stateDirection);
-        _preCollideMovement = _appliedMovement;
-        _finalMagnitude = _stateMagnitude;
-        
-        Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
-        _appliedMovement = CamRelHor(_appliedMovement);
-        
-        _appliedMovement = _appliedMovement.normalized;
-        _appliedMovement *= _finalMagnitude;
-
-        _appliedMovement += _dashDirection;
-        _actualMagnitude = _finalMagnitude;
-        _appliedMovement *= Time.deltaTime;
-        
-        
-        
-        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
-        _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
-        _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
-        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
-        _rigidbody.transform.position += _appliedMovement;
-
-        
     }
 
 

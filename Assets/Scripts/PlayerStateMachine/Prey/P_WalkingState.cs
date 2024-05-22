@@ -11,11 +11,11 @@ public class P_WalkingState : P_BaseState
 
     public override void EnterState()
     {
-        _ctx.Animator.SetWalking(true);
-        _ctx.Animator.SetRunning(false);
+        //_ctx.Animator.SetWalking(true);
+        //_ctx.Animator.SetRunning(false);
         lerpTime = 0f;
     }
-
+        
     public override void UpdateState()
     {
         
