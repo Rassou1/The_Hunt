@@ -44,11 +44,16 @@ public class MapMover : AttributesSync,IInteractable
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
+        moveMaps();
+    }
+
+    public void moveMaps()
+    {
         players = FindObjectsOnLayer(9);
         UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
-        
 
-        if (scene.name == "TEMPLOBBY"|| scene.name == "TEMPSTART")
+
+        if (scene.name == "TEMPLOBBY" || scene.name == "TEMPSTART")
         {
             for (int i = 0; i < players.Count; i++)
             {
@@ -64,9 +69,9 @@ public class MapMover : AttributesSync,IInteractable
             {
                 Transform transform = players[i].GetComponent<Transform>();
                 preyList = FindObjectsOnLayer(7);
-                foreach(GameObject prey in preyList)
+                foreach (GameObject prey in preyList)
                 {
-                    if(prey.GetComponentInChildren<P_StateManager>().Escaped == true)
+                    if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
                     {
                         prey.GetComponentInParent<Transform>().position = new Vector3(64.5f, 16.44f, 100);
                     }
@@ -80,13 +85,9 @@ public class MapMover : AttributesSync,IInteractable
                 {
                     hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
                 }
-                
-                Debug.Log(transform.position);
-                Multiplayer.LoadScene("TEMPLOBBY");
+                Multiplayer.LoadScene("LOBBY");
             }
         }
-       
-        
     }
     // Start is called before the first frame update
     void Start()

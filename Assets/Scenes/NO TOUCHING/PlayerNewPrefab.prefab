@@ -6314,12 +6314,20 @@ PrefabInstance:
       propertyPath: _avatar
       value: 
       objectReference: {fileID: 7566427906986039737}
+    - target: {fileID: 6353652672149950697, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_Name
       value: PreyComponent
       objectReference: {fileID: 0}
     - target: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8060280617838245117, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8545583062885397176, guid: 59556d925da285648bfaf1333170db54, type: 3}

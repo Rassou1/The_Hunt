@@ -17,7 +17,7 @@ public class WinTrigger : MonoBehaviour
     public PlayerStates playerStates;
     //public RoleGiver roleGiver;
     Multiplayer mp = new Multiplayer();
-    MapMover mapMover = new MapMover();
+    MapMover mapMover;
     string hoboInteractor = ("lol");
 
     public List<GameObject> players;
@@ -31,14 +31,15 @@ public class WinTrigger : MonoBehaviour
         players = FindObjectsOnLayer(9);
         preyList = FindObjectsOnLayer(7);
         hunterList = FindObjectsOnLayer(6);
+        mapMover = new MapMover();
+        //youWinText.SetActive(false);
 
-        //youWinText.SetActive(false);  
     }
 
     // Update is called once per frame
 
 
-    public IEnumerator CountDown ()
+    public IEnumerator CountDown()
     {
         yield return new WaitForSeconds(delay);
         Cursor.lockState = CursorLockMode.None;
@@ -61,6 +62,9 @@ public class WinTrigger : MonoBehaviour
     [ExecuteAlways]
     void OnTriggerEnter(Collider other)
     {
+        mp = FindObjectOfType<Multiplayer>();
+
+        Debug.Log(other);
         if (other.gameObject.tag == "Player")
         {
             //youWinText.SetActive(true);
@@ -69,15 +73,12 @@ public class WinTrigger : MonoBehaviour
             player = other.gameObject;
             if (other.gameObject.layer == 7)
             {
-                Debug.Log(other.gameObject);
-                playerStates.playerEscaped(player);
-                Debug.Log("player escaped");
-                //Debug.Log($"Statemanager: {stateManager}. Escaped status 1: {stateManager.Escaped}");
+                stateManager.Escaped = true;
             }
             //untested
-            if (playerStates.escapedPlayers.Count <= mapMover.FindObjectsOnLayer(9).Count)
+            if (playerStates.escapedPlayers.Count <= FindObjectsOnLayer(9).Count)
             {
-
+                //mapMover.moveMaps();
                 for (int i = 0; i < players.Count; i++)
                 {
                     Transform transform = players[i].GetComponent<Transform>();
@@ -100,7 +101,7 @@ public class WinTrigger : MonoBehaviour
                     }
 
                     Debug.Log(transform.position);
-                    mp.LoadScene("TEMPSTART");
+                    mp.LoadScene("LOBBY");
 
                     //Debug.Log(other.gameObject);
                     ////StartCoroutine(LoadScene(other.gameObject));
@@ -118,11 +119,11 @@ public class WinTrigger : MonoBehaviour
                     //{
                     //    stateManager.Rigidbody.position = new Vector3(64.5f, 30, 100);
                     //}
+
                 }
+
             }
         }
-
-
     }
 
     List<GameObject> FindObjectsOnLayer(int layer)
@@ -140,5 +141,11 @@ public class WinTrigger : MonoBehaviour
 
         return objectsInLayer;
     }
-
 }
+
+
+    
+
+    
+
+
