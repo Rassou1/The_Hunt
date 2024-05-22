@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e63889e3a1d314ea9aca3b9b525888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
+  Multiplayer: {fileID: 1969025901}
   _uidString: 9c43e4a3-f913-4b1b-ba73-c08fce3b510b
   Reliability: 1
   LocalMethodBehavior: 1
@@ -1000,9 +1000,6 @@ MonoBehaviour:
   Reliability: 1
   LocalMethodBehavior: 1
   players: []
-  preyList: []
-  hunterList: []
-  mp: {fileID: 0}
 --- !u!1001 &532978904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3744,6 +3741,262 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 850649989193942044, guid: ae358aa425fe140409d8a560f4492730, type: 3}
   m_PrefabInstance: {fileID: 1907603108}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1969025899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1969025902}
+  - component: {fileID: 1969025901}
+  - component: {fileID: 1969025900}
+  - component: {fileID: 1969025903}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: NetworkManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1969025900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969025899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 29116766, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 1969025901}
+  SpawnableObjects:
+  - {fileID: 5547300917286697637, guid: bd7928ae1e30d2b418afbb0065fe734d, type: 3}
+  - {fileID: 8242663099246113931, guid: e95c53ee9ec55d24189a8a7cb8a309dd, type: 3}
+  OnObjectSpawn:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnObjectDespawn:
+    m_PersistentCalls:
+      m_Calls: []
+  ForceSync: 1
+--- !u!114 &1969025901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969025899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1777794829, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LogLevel: 4
+  Buckets:
+  - Name: Min
+    NetLOD: 0
+    Users: 
+  - Name: Low
+    NetLOD: 1
+    Users: 
+  - Name: Mid
+    NetLOD: 2
+    Users: 
+  - Name: High
+    NetLOD: 3
+    Users: 
+  - Name: Max
+    NetLOD: 4
+    Users: 
+  _maxPlayers: 10
+  AvatarSpawning: 1
+  AvatarPrefab: {fileID: 7566427906986039737, guid: 9fdb53ea94717c04eb11ffb7eb6589d7, type: 3}
+  AvatarSpawnLocation: {fileID: 591310748}
+  SpawnAvatarPerIndex: 0
+  AvatarSpawnLocations: []
+  OnConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNetworkError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRoomCreated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRoomJoined:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRoomLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: restartMap, Assembly-CSharp
+        m_MethodName: OnLeave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRoomListUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnOtherUserJoined:
+    m_PersistentCalls:
+      m_Calls: []
+  OnOtherUserLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  OnJoinRejected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPacketSent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPacketReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLockRequested:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLockAcquired:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLockDenied:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLockUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  OnForceSynced:
+    m_PersistentCalls:
+      m_Calls: []
+  OnForceSync:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRpcReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRpcSent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRpcRegistered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnForceSyncReply:
+    m_PersistentCalls:
+      m_Calls: []
+  DevClientIndex: 0
+  DevClientName: DevClient0
+  UseKnownDevDevice: 0
+  IsDevClient: 0
+  IsDevServer: 0
+  AutoJoinFirstRoom: 0
+  AutoJoinOwnRoom: 0
+  BroadcastEnabled: 0
+  DevServerIP: 
+  DevPort: 20010
+  LANServerPort: 0
+  PublishPort: 20000
+  ServerPort: 0
+  _username: 
+--- !u!4 &1969025902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969025899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.015093803, y: -0.0429945, z: 0.01509285}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1969025903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969025899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cacedf0b385b03d4396f366589ab5d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1980168335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4115,6 +4368,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1362374241}
   - {fileID: 2043700366}
+  - {fileID: 1969025902}
   - {fileID: 34780572}
   - {fileID: 449000162}
   - {fileID: 1440708128}
