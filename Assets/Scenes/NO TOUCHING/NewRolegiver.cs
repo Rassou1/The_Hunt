@@ -58,7 +58,31 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
         if (players.Count > 0)
         {
-            int hunterIndex = Random.Range(0, players.Count);
+
+            foreach (var obj in players) 
+            {
+
+                Transform parentTransform = obj.transform;
+
+                // Find the child GameObjects by name
+                Transform firstChild = parentTransform.Find("PreyComponent");
+                Transform secondChild = parentTransform.Find("HunterComponent");
+
+                if (!firstChild.gameObject.active)
+                {
+
+                    // Turn the first GameObject on
+                    firstChild.gameObject.SetActive(true);
+
+                    // Turn the second GameObject off
+                    secondChild.gameObject.SetActive(false);
+                }
+
+            }
+
+            //int hunterIndex = Random.Range(0, players.Count);
+            int hunterIndex = 0;
+
 
             for (int i = 0; i < players.Count; i++)
             {
@@ -70,7 +94,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
                     if (!avatar.IsMe)
                         return;
-                    SwitchPrefab(hunterIndex);
+                   SwitchPrefab(hunterIndex);
                     hunterCanvas.SetActive(true);
                 }
                 else
@@ -91,6 +115,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
 
     [SynchronizableMethod]
+
     public void SwitchPrefab(int i)
     {
         
@@ -107,7 +132,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
             // Turn the second GameObject on
             secondChild.gameObject.SetActive(true);
             // Turn the first GameObject off
-            firstChild.gameObject.SetActive(false);
+             firstChild.gameObject.SetActive(false);
 
             
 
