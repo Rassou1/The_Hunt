@@ -3728,6 +3728,7 @@ MonoBehaviour:
   tagged: 0
   prisonPosition: {x: 27.917, y: 2.182, z: -0.24}
   _avatar: {fileID: 0}
+  _playerManager: {fileID: 0}
 --- !u!114 &9088883111173887985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3940,7 +3941,6 @@ MonoBehaviour:
   Reliability: 1
   LocalMethodBehavior: 1
   _animator: {fileID: 3639016462593882465}
-  _armsAnimator: {fileID: 1689196876965377735}
 --- !u!114 &1630976521167030021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6069,6 +6069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31a29400454b6d4dbb0bdf39894fd38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _avatar: {fileID: 0}
   _mouseSens: 40
   _maxSlopeAngle: 45
   _softCap: 15

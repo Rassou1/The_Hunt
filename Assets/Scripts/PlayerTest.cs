@@ -25,20 +25,22 @@ public class PlayerTest : AttributesSync
         if (_avatar.IsMe)
             return;
 
-        Debug.LogError(_avatar.transform.position);
+
+        
+        //Debug.LogError(_avatar.transform.position);
         _audioSoruce.spatialBlend = 1.0f;
 
-        //if (new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z) != new Vector3(oldPosition.x, 0, oldPosition.z))
-        //{
-        //    if (false)
-        //    {
-        //        _playerSounds.PlayWalkSound();
-        //    }
-        //    else
-        //    {
-        //        _playerSounds.PlayRunSound();
-        //    }
-        //}
+        if (new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z) != new Vector3(oldPosition.x, 0, oldPosition.z))
+        {
+            _playerSounds.PlayWalkSound();
+            //if (false)
+            //{
+            //}
+            //else
+            //{
+            //    _playerSounds.PlayRunSound();
+            //}
+        }
 
         if (Vector3.Distance(new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 3)
         {

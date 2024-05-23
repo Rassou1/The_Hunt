@@ -121,9 +121,11 @@ public class P_StateManager : MonoBehaviour
 
     protected bool _caught;
     protected bool _escaped;
+    protected int _diamondsTaken;
 
     public bool Escaped { get { return _escaped; } set { _escaped = value; } }
     public bool Caught { get { return _caught; } set { _caught = value; } }
+    public int DiamondsTaken { get { return _diamondsTaken; } set { _diamondsTaken = value; } }
 
     public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
@@ -194,6 +196,7 @@ public class P_StateManager : MonoBehaviour
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
+        _diamondsTaken = 5;
     }
 
 
@@ -256,8 +259,18 @@ public class P_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
+        if (gameObject.GetComponentInParent<PlayerTest>() != null && !_avatar.IsMe)
+        {
+            otherPlayerSounds.NonLocalPlayerTest();
+        }
+
         if (!_avatar.IsMe)
             return;
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            DiamondsTaken++;
+        }
 
         if (gameObject.GetComponentInParent<PlayerWalking>() != null)
         {
@@ -272,10 +285,8 @@ public class P_StateManager : MonoBehaviour
             }
         }
 
-        if (gameObject.GetComponentInParent<PlayerTest>() != null)
-        {
-            otherPlayerSounds.NonLocalPlayerTest();
-        }
+
+        
 
 
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
