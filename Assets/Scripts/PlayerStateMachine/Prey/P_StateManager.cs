@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class P_StateManager : MonoBehaviour
+public class P_StateManager : PlayerManagerBase
 {
     public Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
@@ -107,10 +107,10 @@ public class P_StateManager : MonoBehaviour
 
     Vector3 _resetPosition;
 
-    //PlayerWalking playerSounds;
+    PlayerWalking playerSounds;
+    PlayerTest otherPlayerSounds;
 
-    bool _escaped;
-    bool _caught;
+    
 
     public int _dashCooldown;
     public float _dashDuraiton;
@@ -184,13 +184,12 @@ public class P_StateManager : MonoBehaviour
 
     public float RemainingDashCooldown { get { return _remainingDashCooldown;} }
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
-    public bool Escaped { get { return _escaped; } set { _escaped = value; } }
-    public bool Caught { get { return _caught; } set { _caught = value; } }
+    
 
     void Start()
     {
-        //_avatar = GetComponentInParent<Alteruna.Avatar>();
-
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
+        _isPrey = true;
     }
 
 
@@ -199,7 +198,8 @@ public class P_StateManager : MonoBehaviour
     private void Awake()
     {
         //_avatar = gameObject.GetComponent<Alteruna.Avatar>();
-        //playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
+        playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
+        otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -255,16 +255,23 @@ public class P_StateManager : MonoBehaviour
         if (!_avatar.IsMe)
             return;
 
+        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        {
+            if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+            {
+                playerSounds.PlayWalkSound();
+            }
 
-        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-        //{
-        //    //playerSounds.PlayWalkSound();
-        //}
+            if (_isMovementPressed && _isGrounded && _isSprintPressed)
+            {
+                playerSounds.PlayRunSound();
+            }
+        }
 
-        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
-        //{
-        //    //playerSounds.PlayRunSound();
-        //}
+        if (gameObject.GetComponentInParent<PlayerTest>() != null)
+        {
+            otherPlayerSounds.NonLocalPlayerTest();
+        }
 
 
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
