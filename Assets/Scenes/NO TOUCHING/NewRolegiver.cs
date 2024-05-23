@@ -72,10 +72,10 @@ public class NewRoleGiver : AttributesSync, IInteractable
                 {
 
                     // Turn the first GameObject on
-                    firstChild.gameObject.SetActive(true);
+                    firstChild.gameObject.active=true;
 
                     // Turn the second GameObject off
-                    secondChild.gameObject.SetActive(false);
+                    secondChild.gameObject.active = false;
                 }
 
             }
@@ -126,17 +126,21 @@ public class NewRoleGiver : AttributesSync, IInteractable
         Transform secondChild = parentTransform.Find("HunterComponent");
 
 
+
+
+
+
         if (firstChild != null && secondChild != null)
         {
 
             // Turn the second GameObject on
-            secondChild.gameObject.SetActive(true);
+            secondChild.gameObject.active = true;
             // Turn the first GameObject off
-             firstChild.gameObject.SetActive(false);
+            firstChild.gameObject.active = false;
 
-            
 
-            
+
+
         }
         else
         {
