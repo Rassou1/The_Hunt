@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class P_StateManager : PlayerManagerBase
+public class P_StateManager : MonoBehaviour
 {
     public Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
@@ -119,6 +119,11 @@ public class P_StateManager : PlayerManagerBase
     public float _moveSpeed;
     public float climbspeed;
 
+    protected bool _caught;
+    protected bool _escaped;
+
+    public bool Escaped { get { return _escaped; } set { _escaped = value; } }
+    public bool Caught { get { return _caught; } set { _caught = value; } }
 
     public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
@@ -189,7 +194,6 @@ public class P_StateManager : PlayerManagerBase
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
-        _isPrey = true;
     }
 
 

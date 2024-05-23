@@ -6267,7 +6267,8 @@ MonoBehaviour:
   tagged: 0
   prisonPosition: {x: 63.7, y: 10.58, z: -17.28}
   _avatar: {fileID: 7566427906986039737}
-  _playerManager: {fileID: 0}
+  _hunterManager: {fileID: 1128020610449734755}
+  _preyManager: {fileID: 1269575076366420476}
 --- !u!1 &9217312276028605384
 GameObject:
   m_ObjectHideFlags: 0
@@ -6943,6 +6944,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9090348373271904619}
   m_SourcePrefab: {fileID: 100100000, guid: 59556d925da285648bfaf1333170db54, type: 3}
+--- !u!114 &1269575076366420476 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
+  m_PrefabInstance: {fileID: 4868709614004448953}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31a29400454b6d4dbb0bdf39894fd38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1409882155117462875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5765110827027000290, guid: 59556d925da285648bfaf1333170db54, type: 3}

@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class H_StateManager : PlayerManagerBase
+public class H_StateManager : MonoBehaviour
 {
     public Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
@@ -113,7 +113,9 @@ public class H_StateManager : PlayerManagerBase
 
     public float finalAngle;
 
-    
+    protected int _caughtPrey;
+    public int CaughtPrey { get { return _caughtPrey; } }
+
     //Put a lot of getters and setters here
     public H_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
@@ -178,7 +180,6 @@ public class H_StateManager : PlayerManagerBase
     void Start()    
     {
         //_avatar = GetComponentInParent<Alteruna.Avatar>();
-        _isPrey = false;
     }
 
 
