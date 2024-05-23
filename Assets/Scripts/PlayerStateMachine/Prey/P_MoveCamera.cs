@@ -27,7 +27,7 @@ public class P_MoveCamera : MonoBehaviour
         {
             parentRenderer.enabled = false;
         }
-        else
+        else if (!avatar.IsMe) 
         {
             parentRenderer.enabled = true;
 
@@ -35,6 +35,8 @@ public class P_MoveCamera : MonoBehaviour
 
             foreach (var obj in _players)
             {
+                if (obj == gameObject)
+                    return;
 
                 Transform parentTransform = obj.transform;
 
