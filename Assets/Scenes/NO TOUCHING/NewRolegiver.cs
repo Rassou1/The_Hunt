@@ -107,7 +107,9 @@ public class NewRoleGiver : AttributesSync, IInteractable
         Transform secondChild = parentTransform.Find("HunterComponent");
 
 
-
+        // Transfer the position from the first child to the second child
+        secondChild.position = firstChild.position;
+        secondChild.rotation = firstChild.rotation;
 
 
 
@@ -164,6 +166,9 @@ public class NewRoleGiver : AttributesSync, IInteractable
             Transform firstChild = parentTransform.Find("PreyComponent");
             Transform secondChild = parentTransform.Find("HunterComponent");
 
+            // Transfer the position from the first child to the second child
+            secondChild.position = firstChild.position;
+            secondChild.rotation = firstChild.rotation;
             if (!firstChild.gameObject.active)
             {
 

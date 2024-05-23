@@ -783,6 +783,8 @@ GameObject:
   - component: {fileID: 3136571778272917934}
   - component: {fileID: 5508012761460197086}
   - component: {fileID: 2323297128974718852}
+  - component: {fileID: 458848459450860755}
+  - component: {fileID: 2427342990593358432}
   m_Layer: 6
   m_Name: HunterComponent
   m_TagString: Player
@@ -1033,6 +1035,34 @@ MonoBehaviour:
   _uidString: 5d6efc9e-9752-4a06-b2f8-00f165370f9c
   Reliability: 1
   LocalMethodBehavior: 1
+--- !u!114 &458848459450860755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537914950847844620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc570da240af2ef438121ee110440a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2427342990593358432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537914950847844620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractorCam: {fileID: 8069392528602212407}
+  InteractorSource: {fileID: 0}
+  InteractRange: 1.1
+  me: {fileID: 1537914950847844620}
 --- !u!1 &1554703547536722506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6240,7 +6270,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9209242939184243159}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
   m_Name: 
@@ -6956,6 +6986,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9090348373271904619}
+    - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7436666071515128339}
   m_SourcePrefab: {fileID: 100100000, guid: 59556d925da285648bfaf1333170db54, type: 3}
 --- !u!114 &1269575076366420476 stripped
 MonoBehaviour:
@@ -6971,6 +7004,11 @@ MonoBehaviour:
 --- !u!4 &1409882155117462875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5765110827027000290, guid: 59556d925da285648bfaf1333170db54, type: 3}
+  m_PrefabInstance: {fileID: 4868709614004448953}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1666451082803822110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6102744693506150567, guid: 59556d925da285648bfaf1333170db54, type: 3}
   m_PrefabInstance: {fileID: 4868709614004448953}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1737605374854112259 stripped
@@ -7027,6 +7065,22 @@ MonoBehaviour:
   _uidString: dfbc107f-44ff-4035-9bbe-e6d50954fe04
   Reliability: 1
   LocalMethodBehavior: 1
+--- !u!114 &7436666071515128339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737605374854112259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractorCam: {fileID: 1666451082803822110}
+  InteractorSource: {fileID: 0}
+  InteractRange: 1.1
+  me: {fileID: 1737605374854112259}
 --- !u!1 &4783567523206326615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 140602009291933678, guid: 59556d925da285648bfaf1333170db54, type: 3}
