@@ -43,7 +43,7 @@ public class SignScoreCounter : MonoBehaviour
         //    diamondsCollected.Add((user.gameObject.GetComponentInChildren<P_StateManager>().DiamondsTaken, users));
         //}
 
-        if (diamondsCollected.Count > 0)
+        if (diamondsCollected.Count > 0 && diamondsCollected[0].Item1 > 0)
         {
             diamondsCollected = (List<(int, string)>)diamondsCollected.OrderByDescending(i => i.Item1).ToList();
 
