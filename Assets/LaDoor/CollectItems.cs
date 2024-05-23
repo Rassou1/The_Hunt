@@ -32,6 +32,11 @@ public class CollectItems : MonoBehaviour
         if (other.gameObject.tag == "Player" && !isCollected)// && Input.GetKey(KeyCode.E) && )
         {
             CollectDiamond();
+            if (other.GetComponentInChildren<P_StateManager>() != null)
+            {
+                other.GetComponentInChildren<P_StateManager>().DiamondsTaken++;
+
+            }
         }
     }
     void OnEnable()

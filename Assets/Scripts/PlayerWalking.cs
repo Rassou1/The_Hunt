@@ -23,7 +23,7 @@ public class PlayerWalking : MonoBehaviour
 
     Ray floorRay;
     RaycastHit hit;
-    string floorName = "DefaultName";
+    public string floorName = "DefaultName";
     // Start is called before the first frame update
     void Start()
     {
