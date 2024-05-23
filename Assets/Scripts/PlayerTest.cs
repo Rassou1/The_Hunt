@@ -20,7 +20,7 @@ public class PlayerTest : AttributesSync
     // Update is called once per frame
 
     [SynchronizableMethod]
-    public void NonLocalPlayerTest(bool sprint)
+    public void NonLocalPlayerTest()
     {
         if (_avatar.IsMe)
             return;
@@ -44,7 +44,7 @@ public class PlayerTest : AttributesSync
         {
             _playerSounds.PlayRunSound();
         }
-        else if (Vector3.Distance(new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1)
+        else if (Vector3.Distance(new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 0.01f)
         {
             _playerSounds.PlayWalkSound();
         }
@@ -53,6 +53,7 @@ public class PlayerTest : AttributesSync
         {
             //_playerSounds.PlayJumpStartSound();
         }
+
         oldPosition = _avatar.transform.position;
     }
 }

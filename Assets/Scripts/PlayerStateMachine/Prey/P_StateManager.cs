@@ -108,6 +108,7 @@ public class P_StateManager : PlayerManagerBase
     Vector3 _resetPosition;
 
     PlayerWalking playerSounds;
+    PlayerTest otherPlayerSounds;
 
     
 
@@ -198,6 +199,7 @@ public class P_StateManager : PlayerManagerBase
     {
         //_avatar = gameObject.GetComponent<Alteruna.Avatar>();
         playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
+        otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -265,7 +267,11 @@ public class P_StateManager : PlayerManagerBase
                 playerSounds.PlayRunSound();
             }
         }
-        
+
+        if (gameObject.GetComponentInParent<PlayerTest>() != null)
+        {
+            otherPlayerSounds.NonLocalPlayerTest();
+        }
 
 
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
