@@ -789,7 +789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7426980046316077098
 Transform:
   m_ObjectHideFlags: 0
@@ -6115,8 +6115,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4652573204410578318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
@@ -6171,6 +6171,7 @@ GameObject:
   - component: {fileID: 8844845579550324302}
   - component: {fileID: 8811234123907765804}
   - component: {fileID: 7773378596374827617}
+  - component: {fileID: 8643063952669146692}
   m_Layer: 9
   m_Name: PlayerNewPrefab
   m_TagString: Player
@@ -6268,6 +6269,18 @@ MonoBehaviour:
   prisonPosition: {x: 63.7, y: 10.58, z: -17.28}
   _avatar: {fileID: 7566427906986039737}
   _playerManager: {fileID: 0}
+--- !u!114 &8643063952669146692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9209242939184243159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc570da240af2ef438121ee110440a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9217312276028605384
 GameObject:
   m_ObjectHideFlags: 0
@@ -6798,7 +6811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6798341386782492017, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6914,15 +6927,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8545583062885397176, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8545583062885397176, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8545583062885397176, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8760424244741986617, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.y

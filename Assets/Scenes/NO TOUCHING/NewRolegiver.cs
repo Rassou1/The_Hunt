@@ -59,26 +59,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
         if (players.Count > 0)
         {
 
-            foreach (var obj in players) 
-            {
-
-                Transform parentTransform = obj.transform;
-
-                // Find the child GameObjects by name
-                Transform firstChild = parentTransform.Find("PreyComponent");
-                Transform secondChild = parentTransform.Find("HunterComponent");
-
-                if (!firstChild.gameObject.active)
-                {
-
-                    // Turn the first GameObject on
-                    firstChild.gameObject.active=true;
-
-                    // Turn the second GameObject off
-                    secondChild.gameObject.active = false;
-                }
-
-            }
+            resetAllPrefabs();
 
             //int hunterIndex = Random.Range(0, players.Count);
             int hunterIndex = 0;
@@ -94,7 +75,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
                     if (!avatar.IsMe)
                         return;
-                   SwitchPrefab(hunterIndex);
+                   //SwitchPrefab(hunterIndex);
                     hunterCanvas.SetActive(true);
                 }
                 else
@@ -170,9 +151,30 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
     }
 
-    //public GameObject InstantiateWithAvatar()
-    //{
+    public void resetAllPrefabs()
+    {
+        List<GameObject> _players = FindObjectsOnLayer(9);
 
-    //}
+        foreach (var obj in _players)
+        {
+
+            Transform parentTransform = obj.transform;
+
+            // Find the child GameObjects by name
+            Transform firstChild = parentTransform.Find("PreyComponent");
+            Transform secondChild = parentTransform.Find("HunterComponent");
+
+            if (!firstChild.gameObject.active)
+            {
+
+                // Turn the first GameObject on
+                firstChild.gameObject.active = true;
+
+                // Turn the second GameObject off
+                secondChild.gameObject.active = false;
+            }
+
+        }
+    }
 
 }
