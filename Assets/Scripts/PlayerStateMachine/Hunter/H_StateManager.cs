@@ -240,7 +240,9 @@ public class H_StateManager : PlayerManagerBase
         //Add a Way so a remote avatar still makes sounds
 
         if (!_avatar.IsMe)
-            throw new Exception("This avatar is not possessed!");
+        {
+            return;
+        }
         else
         {
 
