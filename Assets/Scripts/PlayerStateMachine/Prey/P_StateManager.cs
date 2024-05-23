@@ -196,7 +196,7 @@ public class P_StateManager : MonoBehaviour
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
-        _diamondsTaken = 5;
+        
     }
 
 
