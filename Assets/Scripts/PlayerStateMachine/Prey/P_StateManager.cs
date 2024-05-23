@@ -107,7 +107,7 @@ public class P_StateManager : PlayerManagerBase
 
     Vector3 _resetPosition;
 
-    //PlayerWalking playerSounds;
+    PlayerWalking playerSounds;
 
     
 
@@ -187,7 +187,7 @@ public class P_StateManager : PlayerManagerBase
 
     void Start()
     {
-        //_avatar = GetComponentInParent<Alteruna.Avatar>();
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
         _isPrey = true;
     }
 
@@ -197,7 +197,7 @@ public class P_StateManager : PlayerManagerBase
     private void Awake()
     {
         //_avatar = gameObject.GetComponent<Alteruna.Avatar>();
-        //playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
+        playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -253,16 +253,19 @@ public class P_StateManager : PlayerManagerBase
         if (!_avatar.IsMe)
             return;
 
+        if (gameObject.GetComponent<PlayerWalking>() != null)
+        {
+            if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+            {
+                playerSounds.PlayWalkSound();
+            }
 
-        //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-        //{
-        //    //playerSounds.PlayWalkSound();
-        //}
-
-        //if (_isMovementPressed && _isGrounded && _isSprintPressed)
-        //{
-        //    //playerSounds.PlayRunSound();
-        //}
+            if (_isMovementPressed && _isGrounded && _isSprintPressed)
+            {
+                playerSounds.PlayRunSound();
+            }
+        }
+        
 
 
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);

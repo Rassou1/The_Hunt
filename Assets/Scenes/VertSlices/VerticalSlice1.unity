@@ -6906,7 +6906,7 @@ GameObject:
   - component: {fileID: 515272871}
   m_Layer: 0
   m_Name: New Game Object
-  m_TagString: groundGrass
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9795,6 +9795,9 @@ MonoBehaviour:
   preyCanvas: {fileID: 1813374679}
   players: []
   newPrefab: {fileID: 0}
+  escapedPlayers: []
+  caughtPlayers: []
+  spawner: {fileID: 0}
 --- !u!114 &619922851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21738,6 +21741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pic: {fileID: 1537400929}
+  targetTime: 0
 --- !u!114 &1537400931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23808,6 +23812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pic: {fileID: 1813374679}
+  targetTime: 0
 --- !u!114 &1813374681
 MonoBehaviour:
   m_ObjectHideFlags: 0
