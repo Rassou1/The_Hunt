@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapMover : AttributesSync,IInteractable
+public class MapMover : AttributesSync/*,IInteractable*/
 {
     public List<GameObject> players;
     public List<GameObject> preyList;
@@ -17,12 +17,12 @@ public class MapMover : AttributesSync,IInteractable
     {
         return gameObject;
     }
-    public void InitInteract(string interactor)
-    {
+    //public void InitInteract(string interactor)
+    //{
 
-        BroadcastRemoteMethod("Interact", interactor);
+    //    BroadcastRemoteMethod("Interact", interactor);
             
-    }
+    //}
 
     public List<GameObject> FindObjectsOnLayer(int layer)
     {
@@ -40,11 +40,12 @@ public class MapMover : AttributesSync,IInteractable
         return objectsInLayer;
     }
 
+    //[SynchronizableMethod]
+    //public void Interact(string interactor)
+    //{
+    //   // moveMaps();
+    //}
     [SynchronizableMethod]
-    public void Interact(string interactor)
-    {
-        moveMaps();
-    }
 
     public void moveMaps()
     {

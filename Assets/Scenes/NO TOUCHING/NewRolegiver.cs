@@ -20,7 +20,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
     public List<GameObject> escapedPlayers;
     public List<GameObject> caughtPlayers;
 
-
+    public MapMover mm;
     public GameObject GiveObject()
     {
         return gameObject;
@@ -89,8 +89,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
                 }
             }
         }
-        gameObject.SetActive(false);
-
+        //gameObject.SetActive(false);
+        mm.moveMaps();
     }
 
 
