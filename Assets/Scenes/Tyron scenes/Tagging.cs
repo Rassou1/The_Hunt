@@ -9,7 +9,11 @@ public class InteractablePlayer : AttributesSync, IInteractable
 
     public Vector3 prisonPosition = new Vector3(63.7f, 10.58f, -17.28f);
     public Alteruna.Avatar _avatar;
-    public PlayerManagerBase _playerManager;
+    //public PlayerManagerBase _playerManager;
+
+    public H_StateManager _hunterManager;
+    public P_StateManager _preyManager;
+
     private string myName;
     private bool GotTagged;
     public void Start()
@@ -60,7 +64,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
             // Teleport the player to the prison position
             GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
             GotTagged = true;
-            _playerManager.Caught = true;
+            _preyManager.Caught = true;
 
         }
         Debug.Log("");
