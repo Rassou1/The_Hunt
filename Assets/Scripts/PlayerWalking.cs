@@ -68,17 +68,11 @@ public class PlayerWalking : MonoBehaviour
                         Sounds = kvp.Value.JumpEndClips;
                     }
                 }
-                else
-                {
-                    if (gravel.walkClips != null)
-                    {
-                        Sounds = metal.walkClips;
-                    }
-                    else
-                    {
-                        //Debug.LogError("Player Sounds Failed To Load! Using Backup File Instead");
-                    }
-                }
+            }
+
+            if (Sounds.Length == 0 && metal.walkClips != null)
+            {
+                Sounds = metal.walkClips;
             }
         }
     }

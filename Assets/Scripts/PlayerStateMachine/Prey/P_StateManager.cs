@@ -253,7 +253,7 @@ public class P_StateManager : PlayerManagerBase
         if (!_avatar.IsMe)
             return;
 
-        if (gameObject.GetComponent<PlayerWalking>() != null)
+        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
         {
             if (_isMovementPressed && _isGrounded && !_isSprintPressed)
             {
