@@ -339,9 +339,6 @@ public class P_StateManager : MonoBehaviour
             _appliedMovement *= _stateMagnitude;
             _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
         }
-
-
-        
     }
 
 
@@ -468,9 +465,12 @@ public class P_StateManager : MonoBehaviour
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
-        if (context.started)
+        if (context.started && gameObject.GetComponentInParent<PlayerWalking>() != null)
         {
-            //playerSounds.PlayJumpStartSound();
+            if (_isGrounded)
+            {
+                playerSounds.PlayJumpStartSound();
+            }
         }
     }
 

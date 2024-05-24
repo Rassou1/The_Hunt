@@ -13,11 +13,14 @@ public class CollectItems : MonoBehaviour
     private int requiredDiamonds = 1;
     private bool isCollected = false;
     public Text diamondCountText;
+    AudioSource audioPlay;
+    public Sounds pickupsounds;
     private Renderer _renderer;
     private Collider _collider;
 
     void Start()
     {
+        audioPlay = GetComponent<AudioSource>();
         _renderer = GetComponent<Renderer>();
         _collider = GetComponent<Collider>();
         if (Diamonds != null)
@@ -67,14 +70,31 @@ public class CollectItems : MonoBehaviour
         //}
         if (!isCollected)
         {
-
-            Destroy(gameObject);
+            int amount = Random.Range(0, pickupsounds.sounds.Length);
+            //AudioSource.PlayClipAtPoint(pickupsounds.sounds[amount], transform.position,10f);
+            audioPlay.PlayOneShot(pickupsounds.sounds[amount]);
+            _collider.enabled = false;
+            _renderer.enabled = false;
+            //Destroy(gameObject);
             isCollected = true;  // Mark the diamond as collected
             diamondsCollected++;
             UpdateDiamondText();
             CheckDiamondsCollected();
+           
         }
     }
+
+    private void Update()
+    {
+        if (isCollected)
+        {
+            if (!audioPlay.isPlaying)
+            {
+                Destroy(this);
+            }
+        }
+    }
+
     private void CheckDiamondsCollected()
     {
         if (diamondsCollected >= requiredDiamonds)
