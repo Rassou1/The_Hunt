@@ -116,6 +116,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GhostTest"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd388416-f2de-478f-8d97-dfb2d1cc28e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -281,6 +290,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SensDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c55266c-149e-4834-a849-4ac297abf2e3"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GhostTest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -584,6 +604,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PreyControls_Reset = m_PreyControls.FindAction("Reset", throwIfNotFound: true);
         m_PreyControls_SetReset = m_PreyControls.FindAction("Set Reset", throwIfNotFound: true);
         m_PreyControls_Dash = m_PreyControls.FindAction("Dash", throwIfNotFound: true);
+        m_PreyControls_GhostTest = m_PreyControls.FindAction("GhostTest", throwIfNotFound: true);
         // HunterControls
         m_HunterControls = asset.FindActionMap("HunterControls", throwIfNotFound: true);
         m_HunterControls_Move = m_HunterControls.FindAction("Move", throwIfNotFound: true);
@@ -668,6 +689,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PreyControls_Reset;
     private readonly InputAction m_PreyControls_SetReset;
     private readonly InputAction m_PreyControls_Dash;
+    private readonly InputAction m_PreyControls_GhostTest;
     public struct PreyControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -682,6 +704,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Reset => m_Wrapper.m_PreyControls_Reset;
         public InputAction @SetReset => m_Wrapper.m_PreyControls_SetReset;
         public InputAction @Dash => m_Wrapper.m_PreyControls_Dash;
+        public InputAction @GhostTest => m_Wrapper.m_PreyControls_GhostTest;
         public InputActionMap Get() { return m_Wrapper.m_PreyControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -721,6 +744,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @GhostTest.started += instance.OnGhostTest;
+            @GhostTest.performed += instance.OnGhostTest;
+            @GhostTest.canceled += instance.OnGhostTest;
         }
 
         private void UnregisterCallbacks(IPreyControlsActions instance)
@@ -755,6 +781,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @GhostTest.started -= instance.OnGhostTest;
+            @GhostTest.performed -= instance.OnGhostTest;
+            @GhostTest.canceled -= instance.OnGhostTest;
         }
 
         public void RemoveCallbacks(IPreyControlsActions instance)
@@ -910,6 +939,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnReset(InputAction.CallbackContext context);
         void OnSetReset(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnGhostTest(InputAction.CallbackContext context);
     }
     public interface IHunterControlsActions
     {

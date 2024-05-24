@@ -16,6 +16,7 @@ public class PlayerWalking : MonoBehaviour
     public SoundFolder rock;
     public SoundFolder mud;
     public SoundFolder metal;
+    
 
     Dictionary<string, SoundFolder> sFolders = new Dictionary<string, SoundFolder>();
 
@@ -23,7 +24,8 @@ public class PlayerWalking : MonoBehaviour
 
     Ray floorRay;
     RaycastHit hit;
-    public string floorName = "DefaultName";
+    string secondaryFloorName = "DefaultName";
+    string floorName = "DefaultName";
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,7 @@ public class PlayerWalking : MonoBehaviour
         sFolders.Add("Rock", rock);
         sFolders.Add("Mud", mud);
         sFolders.Add("Metal", metal);
+        
     }
 
     void UpdatePlayerSound(SoundType type)
@@ -42,30 +45,59 @@ public class PlayerWalking : MonoBehaviour
         floorRay = new Ray(footTransform.position, -transform.up);
         if (Physics.Raycast(floorRay, out hit, 1, ~6))
         {
-            floorName = hit.transform.gameObject.tag;
-            floorName = floorName.Replace("ground", "");
-
-            ////Error(floorName);
-
-            foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
+            if (hit.transform.gameObject.GetComponent<MeshFilter>() != null)
             {
-                if (kvp.Key == floorName)
+                secondaryFloorName = hit.transform.gameObject.GetComponent<MeshFilter>().name;
+                foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
                 {
-                    if (type == SoundType.Walking)
+                    if (kvp.Key.Contains(secondaryFloorName))
                     {
-                        Sounds = kvp.Value.walkClips;
+                        if (type == SoundType.Walking)
+                        {
+                            Sounds = kvp.Value.walkClips;
+                        }
+                        else if (type == SoundType.Running)
+                        {
+                            Sounds = kvp.Value.runClips;
+                        }
+                        else if (type == SoundType.JumpingStart)
+                        {
+                            Sounds = kvp.Value.JumpStartClips;
+                        }
+                        else if (type == SoundType.JumpingEnd)
+                        {
+                            Sounds = kvp.Value.JumpEndClips;
+                        }
                     }
-                    else if (type == SoundType.Running)
+                }
+
+            }
+
+            if (Sounds.Length == 0)
+            {
+                floorName = hit.transform.gameObject.tag;
+                floorName = floorName.Replace("ground", "");
+
+                foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
+                {
+                    if (kvp.Key == floorName)
                     {
-                        Sounds = kvp.Value.runClips;
-                    }
-                    else if (type == SoundType.JumpingStart)
-                    {
-                        Sounds = kvp.Value.JumpStartClips;
-                    }
-                    else if (type == SoundType.JumpingEnd)
-                    {
-                        Sounds = kvp.Value.JumpEndClips;
+                        if (type == SoundType.Walking)
+                        {
+                            Sounds = kvp.Value.walkClips;
+                        }
+                        else if (type == SoundType.Running)
+                        {
+                            Sounds = kvp.Value.runClips;
+                        }
+                        else if (type == SoundType.JumpingStart)
+                        {
+                            Sounds = kvp.Value.JumpStartClips;
+                        }
+                        else if (type == SoundType.JumpingEnd)
+                        {
+                            Sounds = kvp.Value.JumpEndClips;
+                        }
                     }
                 }
             }

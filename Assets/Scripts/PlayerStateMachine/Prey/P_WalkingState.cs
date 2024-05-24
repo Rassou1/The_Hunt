@@ -32,7 +32,7 @@ public class P_WalkingState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        if (_ctx.IsSlidePressed)
+        if (_ctx.IsSlidePressed && _currentSuperState != _factory.Ghost())
         {
             SwitchState(_factory.Slide());
         }
@@ -44,8 +44,6 @@ public class P_WalkingState : P_BaseState
         {
             SwitchState(_factory.Run());
         }
-        
-
     }
 
     public override void InitializeSubState()

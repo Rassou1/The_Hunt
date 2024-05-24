@@ -7,7 +7,7 @@ public abstract class P_BaseState
     protected P_StateManager _ctx;
     protected P_StateFactory _factory;
     protected P_BaseState _currentSubState;
-    private P_BaseState _currentSuperState;
+    protected P_BaseState _currentSuperState;
 
     protected bool hasDoubleJumped;
     public bool HasDoubleJumped { get { return hasDoubleJumped; } set { hasDoubleJumped = value; } }

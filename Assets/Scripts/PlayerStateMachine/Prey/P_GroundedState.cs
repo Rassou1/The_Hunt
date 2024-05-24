@@ -59,6 +59,10 @@ public class P_GroundedState : P_BaseState
 
     public override void CheckSwitchState()
     {
+        if (_ctx.Ghost)
+        {
+            SwitchState(_factory.Ghost());
+        }
         if (_ctx.IsJumpPressed && _currentSubState != _factory.Slide())
         {
             _ctx.VertMagnitude = 7.5f;
