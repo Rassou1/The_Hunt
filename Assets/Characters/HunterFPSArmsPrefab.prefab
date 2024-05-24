@@ -3700,6 +3700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a43938b3ecb1e14caceab769c319fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _avatar: {fileID: 0}
+  amIHunter: 0
   _mouseSens: 40
   _maxSlopeAngle: 45
   _softCap: 9
@@ -5466,6 +5468,7 @@ GameObject:
   - component: {fileID: 6064854597743855699}
   - component: {fileID: 5516876670528954047}
   - component: {fileID: 5339198136092012384}
+  - component: {fileID: 3896168968438025419}
   m_Layer: 6
   m_Name: HunterFPSArmsPrefab
   m_TagString: Untagged
@@ -5619,6 +5622,8 @@ MonoBehaviour:
   tagged: 0
   prisonPosition: {x: 63.7, y: 10.58, z: -17.28}
   _avatar: {fileID: 118116391849148853}
+  _hunterManager: {fileID: 0}
+  _preyManager: {fileID: 0}
 --- !u!114 &6064854597743855699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5749,6 +5754,18 @@ MonoBehaviour:
   _uidString: bb6abba6-7f1f-40fb-92e9-03af38dfe7af
   Reliability: 1
   LocalMethodBehavior: 1
+--- !u!114 &3896168968438025419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8242663099246113931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b752496b9df7a4b823fe7be2aec0e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8297990976286004839
 GameObject:
   m_ObjectHideFlags: 0

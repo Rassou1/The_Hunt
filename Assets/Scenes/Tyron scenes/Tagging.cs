@@ -7,7 +7,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
 {
     public bool tagged = false; // Boolean to track if the prey is tagged
 
-    public Vector3 prisonPosition = new Vector3(63.7f, 10.58f, -17.28f);
+    public Vector3 prisonPosition = new Vector3(-43.941452f, 8.03499985f, -49.7112961f);
     public Alteruna.Avatar _avatar;
     //public PlayerManagerBase _playerManager;
 
@@ -70,5 +70,12 @@ public class InteractablePlayer : AttributesSync, IInteractable
         Debug.Log("");
     }
 
+    public void SendToPrison()
+    {
+            // Teleport the player to the prison position
+            gameObject.transform.position = new Vector3(-43.941452f, 8.03499985f, -49.7112961f);
+           
 
+        
+    }
 }
