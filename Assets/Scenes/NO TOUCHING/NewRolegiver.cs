@@ -90,7 +90,10 @@ public class NewRoleGiver : AttributesSync, IInteractable
             }
         }
         //gameObject.SetActive(false);
-        mm.moveMaps();
+        foreach (var player in players)
+        {
+            mm.moveMaps();
+        }
     }
 
 

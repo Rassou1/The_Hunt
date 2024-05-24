@@ -10,13 +10,14 @@ public class MapMover : AttributesSync/*,IInteractable*/
     public List<GameObject> players;
     public List<GameObject> preyList;
     public List<GameObject> hunterList;
-    public Multiplayer mp;
     P_StateManager pManager;
 
     public GameObject GiveObject()
     {
         return gameObject;
     }
+
+    //NewRoleGover is calling the mapMover script so no interaction needed
     //public void InitInteract(string interactor)
     //{
 
@@ -40,16 +41,18 @@ public class MapMover : AttributesSync/*,IInteractable*/
         return objectsInLayer;
     }
 
+    //NewRoleGover is calling the mapMover script so no interaction needed
+
     //[SynchronizableMethod]
     //public void Interact(string interactor)
     //{
     //   // moveMaps();
     //}
+
     [SynchronizableMethod]
 
     public void moveMaps()
     {
-        players = FindObjectsOnLayer(9);
         UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
 
 
@@ -60,10 +63,11 @@ public class MapMover : AttributesSync/*,IInteractable*/
                 Transform transform = players[i].GetComponent<Transform>();
                 transform.position = new Vector3(0, 3, -10 - 5 * i);
                 Debug.Log(transform.position);
+                Multiplayer.LoadScene("Final_Map");
             }
-            Multiplayer.LoadScene("GAMETEMPMAP");
+            
         }
-        else if (scene.name == "GAMETEMPMAP")
+        else if (scene.name == "Final_Map")
         {
             for (int i = 0; i < players.Count; i++)
             {
@@ -85,19 +89,18 @@ public class MapMover : AttributesSync/*,IInteractable*/
                 {
                     hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
                 }
-                Multiplayer.LoadScene("LOBBY");
+                Multiplayer.LoadScene("TEMPLOBBY");
             }
         }
     }
     // Start is called before the first frame update
     void Start()
     {
-        mp = new Multiplayer();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        players = FindObjectsOnLayer(9);
     }
 }
