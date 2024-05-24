@@ -10,13 +10,14 @@ public class MapMover : AttributesSync/*,IInteractable*/
     public List<GameObject> players;
     public List<GameObject> preyList;
     public List<GameObject> hunterList;
-    public Multiplayer mp;
     P_StateManager pManager;
 
     public GameObject GiveObject()
     {
         return gameObject;
     }
+
+    //NewRoleGover is calling the mapMover script so no interaction needed
     //public void InitInteract(string interactor)
     //{
 
@@ -40,16 +41,18 @@ public class MapMover : AttributesSync/*,IInteractable*/
         return objectsInLayer;
     }
 
+    //NewRoleGover is calling the mapMover script so no interaction needed
+
     //[SynchronizableMethod]
     //public void Interact(string interactor)
     //{
     //   // moveMaps();
     //}
+
     [SynchronizableMethod]
 
     public void moveMaps()
     {
-        players = FindObjectsOnLayer(9);
         UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
 
 
@@ -61,7 +64,7 @@ public class MapMover : AttributesSync/*,IInteractable*/
                 transform.position = new Vector3(0, 3, -10 - 5 * i);
                 Debug.Log(transform.position);
             }
-            Multiplayer.LoadScene("GAMETEMPMAP");
+            Multiplayer.LoadScene("Final_Map");
         }
         else if (scene.name == "GAMETEMPMAP")
         {
@@ -92,12 +95,11 @@ public class MapMover : AttributesSync/*,IInteractable*/
     // Start is called before the first frame update
     void Start()
     {
-        mp = new Multiplayer();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        players = FindObjectsOnLayer(9);
     }
 }
