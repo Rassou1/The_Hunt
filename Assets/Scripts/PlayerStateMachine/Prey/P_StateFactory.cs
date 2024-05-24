@@ -9,7 +9,8 @@ enum P_States
     idle,
     walk,
     run,
-    slide
+    slide,
+    ghost
 }
 
 public class P_StateFactory
@@ -26,7 +27,8 @@ public class P_StateFactory
         _states[P_States.walk] = new P_WalkingState(_context, this);
         _states[P_States.run] = new P_RunningState(_context, this);
         _states[P_States.slide] = new P_SlidingState(_context, this);
-        
+        _states[P_States.ghost] = new P_GhostState(_context, this);
+
     }
 
     public P_BaseState Ground()
@@ -58,5 +60,10 @@ public class P_StateFactory
     {
         return _states[P_States.slide];
     }
-    
+
+    public P_BaseState Ghost()
+    {
+        return _states[P_States.ghost];
+    }
+
 }

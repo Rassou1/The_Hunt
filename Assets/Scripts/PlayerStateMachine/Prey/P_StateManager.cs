@@ -123,9 +123,12 @@ public class P_StateManager : MonoBehaviour
     protected bool _escaped;
     protected int _diamondsTaken;
 
+    bool _ghost = false;
+
     public bool Escaped { get { return _escaped; } set { _escaped = value; } }
     public bool Caught { get { return _caught; } set { _caught = value; } }
     public int DiamondsTaken { get { return _diamondsTaken; } set { _diamondsTaken = value; } }
+    public bool Ghost { get { return _ghost; } set { _ghost = value; } }
 
     public int IsClimbingHash { get { return _isClimbingHash; } }
     //Put a lot of getters and setters here
@@ -236,7 +239,7 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.Reset.started += OnReset;
         _playerInput.PreyControls.SensUp.started += OnSensUp;
         _playerInput.PreyControls.SensDown.started += OnSensDown;
-        
+        _playerInput.PreyControls.GhostTest.started += OnGhost;
 
 
         //setup state
@@ -291,44 +294,52 @@ public class P_StateManager : MonoBehaviour
 
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
-        GroundCheck();
-        if (!_isGrounded)
-        {
-            AntiClipCheck();
-        }
 
-        
-        
         SetCameraOrientation();
-        
         RotateBodyY();
         _relForward = CamRelHor(Vector3.forward);
-        
-        
         _currentState.UpdateStates();
+        
+        if(_currentState != _states.Ghost())
+        {
+            GroundCheck();
+            if (!_isGrounded)
+            {
+                AntiClipCheck();
+            }
 
-        _appliedMovement = AlignToSlope(_stateDirection);
-        _preCollideMovement = _appliedMovement;
-        _finalMagnitude = _stateMagnitude;
-        
-        Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
-        _appliedMovement = CamRelHor(_appliedMovement);
-        
-        _appliedMovement = _appliedMovement.normalized;
-        _appliedMovement *= _finalMagnitude;
+            _appliedMovement = AlignToSlope(_stateDirection);
+            _preCollideMovement = _appliedMovement;
+            _finalMagnitude = _stateMagnitude;
 
-        _appliedMovement += _dashDirection;
-        _actualMagnitude = _finalMagnitude;
-        _appliedMovement *= Time.deltaTime;
-        
-        
-        
-        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
-        _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
-        _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
-        Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
-        
-        _rigidbody.transform.position += _appliedMovement;
+            Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
+            _appliedMovement = CamRelHor(_appliedMovement);
+
+            _appliedMovement = _appliedMovement.normalized;
+            _appliedMovement *= _finalMagnitude;
+
+            _appliedMovement += _dashDirection;
+            _actualMagnitude = _finalMagnitude;
+            _appliedMovement *= Time.deltaTime;
+
+
+
+            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
+            _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+            _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
+            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
+
+            _rigidbody.transform.position += _appliedMovement;
+        }
+        else
+        {
+            _appliedMovement = CamRelHor( _stateDirection);
+            _appliedMovement = _appliedMovement + _gravDir * _vertMagnitude * -1;
+            _appliedMovement = _appliedMovement.normalized;
+            _appliedMovement *= _stateMagnitude;
+            _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
+        }
+
 
         
     }
@@ -573,6 +584,10 @@ public class P_StateManager : MonoBehaviour
         _mouseSens -= 2;
     }
 
+    void OnGhost(InputAction.CallbackContext context)
+    {
+        _ghost = !_ghost;
+    }
 
     void OnEnable()
     {

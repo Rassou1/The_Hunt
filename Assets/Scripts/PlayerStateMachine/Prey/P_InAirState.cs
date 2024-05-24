@@ -55,6 +55,10 @@ public class P_InAirState : P_BaseState
 
     public override void CheckSwitchState()
     {
+        if (_ctx.Ghost)
+        {
+            SwitchState(_factory.Ghost());
+        }
         if (_ctx.IsGrounded)
         {
             SwitchState(_factory.Ground());

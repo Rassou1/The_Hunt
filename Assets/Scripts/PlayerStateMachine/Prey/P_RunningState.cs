@@ -45,7 +45,7 @@ public class P_RunningState : P_BaseState
 
     public override void CheckSwitchState()
     {
-        if (_ctx.IsSlidePressed)
+        if (_ctx.IsSlidePressed && _currentSuperState != _factory.Ghost())
         {
             SwitchState(_factory.Slide());
         }
