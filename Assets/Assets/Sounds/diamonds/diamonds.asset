@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618fc52f843dfb246a5e4fdc2fcf6392, type: 3}
   m_Name: diamonds
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: dd4e5376076672a48be2219d391d90d8, type: 3}
+  - {fileID: 8300000, guid: 68e7aa50026432142931726c18b692aa, type: 3}
+  - {fileID: 8300000, guid: 0691bcb968ccea34f8ad85adb5816bd2, type: 3}
+  - {fileID: 8300000, guid: 07d7db9b37c35ff4b8e8949c101915f9, type: 3}
