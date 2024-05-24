@@ -16,13 +16,13 @@ public class CollectItems : MonoBehaviour
     AudioSource audioPlay;
     public Sounds pickupsounds;
     private Renderer _renderer;
-    private Collider _collider;
+    private BoxCollider _collider;
 
     void Start()
     {
         audioPlay = GetComponent<AudioSource>();
         _renderer = GetComponent<Renderer>();
-        _collider = GetComponent<Collider>();
+        _collider = GetComponent<BoxCollider>();
         if (Diamonds != null)
         {
             Diamonds.SetActive(true);  // Ensure the diamond is visible and interactable at the start
@@ -90,7 +90,7 @@ public class CollectItems : MonoBehaviour
         {
             if (!audioPlay.isPlaying)
             {
-                Destroy(this);
+                Destroy(gameObject);
             }
         }
     }
