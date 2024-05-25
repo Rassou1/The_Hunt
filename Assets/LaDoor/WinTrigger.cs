@@ -35,7 +35,7 @@ public class WinTrigger : MonoBehaviour
         mapMover = new MapMover();
         //youWinText.SetActive(false);
         Debug.Log(playerStates);
-
+        playerStates.escapedPlayers.Clear();
     }
 
     // Update is called once per frame
@@ -105,7 +105,7 @@ public class WinTrigger : MonoBehaviour
                     }
 
                     Debug.Log(transform.position);
-                    mp.LoadScene("LOBBY");
+                    mp.LoadScene("LOOBY");
 
                     //Debug.Log(other.gameObject);
                     ////StartCoroutine(LoadScene(other.gameObject));

@@ -77,7 +77,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
                     if (!avatar.IsMe)
                         return;
-                    SwitchPrefab(hunterIndex);
+                    //SwitchPrefab(hunterIndex);
                     hunterCanvas.SetActive(true);
                 }
                 else

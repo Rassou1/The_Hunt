@@ -32,16 +32,22 @@ public class CollectItems : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == 7 && !isCollected)// && Input.GetKey(KeyCode.E) && )
+        int hunterLayer = LayerMask.NameToLayer("hunter");
+        if (other.gameObject.layer == hunterLayer)
+        {
+            return;  // Ignore collisions with objects on the "hunter" layer
+        }
+
+        if (other.gameObject.layer == 7 && !isCollected)
         {
             CollectDiamond();
             if (other.GetComponentInChildren<P_StateManager>() != null)
             {
                 other.GetComponentInChildren<P_StateManager>().DiamondsTaken++;
-
             }
         }
     }
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -60,27 +66,16 @@ public class CollectItems : MonoBehaviour
 
     private void CollectDiamond()
     {
-        //if (_renderer != null)
-        //{
-        //    _renderer.enabled = false;  // Make the object invisible
-        //}
-        //if (_collider != null)
-        //{
-        //    _collider.enabled = false;  // Disable the collider
-        //}
         if (!isCollected)
         {
             int amount = Random.Range(0, pickupsounds.sounds.Length);
-            //AudioSource.PlayClipAtPoint(pickupsounds.sounds[amount], transform.position,10f);
             audioPlay.PlayOneShot(pickupsounds.sounds[amount]);
             _collider.enabled = false;
             _renderer.enabled = false;
-            //Destroy(gameObject);
             isCollected = true;  // Mark the diamond as collected
             diamondsCollected++;
             UpdateDiamondText();
             CheckDiamondsCollected();
-           
         }
     }
 
@@ -113,14 +108,12 @@ public class CollectItems : MonoBehaviour
             }
         }
     }
+
     void UpdateDiamondText()
     {
         if (diamondCountText != null)
         {
-            diamondCountText.text = "Diamonds: " + diamondsCollected; 
+            diamondCountText.text = "Diamonds: " + diamondsCollected;
         }
     }
 }
-
-
-    

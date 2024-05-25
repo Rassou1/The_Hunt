@@ -58,7 +58,7 @@ public class MapMover : AttributesSync/*,IInteractable*/
         Scene scene = SceneManager.GetActiveScene();
 
 
-        if (scene.name == "TEMPLOBBY" || scene.name == "TEMPSTART")
+        if (scene.name == "LOOBY" || scene.name == "TEMPSTART")
         {
             for (int i = 0; i < players.Count; i++)
             {
@@ -118,7 +118,7 @@ public class MapMover : AttributesSync/*,IInteractable*/
                 {
                     hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
                 }
-                Multiplayer.LoadScene("TEMPLOBBY");
+                Multiplayer.LoadScene("LOOBY");
             }
         }
     }
