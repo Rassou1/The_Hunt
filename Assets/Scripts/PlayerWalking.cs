@@ -89,7 +89,7 @@ public class PlayerWalking : MonoBehaviour
             {
                 floorName = hit.transform.gameObject.tag;
                 //floorName = floorName.Replace("ground", "");
-                Debug.LogError(hit.transform.gameObject.tag);
+                //Debug.LogError(hit.transform.gameObject.tag);
                 foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
                 {
                     if (floorName.Contains(kvp.Key, System.StringComparison.OrdinalIgnoreCase))
