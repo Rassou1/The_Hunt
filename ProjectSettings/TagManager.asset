@@ -11,6 +11,8 @@ TagManager:
   - groundMetal
   - groundTile
   - 'Collactable '
+  - groundMud
+  - groundWood
   layers:
   - Default
   - TransparentFX

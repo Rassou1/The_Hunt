@@ -13,4 +13,6 @@ public class SoundFolder : ScriptableObject
     public AudioClip[] JumpStartClips;
     [SerializeField]
     public AudioClip[] JumpEndClips;
+    [SerializeField]
+    public AudioClip[] slideclips;
 }
