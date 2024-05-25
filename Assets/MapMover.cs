@@ -12,6 +12,8 @@ public class MapMover : AttributesSync/*,IInteractable*/
     public List<GameObject> hunterList;
     P_StateManager pManager;
 
+    
+
     public GameObject GiveObject()
     {
         return gameObject;
@@ -53,7 +55,7 @@ public class MapMover : AttributesSync/*,IInteractable*/
 
     public void moveMaps()
     {
-        UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
+        Scene scene = SceneManager.GetActiveScene();
 
 
         if (scene.name == "TEMPLOBBY" || scene.name == "TEMPSTART")
@@ -63,9 +65,36 @@ public class MapMover : AttributesSync/*,IInteractable*/
                 Transform transform = players[i].GetComponent<Transform>();
                 transform.position = new Vector3(0, 3, -10 - 5 * i);
                 Debug.Log(transform.position);
-                Multiplayer.LoadScene("Final_Map");
+
+
+                Transform parentTransform = players[i].transform;
+
+                // Find the child GameObjects by name
+                Transform firstChild = parentTransform.Find("PreyComponent");
+                Transform secondChild = parentTransform.Find("HunterComponent");
+                if (firstChild.gameObject.active)
+                {
+
+                    firstChild.position = new Vector3(-3, 0, 30);
+                    Debug.Log("firstChildMoved" + firstChild.position + firstChild.gameObject.name);
+                }
+                else
+                {
+                    secondChild.position = new Vector3(-15, 0, 2.4f);
+                    Debug.Log("secondChildMoved" + secondChild.position + secondChild.gameObject.name);
+                }
+
+                Multiplayer networkManager = FindAnyObjectByType<Multiplayer>();
+                Debug.Log(networkManager.name);
+                Debug.Log(networkManager.GetComponent<GameObject>()); //null
+                Debug.Log(networkManager.GetComponent<Transform>()); //takes the transform of networkmanager. honestly might just use this to change spawner.
+                Transform spawn = networkManager.GetComponent<Transform>();
+                    spawn.position = new Vector3(15,5,2.4f);
+                
+
             }
-            
+            Multiplayer.LoadScene("Final_Map");
+
         }
         else if (scene.name == "Final_Map")
         {
@@ -96,11 +125,13 @@ public class MapMover : AttributesSync/*,IInteractable*/
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         players = FindObjectsOnLayer(9);
+        
     }
 }

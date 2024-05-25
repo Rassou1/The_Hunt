@@ -268,7 +268,7 @@ public class H_StateManager : MonoBehaviour
                 AntiClipCheck();
             }
 
-            Debug.Log(Rigidbody.position);
+            //Debug.Log(Rigidbody.position);
 
             SetCameraOrientation();
 
