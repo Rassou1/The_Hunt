@@ -69,6 +69,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             for (int i = 0; i < players.Count; i++)
             {
+                mm.moveMaps();
+
                 Alteruna.Avatar avatar = players[i].GetComponent<Alteruna.Avatar>();
 
                 if (i == hunterIndex)
@@ -91,7 +93,6 @@ public class NewRoleGiver : AttributesSync, IInteractable
                 }
             }
         }
-        mm.moveMaps();
         //gameObject.SetActive(false);
         //foreach (var player in players)
         //{

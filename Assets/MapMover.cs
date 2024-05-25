@@ -57,6 +57,7 @@ public class MapMover : AttributesSync/*,IInteractable*/
     {
         Scene scene = SceneManager.GetActiveScene();
 
+        Debug.Log("moving lobbys");
 
         if (scene.name == "LOOBY" || scene.name == "TEMPSTART")
         {
