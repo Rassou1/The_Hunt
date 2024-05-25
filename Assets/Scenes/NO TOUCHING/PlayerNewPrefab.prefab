@@ -1084,7 +1084,10 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: 72a5d7a71f8e98145a8564dae0f99770, type: 2}
   rock: {fileID: 11400000, guid: efe63d2306aa4fd4ebe7da65ec770035, type: 2}
   mud: {fileID: 11400000, guid: 0a53e6dfc67b1664a84161519f8729ca, type: 2}
+  dirt: {fileID: 11400000, guid: 759928d2e48984c45aa8323827a3567c, type: 2}
   metal: {fileID: 11400000, guid: 154e9bbe71924144096ba315afaa73bb, type: 2}
+  dash: {fileID: 11400000, guid: 10db4f0b44979624eb3d8ee0d69a6ac7, type: 2}
+  Empty: {fileID: 11400000, guid: 6152b677ea5fe234b8c3573c0c4b0ee6, type: 2}
 --- !u!1 &1554703547536722506
 GameObject:
   m_ObjectHideFlags: 0
@@ -7136,11 +7139,14 @@ MonoBehaviour:
   footTransform: {fileID: 4871366360179217991}
   grass: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
   gravel: {fileID: 11400000, guid: 4bdc00a72bdcac6479337a436ab966c8, type: 2}
-  wood: {fileID: 11400000, guid: 72a5d7a71f8e98145a8564dae0f99770, type: 2}
+  wood: {fileID: 11400000, guid: 840ab591daa188b4ea316afe8a11d4f8, type: 2}
   tile: {fileID: 11400000, guid: 72a5d7a71f8e98145a8564dae0f99770, type: 2}
   rock: {fileID: 11400000, guid: efe63d2306aa4fd4ebe7da65ec770035, type: 2}
   mud: {fileID: 11400000, guid: 0a53e6dfc67b1664a84161519f8729ca, type: 2}
+  dirt: {fileID: 11400000, guid: 759928d2e48984c45aa8323827a3567c, type: 2}
   metal: {fileID: 11400000, guid: 154e9bbe71924144096ba315afaa73bb, type: 2}
+  dash: {fileID: 11400000, guid: 10db4f0b44979624eb3d8ee0d69a6ac7, type: 2}
+  Empty: {fileID: 11400000, guid: 6152b677ea5fe234b8c3573c0c4b0ee6, type: 2}
 --- !u!1 &4783567523206326615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 140602009291933678, guid: 59556d925da285648bfaf1333170db54, type: 3}

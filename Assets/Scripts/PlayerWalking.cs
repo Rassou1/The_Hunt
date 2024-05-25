@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class PlayerWalking : MonoBehaviour
 {
-    AudioSource AudioManager;
+    [HideInInspector]
+    public AudioSource AudioManager;
     public AudioClip[] Sounds;
     public Transform footTransform;
     public SoundFolder grass;
@@ -15,7 +16,10 @@ public class PlayerWalking : MonoBehaviour
     public SoundFolder tile;
     public SoundFolder rock;
     public SoundFolder mud;
+    public SoundFolder dirt;
     public SoundFolder metal;
+    public Sounds dash;
+    public SoundFolder Empty;
     
 
     Dictionary<string, SoundFolder> sFolders = new Dictionary<string, SoundFolder>();
@@ -29,6 +33,7 @@ public class PlayerWalking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         AudioManager = GetComponent<AudioSource>();
         sFolders.Add("Gravel", gravel);
         sFolders.Add("Grass", grass);
@@ -36,21 +41,23 @@ public class PlayerWalking : MonoBehaviour
         sFolders.Add("Tile", tile);
         sFolders.Add("Rock", rock);
         sFolders.Add("Mud", mud);
+        sFolders.Add("Dirt", dirt);
         sFolders.Add("Metal", metal);
         
     }
 
     void UpdatePlayerSound(SoundType type)
     {
+        Sounds = Empty.walkClips;
         floorRay = new Ray(footTransform.position, -transform.up);
         if (Physics.Raycast(floorRay, out hit, 1, ~6))
         {
             if (hit.transform.gameObject.GetComponent<MeshFilter>() != null)
             {
-                secondaryFloorName = hit.transform.gameObject.GetComponent<MeshFilter>().name;
+                secondaryFloorName = hit.transform.gameObject.GetComponent<MeshFilter>().mesh.name;
                 foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
                 {
-                    if (kvp.Key.Contains(secondaryFloorName))
+                    if (secondaryFloorName.Contains(kvp.Key, System.StringComparison.OrdinalIgnoreCase))
                     {
                         if (type == SoundType.Walking)
                         {
@@ -67,36 +74,43 @@ public class PlayerWalking : MonoBehaviour
                         else if (type == SoundType.JumpingEnd)
                         {
                             Sounds = kvp.Value.JumpEndClips;
+                        }
+                        else if (type == SoundType.Sliding)
+                        {
+                            Sounds = kvp.Value.slideclips;
                         }
                     }
                 }
 
-            }
-
-            if (Sounds.Length == 0)
-            {
-                floorName = hit.transform.gameObject.tag;
-                floorName = floorName.Replace("ground", "");
-
-                foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
+                if (Sounds.Length == 0)
                 {
-                    if (kvp.Key == floorName)
+                    floorName = hit.transform.gameObject.tag;
+                    //floorName = floorName.Replace("ground", "");
+
+                    foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
                     {
-                        if (type == SoundType.Walking)
+                        if (floorName.Contains(kvp.Key, System.StringComparison.OrdinalIgnoreCase))
                         {
-                            Sounds = kvp.Value.walkClips;
-                        }
-                        else if (type == SoundType.Running)
-                        {
-                            Sounds = kvp.Value.runClips;
-                        }
-                        else if (type == SoundType.JumpingStart)
-                        {
-                            Sounds = kvp.Value.JumpStartClips;
-                        }
-                        else if (type == SoundType.JumpingEnd)
-                        {
-                            Sounds = kvp.Value.JumpEndClips;
+                            if (type == SoundType.Walking)
+                            {
+                                Sounds = kvp.Value.walkClips;
+                            }
+                            else if (type == SoundType.Running)
+                            {
+                                Sounds = kvp.Value.runClips;
+                            }
+                            else if (type == SoundType.JumpingStart)
+                            {
+                                Sounds = kvp.Value.JumpStartClips;
+                            }
+                            else if (type == SoundType.JumpingEnd)
+                            {
+                                Sounds = kvp.Value.JumpEndClips;
+                            }
+                            else if (type == SoundType.Sliding)
+                            {
+                                Sounds = kvp.Value.slideclips;
+                            }
                         }
                     }
                 }
@@ -109,36 +123,12 @@ public class PlayerWalking : MonoBehaviour
         }
     }
 
-    //void ChangeSound()
-    //{
-    //    floorRay = new Ray(footTransform.position, -transform.up);
-    //    if (Physics.Raycast(floorRay, out hit, 1, ~6))
-    //    {
-    //        floorName = hit.transform.gameObject.tag;
-    //        floorName = floorName.Replace("ground", "");
-    //        //Error(floorName);
-    //        walkSounds = Resources.LoadAll<AudioClip>($"Sounds/Footsteps_{floorName}/Walk");
-    //        runSounds = Resources.LoadAll<AudioClip>($"Sounds/Footsteps_{floorName}/Run");
-    //        jumpSounds = Resources.LoadAll<AudioClip>($"Sounds/Footsteps_{floorName}/Jump");
-    //    }
-    //    else
-    //    {
-    //        walkSounds = Resources.LoadAll<AudioClip>("Sounds/Footsteps/Footsteps_Grass/Walk");
-    //        runSounds = Resources.LoadAll<AudioClip>("Sounds/Footsteps/Footsteps_Grass/Run");
-    //        jumpSounds = Resources.LoadAll<AudioClip>("Sounds/Footsteps/Footsteps_Grass/Jump");
-
-    //    }
-    //}
-
-
-
-    // Update is called once per frame
     void Update()
     {
         // Debug.DrawRay(footTransform.position, -transform.up, Color.blue);
 
     }
-
+   
     public void PlayWalkSound()
     {
         UpdatePlayerSound(SoundType.Walking);
@@ -166,7 +156,7 @@ public class PlayerWalking : MonoBehaviour
         UpdatePlayerSound(SoundType.JumpingStart);
         int amount = Random.Range(0, Sounds.Length);
         //AudioManager.Stop();
-        if (!AudioManager.isPlaying && Sounds.Length > 0)
+        if (Sounds.Length > 0)
         {
             AudioManager.PlayOneShot(Sounds[amount]);
         }
@@ -177,10 +167,26 @@ public class PlayerWalking : MonoBehaviour
         UpdatePlayerSound(SoundType.JumpingEnd);
         int amount = Random.Range(0, Sounds.Length);
         //AudioManager.Stop();
-        if (!AudioManager.isPlaying && Sounds.Length > 0)
+        if (Sounds.Length > 0)
         {
             AudioManager.PlayOneShot(Sounds[amount]);
         }
+    }
+
+    public void PlaySlidingSound()
+    {
+        UpdatePlayerSound(SoundType.Sliding);
+        int amount = Random.Range(0, Sounds.Length);
+        AudioManager.Stop();
+        if (Sounds.Length > 0)
+        {
+            AudioManager.PlayOneShot(Sounds[amount]);
+        }
+    }
+
+    public void PlayDashSound()
+    {
+        AudioManager.PlayOneShot(dash.sounds[0]);
     }
 
     enum SoundType

@@ -277,15 +277,17 @@ public class P_StateManager : MonoBehaviour
 
         if (gameObject.GetComponentInParent<PlayerWalking>() != null)
         {
-            if (_isMovementPressed && _isGrounded && !_isSprintPressed)
+            if (_isMovementPressed && _isGrounded && !_isSprintPressed && !_isSlidePressed)
             {
                 playerSounds.PlayWalkSound();
             }
 
-            if (_isMovementPressed && _isGrounded && _isSprintPressed)
+            if (_isMovementPressed && _isGrounded && _isSprintPressed && !_isSlidePressed)
             {
                 playerSounds.PlayRunSound();
             }
+
+            
         }
 
 
@@ -472,6 +474,7 @@ public class P_StateManager : MonoBehaviour
                 playerSounds.PlayJumpStartSound();
             }
         }
+        
     }
 
 
@@ -487,6 +490,11 @@ public class P_StateManager : MonoBehaviour
         _dashDurationCoroutine = DashDuration();
         StartCoroutine(_dashCooldownCoroutine);
         StartCoroutine(_dashDurationCoroutine);
+        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        {
+            playerSounds.PlayDashSound();
+        }
+        
     }
 
     
@@ -499,6 +507,19 @@ public class P_StateManager : MonoBehaviour
     void OnSlide(InputAction.CallbackContext context)
     {
         _isSlidePressed = context.ReadValueAsButton();
+        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        {
+            if (context.started && _isGrounded)
+            {
+                playerSounds.PlaySlidingSound();
+            }
+
+            if (context.canceled)
+            {
+                playerSounds.AudioManager.Stop();
+            }
+        }
+        
     }
 
 
