@@ -32,7 +32,7 @@ public class CollectItems : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !isCollected)// && Input.GetKey(KeyCode.E) && )
+        if (other.gameObject.layer == 7 && !isCollected)// && Input.GetKey(KeyCode.E) && )
         {
             CollectDiamond();
             if (other.GetComponentInChildren<P_StateManager>() != null)
