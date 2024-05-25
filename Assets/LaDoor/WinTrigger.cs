@@ -74,6 +74,7 @@ public class WinTrigger : MonoBehaviour
             {
                 stateManager.Escaped = true;
             }
+
             //untested
             if (playerStates.escapedPlayers.Count <= FindObjectsOnLayer(9).Count)
             {
@@ -100,7 +101,7 @@ public class WinTrigger : MonoBehaviour
                     }
 
                     Debug.Log(transform.position);
-                    mp.LoadScene("LOBBY");
+                    mp.LoadScene("TEMPSTART");
 
                     //Debug.Log(other.gameObject);
                     ////StartCoroutine(LoadScene(other.gameObject));
