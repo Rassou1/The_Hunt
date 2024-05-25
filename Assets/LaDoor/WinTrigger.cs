@@ -105,7 +105,7 @@ public class WinTrigger : MonoBehaviour
                     }
 
                     Debug.Log(transform.position);
-                    mp.LoadScene("TEMPSTART");
+                    mp.LoadScene("LOBBY");
 
                     //Debug.Log(other.gameObject);
                     ////StartCoroutine(LoadScene(other.gameObject));
