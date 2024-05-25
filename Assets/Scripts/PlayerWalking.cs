@@ -82,35 +82,37 @@ public class PlayerWalking : MonoBehaviour
                     }
                 }
 
-                if (Sounds.Length == 0)
-                {
-                    floorName = hit.transform.gameObject.tag;
-                    //floorName = floorName.Replace("ground", "");
+                
+            }
 
-                    foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
+            if (Sounds.Length == 0)
+            {
+                floorName = hit.transform.gameObject.tag;
+                //floorName = floorName.Replace("ground", "");
+                Debug.LogError(hit.transform.gameObject.tag);
+                foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
+                {
+                    if (floorName.Contains(kvp.Key, System.StringComparison.OrdinalIgnoreCase))
                     {
-                        if (floorName.Contains(kvp.Key, System.StringComparison.OrdinalIgnoreCase))
+                        if (type == SoundType.Walking)
                         {
-                            if (type == SoundType.Walking)
-                            {
-                                Sounds = kvp.Value.walkClips;
-                            }
-                            else if (type == SoundType.Running)
-                            {
-                                Sounds = kvp.Value.runClips;
-                            }
-                            else if (type == SoundType.JumpingStart)
-                            {
-                                Sounds = kvp.Value.JumpStartClips;
-                            }
-                            else if (type == SoundType.JumpingEnd)
-                            {
-                                Sounds = kvp.Value.JumpEndClips;
-                            }
-                            else if (type == SoundType.Sliding)
-                            {
-                                Sounds = kvp.Value.slideclips;
-                            }
+                            Sounds = kvp.Value.walkClips;
+                        }
+                        else if (type == SoundType.Running)
+                        {
+                            Sounds = kvp.Value.runClips;
+                        }
+                        else if (type == SoundType.JumpingStart)
+                        {
+                            Sounds = kvp.Value.JumpStartClips;
+                        }
+                        else if (type == SoundType.JumpingEnd)
+                        {
+                            Sounds = kvp.Value.JumpEndClips;
+                        }
+                        else if (type == SoundType.Sliding)
+                        {
+                            Sounds = kvp.Value.slideclips;
                         }
                     }
                 }
@@ -125,7 +127,7 @@ public class PlayerWalking : MonoBehaviour
 
     void Update()
     {
-        // Debug.DrawRay(footTransform.position, -transform.up, Color.blue);
+        //Debug.DrawRay(footTransform.position, -transform.up, Color.blue);
 
     }
    

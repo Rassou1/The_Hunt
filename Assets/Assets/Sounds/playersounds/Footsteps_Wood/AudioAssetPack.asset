@@ -40,3 +40,5 @@ MonoBehaviour:
   JumpEndClips:
   - {fileID: 8300000, guid: bb5ec83ccc5c69f43b31f100278bff91, type: 3}
   - {fileID: 8300000, guid: 623ad07c146cedd4db6b902fd1612618, type: 3}
+  slideclips:
+  - {fileID: 8300000, guid: 5cbe082f18915e24285bee6bbcc29a24, type: 3}

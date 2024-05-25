@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618fc52f843dfb246a5e4fdc2fcf6392, type: 3}
   m_Name: AudioAssetPack
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 431664c694fb546488b9194acf1b5e57, type: 3}

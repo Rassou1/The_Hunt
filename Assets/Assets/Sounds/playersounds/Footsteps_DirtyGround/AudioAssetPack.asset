@@ -42,3 +42,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7131d701ae015a54aa3d856feccd513f, type: 3}
   - {fileID: 8300000, guid: 942019cf9ecd5854ebeb343b12b7f779, type: 3}
   - {fileID: 8300000, guid: 1a88f429c4a7b734f9c4254f0c654cea, type: 3}
+  slideclips:
+  - {fileID: 8300000, guid: df1b629dee7cf9c409096cd8118bad44, type: 3}
