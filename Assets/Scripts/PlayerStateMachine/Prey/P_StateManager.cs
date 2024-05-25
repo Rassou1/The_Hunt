@@ -462,6 +462,7 @@ public class P_StateManager : MonoBehaviour
     {
         _escaped = false;
         _caught = false;
+        _ghost = false;
     }
 
     public void OnJumpPress(InputAction.CallbackContext context)
