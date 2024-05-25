@@ -1,6 +1,7 @@
 using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,12 +27,14 @@ public class WinTrigger : MonoBehaviour
     string sceneName = "TEMPLOBBY";
     void Start()
     {
-        playerStates = new PlayerStates();
+        mp = FindAnyObjectByType<Multiplayer>();//new PlayerStates();
+        playerStates = mp.GetComponent<PlayerStates>();
         players = FindObjectsOnLayer(9);
         preyList = FindObjectsOnLayer(7);
         hunterList = FindObjectsOnLayer(6);
         mapMover = new MapMover();
         //youWinText.SetActive(false);
+        Debug.Log(playerStates);
 
     }
 
@@ -73,6 +76,7 @@ public class WinTrigger : MonoBehaviour
             if (other.gameObject.layer == 7)
             {
                 stateManager.Escaped = true;
+                playerStates.playerEscaped(player);
             }
 
             //untested
@@ -101,7 +105,7 @@ public class WinTrigger : MonoBehaviour
                     }
 
                     Debug.Log(transform.position);
-                    mp.LoadScene("TEMPSTART");
+                    mp.LoadScene("LOBBY");
 
                     //Debug.Log(other.gameObject);
                     ////StartCoroutine(LoadScene(other.gameObject));

@@ -21,6 +21,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
     public List<GameObject> caughtPlayers;
 
     public MapMover mm;
+
+    public Spawner spawner;
     public GameObject GiveObject()
     {
         return gameObject;
@@ -71,11 +73,11 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
                 if (i == hunterIndex)
                 {
-                    players[i].layer = LayerMask.NameToLayer("Hunter");
+                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this if not necessary. The layer of the hunterComponent is already on Hunter layer.
 
                     if (!avatar.IsMe)
                         return;
-                   SwitchPrefab(hunterIndex);
+                    SwitchPrefab(hunterIndex);
                     hunterCanvas.SetActive(true);
                 }
                 else
@@ -89,11 +91,12 @@ public class NewRoleGiver : AttributesSync, IInteractable
                 }
             }
         }
+        mm.moveMaps();
         //gameObject.SetActive(false);
-        foreach (var player in players)
-        {
-            mm.moveMaps();
-        }
+        //foreach (var player in players)
+        //{
+            
+        //}
     }
 
 
@@ -111,18 +114,21 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
 
         // Transfer the position from the first child to the second child
+
         secondChild.position = firstChild.position;
         secondChild.rotation = firstChild.rotation;
-
 
 
         if (firstChild != null && secondChild != null)
         {
 
             // Turn the second GameObject on
-            secondChild.gameObject.active = true;
+            secondChild.gameObject.SetActive(true);
+            
+            Debug.Log(firstChild.position.ToString() + secondChild.position.ToString());
+            
             // Turn the first GameObject off
-            firstChild.gameObject.active = false;
+            firstChild.gameObject.SetActive(false);
 
 
 

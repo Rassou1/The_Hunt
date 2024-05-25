@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42221254, g: 0.64316183, b: 0.793691, a: 1}
+  m_IndirectSpecularColor: {r: 0.42224, g: 0.6431838, b: 0.79369, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -397,6 +397,7 @@ MonoBehaviour:
   escapedPlayers: []
   caughtPlayers: []
   mm: {fileID: 0}
+  spawner: {fileID: 0}
 --- !u!1 &48326722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,13 +1724,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 591310748}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &591310748
 Transform:
   m_ObjectHideFlags: 0
@@ -1738,12 +1739,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591310747}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 62.15, y: 18.66, z: 93.87}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 62.134907, y: 18.702995, z: 93.85491}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1969025902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &611819084
 GameObject:
@@ -5305,6 +5306,7 @@ MonoBehaviour:
   escapedPlayers: []
   caughtPlayers: []
   mm: {fileID: 0}
+  spawner: {fileID: 0}
 --- !u!114 &1640214746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6433,7 +6435,7 @@ MonoBehaviour:
   _maxPlayers: 10
   AvatarSpawning: 1
   AvatarPrefab: {fileID: 7566427906986039737, guid: 9fdb53ea94717c04eb11ffb7eb6589d7, type: 3}
-  AvatarSpawnLocation: {fileID: 591310748}
+  AvatarSpawnLocation: {fileID: 1969025902}
   SpawnAvatarPerIndex: 0
   AvatarSpawnLocations: []
   OnConnected:
@@ -6585,10 +6587,11 @@ Transform:
   m_GameObject: {fileID: 1969025899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.015093803, y: -0.0429945, z: 0.01509285}
+  m_LocalPosition: {x: 62, y: 19, z: 94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 591310748}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1969025903
@@ -7857,6 +7860,7 @@ MonoBehaviour:
   escapedPlayers: []
   caughtPlayers: []
   mm: {fileID: 9020528135807036728}
+  spawner: {fileID: 0}
 --- !u!114 &9020528135807036725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7975,7 +7979,6 @@ SceneRoots:
   - {fileID: 1640214751}
   - {fileID: 449000162}
   - {fileID: 1440708128}
-  - {fileID: 591310748}
   - {fileID: 1625575302}
   - {fileID: 721580618}
   - {fileID: 1787791423}
