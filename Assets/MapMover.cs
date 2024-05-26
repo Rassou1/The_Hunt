@@ -12,7 +12,10 @@ public class MapMover : AttributesSync/*,IInteractable*/
     public List<GameObject> hunterList;
     P_StateManager pManager;
 
-    
+    Multiplayer networkManager;
+    Transform spawn;
+    PlayerStates playerStates;
+
 
     public GameObject GiveObject()
     {
@@ -54,16 +57,22 @@ public class MapMover : AttributesSync/*,IInteractable*/
     [SynchronizableMethod]
     public void moveMaps(GameObject player)
     {
+        players = FindObjectsOnLayer(9);
+        networkManager = FindAnyObjectByType<Multiplayer>();
+        spawn = networkManager.GetComponent<Transform>();
+        playerStates = networkManager.GetComponent<PlayerStates>();
         Scene scene = SceneManager.GetActiveScene();
+        Debug.Log(player);
+        Debug.Log($"{networkManager} moveMaps1");
+        Debug.Log($"{playerStates} moveMaps1");
 
-
-        if (scene.name == "LOOBY" || scene.name == "TEMPSTART")
+        if ((scene.name == "LOOBY" || scene.name == "TEMPSTART") && !playerStates.gameStarted)
         {
             Debug.Log("moving from start");
 
-            Transform transform = player.GetComponent<Transform>();
+                Transform transform = player.GetComponent<Transform>();
                 transform.position = new Vector3(0, 3, -10);
-                Debug.Log(transform.position);
+                
 
 
                 Transform parentTransform = player.transform;
@@ -75,28 +84,23 @@ public class MapMover : AttributesSync/*,IInteractable*/
                 {
 
                     firstChild.position = new Vector3(-3, 0, 30);
-                    Debug.Log("firstChildMoved" + firstChild.position + firstChild.gameObject.name);
+                    
                 }
                 else
                 {
                     secondChild.position = new Vector3(-15, 0, 2.4f);
-                    Debug.Log("secondChildMoved" + secondChild.position + secondChild.gameObject.name);
+                    
                 }
-
-                Multiplayer networkManager = FindAnyObjectByType<Multiplayer>();
-                Debug.Log(networkManager.name);
-                Debug.Log(networkManager.GetComponent<GameObject>()); //null
-                Debug.Log(networkManager.GetComponent<Transform>()); //takes the transform of networkmanager. honestly might just use this to change spawner.
-                Transform spawn = networkManager.GetComponent<Transform>();
+               
                     spawn.position = new Vector3(15,5,2.4f);
-                
-
             
-            Multiplayer.LoadScene("Final_Map");
-
+            networkManager.LoadScene("Final_Map");
+            playerStates.gameStarted = true;
+            Debug.Log($"Has game started? {playerStates.gameStarted}");
         }
-        else if (scene.name == "Final_Map")
+        else if (scene.name == "Final_Map" && playerStates.gameStarted && playerStates.gameEnded)
         {
+            Debug.Log($"{playerStates} moveMaps2");
             Debug.Log("moving from smap");
 
             Transform transform = player.GetComponent<Transform>();
@@ -117,13 +121,16 @@ public class MapMover : AttributesSync/*,IInteractable*/
             {
                 hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
             }
-            Multiplayer.LoadScene("LOOBY");
-            
+            networkManager = FindAnyObjectByType<Multiplayer>();
+            networkManager.LoadScene("LOOBY");
+            playerStates.gameStarted = false;
+            Debug.Log($"Has game ended? {playerStates.gameEnded}");
         }
     }
     // Start is called before the first frame update
     void Start()
     {
+        
         
     }
 
@@ -131,6 +138,9 @@ public class MapMover : AttributesSync/*,IInteractable*/
     void Update()
     {
         players = FindObjectsOnLayer(9);
-        
+        networkManager = FindAnyObjectByType<Multiplayer>();
+        spawn = networkManager.GetComponent<Transform>();
+        playerStates = networkManager.GetComponent<PlayerStates>();
+        //Debug.Log(playerStates);
     }
 }

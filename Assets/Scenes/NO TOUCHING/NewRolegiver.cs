@@ -69,7 +69,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
             
             foreach (var obj in players)
             {
-                //mm.moveMaps(obj);
+                mm.moveMaps(obj);
                 obj.GetComponent<InteractablePlayer>().movingmap=true;
             }
 
