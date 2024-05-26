@@ -52,23 +52,21 @@ public class MapMover : AttributesSync/*,IInteractable*/
     //}
 
     [SynchronizableMethod]
-
-    public void moveMaps()
+    public void moveMaps(GameObject player)
     {
         Scene scene = SceneManager.GetActiveScene();
 
-        Debug.Log("moving lobbys");
 
         if (scene.name == "LOOBY" || scene.name == "TEMPSTART")
         {
-            for (int i = 0; i < players.Count; i++)
-            {
-                Transform transform = players[i].GetComponent<Transform>();
-                transform.position = new Vector3(0, 3, -10 - 5 * i);
+            Debug.Log("moving from start");
+
+            Transform transform = player.GetComponent<Transform>();
+                transform.position = new Vector3(0, 3, -10);
                 Debug.Log(transform.position);
 
 
-                Transform parentTransform = players[i].transform;
+                Transform parentTransform = player.transform;
 
                 // Find the child GameObjects by name
                 Transform firstChild = parentTransform.Find("PreyComponent");
@@ -93,34 +91,34 @@ public class MapMover : AttributesSync/*,IInteractable*/
                     spawn.position = new Vector3(15,5,2.4f);
                 
 
-            }
+            
             Multiplayer.LoadScene("Final_Map");
 
         }
         else if (scene.name == "Final_Map")
         {
-            for (int i = 0; i < players.Count; i++)
+            Debug.Log("moving from smap");
+
+            Transform transform = player.GetComponent<Transform>();
+            preyList = FindObjectsOnLayer(7);
+            foreach (GameObject prey in preyList)
             {
-                Transform transform = players[i].GetComponent<Transform>();
-                preyList = FindObjectsOnLayer(7);
-                foreach (GameObject prey in preyList)
+                if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
-                    if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
-                    {
-                        prey.GetComponentInParent<Transform>().position = new Vector3(64.5f, 16.44f, 100);
-                    }
-                    else if (prey.GetComponentInChildren<P_StateManager>().Escaped == false)
-                    {
-                        prey.GetComponentInParent<Transform>().position = new Vector3(100f, 0.8f, 100);
-                    }
+                    prey.GetComponentInParent<Transform>().position = new Vector3(64.5f, 16.44f, 100);
                 }
-                hunterList = FindObjectsOnLayer(6);
-                foreach (GameObject hunter in hunterList)
+                else if (prey.GetComponentInChildren<P_StateManager>().Escaped == false)
                 {
-                    hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
+                    prey.GetComponentInParent<Transform>().position = new Vector3(100f, 0.8f, 100);
                 }
-                Multiplayer.LoadScene("LOOBY");
             }
+            hunterList = FindObjectsOnLayer(6);
+            foreach (GameObject hunter in hunterList)
+            {
+                hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
+            }
+            Multiplayer.LoadScene("LOOBY");
+            
         }
     }
     // Start is called before the first frame update

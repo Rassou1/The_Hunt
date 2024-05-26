@@ -66,10 +66,17 @@ public class NewRoleGiver : AttributesSync, IInteractable
             //int hunterIndex = Random.Range(0, players.Count);
             int hunterIndex = 0;
 
+            
+            foreach (var obj in players)
+            {
+                //mm.moveMaps(obj);
+                obj.GetComponent<InteractablePlayer>().movingmap=true;
+            }
 
             for (int i = 0; i < players.Count; i++)
             {
-                mm.moveMaps();
+
+                
 
                 Alteruna.Avatar avatar = players[i].GetComponent<Alteruna.Avatar>();
 
