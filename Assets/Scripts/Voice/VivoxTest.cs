@@ -20,7 +20,7 @@ public class VivoxTest : MonoBehaviour
         await VivoxService.Instance.InitializeAsync();
         VivoxService.Instance.LoggedIn += UserLoggedIn;
         multiplayer.OnRoomJoined.AddListener(LogInToVivox);
-        multiplayer.OnRoomLeft.AddListener(LeftChannel);
+        //multiplayer.OnRoomLeft.AddListener(LeftChannel);
 
         //await VivoxService.Instance.JoinEchoChannelAsync("EchoTest", ChatCapability.TextAndAudio);
         //await VivoxService.Instance.JoinGroupChannelAsync("ChannelName", ChatCapability.AudioOnly);
@@ -45,10 +45,10 @@ public class VivoxTest : MonoBehaviour
         Debug.LogError("Joined Channel: " + name);
     }
 
-    async void LeftChannel(Multiplayer arg0)
-    {
-        await VivoxService.Instance.LeaveChannelAsync(name);
-    }
+    //async void LeftChannel(Multiplayer arg0)
+    //{
+    //    await VivoxService.Instance.LeaveChannelAsync(name);
+    //}
 
     // Update is called once per frame
     void Update()
