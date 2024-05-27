@@ -15,19 +15,35 @@ public class InteractablePlayer : AttributesSync, IInteractable
     public P_StateManager _preyManager;
 
     private string myName;
-    private bool GotTagged;
+    public bool movingmap;
+
+    private MapMover mm;
+
+    GameObject startLever;
+    public void Awake()
+    {
+        // Find the startLever in the Awake method
+        startLever = GameObject.Find("Objects/StartLever");
+        if (startLever != null)
+        {
+            mm = startLever.GetComponent<MapMover>();
+        }
+        else
+        {
+            Debug.LogError("StartLever not found in Objects");
+        }
+    }
     public void Start()
     {
         myName = gameObject.name;
-        GotTagged = false;
     }
 
     private void Update()
     {
-        if (GotTagged)
+        if (movingmap)
         {
-            //GetTP();
-
+            MoveMap();
+            movingmap = false;
         }
     }
 
@@ -63,7 +79,6 @@ public class InteractablePlayer : AttributesSync, IInteractable
         {
             // Teleport the player to the prison position
             GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
-            GotTagged = true;
             _preyManager.Caught = true;
 
         }
@@ -77,5 +92,11 @@ public class InteractablePlayer : AttributesSync, IInteractable
            
 
         
+    }
+
+    [SynchronizableMethod]
+    public void MoveMap()
+    {
+        mm.moveMaps(gameObject);
     }
 }

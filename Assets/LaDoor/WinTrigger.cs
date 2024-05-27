@@ -36,6 +36,7 @@ public class WinTrigger : MonoBehaviour
         //youWinText.SetActive(false);
         Debug.Log(playerStates);
         playerStates.escapedPlayers.Clear();
+        playerStates.taggedPlayers.Clear();
     }
 
     // Update is called once per frame
@@ -66,7 +67,7 @@ public class WinTrigger : MonoBehaviour
     {
         mp = FindObjectOfType<Multiplayer>();
 
-        Debug.Log(other);
+        Debug.Log($"{other} has interacted with winTrigger");
         if (other.gameObject.tag == "Player")
         {
             //youWinText.SetActive(true);
@@ -80,51 +81,65 @@ public class WinTrigger : MonoBehaviour
             }
 
             //untested
-            if (playerStates.escapedPlayers.Count <= FindObjectsOnLayer(9).Count)
+            if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == FindObjectsOnLayer(9).Count)
             {
-                //mapMover.moveMaps();
-                for (int i = 0; i < players.Count; i++)
+                playerStates.gameEnded = true;
+                Debug.Log($"{playerStates} winTrigger1");
+                Debug.Log($"{mp} wT1");
+                foreach (var obj in players)
                 {
-                    Transform transform = players[i].GetComponent<Transform>();
-                    preyList = FindObjectsOnLayer(7);
-                    foreach (GameObject prey in preyList)
-                    {
-                        if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
-                        {
-                            prey.GetComponentInParent<Transform>().position = new Vector3(64.5f, 16.44f, 100);
-                        }
-                        else if (prey.GetComponentInChildren<P_StateManager>().Escaped == false)
-                        {
-                            prey.GetComponentInParent<Transform>().position = new Vector3(100f, 0.8f, 100);
-                        }
-                    }
-                    hunterList = FindObjectsOnLayer(6);
-                    foreach (GameObject hunter in hunterList)
-                    {
-                        hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
-                    }
-
-                    Debug.Log(transform.position);
-                    mp.LoadScene("LOOBY");
-
-                    //Debug.Log(other.gameObject);
-                    ////StartCoroutine(LoadScene(other.gameObject));
-                    //mp.LoadScene("TEMPLOBBY");
-
-                    //if (stateManager.Escaped)
-                    //{
-                    //    stateManager.Rigidbody.position = new Vector3(64.5f, 16.44f, 100);
-                    //}
-                    //else if (!stateManager.Escaped)
-                    //{
-                    //    stateManager.Rigidbody.position = new Vector3(100f, 0.8f, 100);
-                    //}
-                    //else
-                    //{
-                    //    stateManager.Rigidbody.position = new Vector3(64.5f, 30, 100);
-                    //}
-
+                   
+                    Debug.Log($"{playerStates} winTrigger2");
+                    Debug.Log($"{mp} wT2");
+                    obj.GetComponent<InteractablePlayer>().movingmap = true;
+                    Debug.Log($"{playerStates} winTrigger3");
+                    Debug.Log($"{mp} wT3");
+                    mapMover.moveMaps(obj);
                 }
+
+                //mapMover.moveMaps();
+                //for (int i = 0; i < players.Count; i++)
+                //{
+                //    Transform transform = players[i].GetComponent<Transform>();
+                //    preyList = FindObjectsOnLayer(7);
+                //    foreach (GameObject prey in preyList)
+                //    {
+                //        if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
+                //        {
+                //            prey.GetComponentInParent<Transform>().position = new Vector3(64.5f, 16.44f, 100);
+                //        }
+                //        else if (prey.GetComponentInChildren<P_StateManager>().Escaped == false)
+                //        {
+                //            prey.GetComponentInParent<Transform>().position = new Vector3(100f, 0.8f, 100);
+                //        }
+                //    }
+                //    hunterList = FindObjectsOnLayer(6);
+                //    foreach (GameObject hunter in hunterList)
+                //    {
+                //        hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
+                //    }
+
+                //    Debug.Log(transform.position);
+                //    mp.LoadScene("LOOBY");
+
+                //Debug.Log(other.gameObject);
+                ////StartCoroutine(LoadScene(other.gameObject));
+                //mp.LoadScene("TEMPLOBBY");
+
+                //if (stateManager.Escaped)
+                //{
+                //    stateManager.Rigidbody.position = new Vector3(64.5f, 16.44f, 100);
+                //}
+                //else if (!stateManager.Escaped)
+                //{
+                //    stateManager.Rigidbody.position = new Vector3(100f, 0.8f, 100);
+                //}
+                //else
+                //{
+                //    stateManager.Rigidbody.position = new Vector3(64.5f, 30, 100);
+                //}
+
+                //}
 
             }
         }

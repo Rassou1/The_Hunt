@@ -7,6 +7,9 @@ public class PlayerStates : MonoBehaviour
     public List<GameObject> escapedPlayers = new List<GameObject>();
     public List<GameObject> taggedPlayers = new List<GameObject>();
 
+    public bool gameStarted;
+    public bool gameEnded;
+
     public void Reset()
     {
         escapedPlayers.Clear();
