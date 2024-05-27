@@ -70,7 +70,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
             foreach (var obj in players)
             {
                 mm.moveMaps(obj);
-                obj.GetComponent<InteractablePlayer>().movingmap=true;
+                //obj.GetComponent<InteractablePlayer>().movingmap=true;
             }
 
             for (int i = 0; i < players.Count; i++)
@@ -100,11 +100,6 @@ public class NewRoleGiver : AttributesSync, IInteractable
                 }
             }
         }
-        //gameObject.SetActive(false);
-        //foreach (var player in players)
-        //{
-            
-        //}
     }
 
 

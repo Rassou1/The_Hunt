@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapMover : AttributesSync/*,IInteractable*/
+public class MapMover : AttributesSync
 {
     public List<GameObject> players;
     public List<GameObject> preyList;
@@ -22,13 +22,7 @@ public class MapMover : AttributesSync/*,IInteractable*/
         return gameObject;
     }
 
-    //NewRoleGover is calling the mapMover script so no interaction needed
-    //public void InitInteract(string interactor)
-    //{
-
-    //    BroadcastRemoteMethod("Interact", interactor);
-            
-    //}
+   
 
     public List<GameObject> FindObjectsOnLayer(int layer)
     {
@@ -46,13 +40,7 @@ public class MapMover : AttributesSync/*,IInteractable*/
         return objectsInLayer;
     }
 
-    //NewRoleGover is calling the mapMover script so no interaction needed
 
-    //[SynchronizableMethod]
-    //public void Interact(string interactor)
-    //{
-    //   // moveMaps();
-    //}
 
     [SynchronizableMethod]
     public void moveMaps(GameObject player)
