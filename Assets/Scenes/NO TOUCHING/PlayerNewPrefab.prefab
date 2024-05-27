@@ -3835,7 +3835,7 @@ MonoBehaviour:
   amIHunter: 0
   _mouseSens: 40
   _maxSlopeAngle: 45
-  _softCap: 9
+  _softCap: 13
   _sprintResistance: 4
   _slideResistance: 2
   _rigidbody: {fileID: 4414323383735443759}
@@ -3845,10 +3845,10 @@ MonoBehaviour:
   _interacter: {fileID: 8811234123907765804}
   _finalMagnitude: 0
   _actualMagnitude: 0
-  _dashCooldown: 5
+  _dashCooldown: 4
   _dashDuraiton: 0.25
   _dashSpeed: 25
-  _moveSpeed: 3
+  _moveSpeed: 4
   climbspeed: 0
   finalAngle: 0
 --- !u!136 &7582628521144172111
@@ -6828,6 +6828,18 @@ PrefabInstance:
       propertyPath: _avatar
       value: 
       objectReference: {fileID: 7566427906986039737}
+    - target: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: _softCap
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: _moveSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: _dashCooldown
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6047615582685427600, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.007963493

@@ -59,7 +59,7 @@ public class H_GroundedState : H_BaseState
 
     public override void CheckSwitchState()
     {
-        if (_ctx.IsJumpPressed && _currentSubState != _factory.Slide())
+        if (_ctx.IsJumpPressed)
         {
             _ctx.VertMagnitude = 7.5f;
             _ctx.IsGrounded = false;

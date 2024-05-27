@@ -63,7 +63,7 @@ public class P_GroundedState : P_BaseState
         {
             SwitchState(_factory.Ghost());
         }
-        if (_ctx.IsJumpPressed && _currentSubState != _factory.Slide())
+        if (_ctx.IsJumpPressed)
         {
             _ctx.VertMagnitude = 7.5f;
             _ctx.IsGrounded = false;
