@@ -3728,7 +3728,8 @@ MonoBehaviour:
   tagged: 0
   prisonPosition: {x: 27.917, y: 2.182, z: -0.24}
   _avatar: {fileID: 0}
-  _playerManager: {fileID: 0}
+  _hunterManager: {fileID: 0}
+  _preyManager: {fileID: 0}
 --- !u!114 &9088883111173887985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3784,6 +3785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3fabbe73f17c0e4d9f6ebe9f0b9d6b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioManager: {fileID: 0}
   Sounds: []
   footTransform: {fileID: 1308927344786973826}
   grass: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
@@ -3792,7 +3794,10 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
   rock: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
   mud: {fileID: 11400000, guid: dbd2c62a5cd4cf142bb831bb1f7e5246, type: 2}
+  dirt: {fileID: 11400000, guid: 6152b677ea5fe234b8c3573c0c4b0ee6, type: 2}
   metal: {fileID: 11400000, guid: 154e9bbe71924144096ba315afaa73bb, type: 2}
+  dash: {fileID: 11400000, guid: 10db4f0b44979624eb3d8ee0d69a6ac7, type: 2}
+  Empty: {fileID: 11400000, guid: 6152b677ea5fe234b8c3573c0c4b0ee6, type: 2}
 --- !u!82 &39573402222187602
 AudioSource:
   m_ObjectHideFlags: 0
