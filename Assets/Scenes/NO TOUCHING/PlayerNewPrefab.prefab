@@ -6792,6 +6792,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: -0.002580699
       objectReference: {fileID: 0}
+    - target: {fileID: 4543357826355700975, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4781075714632687787, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -7335,7 +7339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Multiplayer: {fileID: 0}
-  _uidString: 
+  _uidString: f862af99-4440-44b5-b4ec-f525a9dd2c89
   Reliability: 1
   LocalMethodBehavior: 1
   avatar: {fileID: 7566427906986039737}
