@@ -260,8 +260,6 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
-        //Add a Way so a remote avatar still makes sounds
-
         if (gameObject.GetComponentInParent<PlayerTest>() != null && !_avatar.IsMe)
         {
             otherPlayerSounds.NonLocalPlayerTest();
@@ -270,10 +268,10 @@ public class P_StateManager : MonoBehaviour
         if (!_avatar.IsMe)
             return;
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            DiamondsTaken++;
-        }
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    DiamondsTaken++;
+        //}
 
         if (gameObject.GetComponentInParent<PlayerWalking>() != null)
         {
@@ -286,8 +284,6 @@ public class P_StateManager : MonoBehaviour
             {
                 playerSounds.PlayRunSound();
             }
-
-            
         }
 
 

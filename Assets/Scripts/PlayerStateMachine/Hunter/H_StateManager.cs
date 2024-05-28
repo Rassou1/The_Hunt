@@ -101,7 +101,8 @@ public class H_StateManager : MonoBehaviour
 
     Vector3 _resetPosition;
 
-    //PlayerWalking walking;
+    PlayerWalking playerSounds;
+    PlayerTest otherPlayerSounds;
 
 
     public int _dashCooldown;
@@ -187,8 +188,8 @@ public class H_StateManager : MonoBehaviour
 
     private void Awake()
     {
-        
-        //walking = gameObject.GetComponentInParent<PlayerWalking>();
+        playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
+        otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -240,6 +241,11 @@ public class H_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
+        if (gameObject.GetComponentInParent<PlayerTest>() != null && !_avatar.IsMe)
+        {
+            otherPlayerSounds.NonLocalPlayerTest();
+        }
+
         if (!_avatar.IsMe)
         {
             return;
@@ -249,15 +255,18 @@ public class H_StateManager : MonoBehaviour
 
 
 
-            //if (_isMovementPressed && _isGrounded && !_isSprintPressed)
-            //{
-            //    walking.PlayWalkSound();
-            //}
+            if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+            {
+                if (_isMovementPressed && _isGrounded && !_isSprintPressed && !_isSlidePressed)
+                {
+                    playerSounds.PlayWalkSound();
+                }
 
-            //if (_isMovementPressed && _isGrounded && _isSprintPressed)
-            //{
-            //    walking.PlayRunSound();
-            //}
+                if (_isMovementPressed && _isGrounded && _isSprintPressed && !_isSlidePressed)
+                {
+                    playerSounds.PlayRunSound();
+                }
+            }
 
 
             _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
@@ -431,6 +440,13 @@ public class H_StateManager : MonoBehaviour
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
+        if (context.started && gameObject.GetComponentInParent<PlayerWalking>() != null)
+        {
+            if (_isGrounded)
+            {
+                playerSounds.PlayJumpStartSound();
+            }
+        }
     }
 
 
@@ -446,6 +462,10 @@ public class H_StateManager : MonoBehaviour
         _dashDurationCoroutine = DashDuration();
         StartCoroutine(_dashCooldownCoroutine);
         StartCoroutine(_dashDurationCoroutine);
+        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        {
+            playerSounds.PlayDashSound();
+        }
     }
 
     
@@ -457,6 +477,18 @@ public class H_StateManager : MonoBehaviour
     void OnSlide(InputAction.CallbackContext context)
     {
         _isSlidePressed = context.ReadValueAsButton();
+        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        {
+            if (context.started && _isGrounded)
+            {
+                playerSounds.PlaySlidingSound();
+            }
+
+            if (context.canceled)
+            {
+                playerSounds.AudioManager.Stop();
+            }
+        }
     }
 
 
