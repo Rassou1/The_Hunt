@@ -49,7 +49,7 @@ public class interacter : MonoBehaviour
 
                 if (interactObj != null)
                 {
-                    interactObj.InitInteract(me.name);
+                    interactObj.InitInteract(_avatar.name);
 
                     Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
                 } 

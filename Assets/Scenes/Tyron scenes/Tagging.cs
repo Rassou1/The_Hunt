@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class InteractablePlayer : AttributesSync, IInteractable
 {
@@ -60,7 +59,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
             BroadcastRemoteMethod("Interact", interactor);
         
     }
-    GameObject _interactor;
+    public GameObject _interactor;
     List<GameObject> FindObjectsOnLayer(int layer)
     {
         GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
@@ -79,25 +78,25 @@ public class InteractablePlayer : AttributesSync, IInteractable
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
-        _interactor = FindAnyObjectByType<GameObject>();
+        //_interactor = FindAnyObjectByType<GameObject>();
 
         List<GameObject> players = new List<GameObject>();
 
-        List<GameObject> playersEXTRA = FindObjectsOnLayer(9);
+        List<GameObject> parents = FindObjectsOnLayer(9);
 
-        foreach (GameObject player in playersEXTRA)
+        foreach (GameObject player in parents)
         {
             Transform parentTransform = player.transform;
 
             Transform firstChild = parentTransform.Find("PreyComponent");
             Transform secondChild = parentTransform.Find("HunterComponent");
 
-            if (secondChild != null)
+            if (secondChild.gameObject.active)
             {
                 players.Add(secondChild.gameObject);
             }
 
-            if (firstChild != null)
+            if (firstChild.gameObject.active)
             {
                 players.Add(firstChild.gameObject);
             }
@@ -105,14 +104,15 @@ public class InteractablePlayer : AttributesSync, IInteractable
 
 
 
-
-        foreach (GameObject player in players)
+        for (int i = 0; i < players.Count; i++)
         {
-            if (player.name == interactor)
+            if (players[i].GetComponentInParent<Alteruna.Avatar>().name == interactor)
             {
-                _interactor = player;
+                _interactor = players[i];
             }
         }
+
+
         // Check if both the interactor and the player are on specific layers
         if (_interactor.layer == LayerMask.NameToLayer("Hunter") && gameObject.layer == LayerMask.NameToLayer("Prey"))
         {
