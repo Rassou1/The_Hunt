@@ -46,7 +46,7 @@ public class PlayerTest : AttributesSync
         {
             _playerSounds.PlayRunSound();
         }
-        else if (Vector3.Distance(new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 0.01f)
+        else if (Vector3.Distance(new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1f)
         {
             _playerSounds.PlayWalkSound();
         }
