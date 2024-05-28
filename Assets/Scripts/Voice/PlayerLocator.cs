@@ -25,7 +25,7 @@ public class PlayerLocator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.parent.GetChild(0).gameObject != null)
+        if (transform.parent.GetChild(0).gameObject.activeSelf)
         {
             transform.position = transform.parent.GetChild(0).position;
 
