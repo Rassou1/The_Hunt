@@ -42,7 +42,7 @@ public class PlayerTest : AttributesSync
         //    //}
         //}
 
-        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1)
+        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 0.70f)
         {
             _playerSounds.PlayRunSound();
         }
