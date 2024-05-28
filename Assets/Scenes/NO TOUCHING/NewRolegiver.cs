@@ -92,7 +92,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
                 else
                 {
 
-                    players[i].layer = LayerMask.NameToLayer("Prey");
+                    //players[i].layer = LayerMask.NameToLayer("Prey");
 
                     if (!avatar.IsMe)
                         return;

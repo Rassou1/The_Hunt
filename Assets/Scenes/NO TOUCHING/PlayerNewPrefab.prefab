@@ -6331,7 +6331,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9209242939184243159}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db10a0c97f27ac145b2be0d7eac216be, type: 3}
   m_Name: 
@@ -7070,6 +7070,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7993911582570954786}
+    - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2714926659711497951}
   m_SourcePrefab: {fileID: 100100000, guid: 59556d925da285648bfaf1333170db54, type: 3}
 --- !u!114 &1269575076366420476 stripped
 MonoBehaviour:
@@ -7203,6 +7206,28 @@ MonoBehaviour:
   _uidString: 6386e481-a8f7-4f27-86f5-a9b0f26fadce
   Reliability: 1
   LocalMethodBehavior: 1
+--- !u!114 &2714926659711497951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737605374854112259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db10a0c97f27ac145b2be0d7eac216be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: c3e14cae-0938-42bd-aad4-4568630ff67c
+  Reliability: 1
+  LocalMethodBehavior: 1
+  tagged: 0
+  prisonPosition: {x: -43.941452, y: 8.035, z: -49.711296}
+  _avatar: {fileID: 7566427906986039737}
+  _hunterManager: {fileID: 1128020610449734755}
+  _preyManager: {fileID: 1269575076366420476}
+  movingmap: 0
 --- !u!1 &4783567523206326615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 140602009291933678, guid: 59556d925da285648bfaf1333170db54, type: 3}
