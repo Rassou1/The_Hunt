@@ -6361,7 +6361,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9209242939184243159}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4528f0bf59977048a7f58e7899b35b9, type: 3}
   m_Name: 
@@ -6713,6 +6713,10 @@ PrefabInstance:
     - target: {fileID: 4421854280138005476, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0.002580699
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781075714632687787, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4876868552892892206, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.x
