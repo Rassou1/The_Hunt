@@ -30,35 +30,15 @@ public class PlayerTest : AttributesSync
         //Debug.LogError(_avatar.transform.position);
         _audioSoruce.spatialBlend = 1.0f;
 
-        //if (new Vector3(transform.position.x, 0, transform.position.z) != new Vector3(oldPosition.x, 0, oldPosition.z))
-        //{
-        //    _playerSounds.PlayWalkSound();
-        //    //if (false)
-        //    //{
-        //    //}
-        //    //else
-        //    //{
-        //    //    _playerSounds.PlayRunSound();
-        //    //}
-        //}
+       
 
         if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 0.70f)
         {
             _playerSounds.PlayRunSound();
         }
-        else if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1)
-        {
-            _playerSounds.PlayDashSound();
-        }
         else if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 0.35f)
         {
             _playerSounds.PlayWalkSound();
-        }
-
-
-        if (new Vector3(0, transform.position.y, 0) != new Vector3(0, oldPosition.y, 0))
-        {
-            //_playerSounds.PlayJumpStartSound();
         }
 
         oldPosition = transform.position;
