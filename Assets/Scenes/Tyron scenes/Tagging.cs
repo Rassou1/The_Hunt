@@ -30,7 +30,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
         }
         else
         {
-            Debug.LogError("StartLever not found in Objects");
+            //Debug.LogError("StartLever not found in Objects");
         }
     }
     public void Start()
@@ -82,7 +82,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
             _preyManager.Caught = true;
 
         }
-        Debug.Log("");
+        //Debug.Log("");
     }
 
     public void SendToPrison()
