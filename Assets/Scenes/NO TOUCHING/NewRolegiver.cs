@@ -6,8 +6,6 @@ using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.XR;
 using UnityEditor;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
-using static UnityEngine.ParticleSystem;
 
 public class NewRoleGiver : AttributesSync, IInteractable
 {
@@ -68,8 +66,9 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             foreach (GameObject p in players)
             {
+                p.GetComponent<InteractablePlayer>().movingmap = true;
                 mm.moveMaps(p);
-                //obj.GetComponent<InteractablePlayer>().movingmap=true;
+                
             }
 
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42221254, g: 0.64316183, b: 0.793691, a: 1}
+  m_IndirectSpecularColor: {r: 0.42224, g: 0.6431838, b: 0.79369, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1301,37 +1301,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2043700366}
   m_LocalEulerAnglesHint: {x: 0, y: 60, z: 0}
---- !u!1 &591310747
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 591310748}
-  m_Layer: 15
-  m_Name: Spawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &591310748
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591310747}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 62.134907, y: 18.702995, z: 93.85491}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1969025902}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &611819084
 GameObject:
   m_ObjectHideFlags: 0
@@ -5527,8 +5496,7 @@ Transform:
   m_LocalPosition: {x: 62, y: 19, z: 94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 591310748}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1969025903
@@ -5550,8 +5518,10 @@ MonoBehaviour:
   - {x: -27, y: 0, z: 55}
   - {x: 9, y: 0, z: -37}
   - {x: 22, y: 0, z: 22}
+  players: []
   gameStarted: 0
   gameEnded: 0
+  allPlayersTagged: 0
 --- !u!1001 &1980168335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6737,8 +6707,8 @@ MonoBehaviour:
   preyCanvas: {fileID: 1625575297}
   players: []
   newPrefab: {fileID: 9209242939184243159, guid: 9fdb53ea94717c04eb11ffb7eb6589d7, type: 3}
-  escapedPlayers: []
-  caughtPlayers: []
+  playerStates: {fileID: 0}
+  networkManager: {fileID: 0}
   mm: {fileID: 9020528135807036728}
   spawner: {fileID: 0}
 --- !u!114 &9020528135807036725

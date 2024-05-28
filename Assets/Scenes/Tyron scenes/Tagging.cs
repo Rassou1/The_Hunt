@@ -10,6 +10,8 @@ public class InteractablePlayer : AttributesSync, IInteractable
 
     public Vector3 prisonPosition = new Vector3(-43.941452f, 8.03499985f, -49.7112961f);
     public Alteruna.Avatar _avatar;
+    Multiplayer networkManager;
+    PlayerStates playerStates;
     //public PlayerManagerBase _playerManager;
 
     public H_StateManager _hunterManager;
@@ -41,6 +43,8 @@ public class InteractablePlayer : AttributesSync, IInteractable
 
     private void Update()
     {
+        networkManager = FindAnyObjectByType<Multiplayer>();
+        playerStates = networkManager.GetComponent<PlayerStates>();
         if (movingmap)
         {
             MoveMap();
@@ -119,6 +123,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
             // Teleport the player to the prison position
             GetComponent<TransformSynchronizable>().transform.position = prisonPosition;
             _preyManager.Caught = true;
+            playerStates.playerTagged(gameObject);
 
         }
         //Debug.Log("");
