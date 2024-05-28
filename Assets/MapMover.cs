@@ -147,7 +147,8 @@ public class MapMover : AttributesSync
     // Update is called once per frame
     void Update()
     {
-        players = FindObjectsOnLayer(9);    
+        players = FindObjectsOnLayer(9);
+        Debug.Log(players.Count);
         networkManager = FindAnyObjectByType<Multiplayer>();
         spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();

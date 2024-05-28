@@ -40,6 +40,25 @@ public class WinTrigger : MonoBehaviour
     }
 
     // Update is called once per frame
+    public void Update()
+    {
+        if (playerStates.taggedPlayers.Count == players.Count - 1 && playerStates.taggedPlayers.Count > 0)
+        {
+            playerStates.allPlayersTagged = true;
+        }
+        if (playerStates.allPlayersTagged)
+        {
+            playerStates.gameEnded = true;
+            foreach (var obj in players)
+            {
+
+
+                obj.GetComponent<InteractablePlayer>().movingmap = true;
+
+                mapMover.moveMaps(obj);
+            }
+        }
+    }
 
 
     public IEnumerator CountDown()
@@ -81,7 +100,7 @@ public class WinTrigger : MonoBehaviour
             }
 
             //untested
-            if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == FindObjectsOnLayer(9).Count)
+            if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == FindObjectsOnLayer(7).Count && playerStates.escapedPlayers.Count > 0)
             {
                 playerStates.gameEnded = true;
                 Debug.Log($"{playerStates} winTrigger1");
@@ -97,51 +116,7 @@ public class WinTrigger : MonoBehaviour
                     mapMover.moveMaps(obj);
                 }
 
-                //mapMover.moveMaps();
-                //for (int i = 0; i < players.Count; i++)
-                //{
-                //    Transform transform = players[i].GetComponent<Transform>();
-                //    preyList = FindObjectsOnLayer(7);
-                //    foreach (GameObject prey in preyList)
-                //    {
-                //        if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
-                //        {
-                //            prey.GetComponentInParent<Transform>().position = new Vector3(64.5f, 16.44f, 100);
-                //        }
-                //        else if (prey.GetComponentInChildren<P_StateManager>().Escaped == false)
-                //        {
-                //            prey.GetComponentInParent<Transform>().position = new Vector3(100f, 0.8f, 100);
-                //        }
-                //    }
-                //    hunterList = FindObjectsOnLayer(6);
-                //    foreach (GameObject hunter in hunterList)
-                //    {
-                //        hunter.GetComponentInParent<Transform>().position = new Vector3(64.5f, 30, 100);
-                //    }
-
-                //    Debug.Log(transform.position);
-                //    mp.LoadScene("LOOBY");
-
-                //Debug.Log(other.gameObject);
-                ////StartCoroutine(LoadScene(other.gameObject));
-                //mp.LoadScene("TEMPLOBBY");
-
-                //if (stateManager.Escaped)
-                //{
-                //    stateManager.Rigidbody.position = new Vector3(64.5f, 16.44f, 100);
-                //}
-                //else if (!stateManager.Escaped)
-                //{
-                //    stateManager.Rigidbody.position = new Vector3(100f, 0.8f, 100);
-                //}
-                //else
-                //{
-                //    stateManager.Rigidbody.position = new Vector3(64.5f, 30, 100);
-                //}
-
-                //}
-
-            }
+            }           
         }
     }
 

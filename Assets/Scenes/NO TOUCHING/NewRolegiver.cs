@@ -17,8 +17,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
     public List<GameObject> players;
     public GameObject newPrefab;
 
-    public List<GameObject> escapedPlayers;
-    public List<GameObject> caughtPlayers;
+    public PlayerStates playerStates;
+    public Multiplayer networkManager;
 
     public MapMover mm;
 
@@ -31,7 +31,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
     public void InitInteract(string interactor)
     {
         //finds everything on parentPlayer layer.
-        
+        playerStates.stateReset();
         BroadcastRemoteMethod("Interact", interactor);
         
         
@@ -164,6 +164,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
     void Update()
     {
         players = FindObjectsOnLayer(9);
+        networkManager = FindAnyObjectByType<Multiplayer>();
+        playerStates = networkManager.GetComponent<PlayerStates>();
     }
 
     public void resetAllPrefabs()

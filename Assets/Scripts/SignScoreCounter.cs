@@ -35,7 +35,7 @@ public class SignScoreCounter : MonoBehaviour
 
         for (int i = 0; i < avatars.Count; i++)
         {
-            diamondsCollected.Add((avatars[i].gameObject.GetComponentInChildren<P_StateManager>().DiamondsTaken, users[i].Name));
+            //diamondsCollected.Add((avatars[i].gameObject.GetComponentInChildren<P_StateManager>().DiamondsTaken, users[i].Name));
         }
 
         //foreach (Avatar user in avatars)
