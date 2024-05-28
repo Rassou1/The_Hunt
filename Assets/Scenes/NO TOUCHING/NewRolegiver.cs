@@ -66,12 +66,12 @@ public class NewRoleGiver : AttributesSync, IInteractable
             int hunterIndex = Random.Range(0, players.Count);
             //int hunterIndex = 0;
 
-            
             foreach (GameObject p in players)
             {
                 mm.moveMaps(p);
                 //obj.GetComponent<InteractablePlayer>().movingmap=true;
             }
+
 
             for (int i = 0; i < players.Count; i++)
             {
@@ -82,7 +82,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
                 if (i == hunterIndex)
                 {
-                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this if not necessary. The layer of the hunterComponent is already on Hunter layer.
+                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this. The layer of the hunterComponent is already on Hunter layer.
 
                     if (!avatar.IsMe)
                         return;
@@ -99,6 +99,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
                     preyCanvas.SetActive(true);
                 }
             }
+            
         }
     }
 
