@@ -42,16 +42,16 @@ public class PlayerTest : AttributesSync
         //    //}
         //}
 
-        if (Vector3.Distance(new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 3)
+        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 3)
         {
             _playerSounds.PlayRunSound();
         }
-        else if (Vector3.Distance(new Vector3(_avatar.transform.position.x, 0, _avatar.transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1f)
+        else if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1f)
         {
             _playerSounds.PlayWalkSound();
         }
 
-        if (new Vector3(0, _avatar.transform.position.y, 0) != new Vector3(0, oldPosition.y, 0))
+        if (new Vector3(0, transform.position.y, 0) != new Vector3(0, oldPosition.y, 0))
         {
             //_playerSounds.PlayJumpStartSound();
         }
