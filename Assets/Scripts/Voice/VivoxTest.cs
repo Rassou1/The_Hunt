@@ -14,6 +14,7 @@ public class VivoxTest : MonoBehaviour
     Multiplayer multiplayer;
     string currentVoicechatLobby;
     public Image muteicon;
+    bool enablemute = false;
     async void Start()
     {
         multiplayer = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<Multiplayer>();
@@ -51,6 +52,7 @@ public class VivoxTest : MonoBehaviour
         //await VivoxService.Instance.JoinGroupChannelAsync(name, ChatCapability.AudioOnly);
         //await VivoxService.Instance.JoinEchoChannelAsync(name, ChatCapability.AudioOnly);
         currentVoicechatLobby = name;
+        enablemute = true;
         Debug.Log("Joined Channel: " + name);
         
     }
@@ -63,29 +65,40 @@ public class VivoxTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P) && VivoxService.Instance.IsLoggedIn)
+        if (VivoxService.Instance.IsLoggedIn)
         {
             if (!VivoxService.Instance.IsInputDeviceMuted)
             {
-                VivoxService.Instance.MuteOutputDevice();
-                VivoxService.Instance.MuteInputDevice();
-                Debug.Log("Muting Player");
-                if (muteicon != null)
-                {
-                    muteicon.gameObject.active = true;
-                }
-            }
-            else
-            {
-                VivoxService.Instance.UnmuteInputDevice();
-                VivoxService.Instance.UnmuteOutputDevice();
-                Debug.Log("Unmuting Player");
                 if (muteicon != null)
                 {
                     muteicon.gameObject.active = false;
                 }
             }
+            else
+            {
+                if (muteicon != null)
+                {
+                    muteicon.gameObject.active = true;
+                }
+            }
 
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                if (!VivoxService.Instance.IsInputDeviceMuted)
+                {
+                    VivoxService.Instance.MuteOutputDevice();
+                    VivoxService.Instance.MuteInputDevice();
+                    Debug.Log("Muting Player");
+                }
+                else
+                {
+                    VivoxService.Instance.UnmuteInputDevice();
+                    VivoxService.Instance.UnmuteOutputDevice();
+                    Debug.Log("Unmuting Player");
+                }
+            }
         }
+        
     }
 }
