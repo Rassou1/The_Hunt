@@ -786,6 +786,7 @@ GameObject:
   - component: {fileID: 458848459450860755}
   - component: {fileID: 2427342990593358432}
   - component: {fileID: 4726594215614398109}
+  - component: {fileID: 3712163568815438281}
   m_Layer: 6
   m_Name: HunterComponent
   m_TagString: Player
@@ -845,7 +846,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537914950847844620}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -1089,6 +1090,22 @@ MonoBehaviour:
   metal: {fileID: 11400000, guid: 154e9bbe71924144096ba315afaa73bb, type: 2}
   dash: {fileID: 11400000, guid: 10db4f0b44979624eb3d8ee0d69a6ac7, type: 2}
   Empty: {fileID: 11400000, guid: 6152b677ea5fe234b8c3573c0c4b0ee6, type: 2}
+--- !u!114 &3712163568815438281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537914950847844620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4528f0bf59977048a7f58e7899b35b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 222e6f7c-31a3-4f37-9898-12f75607abf6
+  Reliability: 1
+  LocalMethodBehavior: 1
 --- !u!1 &1554703547536722506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6229,7 +6246,6 @@ GameObject:
   - component: {fileID: 7773378596374827617}
   - component: {fileID: 8643063952669146692}
   - component: {fileID: 3114294699107689675}
-  - component: {fileID: 4028959226434336095}
   m_Layer: 9
   m_Name: PlayerNewPrefab
   m_TagString: Player
@@ -6354,22 +6370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taggingPlayer: {fileID: 7773378596374827617}
---- !u!114 &4028959226434336095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9209242939184243159}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4528f0bf59977048a7f58e7899b35b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
-  _uidString: 023af86c-b3ff-4b1b-a837-22de2ee8c640
-  Reliability: 1
-  LocalMethodBehavior: 1
 --- !u!1 &9217312276028605384
 GameObject:
   m_ObjectHideFlags: 0
@@ -7054,6 +7054,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4654814697771157772}
+    - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7547678893436332301}
   m_SourcePrefab: {fileID: 100100000, guid: 59556d925da285648bfaf1333170db54, type: 3}
 --- !u!114 &1269575076366420476 stripped
 MonoBehaviour:
@@ -7171,6 +7174,22 @@ MonoBehaviour:
   metal: {fileID: 11400000, guid: 154e9bbe71924144096ba315afaa73bb, type: 2}
   dash: {fileID: 11400000, guid: 10db4f0b44979624eb3d8ee0d69a6ac7, type: 2}
   Empty: {fileID: 11400000, guid: 6152b677ea5fe234b8c3573c0c4b0ee6, type: 2}
+--- !u!114 &7547678893436332301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737605374854112259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4528f0bf59977048a7f58e7899b35b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 2074784e-8d16-4e79-8701-37c3b125b001
+  Reliability: 1
+  LocalMethodBehavior: 1
 --- !u!1 &4783567523206326615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 140602009291933678, guid: 59556d925da285648bfaf1333170db54, type: 3}
