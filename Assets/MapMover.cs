@@ -2,7 +2,7 @@ using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEngine;
+    using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MapMover : AttributesSync
@@ -45,7 +45,7 @@ public class MapMover : AttributesSync
     [SynchronizableMethod]
     public void moveMaps(GameObject player)
     {
-        players = FindObjectsOnLayer(9);
+        
         networkManager = FindAnyObjectByType<Multiplayer>();
         spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();
@@ -58,27 +58,32 @@ public class MapMover : AttributesSync
         {
             Debug.Log("moving from start");
 
-                Transform transform = player.GetComponent<Transform>();
-                transform.position = new Vector3(0, 3, -10);
-                
+            //Transform transform = player.GetComponent<Transform>();
+            //transform.position = new Vector3(0, 3, -10);
 
 
-                Transform parentTransform = player.transform;
 
-                // Find the child GameObjects by name
+
+            foreach (GameObject p in players)
+            {
+                Transform parentTransform = p.transform;
                 Transform firstChild = parentTransform.Find("PreyComponent");
                 Transform secondChild = parentTransform.Find("HunterComponent");
+                parentTransform.position = Vector3.zero;
                 if (firstChild.gameObject.active)
                 {
 
-                    firstChild.position = new Vector3(-3, 0, 30);
-                    
+                    firstChild.position = new Vector3(0, 0, 0);
+
                 }
                 else
                 {
-                    secondChild.position = new Vector3(-15, 0, 2.4f);
-                    
+                    secondChild.position = new Vector3(0, 0, 0);
+
                 }
+            }
+                
+                
                
                     spawn.position = new Vector3(15,5,2.4f);
             
@@ -125,7 +130,7 @@ public class MapMover : AttributesSync
     // Update is called once per frame
     void Update()
     {
-        players = FindObjectsOnLayer(9);
+        players = FindObjectsOnLayer(9);    
         networkManager = FindAnyObjectByType<Multiplayer>();
         spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();

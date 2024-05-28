@@ -31,7 +31,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
     public void InitInteract(string interactor)
     {
         //finds everything on parentPlayer layer.
-        players = FindObjectsOnLayer(9);
+        
         BroadcastRemoteMethod("Interact", interactor);
         
         
@@ -57,19 +57,19 @@ public class NewRoleGiver : AttributesSync, IInteractable
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
-
+        
         if (players.Count > 0)
         {
 
             resetAllPrefabs();
 
-            //int hunterIndex = Random.Range(0, players.Count);
-            int hunterIndex = 0;
+            int hunterIndex = Random.Range(0, players.Count);
+            //int hunterIndex = 0;
 
             
-            foreach (var obj in players)
+            foreach (GameObject p in players)
             {
-                mm.moveMaps(obj);
+                mm.moveMaps(p);
                 //obj.GetComponent<InteractablePlayer>().movingmap=true;
             }
 
@@ -86,7 +86,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
                     if (!avatar.IsMe)
                         return;
-                    //SwitchPrefab(hunterIndex);
+                    SwitchPrefab(hunterIndex);
                     hunterCanvas.SetActive(true);
                 }
                 else
@@ -162,7 +162,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
     void Update()
     {
-
+        players = FindObjectsOnLayer(9);
     }
 
     public void resetAllPrefabs()
