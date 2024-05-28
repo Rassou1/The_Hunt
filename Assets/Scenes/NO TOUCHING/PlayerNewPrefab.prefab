@@ -4677,6 +4677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9157888135745133622}
+  - component: {fileID: 5435128814755884983}
   m_Layer: 13
   m_Name: Portrait
   m_TagString: Untagged
@@ -4704,6 +4705,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5435128814755884983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6905602109508116108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d7a314110d89c4bb724cfe5ceca9b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 8977c628-88aa-46aa-a61f-a1fd460679c4
+  Reliability: 1
+  LocalMethodBehavior: 1
+  avatar: {fileID: 7566427906986039737}
 --- !u!1 &6912776320988967298
 GameObject:
   m_ObjectHideFlags: 0
@@ -6850,6 +6868,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.115289
       objectReference: {fileID: 0}
+    - target: {fileID: 5159587152315076434, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5378068342714759872, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.8540116
@@ -7110,6 +7132,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.068301804
       objectReference: {fileID: 0}
+    - target: {fileID: 9183273402705518421, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7132,6 +7158,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2714926659711497951}
+    - targetCorrespondingSourceObject: {fileID: 9183273402705518421, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3516641510348071382}
   m_SourcePrefab: {fileID: 100100000, guid: 59556d925da285648bfaf1333170db54, type: 3}
 --- !u!114 &1269575076366420476 stripped
 MonoBehaviour:
@@ -7288,6 +7317,28 @@ MonoBehaviour:
   _preyManager: {fileID: 1269575076366420476}
   movingmap: 0
   _interactor: {fileID: 0}
+--- !u!1 &4386694156673462764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9183273402705518421, guid: 59556d925da285648bfaf1333170db54, type: 3}
+  m_PrefabInstance: {fileID: 4868709614004448953}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3516641510348071382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4386694156673462764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d7a314110d89c4bb724cfe5ceca9b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 
+  Reliability: 1
+  LocalMethodBehavior: 1
+  avatar: {fileID: 7566427906986039737}
 --- !u!1 &4783567523206326615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 140602009291933678, guid: 59556d925da285648bfaf1333170db54, type: 3}
