@@ -1,5 +1,6 @@
 using Alteruna;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,7 +31,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
         }
         else
         {
-            Debug.LogError("StartLever not found in Objects");
+            //Debug.LogError("StartLever not found in Objects");
         }
     }
     public void Start()
@@ -65,7 +66,30 @@ public class InteractablePlayer : AttributesSync, IInteractable
     {
         _interactor = FindAnyObjectByType<GameObject>();
 
-       GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+
+       //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        List<GameObject> players = new List<GameObject>();
+
+
+    GameObject[] playerPrefabs = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (GameObject playerPrefab in playerPrefabs)
+        {
+            if (playerPrefab.name == "PlayerNewPrefab")
+            {
+                // Get all child transforms
+                foreach (Transform child in playerPrefab.transform)
+                {
+                    // Check if the child is active
+                    if (child.gameObject.activeSelf)
+                    {
+                        // Add the active child to the players list
+                        players.Add(child.gameObject);
+                    }
+                }
+            }
+        }
 
         foreach (GameObject player in players)
         {
@@ -82,7 +106,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
             _preyManager.Caught = true;
 
         }
-        Debug.Log("");
+        //Debug.Log("");
     }
 
     public void SendToPrison()
