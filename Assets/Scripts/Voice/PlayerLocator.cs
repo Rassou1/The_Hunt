@@ -13,7 +13,7 @@ public class PlayerLocator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _avatar = GetComponent<Alteruna.Avatar>();
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
         multiplayer = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<Multiplayer>();
         VivoxService.Instance.ChannelJoined += JoinedChannel;
         VivoxService.Instance.ChannelLeft += LeftChannel;
@@ -25,6 +25,7 @@ public class PlayerLocator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.position = transform.parent.GetChild(0).position;
         if (_avatar.IsMe && VivoxService.Instance != null && VivoxService.Instance.IsLoggedIn && readyToChange)
         {
             if (Time.time > _nextPosUpdate)
@@ -34,7 +35,6 @@ public class PlayerLocator : MonoBehaviour
                 Debug.Log("Updated Player Location");
             }
         }
-
     }
 
     void JoinedChannel(string channelName)
