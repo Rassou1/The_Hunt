@@ -13,7 +13,7 @@ public class PlayerLocator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _avatar = GetComponentInParent<Alteruna.Avatar>();
+        _avatar = GetComponent<Alteruna.Avatar>();
         multiplayer = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<Multiplayer>();
         VivoxService.Instance.ChannelJoined += JoinedChannel;
         VivoxService.Instance.ChannelLeft += LeftChannel;

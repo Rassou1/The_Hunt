@@ -942,7 +942,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537914950847844620}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffa02b739e5dc964c85335d1e21e4fbc, type: 3}
   m_Name: 
@@ -6247,6 +6247,7 @@ GameObject:
   - component: {fileID: 7773378596374827617}
   - component: {fileID: 8643063952669146692}
   - component: {fileID: 3114294699107689675}
+  - component: {fileID: 5458006861526385047}
   m_Layer: 9
   m_Name: PlayerNewPrefab
   m_TagString: Player
@@ -6346,6 +6347,7 @@ MonoBehaviour:
   _hunterManager: {fileID: 1128020610449734755}
   _preyManager: {fileID: 1269575076366420476}
   movingmap: 0
+  _interactor: {fileID: 0}
 --- !u!114 &8643063952669146692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6371,6 +6373,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taggingPlayer: {fileID: 7773378596374827617}
+--- !u!114 &5458006861526385047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9209242939184243159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa02b739e5dc964c85335d1e21e4fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9217312276028605384
 GameObject:
   m_ObjectHideFlags: 0
@@ -6717,7 +6731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781075714632687787, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4876868552892892206, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.x
@@ -7228,6 +7242,7 @@ MonoBehaviour:
   _hunterManager: {fileID: 1128020610449734755}
   _preyManager: {fileID: 1269575076366420476}
   movingmap: 0
+  _interactor: {fileID: 0}
 --- !u!1 &4783567523206326615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 140602009291933678, guid: 59556d925da285648bfaf1333170db54, type: 3}
