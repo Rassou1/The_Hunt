@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Vivox;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -53,5 +54,23 @@ public class VivoxTest : MonoBehaviour
     {
         await VivoxService.Instance.LeaveChannelAsync(currentVoicechatLobby);
         VivoxService.Instance.LogoutAsync();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!VivoxService.Instance.IsInputDeviceMuted)
+            {
+                VivoxService.Instance.MuteOutputDevice();
+                VivoxService.Instance.MuteInputDevice();
+            }
+            else
+            {
+                VivoxService.Instance.UnmuteInputDevice();
+                VivoxService.Instance.UnmuteOutputDevice();
+            }
+            
+        }
     }
 }
