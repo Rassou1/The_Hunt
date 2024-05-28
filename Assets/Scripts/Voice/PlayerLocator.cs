@@ -28,11 +28,13 @@ public class PlayerLocator : MonoBehaviour
         if (transform.parent.GetChild(0).gameObject.activeSelf)
         {
             transform.position = transform.parent.GetChild(0).position;
+            transform.rotation = transform.parent.GetChild(0).rotation;
 
         }
         else
         {
             transform.position = transform.parent.GetChild(1).position;
+            transform.rotation = transform.parent.GetChild(1).rotation;
         }
 
         if (_avatar.IsMe && VivoxService.Instance != null && VivoxService.Instance.IsLoggedIn && readyToChange)
