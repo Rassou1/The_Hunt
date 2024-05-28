@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class InteractablePlayer : AttributesSync, IInteractable
 {
@@ -60,36 +61,50 @@ public class InteractablePlayer : AttributesSync, IInteractable
         
     }
     GameObject _interactor;
+    List<GameObject> FindObjectsOnLayer(int layer)
+    {
+        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+        List<GameObject> objectsInLayer = new List<GameObject>();
 
+        foreach (var obj in allPlayers)
+        {
+            if (obj.layer == layer)
+            {
+                objectsInLayer.Add(obj);
+            }
+        }
+
+        return objectsInLayer;
+    }
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
         _interactor = FindAnyObjectByType<GameObject>();
 
-
-
-       //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         List<GameObject> players = new List<GameObject>();
 
+        List<GameObject> playersEXTRA = FindObjectsOnLayer(9);
 
-    GameObject[] playerPrefabs = GameObject.FindObjectsOfType<GameObject>();
-
-        foreach (GameObject playerPrefab in playerPrefabs)
+        foreach (GameObject player in playersEXTRA)
         {
-            if (playerPrefab.name == "PlayerNewPrefab")
+            Transform parentTransform = player.transform;
+
+            Transform firstChild = parentTransform.Find("PreyComponent");
+            Transform secondChild = parentTransform.Find("HunterComponent");
+
+            if (secondChild != null)
             {
-                // Get all child transforms
-                foreach (Transform child in playerPrefab.transform)
-                {
-                    // Check if the child is active
-                    if (child.gameObject.activeSelf)
-                    {
-                        // Add the active child to the players list
-                        players.Add(child.gameObject);
-                    }
-                }
+                players.Add(secondChild.gameObject);
+            }
+
+            if (firstChild != null)
+            {
+                players.Add(firstChild.gameObject);
             }
         }
+
+
+
 
         foreach (GameObject player in players)
         {
