@@ -50,13 +50,13 @@ public class MapMover : AttributesSync
         spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();
         Scene scene = SceneManager.GetActiveScene();
-        //Debug.Log(player);
-        //Debug.Log($"{networkManager} moveMaps1");
-        //Debug.Log($"{playerStates} moveMaps1");
+        Debug.Log(player);
+        Debug.Log($"{networkManager} moveMaps1");
+        Debug.Log($"{playerStates} moveMaps1");
 
         if ((scene.name == "LOOBY" || scene.name == "TEMPSTART") && !playerStates.gameStarted)
         {
-           // Debug.Log("moving from start");
+            Debug.Log("moving from start");
 
             //Transform transform = player.GetComponent<Transform>();
             //transform.position = new Vector3(0, 3, -10);
@@ -106,12 +106,12 @@ public class MapMover : AttributesSync
             
             networkManager.LoadScene("Final_Map");
             playerStates.gameStarted = true;
-            //Debug.Log($"Has game started? {playerStates.gameStarted}");
+            Debug.Log($"Has game started? {playerStates.gameStarted}");
         }
         else if (scene.name == "Final_Map" && playerStates.gameStarted && playerStates.gameEnded)
         {
-            //Debug.Log($"{playerStates} moveMaps2");
-            //Debug.Log("moving from smap");
+            Debug.Log($"{playerStates} moveMaps2");
+            Debug.Log("moving from smap");
 
             Transform transform = player.GetComponent<Transform>();
             preyList = FindObjectsOnLayer(7);
@@ -134,7 +134,7 @@ public class MapMover : AttributesSync
             networkManager = FindAnyObjectByType<Multiplayer>();
             networkManager.LoadScene("LOOBY");
             playerStates.gameStarted = false;
-            //Debug.Log($"Has game ended? {playerStates.gameEnded}");
+            Debug.Log($"Has game ended? {playerStates.gameEnded}");
         }
     }
     // Start is called before the first frame update

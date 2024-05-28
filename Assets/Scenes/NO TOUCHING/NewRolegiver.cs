@@ -63,8 +63,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             resetAllPrefabs();
 
-            //int hunterIndex = Random.Range(0, players.Count);
-            int hunterIndex = 0;
+            int hunterIndex = Random.Range(0, players.Count);
+            //int hunterIndex = 0;
 
             foreach (GameObject p in players)
             {
@@ -87,7 +87,6 @@ public class NewRoleGiver : AttributesSync, IInteractable
                     if (!avatar.IsMe)
                         return;
                     SwitchPrefab(hunterIndex);
-
                     hunterCanvas.SetActive(true);
                 }
                 else
@@ -107,50 +106,47 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
 
     [SynchronizableMethod]
+
     public void SwitchPrefab(int i)
     {
+        
         Transform parentTransform = players[i].transform;
 
         // Find the child GameObjects by name
         Transform firstChild = parentTransform.Find("PreyComponent");
         Transform secondChild = parentTransform.Find("HunterComponent");
 
+
+        // Transfer the position from the first child to the second child
+
+        secondChild.position = firstChild.position;
+        secondChild.rotation = firstChild.rotation;
+
+
         if (firstChild != null && secondChild != null)
         {
-            // Transfer the position and rotation from the first child to the second child
-            secondChild.position = firstChild.position;
-            secondChild.rotation = firstChild.rotation;
 
             // Turn the second GameObject on
             secondChild.gameObject.SetActive(true);
-
+            
+            Debug.Log(firstChild.position.ToString() + secondChild.position.ToString());
+            
             // Turn the first GameObject off
             firstChild.gameObject.SetActive(false);
 
-            Debug.Log("turned " + parentTransform.gameObject.name + " into hunter");
 
-            // Handle camera switching
-            Camera firstChildCamera = firstChild.GetComponentInChildren<Camera>();
-            Camera secondChildCamera = secondChild.GetComponentInChildren<Camera>();
 
-            if (firstChildCamera != null && secondChildCamera != null)
-            {
-                firstChildCamera.gameObject.SetActive(false);
-                secondChildCamera.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.LogWarning("One or both cameras not found on the child GameObjects.");
-            }
+
         }
         else
         {
             Debug.LogWarning("One or both child GameObjects not found.");
+           
         }
+
     }
 
-
-
+    
 
     public void Tag(GameObject tagger, GameObject tagged)
     {

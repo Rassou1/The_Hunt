@@ -51,11 +51,11 @@ public class interacter : MonoBehaviour
                 {
                     interactObj.InitInteract(me.name);
 
-                    //Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
+                    Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
                 } 
                 else
                 {
-                    //Debug.Log("No interactable object found!");
+                    Debug.Log("No interactable object found!");
                 }
             }
         }
@@ -64,8 +64,8 @@ public class interacter : MonoBehaviour
     public void InteractionRay()
     {
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
-        //Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
-        //Debug.Log("Attacking");
+        Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
+        Debug.Log("Attacking");
         if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
         {
             IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
@@ -75,11 +75,11 @@ public class interacter : MonoBehaviour
             {
                 interactObj.InitInteract(me.name);
 
-                //Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
+                Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
             }
             else
             {
-                //Debug.Log("No interactable object found!");
+                Debug.Log("No interactable object found!");
             }
         }
     }
