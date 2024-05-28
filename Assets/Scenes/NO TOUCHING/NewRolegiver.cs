@@ -63,12 +63,12 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             resetAllPrefabs();
 
-            int hunterIndex = Random.Range(0, players.Count);
-            //int hunterIndex = 0;
+            //int hunterIndex = Random.Range(0, players.Count);
+            int hunterIndex = 0;
 
             foreach (GameObject p in players)
             {
-                //mm.moveMaps(p);
+                mm.moveMaps(p);
                 //obj.GetComponent<InteractablePlayer>().movingmap=true;
             }
 

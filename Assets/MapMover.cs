@@ -73,23 +73,23 @@ public class MapMover : AttributesSync
                 int spawnLocation = Random.Range(0, 80000);
                 if (firstChild.gameObject.active)
                 {
-                    if(spawnLocation <= 20000)
-                    {
-                        firstChild.position = playerStates.spawns[0];
-                    }
-                    else if (spawnLocation <= 40000 && spawnLocation > 20000)
-                    {
-                        firstChild.position = playerStates.spawns[1];
-                    }
-                    else if (spawnLocation <= 60000 && spawnLocation > 40000)
-                    {
-                        firstChild.position = playerStates.spawns[2];
-                    }
-                    else if (spawnLocation <= 80000 && spawnLocation > 60000)
-                    {
-                        firstChild.position = playerStates.spawns[3];
-                    }
-                    //firstChild.position = new Vector3(0, 0, 0);
+                    //if(spawnLocation <= 20000)
+                    //{
+                    //    firstChild.position = playerStates.spawns[0];
+                    //}
+                    //else if (spawnLocation <= 40000 && spawnLocation > 20000)
+                    //{
+                    //    firstChild.position = playerStates.spawns[1];
+                    //}
+                    //else if (spawnLocation <= 60000 && spawnLocation > 40000)
+                    //{
+                    //    firstChild.position = playerStates.spawns[2];
+                    //}
+                    //else if (spawnLocation <= 80000 && spawnLocation > 60000)
+                    //{
+                    //    firstChild.position = playerStates.spawns[3];
+                    //}
+                    firstChild.position = new Vector3(0, 0, 0);
 
 
                 }
