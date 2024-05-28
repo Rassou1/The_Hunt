@@ -50,10 +50,12 @@ public class WinTrigger : MonoBehaviour
         if (playerStates.allPlayersTagged)
         {
             playerStates.gameEnded = true;
-            foreach (var obj in players)
-            { 
-                obj.GetComponent<InteractablePlayer>().movingmap = true;
-                mapMover.moveMaps(obj);
+            foreach (GameObject p in players)
+            {
+                Debug.Log("loseMove");
+                p.GetComponent<InteractablePlayer>().movingmap = true;
+                mapMover.moveMaps(p);
+                
             }
         }
     }
@@ -103,6 +105,7 @@ public class WinTrigger : MonoBehaviour
                
                 foreach (var obj in players)
                 {
+                    Debug.Log("winMove");
                     obj.GetComponent<InteractablePlayer>().movingmap = true;
                     mapMover.moveMaps(obj);
                 }

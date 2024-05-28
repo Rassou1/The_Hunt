@@ -41,6 +41,7 @@ public class interacter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+            
 
             if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
             {
