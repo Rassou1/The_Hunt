@@ -42,11 +42,11 @@ public class PlayerTest : AttributesSync
         //    //}
         //}
 
-        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 3)
+        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1)
         {
             _playerSounds.PlayRunSound();
         }
-        else if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1f)
+        else if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 0.35f)
         {
             _playerSounds.PlayWalkSound();
         }
