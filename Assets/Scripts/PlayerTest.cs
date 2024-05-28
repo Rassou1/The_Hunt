@@ -46,10 +46,15 @@ public class PlayerTest : AttributesSync
         {
             _playerSounds.PlayRunSound();
         }
+        else if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 1)
+        {
+            _playerSounds.PlayDashSound();
+        }
         else if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(oldPosition.x, 0, oldPosition.z)) > 0.35f)
         {
             _playerSounds.PlayWalkSound();
         }
+
 
         if (new Vector3(0, transform.position.y, 0) != new Vector3(0, oldPosition.y, 0))
         {
