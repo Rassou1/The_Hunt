@@ -48,6 +48,8 @@ public class VivoxTest : MonoBehaviour
         //await VivoxService.Instance.JoinEchoChannelAsync(name, ChatCapability.AudioOnly);
         currentVoicechatLobby = name;
         Debug.Log("Joined Channel: " + name);
+        VivoxService.Instance.MuteOutputDevice();
+        VivoxService.Instance.MuteInputDevice();
     }
 
     async void LeftRoom(Multiplayer arg0)
@@ -64,11 +66,13 @@ public class VivoxTest : MonoBehaviour
             {
                 VivoxService.Instance.MuteOutputDevice();
                 VivoxService.Instance.MuteInputDevice();
+                Debug.Log("Muting Player");
             }
             else
             {
                 VivoxService.Instance.UnmuteInputDevice();
                 VivoxService.Instance.UnmuteOutputDevice();
+                Debug.Log("Unmuting Player");
             }
             
         }

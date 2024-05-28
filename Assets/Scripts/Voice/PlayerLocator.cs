@@ -9,11 +9,15 @@ public class PlayerLocator : MonoBehaviour
     float _nextPosUpdate;
     Alteruna.Avatar _avatar;
     Multiplayer multiplayer;
+    bool readyToChange = false;
     // Start is called before the first frame update
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
         multiplayer = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<Multiplayer>();
+        VivoxService.Instance.ChannelJoined += JoinedChannel;
+        VivoxService.Instance.ChannelLeft += LeftChannel;
+        
     }
 
     //Make a event that enables a bool to broadcast the player position to prevent a bunch of errors when starting
@@ -21,7 +25,7 @@ public class PlayerLocator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_avatar.IsMe && VivoxService.Instance != null && VivoxService.Instance.IsLoggedIn)
+        if (_avatar.IsMe && VivoxService.Instance != null && VivoxService.Instance.IsLoggedIn && readyToChange)
         {
             if (Time.time > _nextPosUpdate)
             {
@@ -31,5 +35,15 @@ public class PlayerLocator : MonoBehaviour
             }
         }
 
+    }
+
+    void JoinedChannel(string channelName)
+    {
+        readyToChange = true;
+    }
+
+    void LeftChannel(string channelName)
+    {
+        readyToChange = false;
     }
 }
