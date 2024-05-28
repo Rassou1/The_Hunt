@@ -68,7 +68,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             foreach (GameObject p in players)
             {
-                mm.moveMaps(p);
+                //mm.moveMaps(p);
                 //obj.GetComponent<InteractablePlayer>().movingmap=true;
             }
 
@@ -86,7 +86,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
                     if (!avatar.IsMe)
                         return;
-                    //SwitchPrefab(hunterIndex);
+                    SwitchPrefab(hunterIndex);
                     hunterCanvas.SetActive(true);
                 }
                 else

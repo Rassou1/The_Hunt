@@ -31,6 +31,8 @@ public class P_MoveCamera : MonoBehaviour
         {
             parentRenderer.enabled = true;
 
+            gameObject.SetActive(false);
+
             List<GameObject> _players = FindObjectsOnLayer(9);
 
             foreach (var obj in _players)

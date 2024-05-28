@@ -2672,6 +2672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {fileID: 684376852109019960}
+  avatar: {fileID: 7566427906986039737}
 --- !u!1 &4166207050790885680
 GameObject:
   m_ObjectHideFlags: 0
@@ -6327,6 +6328,7 @@ MonoBehaviour:
   _avatar: {fileID: 7566427906986039737}
   _hunterManager: {fileID: 1128020610449734755}
   _preyManager: {fileID: 1269575076366420476}
+  movingmap: 0
 --- !u!114 &8643063952669146692
 MonoBehaviour:
   m_ObjectHideFlags: 0
