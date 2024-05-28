@@ -29,12 +29,12 @@ public class WinTrigger : MonoBehaviour
     {
         mp = FindAnyObjectByType<Multiplayer>();//new PlayerStates();
         playerStates = mp.GetComponent<PlayerStates>();
-        players = FindObjectsOnLayer(9);
+        
         preyList = FindObjectsOnLayer(7);
         hunterList = FindObjectsOnLayer(6);
         mapMover = new MapMover();
         //youWinText.SetActive(false);
-        Debug.Log(playerStates);
+       
         playerStates.escapedPlayers.Clear();
         playerStates.taggedPlayers.Clear();
     }
@@ -42,6 +42,7 @@ public class WinTrigger : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        players = FindObjectsOnLayer(9);
         if (playerStates.taggedPlayers.Count == players.Count - 1 && playerStates.taggedPlayers.Count > 0)
         {
             playerStates.allPlayersTagged = true;
@@ -50,11 +51,8 @@ public class WinTrigger : MonoBehaviour
         {
             playerStates.gameEnded = true;
             foreach (var obj in players)
-            {
-
-
+            { 
                 obj.GetComponent<InteractablePlayer>().movingmap = true;
-
                 mapMover.moveMaps(obj);
             }
         }
@@ -99,20 +97,13 @@ public class WinTrigger : MonoBehaviour
                 playerStates.playerEscaped(player);
             }
 
-            //untested
             if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == FindObjectsOnLayer(7).Count && playerStates.escapedPlayers.Count > 0)
             {
                 playerStates.gameEnded = true;
-                Debug.Log($"{playerStates} winTrigger1");
-                Debug.Log($"{mp} wT1");
+               
                 foreach (var obj in players)
                 {
-                   
-                    Debug.Log($"{playerStates} winTrigger2");
-                    Debug.Log($"{mp} wT2");
                     obj.GetComponent<InteractablePlayer>().movingmap = true;
-                    Debug.Log($"{playerStates} winTrigger3");
-                    Debug.Log($"{mp} wT3");
                     mapMover.moveMaps(obj);
                 }
 
