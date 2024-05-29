@@ -8,10 +8,10 @@ public class PlayerStates : MonoBehaviour
     public List<GameObject> taggedPlayers = new List<GameObject>();
     public List<Vector3> spawns = new List<Vector3>()
     {
-        new Vector3(0,1,18),
-        new Vector3(-8,1.3f, 2),
-        new Vector3(6,1, 29),
-        new Vector3(16,1, 26) //outside map bounds
+        new Vector3(-14,1,4),
+        new Vector3(-11,1, 26),
+        new Vector3(14.5f,1, 20),
+        new Vector3(9,1, 6) //outside map bounds
         //DOUBLE CHECK THAT SPAWN LOCATIONS WONT CLIP YOU INTO FLOOR
     };
 
