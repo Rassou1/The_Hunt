@@ -4,7 +4,10 @@ using UnityEngine;
 using Alteruna;
 using System;
 using Unity.VisualScripting;
-
+/// <summary>
+/// Script written by: ---
+/// Fixed for th hunter by Hamdi.
+/// </summary>
 interface IInteractable
 {
     public void Interact(string interactor);

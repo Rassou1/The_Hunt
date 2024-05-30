@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+/// <summary>
+/// Dash count written by Hamdi.
+/// Keeps track of the dash.
+/// </summary>
 public class SCR_dashCount : MonoBehaviour
 {
     public GameObject playerObject;

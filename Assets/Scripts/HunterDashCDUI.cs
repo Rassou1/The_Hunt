@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Dash cooldown written by Hamdi.
+/// This script links the canvas UI of the dash with its counter for the hunter.
+/// </summary>
 public class SHunterDashCDUI : MonoBehaviour
 {
     public Slider slider;

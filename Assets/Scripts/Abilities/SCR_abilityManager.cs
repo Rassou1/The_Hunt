@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+/// <summary>
+/// Ability manager written by Hamdi.
+/// This script takes care of all the abilities of the characters.
+/// </summary>
 public class SCR_abilityManager : MonoBehaviour
 {
     // All multi jump variables
     public bool AB_canDoubleJump = true;
-
     public int AB_jumpsTotal = 1;
     public int AB_jumpsLeft = 1;
     private float AB_jumpHeight = 10f;
