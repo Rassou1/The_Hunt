@@ -9,6 +9,8 @@ using UnityEditor;
 
 public class NewRoleGiver : AttributesSync, IInteractable
 {
+    // Many memebers worked on this script file
+    // Thitiwich implented the code to show the hunter/prey canvas but has been rewritten by another member in the group
     public GameObject hunterCanvas;
     public GameObject preyCanvas;
 

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Thitiwich´s code on how to make a moving platforms:
+// Yet again got scrapped because it was too hard to work with the collision the charafcters have.
+
 public class MovingPlatform : MonoBehaviour
 {
     [SerializeField]
@@ -42,6 +45,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+    // How the platforms moves with the help of empty object call wayPoint
     private void TargetNextWaypoint()
     {
         _previousWaypoint = _waypointPath.GetWaypoint(_targetWaypointIndex);
@@ -64,6 +68,7 @@ public class MovingPlatform : MonoBehaviour
     //    other.transform.SetParent(null);                                        
     //}
 
+    // An attempt to make the character move along side the platform
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This code should be ignore because it was Thitiwich´s attempt to make a "pit"
+// By changing the spotlight´s color to indicate that players have been fallen into the pit.
+
 public class SpotlightColorChange : MonoBehaviour
 {
 

@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Waypoint for the moving platforms.
+// No longer used because the idea got scrapped. 
+// Made by Thitiwich
+
 public class WaypointPath : MonoBehaviour
 {
    public Transform GetWaypoint(int waypointIndex)

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This is Thitiwich´s code on how to close the canvas in Game.
+// Unfortunately I do not think this was used in the final showcase.
+
 public class Close : MonoBehaviour
 {
     public GameObject pic;
