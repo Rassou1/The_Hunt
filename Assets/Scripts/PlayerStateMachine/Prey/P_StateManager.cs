@@ -320,24 +320,28 @@ public class P_StateManager : MonoBehaviour
             //The movement before this has been relative to the world coordinates, now it is relative to the players camera - Love
             _appliedMovement = CamRelHor(_appliedMovement);
 
+            //Normalize the direction and then multiply it by the magnitude from the state machine - Love
             _appliedMovement = _appliedMovement.normalized;
             _appliedMovement *= _finalMagnitude;
 
+            //This is a really quick and honestly bad implementation of the dash I quickly made towards the end of the project. _dashDirection is usually (0,0,0) but set to a different value for a short duration when dashing - Love
             _appliedMovement += _dashDirection;
+            //I think _actualMagnitude is a variable from earlier in the project that was used when I actually changed _finalMagnitude in this part of the code - Love
             _actualMagnitude = _finalMagnitude;
             _appliedMovement *= Time.deltaTime;
 
 
 
-            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
+            //First collision pass gives us the collision of the "normal" movement - Love
             _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+            //Second pass gives us the collision of the movement resulting from gravity - Love
             _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
-            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
-
+            //Move the rigidbody of the character with the movement after the collision passes - Love
             _rigidbody.transform.position += _appliedMovement;
         }
         else
         {
+            //The code that is ran when in ghost mode doesn't include collision nor aligning to slopes
             _appliedMovement = CamRelHor( _stateDirection);
             _appliedMovement = _appliedMovement + _gravDir * _vertMagnitude * -1;
             _appliedMovement = _appliedMovement.normalized;
@@ -348,6 +352,7 @@ public class P_StateManager : MonoBehaviour
 
 
     //This function  based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
+    //It essentially takes collisions and lets the movement vector go across the surface you collided with. This is done up to 5 times - Love
     Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
         
@@ -410,7 +415,7 @@ public class P_StateManager : MonoBehaviour
         return vec;
     }
 
-
+    //This method checks if you're grounded or not and then set the values of some relevant variables which is used when aligning the movement to the ground - Love
     void GroundCheck()
     {
         RaycastHit hit;
@@ -431,6 +436,7 @@ public class P_StateManager : MonoBehaviour
         }
     }
 
+    //This is an emergency method for snapping the player up to the surface they where standing on if the start to clip through. Kind of brute forcing the problem but it works most of the time - Love
     void AntiClipCheck()
     {
         RaycastHit hit;
@@ -445,13 +451,14 @@ public class P_StateManager : MonoBehaviour
         }
     }
 
+    //Here I use the accursed quaternions to align the direction of the input vector (the movement direction of the player) to the angle of the slope beneath it - Love
     public Vector3 AlignToSlope(Vector3 inputDirection)
     {
         var slopeRotation = Quaternion.AngleAxis(_slopeAngle, Vector3.right);
         return slopeRotation * inputDirection;
     }
 
-
+    //Set the horizontal movement of an incoming vector to be relative to the camera - Love
     Vector3 CamRelHor(Vector3 input)
     {
         Vector3 camRelativeHor;
@@ -460,7 +467,7 @@ public class P_StateManager : MonoBehaviour
         camRelativeHor = new Vector3(camRelativeHor.x, input.y, camRelativeHor.z);
         return camRelativeHor;
     }
-
+    //Reset how many prey the hunter has caught - Love
     public void ResetPreyStats()
     {
         _escaped = false;
@@ -468,6 +475,7 @@ public class P_StateManager : MonoBehaviour
         _ghost = false;
     }
 
+    //All "On_Press" methods are tied to the input system - Love
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
@@ -481,7 +489,7 @@ public class P_StateManager : MonoBehaviour
         
     }
 
-
+    //The dash uses coroutines to count down the time both for the duration of the dash and for the duration of the cooldown - Love
     public void OnDashPress(InputAction.CallbackContext context)
     {
         if (_dashCoolingDown) return;
@@ -542,9 +550,10 @@ public class P_StateManager : MonoBehaviour
         _currentLookInput = context.ReadValue<Vector2>();
         _mouseRotationX -= _currentLookInput.y * Time.deltaTime * _mouseSens;
         _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens * _horMouseMod;
-        _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f);
+        _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f); //When rotating to -90 and 90 on the x axis the rotation of the player model got confused so i just clamped it to -89 and 89 - Love
     }
 
+    //The following two methods are purely for debug purposes and not for gameplay - Love
     void OnSetReset(InputAction.CallbackContext context)
     {
         _resetPosition = _rigidbody.transform.position;
@@ -558,6 +567,7 @@ public class P_StateManager : MonoBehaviour
         _rigidbody.transform.position = _resetPosition;
     }
 
+    //Rotates the camera according tó the mouse rotation from the "OnLookInput" method
     public void SetCameraOrientation()
     {
         _cameraOrientation.rotation = Quaternion.Euler(_mouseRotationX, _mouseRotationY, 0);
@@ -568,7 +578,7 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-
+    //Rotates the player to where the camera is pointing while keeping the orientation of the player upright
     void RotateBodyY()
     {
         var forward = _cameraOrientation.forward;
@@ -577,7 +587,7 @@ public class P_StateManager : MonoBehaviour
     }
 
 
-    //Usíng coroutines for the dash cooldown and duration. I don't know if it actually is an appropriate thing to do but it seems to work. Dash Cooldown has to be in
+    //Usíng coroutines for the dash cooldown and duration. I don't know if it actually is an appropriate thing to do but it seems to work - Love
 
     IEnumerator DashCooldown()
     {
