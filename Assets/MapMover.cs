@@ -45,7 +45,8 @@ public class MapMover : AttributesSync
     [SynchronizableMethod]
     public void moveMaps(GameObject player)
     {
-        
+        //Finds the networkmanager and the playerstates global values. Moves players differently based on which map they are on. The gameStarted and gameEnded bools were used 
+        //to ensure correct placement of players.
         networkManager = FindAnyObjectByType<Multiplayer>();
         spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();
@@ -64,6 +65,7 @@ public class MapMover : AttributesSync
 
             foreach (GameObject p in players)
             {
+                //Sends each player to a predetermined spawn in the final map.
                 Transform parentTransform = p.transform;
                 Transform firstChild = parentTransform.Find("PreyComponent");
                 Transform secondChild = parentTransform.Find("HunterComponent");
@@ -108,7 +110,7 @@ public class MapMover : AttributesSync
         }
         else if (scene.name == "Final_Map" && playerStates.gameStarted && playerStates.gameEnded)
         {
-            
+            //Moves players from game map to lobby. Sends them to their place based on their status (tagged, escaped, hunter).
 
             Transform transform = player.GetComponent<Transform>();
             preyList = FindObjectsOnLayer(7);

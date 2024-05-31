@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStates : MonoBehaviour
 {
+    //Global values. Gather number of players based on their states. Holds info for spawn locations. Resets all states on new game start.
     public List<GameObject> escapedPlayers = new List<GameObject>();
     public List<GameObject> taggedPlayers = new List<GameObject>();
     public List<Vector3> spawns = new List<Vector3>()
@@ -11,8 +12,7 @@ public class PlayerStates : MonoBehaviour
         new Vector3(-14,1,4),
         new Vector3(-11,1, 26),
         new Vector3(14.5f,1, 20),
-        new Vector3(9,1, 6) //outside map bounds
-        //DOUBLE CHECK THAT SPAWN LOCATIONS WONT CLIP YOU INTO FLOOR
+        new Vector3(9,1, 6) 
     };
 
     public List<GameObject> players;

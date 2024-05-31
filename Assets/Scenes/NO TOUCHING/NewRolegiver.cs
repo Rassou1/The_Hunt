@@ -30,7 +30,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
     public void InitInteract(string interactor)
     {
-        //finds everything on parentPlayer layer.
+        //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game.
         playerStates.stateReset();
         BroadcastRemoteMethod("Interact", interactor);
         
@@ -40,6 +40,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
     List<GameObject> FindObjectsOnLayer(int layer)
     {
+        //Finds every object on a given layer.
         GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
         List<GameObject> objectsInLayer = new List<GameObject>();
 
@@ -57,7 +58,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
-        
+        //Resets all players to prey. Moves all players to game map.Changes the host to a hunter.
         if (players.Count > 0)
         {
 
@@ -110,7 +111,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
     public void SwitchPrefab(int i)
     {
-        
+        //Disables the prey and enables the hunter components of the player.
         Transform parentTransform = players[i].transform;
 
         // Find the child GameObjects by name
@@ -127,12 +128,12 @@ public class NewRoleGiver : AttributesSync, IInteractable
         if (firstChild != null && secondChild != null)
         {
 
-            // Turn the second GameObject on
+         
             secondChild.gameObject.SetActive(true);
             
             Debug.Log(firstChild.position.ToString() + secondChild.position.ToString());
             
-            // Turn the first GameObject off
+         
             firstChild.gameObject.SetActive(false);
 
 

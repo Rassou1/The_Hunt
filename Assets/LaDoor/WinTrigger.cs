@@ -27,6 +27,7 @@ public class WinTrigger : MonoBehaviour
     string sceneName = "TEMPLOBBY";
     void Start()
     {
+        //On game start, finds the multiplayer component. Makes list of prey and hunter. 
         mp = FindAnyObjectByType<Multiplayer>();//new PlayerStates();
         playerStates = mp.GetComponent<PlayerStates>();
         
@@ -42,6 +43,7 @@ public class WinTrigger : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        //Finds all players. Ends game when all players are tagged. Moves back to lobby.
         players = FindObjectsOnLayer(9);
         if (playerStates.taggedPlayers.Count == players.Count - 1 && playerStates.taggedPlayers.Count > 0)
         {
@@ -84,6 +86,7 @@ public class WinTrigger : MonoBehaviour
     [ExecuteAlways]
     void OnTriggerEnter(Collider other)
     {
+        //On entering the escape door, the player turns into ghost, is logged as having escaped, and upon all players escaping, sends everyone back to lobby.
         mp = FindObjectOfType<Multiplayer>();
 
         Debug.Log($"{other} has interacted with winTrigger");
