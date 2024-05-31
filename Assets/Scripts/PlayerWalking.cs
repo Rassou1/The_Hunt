@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerWalking : MonoBehaviour
 {
+    //This script is in charge of playing all of the sounds the player does and was worked on by me -Jonathan
     [HideInInspector]
     public AudioSource AudioManager;
     public AudioClip[] Sounds;
@@ -21,10 +22,7 @@ public class PlayerWalking : MonoBehaviour
     public Sounds dash;
     public SoundFolder Empty;
     
-
     Dictionary<string, SoundFolder> sFolders = new Dictionary<string, SoundFolder>();
-
-
 
     Ray floorRay;
     RaycastHit hit;
@@ -33,7 +31,7 @@ public class PlayerWalking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //This adds all diffrent types of surfaces so they can get refrenced by name
         AudioManager = GetComponent<AudioSource>();
         sFolders.Add("Gravel", gravel);
         sFolders.Add("Grass", grass);
@@ -46,6 +44,11 @@ public class PlayerWalking : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// This Method Checks what surface the player is currently on
+    /// </summary>
+    /// <remarks> If no surface is found the method assigns the default as a metal surface</remarks>
+    /// <param name="type"> The type of surface the player is on</param>
     void UpdatePlayerSound(SoundType type)
     {
         Sounds = Empty.walkClips;
@@ -81,15 +84,12 @@ public class PlayerWalking : MonoBehaviour
                         }
                     }
                 }
-
                 
             }
 
             if (Sounds.Length == 0)
             {
                 floorName = hit.transform.gameObject.tag;
-                //floorName = floorName.Replace("ground", "");
-                //Debug.LogError(hit.transform.gameObject.tag);
                 foreach (KeyValuePair<string, SoundFolder> kvp in sFolders)
                 {
                     if (floorName.Contains(kvp.Key, System.StringComparison.OrdinalIgnoreCase))
@@ -131,22 +131,22 @@ public class PlayerWalking : MonoBehaviour
 
     }
    
+    
     public void PlayWalkSound()
     {
         UpdatePlayerSound(SoundType.Walking);
         int amount = Random.Range(0, Sounds.Length);
-        //($"Played Walking sound number {amount}");
         if (!AudioManager.isPlaying && Sounds.Length > 0)
         {
             AudioManager.PlayOneShot(Sounds[amount]);
         }
     }
 
+    
     public void PlayRunSound()
     {
         UpdatePlayerSound(SoundType.Running);
         int amount = Random.Range(0, Sounds.Length);
-        //($"Played Walking sound Number {amount}");
         if (!AudioManager.isPlaying && Sounds.Length > 0)
         {
             AudioManager.PlayOneShot(Sounds[amount]);
@@ -157,7 +157,6 @@ public class PlayerWalking : MonoBehaviour
     {
         UpdatePlayerSound(SoundType.JumpingStart);
         int amount = Random.Range(0, Sounds.Length);
-        //AudioManager.Stop();
         if (Sounds.Length > 0)
         {
             AudioManager.PlayOneShot(Sounds[amount]);
@@ -168,7 +167,6 @@ public class PlayerWalking : MonoBehaviour
     {
         UpdatePlayerSound(SoundType.JumpingEnd);
         int amount = Random.Range(0, Sounds.Length);
-        //AudioManager.Stop();
         if (Sounds.Length > 0)
         {
             AudioManager.PlayOneShot(Sounds[amount]);

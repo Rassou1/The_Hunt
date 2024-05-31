@@ -6,30 +6,28 @@ using UnityEngine;
 
 public class PlayerLocator : MonoBehaviour
 {
+    //This locates where the player is for the voicechat -Jonathan
     float _nextPosUpdate;
     Alteruna.Avatar _avatar;
     Multiplayer multiplayer;
     bool readyToChange = false;
-    // Start is called before the first frame update
     void Start()
     {
         _avatar = GetComponentInParent<Alteruna.Avatar>();
         multiplayer = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<Multiplayer>();
         VivoxService.Instance.ChannelJoined += JoinedChannel;
         VivoxService.Instance.ChannelLeft += LeftChannel;
-        
     }
 
-    //Make a event that enables a bool to broadcast the player position to prevent a bunch of errors when starting
 
-    // Update is called once per frame
+    
     void Update()
     {
+        //This gets the rotation and position of the hunter of prey so the other players voice goes out the right direction -Jonathan
         if (transform.parent.GetChild(0).gameObject.activeSelf)
         {
             transform.position = transform.parent.GetChild(0).position;
             transform.rotation = transform.parent.GetChild(0).rotation;
-
         }
         else
         {

@@ -11,10 +11,10 @@ using UnityEngine.UI;
 
 public class VivoxTest : MonoBehaviour
 {
+    // This script starts up the Vivox Voicechat -Jonathan
     Multiplayer multiplayer;
     string currentVoicechatLobby;
     public Image muteicon;
-    bool enablemute = false;
     async void Start()
     {
         multiplayer = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<Multiplayer>();
@@ -29,6 +29,12 @@ public class VivoxTest : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This Method is triggerd when the player has joined a Alteruna Room
+    /// </summary>
+    /// <param name="arg0">The Multiplayer Component from Alteruna</param>
+    /// <param name="arg1">The Room Component from Alteruna</param>
+    /// <param name="arg2">The User Component from Alteruna</param>
     async void LogInToVivox(Multiplayer arg0,Room arg1,User arg2)
     {
         if (!VivoxService.Instance.IsLoggedIn)
@@ -38,11 +44,18 @@ public class VivoxTest : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// This Method is triggerd when Vixox is finished logging in the player to Unity player accounts
+    /// </summary>
     void UserLoggedIn()
     {
         JoinChannelAsync(multiplayer.CurrentRoom.Name);
     }
 
+    /// <summary>
+    /// Joins or creates a vivox voice chat server.
+    /// </summary>
+    /// <param name="name">The name of the channel that the user is going to join</param>
     async void JoinChannelAsync(string name)
     {
         VivoxService.Instance.MuteOutputDevice();
@@ -52,7 +65,6 @@ public class VivoxTest : MonoBehaviour
         //await VivoxService.Instance.JoinGroupChannelAsync(name, ChatCapability.AudioOnly);
         //await VivoxService.Instance.JoinEchoChannelAsync(name, ChatCapability.AudioOnly);
         currentVoicechatLobby = name;
-        enablemute = true;
         Debug.Log("Joined Channel: " + name);
         
     }
@@ -65,6 +77,7 @@ public class VivoxTest : MonoBehaviour
 
     private void Update()
     {
+        //All of this is just too toggle the mute function -Jonathan
         if (VivoxService.Instance.IsLoggedIn)
         {
             if (!VivoxService.Instance.IsInputDeviceMuted)

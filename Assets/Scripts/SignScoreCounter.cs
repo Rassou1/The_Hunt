@@ -9,7 +9,7 @@ using Avatar = Alteruna.Avatar;
 
 public class SignScoreCounter : MonoBehaviour
 {
-
+    //This script makes a list of all the players and lists them by the most diamonds taken and shows the one who took the most on the sign -Jonathan
     Multiplayer multiplayerManager;
     List<Avatar> avatars = new List<Avatar>();
     List<User> users = new List<User>();
@@ -29,19 +29,8 @@ public class SignScoreCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         avatars = multiplayerManager.GetAvatars();
         users = multiplayerManager.GetUsers();
-
-        for (int i = 0; i < avatars.Count; i++)
-        {
-            //diamondsCollected.Add((avatars[i].gameObject.GetComponentInChildren<P_StateManager>().DiamondsTaken, users[i].Name));
-        }
-
-        //foreach (Avatar user in avatars)
-        //{
-        //    diamondsCollected.Add((user.gameObject.GetComponentInChildren<P_StateManager>().DiamondsTaken, users));
-        //}
 
         if (diamondsCollected.Count > 0 && diamondsCollected[0].Item1 > 0)
         {
@@ -51,7 +40,5 @@ public class SignScoreCounter : MonoBehaviour
 
             Text.text = $"{amountUser.Item2} Got the most diamonds:{amountUser.Item1}";
         }
-       
-
     }
 }

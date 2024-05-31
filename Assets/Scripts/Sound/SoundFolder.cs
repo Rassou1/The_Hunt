@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="AudioAssetPack",menuName = "SoundTest")]
 public class SoundFolder : ScriptableObject
 {
+    //This Script is used to assign sound files and later acces them in the playerwalking.cs file -Jonathan
     [SerializeField]
     public AudioClip[] walkClips;
     [SerializeField]
