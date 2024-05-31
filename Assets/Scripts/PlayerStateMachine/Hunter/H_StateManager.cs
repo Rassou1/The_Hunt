@@ -8,6 +8,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//The hunter scripts are almost identical to the prey. Could have probably inherited them from the same class or something, but I thought it
+//would just be easier to clone the scripts and make the appropriate changes where needed.
+// - Love
+
 public class H_StateManager : MonoBehaviour
 {
     public Alteruna.Avatar _avatar;
@@ -177,10 +181,11 @@ public class H_StateManager : MonoBehaviour
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     public bool IsAttacking { get { return _isAttacking; } }
     
+    
 
     void Start()    
     {
-        //_avatar = GetComponentInParent<Alteruna.Avatar>();
+        _avatar = GetComponentInParent<Alteruna.Avatar>();
     }
 
 
@@ -190,18 +195,19 @@ public class H_StateManager : MonoBehaviour
     {
         playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
         otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
+
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
-
+        //Getting the bounds of the capsule collider and reduce it slightly to use for collisions later - Love
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
 
-        //This gets the inputs from the new input system
+        //This gets the inputs from unity's new input system - Love
         _playerInput.HunterControls.Move.started += OnMovementInput;
         _playerInput.HunterControls.Move.canceled += OnMovementInput;
-        _playerInput.HunterControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
+        _playerInput.HunterControls.Move.performed += OnMovementInput;
         _playerInput.HunterControls.Sprint.started += OnSprint;
         _playerInput.HunterControls.Sprint.canceled += OnSprint;
         _playerInput.HunterControls.Jump.started += OnJumpPress;
@@ -221,7 +227,7 @@ public class H_StateManager : MonoBehaviour
         
 
 
-        //setup state
+        //setup state states here - Love
         
         _states = new H_StateFactory(this);
         _currentState = _states.Ground();
@@ -231,6 +237,7 @@ public class H_StateManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        //Set the resetposition of the character to wherever they spawn so I don't have to set it each time I debug - Love
         _resetPosition =  _rigidbody.transform.position;
         
     }
@@ -268,46 +275,55 @@ public class H_StateManager : MonoBehaviour
                 }
             }
 
-
+            //Update positions of where the centre of the "spheres" at the edges of the capsule collider are for use in collisions
             _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
             _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
+            //Calling ground check function, followed by an emergency function that gets called when not grounded to make sure you're not falling through the ground - Love
             GroundCheck();
             if (!_isGrounded)
             {
                 AntiClipCheck();
             }
 
-            //Debug.Log(Rigidbody.position);
-
+            //Here we start by setting the rotation of the player camera based on mouse inputs - Love
+            
             SetCameraOrientation();
 
+            //We follow that up by rotating the character to face the same direciton as the camera is looking as well a creating a horizontal forward vector - Love
             RotateBodyY();
             _relForward = CamRelHor(Vector3.forward);
 
-            Debug.Log("Current Hunter State:" + CurrentState);
-
+            
+            //Here we update the state machine, this is where the variables like _stateDirection and _stateMagnitude get updated - Love
             _currentState.UpdateStates();
 
+            //Align the characters movement direction to the ground underneath it. We are not rotating the character itself, only the vector that decides its movement - Love
             _appliedMovement = AlignToSlope(_stateDirection);
+            //Saving a couple of values that we use to calculate momentum etc in some of the states.
             _preCollideMovement = _appliedMovement;
             _finalMagnitude = _stateMagnitude;
 
-            Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
+            //The movement before this has been relative to the world coordinates, now it is relative to the players camera - Love
             _appliedMovement = CamRelHor(_appliedMovement);
 
+            //Normalize the direction and then multiply it by the magnitude from the state machine - Love
             _appliedMovement = _appliedMovement.normalized;
             _appliedMovement *= _finalMagnitude;
 
+            //This is a really quick and honestly bad implementation of the dash I quickly made towards the end of the project. _dashDirection is usually (0,0,0) but set to a different value for a short duration when dashing - Love
             _appliedMovement += _dashDirection;
+            
+            //I think _actualMagnitude is a variable from earlier in the project that was used when I actually changed _finalMagnitude in this part of the code - Love
             _actualMagnitude = _finalMagnitude;
             _appliedMovement *= Time.deltaTime;
 
 
 
-            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.red, Time.deltaTime);
+            //First collision pass gives us the collision of the "normal" movement - Love
             _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+            //Second pass gives us the collision of the movement resulting from gravity - Love
             _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
-            Debug.DrawRay(_rigidbody.transform.position, _appliedMovement / Time.deltaTime, Color.blue, Time.deltaTime);
+            //Move the rigidbody of the character with the movement after the collision passes - Love
             _rigidbody.transform.position += _appliedMovement;
 
         }
@@ -315,6 +331,7 @@ public class H_StateManager : MonoBehaviour
 
 
     //This function  based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
+    //It essentially takes collisions and lets the movement vector go across the surface you collided with. This is done up to 5 times - Love
     Vector3 CollideAndSlide(Vector3 vel, Vector3 startPos, int depth, bool gravityPass, Vector3 velInit)
     {
         
@@ -377,7 +394,7 @@ public class H_StateManager : MonoBehaviour
         return vec;
     }
 
-
+    //This method checks if you're grounded or not and then set the values of some relevant variables which is used when aligning the movement to the ground - Love
     void GroundCheck()
     {
         RaycastHit hit;
@@ -400,6 +417,7 @@ public class H_StateManager : MonoBehaviour
         }
     }
 
+    //This is an emergency method for snapping the player up to the surface they where standing on if the start to clip through. Kind of brute forcing the problem but it works most of the time - Love
     void AntiClipCheck()
     {
         RaycastHit hit;
@@ -414,13 +432,15 @@ public class H_StateManager : MonoBehaviour
         }
     }
 
+
+    //Here I use the accursed quaternions to align the direction of the input vector (the movement direction of the player) to the angle of the slope beneath it - Love
     public Vector3 AlignToSlope(Vector3 inputDirection)
     {
         var slopeRotation = Quaternion.AngleAxis(_slopeAngle, Vector3.right);
         return slopeRotation * inputDirection;
     }
 
-
+    //Set the horizontal movement of an incoming vector to be relative to the camera - Love
     Vector3 CamRelHor(Vector3 input)
     {
         Vector3 camRelativeHor;
@@ -430,13 +450,13 @@ public class H_StateManager : MonoBehaviour
         return camRelativeHor;
     }
 
-    
+    //Reset how many prey the hunter has caught - Love
     public void ResetHunterStats()
     {
         _caughtPrey = 0;
     }
 
-
+    //All "On_Press" methods are tied to the input system - Love
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
@@ -449,7 +469,7 @@ public class H_StateManager : MonoBehaviour
         }
     }
 
-
+    //The dash uses coroutines to count down the time both for the duration of the dash and for the duration of the cooldown - Love
     public void OnDashPress(InputAction.CallbackContext context)
     {
         if (_dashCoolingDown) return;
@@ -504,9 +524,11 @@ public class H_StateManager : MonoBehaviour
         _currentLookInput = context.ReadValue<Vector2>();
         _mouseRotationX -= _currentLookInput.y * Time.deltaTime * _mouseSens;
         _mouseRotationY += _currentLookInput.x * Time.deltaTime * _mouseSens * _horMouseMod;
-        _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f);
+        _mouseRotationX = Mathf.Clamp(_mouseRotationX, -89f, 89f);  //When rotating to -90 and 90 on the x axis the rotation of the player model got confused so i just clamped it to -89 and 89 - Love
     }
 
+
+    //The following two methods are purely for debug purposes and not for gameplay - Love
     void OnSetReset(InputAction.CallbackContext context)
     {
         _resetPosition = _rigidbody.transform.position;
@@ -520,6 +542,7 @@ public class H_StateManager : MonoBehaviour
         _rigidbody.transform.position = _resetPosition;
     }
 
+
     void OnAttack(InputAction.CallbackContext context)
     {
         if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
@@ -529,6 +552,8 @@ public class H_StateManager : MonoBehaviour
         StartCoroutine(_attackDurationCoroutine);
     }
 
+
+    //Rotates the camera according tó the mouse rotation from the "OnLookInput" method
     public void SetCameraOrientation()
     {
         _cameraOrientation.rotation = Quaternion.Euler(_mouseRotationX, _mouseRotationY, 0);
@@ -539,7 +564,7 @@ public class H_StateManager : MonoBehaviour
     }
 
 
-
+    //Rotates the player to where the camera is pointing while keeping the orientation of the player upright
     void RotateBodyY()
     {
         var forward = _cameraOrientation.forward;
@@ -548,7 +573,7 @@ public class H_StateManager : MonoBehaviour
     }
 
 
-    //Usíng coroutines for the dash cooldown and duration. I don't know if it actually is an appropriate thing to do but it seems to work. Dash Cooldown has to be in
+    //Usíng coroutines for the dash cooldown and duration. I don't know if it actually is an appropriate thing to do but it seems to work - Love
     IEnumerator DashCooldown()
     {
         _remainingDashCooldown = _dashCooldown;
@@ -568,6 +593,8 @@ public class H_StateManager : MonoBehaviour
         _dashDirection = Vector3.zero;
     }
 
+
+    //This was supposed to trigger the interaction script, the script itself worked back when I implemented it but I know that it's not working in the final version but don't know what's up with that - Love
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(0.1f);

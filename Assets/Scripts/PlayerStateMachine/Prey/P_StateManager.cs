@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
+//99% of this script was writen by Love
 public class P_StateManager : MonoBehaviour
 {
     public Alteruna.Avatar _avatar;
@@ -213,14 +213,14 @@ public class P_StateManager : MonoBehaviour
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
-        
 
+        //Getting the bounds of the capsule collider and reduce it slightly to use for collisions later - Love
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
-        
 
-        //This gets the inputs from the new input system
+
+        //This gets the inputs from unity's new input system - Love
         _playerInput.PreyControls.Move.started += OnMovementInput;
         _playerInput.PreyControls.Move.canceled += OnMovementInput;
         _playerInput.PreyControls.Move.performed += OnMovementInput; //This allows the game to realize we might be holding two buttons at once (based). It also allows for controler inputs (cringe)
@@ -242,8 +242,8 @@ public class P_StateManager : MonoBehaviour
         _playerInput.PreyControls.GhostTest.started += OnGhost;
 
 
-        //setup state
-        
+        //setup state states here - Love
+
         _states = new P_StateFactory(this);
         _currentState = _states.Ground();
         _currentState.EnterState();
@@ -252,6 +252,7 @@ public class P_StateManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        //Set the resetposition of the character to wherever they spawn so I don't have to set it each time I debug - Love
         _resetPosition =  _rigidbody.transform.position;
         
     }
@@ -287,30 +288,36 @@ public class P_StateManager : MonoBehaviour
         }
 
 
-        
 
 
+        //Update positions of where the centre of the "spheres" at the edges of the capsule collider are for use in collisions
         _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
         _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
 
+        //Here we start by setting the rotation of the player camera based on mouse inputs - Love
         SetCameraOrientation();
+        //We follow that up by rotating the character to face the same direciton as the camera is looking as well a creating a horizontal forward vector - Love
         RotateBodyY();
         _relForward = CamRelHor(Vector3.forward);
+        //Here we update the state machine, this is where the variables like _stateDirection and _stateMagnitude get updated - Love
         _currentState.UpdateStates();
         
+        //This is from my quick and dirty implementaiton of a "ghost mode" or spectator mode which I used for recording parts of the trailer and to make debugging easier - Love
         if(_currentState != _states.Ghost())
         {
+            //Calling ground check function, followed by an emergency function that gets called when not grounded to make sure you're not falling through the ground - Love
             GroundCheck();
             if (!_isGrounded)
             {
                 AntiClipCheck();
             }
-
+            //Align the characters movement direction to the ground underneath it. We are not rotating the character itself, only the vector that decides its movement - Love
             _appliedMovement = AlignToSlope(_stateDirection);
+            //Saving a couple of values that we use to calculate momentum etc in some of the states.
             _preCollideMovement = _appliedMovement;
             _finalMagnitude = _stateMagnitude;
 
-            Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, Time.deltaTime);
+            //The movement before this has been relative to the world coordinates, now it is relative to the players camera - Love
             _appliedMovement = CamRelHor(_appliedMovement);
 
             _appliedMovement = _appliedMovement.normalized;
