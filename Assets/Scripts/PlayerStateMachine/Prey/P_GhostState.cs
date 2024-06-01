@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//This state was added last minute as a debug tool as well as something to make it easier for me to record footage for the trailer - Love
 public class P_GhostState : P_BaseState
 {
     Vector3 direction;
@@ -8,6 +9,7 @@ public class P_GhostState : P_BaseState
     {
         IsRootState = true;
     }
+
 
     public override void EnterState()
     {
@@ -19,6 +21,7 @@ public class P_GhostState : P_BaseState
 
     }
 
+    //UpdateState here get's the movement input from wasd in state manager. Jump and slide is now used for going up and down.
     public override void UpdateState()
     {
         CheckSwitchState();
@@ -43,7 +46,7 @@ public class P_GhostState : P_BaseState
 
     }
 
-
+    //Only want one of run, walk and idle to be initialized when entering ghost state - Love
     public override void InitializeSubState()
     {
         if (_ctx.IsMovementPressed && _ctx.IsSprintPressed)
@@ -61,6 +64,7 @@ public class P_GhostState : P_BaseState
 
     }
 
+    //Only switch when the state manager bool "Ghost" is flipped to false - Love
     public override void CheckSwitchState()
     {
         if (!_ctx.Ghost)

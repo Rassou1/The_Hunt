@@ -1,6 +1,7 @@
 using System.Xml.Serialization;
 using UnityEngine;
 
+//Walking state - Love
 public class H_WalkingState : H_BaseState
 {
     float lerpTime;
@@ -16,6 +17,7 @@ public class H_WalkingState : H_BaseState
         lerpTime = 0f;
     }
 
+    //Lerp to walking speed for a smoother transition - Love
     public override void UpdateState()
     {
         
@@ -52,5 +54,4 @@ public class H_WalkingState : H_BaseState
     {
         
     }
-
 }

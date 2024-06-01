@@ -17,18 +17,20 @@ public class P_RunningState : P_BaseState
     public override void UpdateState()
     {
         totalMagnitude = _ctx.ActualMagnitude;
+        //Gain extra speed when falling - Love
         if (!_ctx.IsGrounded)
         {
             totalMagnitude += Mathf.Abs(_ctx.VertMagnitude * 0.4f) * Time.deltaTime;
         }
 
+        //when sprinting up a slope your max speed is capped at the "soft cap" - Love
         if (_ctx.SlopeAngle >= 0)
         {
             sprintMagnitude = totalMagnitude + _ctx.SlopeAngle - _ctx._sprintResistance - (_ctx._sprintResistance * totalMagnitude * 0.5f);
             _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;
             _ctx.StateMagnitude = Mathf.Max(_ctx.StateMagnitude, _ctx._softCap);
         }
-        else
+        else //When sprinting down a slope your minimum speed is capped at the "soft cap". Go faster when going down steep hills. - Love
         {
             sprintMagnitude = totalMagnitude - _ctx.SlopeAngle + _ctx._sprintResistance;
             _ctx.StateMagnitude += sprintMagnitude * Time.deltaTime;

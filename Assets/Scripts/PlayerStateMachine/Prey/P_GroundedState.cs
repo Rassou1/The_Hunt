@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//Root-state for when the player is grounded. All root-states handle movement direction and gravity, while all substates handle magnitude of movement. - Love
 public class P_GroundedState : P_BaseState
 {
     Vector3 direction;
@@ -22,6 +23,7 @@ public class P_GroundedState : P_BaseState
         _ctx.StateDirection = direction;
     }
 
+    //Get input from wasd in state manager and set movement to that - Love
     public override void UpdateState()
     {
         CheckSwitchState();
@@ -56,7 +58,8 @@ public class P_GroundedState : P_BaseState
         }
 
     }
-
+    //When jumping, set vertical magnitude to a positive value, set state manager to not grounded and switch state to air, just switch to air when not grounded anymore. - Love
+    //Here we also see the quick addition of the ghost state to the prey's state machine. - Love
     public override void CheckSwitchState()
     {
         if (_ctx.Ghost)

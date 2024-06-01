@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//Root-state for when the player is grounded. All root-states handle movement direction and gravity, while all substates handle magnitude of movement. - Love
 public class H_GroundedState : H_BaseState
 {
     Vector3 direction;
@@ -22,6 +23,7 @@ public class H_GroundedState : H_BaseState
         _ctx.StateDirection = direction;
     }
 
+    //Get input from wasd in state manager and set movement to that - Love
     public override void UpdateState()
     {
         CheckSwitchState();
@@ -56,7 +58,7 @@ public class H_GroundedState : H_BaseState
         }
 
     }
-
+    //When jumping, set vertical magnitude to a positive value, set state manager to not grounded and switch state to air, just switch to air when not grounded anymore. - Love
     public override void CheckSwitchState()
     {
         if (_ctx.IsJumpPressed)
@@ -68,7 +70,6 @@ public class H_GroundedState : H_BaseState
         else if (!_ctx.IsGrounded)
         {
 
-            Debug.Log("Ground to air AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             _ctx.VertMagnitude = -Vector3.Project(_ctx.AppliedMovement / Time.deltaTime, _ctx.GravDirection).magnitude;
             
             SwitchState(_factory.Air());

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//The idle state, not a lot happens here naturally - Love
 public class P_IdleState : P_BaseState
 {
     float lerpTime;
@@ -16,7 +17,7 @@ public class P_IdleState : P_BaseState
     }
 
 
-
+    //Quickly lerp to 0 speed just to not make going from high speed to nothing too instant. - Love
     public override void UpdateState()
     {
         _ctx.StateMagnitude = Mathf.Lerp(_ctx.ActualMagnitude, 0, lerpTime);

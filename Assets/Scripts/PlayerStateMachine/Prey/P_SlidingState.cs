@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//The sliding substate is the most complicated one, but it's just some addition and subrtraction at the end of the day - Love
 public class P_SlidingState : P_BaseState
 {
 
@@ -11,11 +12,13 @@ public class P_SlidingState : P_BaseState
 
     }
 
+    //Change the position of the camera as well as the size of the collider when entering and exiting the state - Love
+    //Also make the horizontal mouse sensitivity lower to make the slide feel less maneuverable, also creates a forward direction modifier to the root state that gives your sideways inputs less impact for the same reason - Love
     public override void EnterState()
     {
         _ctx._cameraPostion.transform.position -= new Vector3(0, 0.7f, 0);
         _ctx.CapsuleColliderHeight -= 0.8f;
-        //IgnoreCollision(this, hunter, true)
+        
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
         _ctx.HorMouseMod = 0.4f;
         //_ctx.Animator.SetSliding(true);
@@ -23,8 +26,9 @@ public class P_SlidingState : P_BaseState
 
     public override void UpdateState()
     {
+        //Get current speed from state manager - Love
         totalMagnitude = _ctx.ActualMagnitude;
-        
+        //When on a downwards slope gain extra speed and when on a upwards slope loose it. Used to have slightly diffferent math for both but they're now the same - Love
         if (_ctx.SlopeAngle < 0)
         {
             stateMag = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.1f)) * Time.deltaTime;
@@ -33,7 +37,7 @@ public class P_SlidingState : P_BaseState
         {
             stateMag = totalMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance - (_ctx._slideResistance * totalMagnitude * 0.1f)) * Time.deltaTime;
         }
-        else
+        else //When on flat ground the math works slightly differently - Love
         {
             if(totalMagnitude > 0)
             {
@@ -46,24 +50,16 @@ public class P_SlidingState : P_BaseState
             
         }
 
+        //Clamp speed to -40 and 40 to not get too absurd since too high speeds start creating edge case bugs - Love
         _ctx.StateMagnitude = Mathf.Clamp(stateMag, -40f, 40f);
         
 
-        //Vector3.Dot(_ctx.RelForward, _ctx.AppliedMovement) >= 0
-
-        //_ctx.StateMagnitude = Mathf.Clamp(_ctx.ActualMagnitude + (_ctx.SlopeAngle - _ctx._slideResistance) * Time.deltaTime, 0f, Mathf.Max(_ctx.SlopeAngle * 0.5f, 10f));
-
-        //if (_ctx.StateMagnitude <= 0.01f)
-        //{
-        //    _ctx.StateMagnitude = 0f;
-        //}
         
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        //IgnoreCollision(this, hunter, false)
         _ctx._cameraPostion.transform.position += new Vector3(0, 0.7f, 0);
         _ctx.CapsuleColliderHeight += 0.8f;
         _ctx.SubStateDirSet = new Vector3(0, 0, 0);

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+//Root-state for being in the air - Love
 public class H_InAirState : H_BaseState
 {
 
@@ -27,6 +28,7 @@ public class H_InAirState : H_BaseState
         _ctx.VertMagnitude -= 14f * Time.deltaTime;
     }
 
+    //Kinda sloppy implementation of the double jump, but it works. Make sure to not allow double jump until player has let go of jump to avoid instantly double jumping from not pressing jump only one frame - Love
     public override void UpdateState()
     {
         CheckSwitchState();
@@ -41,6 +43,7 @@ public class H_InAirState : H_BaseState
             buttonReleased = true;
         }
 
+        //Setting the vert speed instead of adding to it, makes it more rewarding to be patient with the double jump - Love
         if (!hasDoubleJumped && _ctx.IsJumpPressed && buttonReleased && _currentSubState != _factory.Slide())
         {
             _ctx.VertMagnitude = 7.5f;
@@ -81,22 +84,4 @@ public class H_InAirState : H_BaseState
         }
     }
 
-    //void HandleGravity()
-    //{
-    //    bool goingDown = _ctx.CurrentMovementY <= 2.0f || !_ctx.IsJumpPressed;
-    //    float fallMultiplier = 2f;
-
-    //    if (goingDown)
-    //    {
-    //        float previousYVelocity = _ctx.CurrentMovementY;
-    //        _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * fallMultiplier * Time.deltaTime);
-    //        _ctx.AppliedMovementY = Mathf.Max((previousYVelocity + _ctx.CurrentMovementY) * .5f, -10.0f);
-    //    }
-    //    else
-    //    {
-    //        float previousYVelocity = _ctx.CurrentMovementY;
-    //        _ctx.CurrentMovementY = _ctx.CurrentMovementY + (_ctx.Gravity * Time.deltaTime);
-    //        _ctx.AppliedMovementY = (previousYVelocity + _ctx.CurrentMovementY) * .5f;
-    //    }
-    //}
 }
