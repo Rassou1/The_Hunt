@@ -48,8 +48,8 @@ public class H_StateManager : MonoBehaviour
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
-    public H_Animations _animator;
-    public interacter _interacter;
+    public Animator _animator;
+    
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -105,8 +105,8 @@ public class H_StateManager : MonoBehaviour
 
     Vector3 _resetPosition;
 
-    PlayerWalking playerSounds;
-    PlayerTest otherPlayerSounds;
+    //PlayerWalking playerSounds;
+    //PlayerTest otherPlayerSounds;
 
 
     public int _dashCooldown;
@@ -124,7 +124,7 @@ public class H_StateManager : MonoBehaviour
     //Put a lot of getters and setters here
     public H_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
-    public H_Animations Animator { get { return _animator; } }
+    public Animator Animator { get { return _animator; } }
    
     
 
@@ -183,18 +183,18 @@ public class H_StateManager : MonoBehaviour
     
     
 
-    void Start()    
-    {
-        _avatar = GetComponentInParent<Alteruna.Avatar>();
-    }
+    //void Start()    
+    //{
+    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
+    //}
 
 
 
 
     private void Awake()
     {
-        playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
-        otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
+        //playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
+        //otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
 
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -248,85 +248,64 @@ public class H_StateManager : MonoBehaviour
     {
         //Add a Way so a remote avatar still makes sounds
 
-        if (gameObject.GetComponentInParent<PlayerTest>() != null && !_avatar.IsMe)
+        //if (gameObject.GetComponentInParent<PlayerTest>() != null && !_avatar.IsMe)
+        //{
+        //    otherPlayerSounds.NonLocalPlayerTest();
+        //}
+
+
+
+        //Update positions of where the centre of the "spheres" at the edges of the capsule collider are for use in collisions
+        _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
+        _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
+        //Calling ground check function, followed by an emergency function that gets called when not grounded to make sure you're not falling through the ground - Love
+        GroundCheck();
+        if (!_isGrounded)
         {
-            otherPlayerSounds.NonLocalPlayerTest();
+            AntiClipCheck();
         }
 
-        if (!_avatar.IsMe)
-        {
-            return;
-        }
-        else
-        {
+        //Here we start by setting the rotation of the player camera based on mouse inputs - Love
+
+        SetCameraOrientation();
+
+        //We follow that up by rotating the character to face the same direciton as the camera is looking as well a creating a horizontal forward vector - Love
+        RotateBodyY();
+        _relForward = CamRelHor(Vector3.forward);
+
+
+        //Here we update the state machine, this is where the variables like _stateDirection and _stateMagnitude get updated - Love
+        _currentState.UpdateStates();
+
+        //Align the characters movement direction to the ground underneath it. We are not rotating the character itself, only the vector that decides its movement - Love
+        _appliedMovement = AlignToSlope(_stateDirection);
+        //Saving a couple of values that we use to calculate momentum etc in some of the states.
+        _preCollideMovement = _appliedMovement;
+        _finalMagnitude = _stateMagnitude;
+
+        //The movement before this has been relative to the world coordinates, now it is relative to the players camera - Love
+        _appliedMovement = CamRelHor(_appliedMovement);
+
+        //Normalize the direction and then multiply it by the magnitude from the state machine - Love
+        _appliedMovement = _appliedMovement.normalized;
+        _appliedMovement *= _finalMagnitude;
+
+        //This is a really quick and honestly bad implementation of the dash I quickly made towards the end of the project. _dashDirection is usually (0,0,0) but set to a different value for a short duration when dashing - Love
+        _appliedMovement += _dashDirection;
+
+        //I think _actualMagnitude is a variable from earlier in the project that was used when I actually changed _finalMagnitude in this part of the code - Love
+        _actualMagnitude = _finalMagnitude;
+        _appliedMovement *= Time.deltaTime;
 
 
 
-            if (gameObject.GetComponentInParent<PlayerWalking>() != null)
-            {
-                if (_isMovementPressed && _isGrounded && !_isSprintPressed && !_isSlidePressed)
-                {
-                    playerSounds.PlayWalkSound();
-                }
+        //First collision pass gives us the collision of the "normal" movement - Love
+        _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
+        //Second pass gives us the collision of the movement resulting from gravity - Love
+        _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
+        //Move the rigidbody of the character with the movement after the collision passes - Love
+        _rigidbody.transform.position += _appliedMovement;
 
-                if (_isMovementPressed && _isGrounded && _isSprintPressed && !_isSlidePressed)
-                {
-                    playerSounds.PlayRunSound();
-                }
-            }
-
-            //Update positions of where the centre of the "spheres" at the edges of the capsule collider are for use in collisions
-            _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
-            _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
-            //Calling ground check function, followed by an emergency function that gets called when not grounded to make sure you're not falling through the ground - Love
-            GroundCheck();
-            if (!_isGrounded)
-            {
-                AntiClipCheck();
-            }
-
-            //Here we start by setting the rotation of the player camera based on mouse inputs - Love
-            
-            SetCameraOrientation();
-
-            //We follow that up by rotating the character to face the same direciton as the camera is looking as well a creating a horizontal forward vector - Love
-            RotateBodyY();
-            _relForward = CamRelHor(Vector3.forward);
-
-            
-            //Here we update the state machine, this is where the variables like _stateDirection and _stateMagnitude get updated - Love
-            _currentState.UpdateStates();
-
-            //Align the characters movement direction to the ground underneath it. We are not rotating the character itself, only the vector that decides its movement - Love
-            _appliedMovement = AlignToSlope(_stateDirection);
-            //Saving a couple of values that we use to calculate momentum etc in some of the states.
-            _preCollideMovement = _appliedMovement;
-            _finalMagnitude = _stateMagnitude;
-
-            //The movement before this has been relative to the world coordinates, now it is relative to the players camera - Love
-            _appliedMovement = CamRelHor(_appliedMovement);
-
-            //Normalize the direction and then multiply it by the magnitude from the state machine - Love
-            _appliedMovement = _appliedMovement.normalized;
-            _appliedMovement *= _finalMagnitude;
-
-            //This is a really quick and honestly bad implementation of the dash I quickly made towards the end of the project. _dashDirection is usually (0,0,0) but set to a different value for a short duration when dashing - Love
-            _appliedMovement += _dashDirection;
-            
-            //I think _actualMagnitude is a variable from earlier in the project that was used when I actually changed _finalMagnitude in this part of the code - Love
-            _actualMagnitude = _finalMagnitude;
-            _appliedMovement *= Time.deltaTime;
-
-
-
-            //First collision pass gives us the collision of the "normal" movement - Love
-            _appliedMovement = CollideAndSlide(_appliedMovement, _capsuleCollider.transform.position, 0, false, _appliedMovement);
-            //Second pass gives us the collision of the movement resulting from gravity - Love
-            _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
-            //Move the rigidbody of the character with the movement after the collision passes - Love
-            _rigidbody.transform.position += _appliedMovement;
-
-        }
     }
 
 
@@ -460,13 +439,13 @@ public class H_StateManager : MonoBehaviour
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
-        if (context.started && gameObject.GetComponentInParent<PlayerWalking>() != null)
-        {
-            if (_isGrounded)
-            {
-                playerSounds.PlayJumpStartSound();
-            }
-        }
+        //if (context.started && gameObject.GetComponentInParent<PlayerWalking>() != null)
+        //{
+        //    if (_isGrounded)
+        //    {
+        //        playerSounds.PlayJumpStartSound();
+        //    }
+        //}
     }
 
     //The dash uses coroutines to count down the time both for the duration of the dash and for the duration of the cooldown - Love
@@ -482,10 +461,10 @@ public class H_StateManager : MonoBehaviour
         _dashDurationCoroutine = DashDuration();
         StartCoroutine(_dashCooldownCoroutine);
         StartCoroutine(_dashDurationCoroutine);
-        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
-        {
-            playerSounds.PlayDashSound();
-        }
+        //if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        //{
+        //    playerSounds.PlayDashSound();
+        //}
     }
 
     
@@ -497,18 +476,18 @@ public class H_StateManager : MonoBehaviour
     void OnSlide(InputAction.CallbackContext context)
     {
         _isSlidePressed = context.ReadValueAsButton();
-        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
-        {
-            if (context.started && _isGrounded)
-            {
-                playerSounds.PlaySlidingSound();
-            }
+        //if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        //{
+        //    if (context.started && _isGrounded)
+        //    {
+        //        playerSounds.PlaySlidingSound();
+        //    }
 
-            if (context.canceled)
-            {
-                playerSounds.AudioManager.Stop();
-            }
-        }
+        //    if (context.canceled)
+        //    {
+        //        playerSounds.AudioManager.Stop();
+        //    }
+        //}
     }
 
 
@@ -547,7 +526,7 @@ public class H_StateManager : MonoBehaviour
     {
         if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
         _isAttacking = true;
-        //_animator.SetPunching(true);
+        _animator.SetBool("isPunching", true);
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
     }
@@ -600,10 +579,10 @@ public class H_StateManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         for(float i = 0; i < 0.5f; i += Time.deltaTime)
         {
-            _interacter.InteractionRay();
+            
             yield return null;
         }
-        //_animator.SetPunching(false);
+        _animator.SetBool("isPunching", false);
         yield return new WaitForSeconds(0.35f);
         _isAttacking = false;
     }

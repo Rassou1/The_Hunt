@@ -12,8 +12,10 @@ public class P_WalkingState : P_BaseState
 
     public override void EnterState()
     {
-        //_ctx.Animator.SetWalking(true);
-        //_ctx.Animator.SetRunning(false);
+        _ctx.Animator.SetBool("isWalking", true);
+        _ctx.Animator.SetBool("isRunning", false);
+        _ctx.AnimatorArms.SetBool("isWalking", true);
+        _ctx.AnimatorArms.SetBool("isRunning", false);
         lerpTime = 0f;
     }
 

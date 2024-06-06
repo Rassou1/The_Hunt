@@ -13,7 +13,8 @@ public class P_GroundedState : P_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        //_ctx.Animator.SetFalling(false);
+        _ctx.Animator.SetBool("isFalling", false);
+        _ctx.AnimatorArms.SetBool("isFalling", false);
         _ctx.ActualMagnitude = _ctx.AppliedMovement.magnitude / Time.deltaTime;
         
         _ctx.VertMagnitude = -0.1f;

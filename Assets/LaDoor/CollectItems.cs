@@ -14,7 +14,7 @@ public class CollectItems : MonoBehaviour
     private bool isCollected = false;
     public Text diamondCountText;
     AudioSource audioPlay;
-    public Sounds pickupsounds;
+    //public Sounds pickupsounds;
     private Renderer _renderer;
     private BoxCollider _collider;
 
@@ -68,8 +68,8 @@ public class CollectItems : MonoBehaviour
     {
         if (!isCollected)
         {
-            int amount = Random.Range(0, pickupsounds.sounds.Length);
-            audioPlay.PlayOneShot(pickupsounds.sounds[amount]);
+            //int amount = Random.Range(0, pickupsounds.sounds.Length);
+            //audioPlay.PlayOneShot(pickupsounds.sounds[amount]);
             _collider.enabled = false;
             _renderer.enabled = false;
             isCollected = true;  // Mark the diamond as collected

@@ -21,7 +21,7 @@ public class H_SlidingState : H_BaseState
         
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
         _ctx.HorMouseMod = 0.2f;
-        //_ctx.Animator.SetSliding(true);
+        _ctx.Animator.SetBool("isSliding", true);
     }
 
     public override void UpdateState()

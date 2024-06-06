@@ -11,8 +11,8 @@ public class H_IdleState : H_BaseState
 
     public override void EnterState()
     {
-        //_ctx.Animator.SetWalking(false);
-        //_ctx.Animator.SetRunning(false);
+        _ctx.Animator.SetBool("isWalking", false);
+        _ctx.Animator.SetBool("isRunning", false);
         lerpTime = 0f;
     }
 

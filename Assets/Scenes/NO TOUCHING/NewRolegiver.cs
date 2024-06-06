@@ -1,202 +1,202 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Alteruna;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.XR;
-using UnityEditor;
+﻿//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using Alteruna;
+//using JetBrains.Annotations;
+//using Unity.VisualScripting;
+//using UnityEngine.InputSystem.XR;
+//using UnityEditor;
 
-public class NewRoleGiver : AttributesSync, IInteractable
-{
-    // Many memebers worked on this script file
-    // Thitiwich implented the code to show the hunter/prey canvas but has been rewritten by another member in the group
-    public GameObject hunterCanvas;
-    public GameObject preyCanvas;
+//public class NewRoleGiver : AttributesSync, IInteractable
+//{
+//    // Many memebers worked on this script file
+//    // Thitiwich implented the code to show the hunter/prey canvas but has been rewritten by another member in the group
+//    public GameObject hunterCanvas;
+//    public GameObject preyCanvas;
 
-    public List<GameObject> players;
-    public GameObject newPrefab;
+//    public List<GameObject> players;
+//    public GameObject newPrefab;
 
-    public PlayerStates playerStates;
-    public Multiplayer networkManager;
+//    public PlayerStates playerStates;
+//    public Multiplayer networkManager;
 
-    public MapMover mm;
+//    public MapMover mm;
 
-    public Spawner spawner;
-    public GameObject GiveObject()
-    {
-        return gameObject;
-    }
+//    public Spawner spawner;
+//    public GameObject GiveObject()
+//    {
+//        return gameObject;
+//    }
 
-    public void InitInteract(string interactor)
-    {
-        //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game.
-        playerStates.stateReset();
-        BroadcastRemoteMethod("Interact", interactor);
+//    public void InitInteract(string interactor)
+//    {
+//        //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game.
+//        playerStates.stateReset();
+//        BroadcastRemoteMethod("Interact", interactor);
         
         
 
-    }
+//    }
 
-    List<GameObject> FindObjectsOnLayer(int layer)
-    {
-        //Finds every object on a given layer.
-        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        List<GameObject> objectsInLayer = new List<GameObject>();
+//    List<GameObject> FindObjectsOnLayer(int layer)
+//    {
+//        //Finds every object on a given layer.
+//        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+//        List<GameObject> objectsInLayer = new List<GameObject>();
 
-        foreach (var obj in allPlayers)
-        {
-            if (obj.layer == layer)
-            {
-                objectsInLayer.Add(obj);
-            }
-        }
+//        foreach (var obj in allPlayers)
+//        {
+//            if (obj.layer == layer)
+//            {
+//                objectsInLayer.Add(obj);
+//            }
+//        }
 
-        return objectsInLayer;
-    }
+//        return objectsInLayer;
+//    }
 
-    [SynchronizableMethod]
-    public void Interact(string interactor)
-    {
-        //Resets all players to prey. Moves all players to game map.Changes the host to a hunter.
-        if (players.Count > 0)
-        {
+//    [SynchronizableMethod]
+//    public void Interact(string interactor)
+//    {
+//        //Resets all players to prey. Moves all players to game map.Changes the host to a hunter.
+//        if (players.Count > 0)
+//        {
 
-            resetAllPrefabs();
+//            resetAllPrefabs();
 
-            //int hunterIndex = Random.Range(0, players.Count);
-            int hunterIndex = 0;
+//            //int hunterIndex = Random.Range(0, players.Count);
+//            int hunterIndex = 0;
 
-            foreach (GameObject p in players)
-            {
-                p.GetComponent<InteractablePlayer>().movingmap = true;
-                mm.moveMaps(p);
+//            foreach (GameObject p in players)
+//            {
+//                p.GetComponent<InteractablePlayer>().movingmap = true;
+//                mm.moveMaps(p);
                 
-            }
+//            }
 
 
-            for (int i = 0; i < players.Count; i++)
-            {
+//            for (int i = 0; i < players.Count; i++)
+//            {
 
                 
 
-                Alteruna.Avatar avatar = players[i].GetComponent<Alteruna.Avatar>();
+//                Alteruna.Avatar avatar = players[i].GetComponent<Alteruna.Avatar>();
 
-                if (i == hunterIndex)
-                {
-                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this. The layer of the hunterComponent is already on Hunter layer.
+//                if (i == hunterIndex)
+//                {
+//                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this. The layer of the hunterComponent is already on Hunter layer.
 
-                    if (!avatar.IsMe)
-                        return;
-                    SwitchPrefab(hunterIndex);
-                    hunterCanvas.SetActive(true);
-                }
-                else
-                {
+//                    if (!avatar.IsMe)
+//                        return;
+//                    SwitchPrefab(hunterIndex);
+//                    hunterCanvas.SetActive(true);
+//                }
+//                else
+//                {
 
-                    //players[i].layer = LayerMask.NameToLayer("Prey");
+//                    //players[i].layer = LayerMask.NameToLayer("Prey");
 
-                    if (!avatar.IsMe)
-                        return;
-                    preyCanvas.SetActive(true);
-                }
-            }
+//                    if (!avatar.IsMe)
+//                        return;
+//                    preyCanvas.SetActive(true);
+//                }
+//            }
             
-        }
-    }
+//        }
+//    }
 
 
 
-    [SynchronizableMethod]
+//    [SynchronizableMethod]
 
-    public void SwitchPrefab(int i)
-    {
-        //Disables the prey and enables the hunter components of the player.
-        Transform parentTransform = players[i].transform;
+//    public void SwitchPrefab(int i)
+//    {
+//        //Disables the prey and enables the hunter components of the player.
+//        Transform parentTransform = players[i].transform;
 
-        // Find the child GameObjects by name
-        Transform firstChild = parentTransform.Find("PreyComponent");
-        Transform secondChild = parentTransform.Find("HunterComponent");
-
-
-        // Transfer the position from the first child to the second child
-
-        secondChild.position = firstChild.position;
-        secondChild.rotation = firstChild.rotation;
+//        // Find the child GameObjects by name
+//        Transform firstChild = parentTransform.Find("PreyComponent");
+//        Transform secondChild = parentTransform.Find("HunterComponent");
 
 
-        if (firstChild != null && secondChild != null)
-        {
+//        // Transfer the position from the first child to the second child
+
+//        secondChild.position = firstChild.position;
+//        secondChild.rotation = firstChild.rotation;
+
+
+//        if (firstChild != null && secondChild != null)
+//        {
 
          
-            secondChild.gameObject.SetActive(true);
+//            secondChild.gameObject.SetActive(true);
             
-            Debug.Log(firstChild.position.ToString() + secondChild.position.ToString());
+//            Debug.Log(firstChild.position.ToString() + secondChild.position.ToString());
             
          
-            firstChild.gameObject.SetActive(false);
+//            firstChild.gameObject.SetActive(false);
 
 
 
 
-        }
-        else
-        {
-            Debug.LogWarning("One or both child GameObjects not found.");
+//        }
+//        else
+//        {
+//            Debug.LogWarning("One or both child GameObjects not found.");
            
-        }
+//        }
 
-    }
+//    }
 
     
 
-    public void Tag(GameObject tagger, GameObject tagged)
-    {
-        tagged.transform.position = new Vector3(63.7f, 10.58f, -17.28f);
+//    public void Tag(GameObject tagger, GameObject tagged)
+//    {
+//        tagged.transform.position = new Vector3(63.7f, 10.58f, -17.28f);
 
-    }
+//    }
 
-    void Start()
-    {
-        hunterCanvas.SetActive(false);
-        preyCanvas.SetActive(false);
+//    void Start()
+//    {
+//        hunterCanvas.SetActive(false);
+//        preyCanvas.SetActive(false);
         
-    }
+//    }
 
-    void Update()
-    {
-        players = FindObjectsOnLayer(9);
-        networkManager = FindAnyObjectByType<Multiplayer>();
-        playerStates = networkManager.GetComponent<PlayerStates>();
-    }
+//    void Update()
+//    {
+//        players = FindObjectsOnLayer(9);
+//        networkManager = FindAnyObjectByType<Multiplayer>();
+//        playerStates = networkManager.GetComponent<PlayerStates>();
+//    }
 
-    public void resetAllPrefabs()
-    {
-        List<GameObject> _players = FindObjectsOnLayer(9);
+//    public void resetAllPrefabs()
+//    {
+//        List<GameObject> _players = FindObjectsOnLayer(9);
 
-        foreach (var obj in _players)
-        {
+//        foreach (var obj in _players)
+//        {
 
-            Transform parentTransform = obj.transform;
+//            Transform parentTransform = obj.transform;
 
-            // Find the child GameObjects by name
-            Transform firstChild = parentTransform.Find("PreyComponent");
-            Transform secondChild = parentTransform.Find("HunterComponent");
+//            // Find the child GameObjects by name
+//            Transform firstChild = parentTransform.Find("PreyComponent");
+//            Transform secondChild = parentTransform.Find("HunterComponent");
 
-            // Transfer the position from the first child to the second child
-            secondChild.position = firstChild.position;
-            secondChild.rotation = firstChild.rotation;
-            if (!firstChild.gameObject.active)
-            {
+//            // Transfer the position from the first child to the second child
+//            secondChild.position = firstChild.position;
+//            secondChild.rotation = firstChild.rotation;
+//            if (!firstChild.gameObject.active)
+//            {
 
-                // Turn the first GameObject on
-                firstChild.gameObject.active = true;
+//                // Turn the first GameObject on
+//                firstChild.gameObject.active = true;
 
-                // Turn the second GameObject off
-                secondChild.gameObject.active = false;
-            }
+//                // Turn the second GameObject off
+//                secondChild.gameObject.active = false;
+//            }
 
-        }
-    }
+//        }
+//    }
 
-}
+//}

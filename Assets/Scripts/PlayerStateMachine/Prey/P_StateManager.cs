@@ -54,7 +54,8 @@ public class P_StateManager : MonoBehaviour
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
-    public P_Animations _animator;
+    public Animator _animator;
+    public Animator _animatorArms;
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -107,8 +108,8 @@ public class P_StateManager : MonoBehaviour
 
     Vector3 _resetPosition;
 
-    PlayerWalking playerSounds;
-    PlayerTest otherPlayerSounds;
+    //PlayerWalking playerSounds;
+    //PlayerTest otherPlayerSounds;
 
     
 
@@ -134,7 +135,8 @@ public class P_StateManager : MonoBehaviour
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
-    public P_Animations Animator { get { return _animator; } }
+    public Animator Animator { get { return _animator; } }
+    public Animator AnimatorArms { get { return _animatorArms; } }
     public int IsWalkingHash { get { return _isWalkingHash; } }
     public int IsSprintingHash { get { return _isSprintingHash; } }
     public int IsFallingHash { get { return _isFallingHash; } }
@@ -196,11 +198,11 @@ public class P_StateManager : MonoBehaviour
     public bool DashCoolingDown { get { return _dashCoolingDown; } }
     
 
-    void Start()
-    {
-        _avatar = GetComponentInParent<Alteruna.Avatar>();
+    //void Start()
+    //{
+    //    _avatar = GetComponentInParent<Alteruna.Avatar>();
         
-    }
+    //}
 
 
 
@@ -208,8 +210,8 @@ public class P_StateManager : MonoBehaviour
     private void Awake()
     {
         //_avatar = gameObject.GetComponent<Alteruna.Avatar>();
-        playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
-        otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
+        //playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
+        //otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -261,31 +263,31 @@ public class P_StateManager : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.GetComponentInParent<PlayerTest>() != null && !_avatar.IsMe)
-        {
-            otherPlayerSounds.NonLocalPlayerTest();
-        }
+        //if (gameObject.GetComponentInParent<PlayerTest>() != null && !_avatar.IsMe)
+        //{
+        //    otherPlayerSounds.NonLocalPlayerTest();
+        //}
 
-        if (!_avatar.IsMe)
-            return;
+        //if (!_avatar.IsMe)
+        //    return;
 
         //if (Input.GetKeyDown(KeyCode.U))
         //{
         //    DiamondsTaken++;
         //}
 
-        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
-        {
-            if (_isMovementPressed && _isGrounded && !_isSprintPressed && !_isSlidePressed)
-            {
-                playerSounds.PlayWalkSound();
-            }
+        //if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        //{
+        //    if (_isMovementPressed && _isGrounded && !_isSprintPressed && !_isSlidePressed)
+        //    {
+        //        playerSounds.PlayWalkSound();
+        //    }
 
-            if (_isMovementPressed && _isGrounded && _isSprintPressed && !_isSlidePressed)
-            {
-                playerSounds.PlayRunSound();
-            }
-        }
+        //    if (_isMovementPressed && _isGrounded && _isSprintPressed && !_isSlidePressed)
+        //    {
+        //        playerSounds.PlayRunSound();
+        //    }
+        //}
 
 
 
@@ -479,13 +481,13 @@ public class P_StateManager : MonoBehaviour
     public void OnJumpPress(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
-        if (context.started && gameObject.GetComponentInParent<PlayerWalking>() != null)
-        {
-            if (_isGrounded)
-            {
-                playerSounds.PlayJumpStartSound();
-            }
-        }
+        //if (context.started && gameObject.GetComponentInParent<PlayerWalking>() != null)
+        //{
+        //    if (_isGrounded)
+        //    {
+        //        playerSounds.PlayJumpStartSound();
+        //    }
+        //}
         
     }
 
@@ -502,10 +504,10 @@ public class P_StateManager : MonoBehaviour
         _dashDurationCoroutine = DashDuration();
         StartCoroutine(_dashCooldownCoroutine);
         StartCoroutine(_dashDurationCoroutine);
-        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
-        {
-            playerSounds.PlayDashSound();
-        }
+        //if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        //{
+        //    playerSounds.PlayDashSound();
+        //}
         
     }
 
@@ -519,18 +521,18 @@ public class P_StateManager : MonoBehaviour
     void OnSlide(InputAction.CallbackContext context)
     {
         _isSlidePressed = context.ReadValueAsButton();
-        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
-        {
-            if (context.started && _isGrounded)
-            {
-                playerSounds.PlaySlidingSound();
-            }
+        //if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        //{
+        //    if (context.started && _isGrounded)
+        //    {
+        //        playerSounds.PlaySlidingSound();
+        //    }
 
-            if (context.canceled)
-            {
-                playerSounds.AudioManager.Stop();
-            }
-        }
+        //    if (context.canceled)
+        //    {
+        //        playerSounds.AudioManager.Stop();
+        //    }
+        //}
         
     }
 

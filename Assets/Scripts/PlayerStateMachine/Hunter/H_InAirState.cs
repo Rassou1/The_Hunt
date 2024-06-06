@@ -18,7 +18,7 @@ public class H_InAirState : H_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        //_ctx.Animator.SetFalling(true);
+        _ctx.Animator.SetBool("isFalling", true);
         hasDoubleJumped = false;
         buttonReleased = false;
         direction = _ctx.PreCollideMovement;
