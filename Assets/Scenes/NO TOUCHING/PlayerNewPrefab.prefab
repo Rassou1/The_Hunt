@@ -3927,7 +3927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _avatar: {fileID: 7566427906986039737}
   amIHunter: 0
-  _mouseSens: 40
+  _mouseSens: 10
   _maxSlopeAngle: 45
   _softCap: 13
   _sprintResistance: 4
@@ -6971,6 +6971,10 @@ PrefabInstance:
     - target: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: _softCap
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: _mouseSens
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: _moveSpeed

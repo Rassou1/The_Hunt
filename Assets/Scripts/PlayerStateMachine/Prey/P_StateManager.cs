@@ -28,7 +28,7 @@ public class P_StateManager : MonoBehaviour
 
 
 
-    public float _mouseSens = 10f;
+    public float _mouseSens;
     public float _maxSlopeAngle;
     public float _softCap;
     public float _sprintResistance;
