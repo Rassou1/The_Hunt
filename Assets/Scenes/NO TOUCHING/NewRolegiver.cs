@@ -64,8 +64,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             resetAllPrefabs();
 
-            //int hunterIndex = Random.Range(0, players.Count);
-            int hunterIndex = 0;
+            int hunterIndex = Random.Range(0, players.Count);
+            //int hunterIndex = 0;
 
             foreach (GameObject p in players)
             {
@@ -121,7 +121,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
         // Transfer the position from the first child to the second child
 
-        secondChild.position = firstChild.position;
+        secondChild.position = Vector2.zero;
         secondChild.rotation = firstChild.rotation;
 
 
