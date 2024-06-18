@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Linq;
 using Alteruna.Trinity;
+using UnityEditor.SearchService;
 
 namespace Alteruna
 {
@@ -18,6 +20,7 @@ namespace Alteruna
 		[SerializeField] private GameObject ContentContainer;
 		[SerializeField] private Button StartButton;
 		[SerializeField] private Button LeaveButton;
+		[SerializeField] private UnityEngine.SceneManagement.Scene CurrentScene;
 
 		public bool ShowUserCount = false;
 
@@ -100,6 +103,11 @@ namespace Alteruna
 
 		private void FixedUpdate()
 		{
+			// Disable leaving if player mid-game
+			if (CurrentScene.name == "GAMETEMPMAP")
+			{
+
+			}
 			if (!Multiplayer.enabled)
 			{
 				TitleText.text = "Offline";
