@@ -3,41 +3,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script makes sure animations are synced up between players by invoking methods remotely which updates the bools assigned to each player globally
+//It is called in both the state manager and the states in the player scripts - Love
+
 public class H_Animations : AttributesSync
 {
-
     public Animator _animator;
-    public Animator _armsAnimator;
+
+    private void Start()
+    {
+        if (!gameObject.GetComponent<Alteruna.Avatar>().IsMe)
+        {
+            enabled = false;
+            return;
+        }
+    }
+
+
 
     public void SetWalking(bool setBool)
     {
-        _animator.SetBool("isWalking", setBool);
-        _armsAnimator.SetBool("isWalking", setBool);
+        InvokeRemoteMethod("WalkingRemote", UserId.All, setBool);
     }
 
     public void SetRunning(bool setBool)
     {
-        _animator.SetBool("isRunning", setBool);
-        _armsAnimator.SetBool("isRunning", setBool);
+        InvokeRemoteMethod("RunningRemote", UserId.All, setBool);
     }
 
     public void SetFalling(bool setBool)
     {
-        _animator.SetBool("isFalling", setBool);
-        _armsAnimator.SetBool("isFalling", setBool);
+        InvokeRemoteMethod("FallingRemote", UserId.All, setBool);
     }
 
     public void SetSliding(bool setBool)
     {
-        _animator.SetBool("isSliding", setBool);
-        _armsAnimator.SetBool("isSliding", setBool);
+        InvokeRemoteMethod("SlidingRemote", UserId.All, setBool);
     }
 
     public void SetPunching(bool setBool)
     {
-        _animator.SetBool("isPunching", setBool);
-        _armsAnimator.SetBool("isPunching", setBool);
+        InvokeRemoteMethod("PunchingRemote", UserId.All, setBool);
     }
 
+
+
+    [SynchronizableMethod]
+    public void WalkingRemote(bool setBool)
+    {
+        _animator.SetBool("isWalking", setBool);
+    }
+
+    [SynchronizableMethod]
+    public void RunningRemote(bool setBool)
+    {
+        _animator.SetBool("isRunning", setBool);
+    }
+
+    [SynchronizableMethod]
+    public void FallingRemote(bool setBool)
+    {
+        _animator.SetBool("isFalling", setBool);
+    }
+
+    [SynchronizableMethod]
+    public void SlidingRemote(bool setBool)
+    {
+        _animator.SetBool("isSliding", setBool);
+    }
+
+    [SynchronizableMethod]
+    public void PunchingRemote(bool setBool)
+    {
+        _animator.SetBool("isPunching", setBool);
+    }
 
 }

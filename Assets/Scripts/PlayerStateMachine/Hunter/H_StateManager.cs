@@ -1,3 +1,4 @@
+using Alteruna;
 using Alteruna.Scoreboard;
 using System;
 using System.Collections;
@@ -12,7 +13,7 @@ using UnityEngine.InputSystem;
 //would just be easier to clone the scripts and make the appropriate changes where needed.
 // - Love
 
-public class H_StateManager : MonoBehaviour
+public class H_StateManager : Synchronizable
 {
     public Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
@@ -24,7 +25,7 @@ public class H_StateManager : MonoBehaviour
     Bounds _bounds;
 
     int _maxBounces = 5;
-    float _skindWidth = 0.1f;
+    float _skindWidth = 0.05f;
 
     
 
@@ -48,8 +49,10 @@ public class H_StateManager : MonoBehaviour
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
-    public H_Animations _animator;
     public interacter _interacter;
+    public Animator _animator;
+    public Animator _armsAnimator;
+    public H_Animations _remoteAnimator;
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -124,9 +127,10 @@ public class H_StateManager : MonoBehaviour
     //Put a lot of getters and setters here
     public H_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
-    public H_Animations Animator { get { return _animator; } }
-   
-    
+    public Animator Animator { get { return _animator; } }
+    public Animator ArmsAnimator { get { return _armsAnimator; } }
+    public H_Animations RemoteAnimator { get { return _remoteAnimator; } }
+
 
     public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
@@ -196,6 +200,8 @@ public class H_StateManager : MonoBehaviour
         playerSounds = gameObject.GetComponentInParent<PlayerWalking>();
         otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
 
+        
+
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -253,6 +259,9 @@ public class H_StateManager : MonoBehaviour
             otherPlayerSounds.NonLocalPlayerTest();
         }
 
+        
+
+
         if (!_avatar.IsMe)
         {
             return;
@@ -278,12 +287,7 @@ public class H_StateManager : MonoBehaviour
             //Update positions of where the centre of the "spheres" at the edges of the capsule collider are for use in collisions
             _botSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.radius, 0);
             _topSphere = _capsuleCollider.transform.position + new Vector3(0, _capsuleCollider.height - _capsuleCollider.radius, 0);
-            //Calling ground check function, followed by an emergency function that gets called when not grounded to make sure you're not falling through the ground - Love
-            GroundCheck();
-            if (!_isGrounded)
-            {
-                AntiClipCheck();
-            }
+            
 
             //Here we start by setting the rotation of the player camera based on mouse inputs - Love
             
@@ -296,6 +300,13 @@ public class H_StateManager : MonoBehaviour
             
             //Here we update the state machine, this is where the variables like _stateDirection and _stateMagnitude get updated - Love
             _currentState.UpdateStates();
+
+            //Calling ground check function, followed by an emergency function that gets called when not grounded to make sure you're not falling through the ground - Love
+            GroundCheck();
+            if (!_isGrounded)
+            {
+                AntiClipCheck();
+            }
 
             //Align the characters movement direction to the ground underneath it. We are not rotating the character itself, only the vector that decides its movement - Love
             _appliedMovement = AlignToSlope(_stateDirection);
@@ -327,6 +338,10 @@ public class H_StateManager : MonoBehaviour
             _rigidbody.transform.position += _appliedMovement;
 
         }
+
+        //Here we call to sync data between players followed by commiting the synced data to actually make use of it - Love
+        Sync();
+        Commit();
     }
 
 
@@ -547,7 +562,8 @@ public class H_StateManager : MonoBehaviour
     {
         if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
         _isAttacking = true;
-        //_animator.SetPunching(true);
+        _remoteAnimator.SetPunching(true);
+        _armsAnimator.SetBool("isPunching", true);
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
     }
@@ -603,7 +619,8 @@ public class H_StateManager : MonoBehaviour
             _interacter.InteractionRay();
             yield return null;
         }
-        //_animator.SetPunching(false);
+        _remoteAnimator.SetPunching(false);
+        _armsAnimator.SetBool("isPunching", false);
         yield return new WaitForSeconds(0.35f);
         _isAttacking = false;
     }
@@ -618,7 +635,30 @@ public class H_StateManager : MonoBehaviour
         _mouseSens -= 2;
     }
 
-    void OnEnable()
+    //The following three methods are related to syncing positions and rotations of players online
+    //The "SyncUpdate" method updates the assembler and dissasembler which in turn write and read the data of players - Love
+    private void Sync()
+    {
+        if (_avatar.IsMe)
+        {
+            SyncUpdate();
+        }
+    }
+
+    public override void AssembleData(Writer writer, byte LOD = 100)
+    {
+        writer.Write(_rigidbody.transform.position);
+        writer.Write(_rigidbody.transform.rotation);
+    }
+
+    public override void DisassembleData(Reader reader, byte LOD = 100)
+    {
+        _rigidbody.transform.position = reader.ReadVector3();
+        _rigidbody.transform.rotation = reader.ReadQuaternion();
+    }
+
+
+    new void OnEnable()
     {
         _playerInput.HunterControls.Enable();
     }

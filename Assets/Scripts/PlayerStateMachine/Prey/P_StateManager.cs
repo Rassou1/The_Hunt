@@ -1,5 +1,6 @@
 using Alteruna;
 using Alteruna.Scoreboard;
+using Alteruna.Trinity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,9 +9,10 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 //99% of this script was writen by Love
-public class P_StateManager : MonoBehaviour
+public class P_StateManager : Synchronizable
 {
     public Alteruna.Avatar _avatar;
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
@@ -34,12 +36,7 @@ public class P_StateManager : MonoBehaviour
     public float _sprintResistance;
     public float _slideResistance;
 
-    int _isWalkingHash;
-    int _isSprintingHash;
-    int _isFallingHash;
-    int _isWallRunningHash;
-    int _isSlidingHash;
-    int _isClimbingHash;
+    
 
     P_BaseState _currentState;
     P_StateFactory _states;
@@ -54,7 +51,9 @@ public class P_StateManager : MonoBehaviour
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
-    public P_Animations _animator;
+    public Animator _animator;
+    public Animator _armsAnimator;
+    public P_Animations _remoteAnimator;
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -125,21 +124,21 @@ public class P_StateManager : MonoBehaviour
 
     bool _ghost = false;
 
+
     public bool Escaped { get { return _escaped; } set { _escaped = value; } }
     public bool Caught { get { return _caught; } set { _caught = value; } }
     public int DiamondsTaken { get { return _diamondsTaken; } set { _diamondsTaken = value; } }
     public bool Ghost { get { return _ghost; } set { _ghost = value; } }
 
-    public int IsClimbingHash { get { return _isClimbingHash; } }
+    
     //Put a lot of getters and setters here
     public P_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Rigidbody Rigidbody { get { return _rigidbody; } }
-    public P_Animations Animator { get { return _animator; } }
-    public int IsWalkingHash { get { return _isWalkingHash; } }
-    public int IsSprintingHash { get { return _isSprintingHash; } }
-    public int IsFallingHash { get { return _isFallingHash; } }
-    public int IsWallRunningHash { get { return _isWallRunningHash; } }
-    public int IsSlidingHash { get { return _isSlidingHash; } }
+    public Animator Animator { get { return _animator; } }
+    public Animator ArmsAnimator { get { return _armsAnimator; } }
+    public P_Animations RemoteAnimator { get { return _remoteAnimator; } }
+
+    
 
     public Vector3 StateDirection { get { return _stateDirection; } set { _stateDirection = value; } }
     public float StateMagnitude { get { return _stateMagnitude; } set { _stateMagnitude = value; } }
@@ -212,7 +211,7 @@ public class P_StateManager : MonoBehaviour
         otherPlayerSounds = gameObject.GetComponentInParent<PlayerTest>();
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
-
+        
 
         //Getting the bounds of the capsule collider and reduce it slightly to use for collisions later - Love
         _bounds = _capsuleCollider.bounds;
@@ -265,6 +264,8 @@ public class P_StateManager : MonoBehaviour
         {
             otherPlayerSounds.NonLocalPlayerTest();
         }
+
+        
 
         if (!_avatar.IsMe)
             return;
@@ -348,8 +349,14 @@ public class P_StateManager : MonoBehaviour
             _appliedMovement *= _stateMagnitude;
             _rigidbody.transform.position += _appliedMovement * Time.deltaTime;
         }
+
+        //Here we call to sync data between players followed by commiting the synced data to actually make use of it - Love
+        Sync();
+        Commit();
+
     }
 
+    
 
     //This function  based on this YT video https://www.youtube.com/watch?v=YR6Q7dUz2uk which in turn is based on this paper https://www.peroxide.dk/papers/collision/collision.pdf
     //It essentially takes collisions and lets the movement vector go across the surface you collided with. This is done up to 5 times - Love
@@ -624,7 +631,33 @@ public class P_StateManager : MonoBehaviour
         _ghost = !_ghost;
     }
 
-    void OnEnable()
+
+    //The following three methods are related to syncing positions and rotations of players online
+    //The "SyncUpdate" method updates the assembler and dissasembler which in turn write and read the data of players - Love
+    private void Sync()
+    {
+        if (_avatar.IsMe)
+        {
+            SyncUpdate();
+        }
+    }
+
+    public override void AssembleData(Writer writer, byte LOD = 100)
+    {
+        writer.Write(_rigidbody.transform.position);
+        writer.Write(_rigidbody.transform.rotation);
+    }
+
+    public override void DisassembleData(Reader reader, byte LOD = 100)
+    {
+        _rigidbody.transform.position = reader.ReadVector3();
+        _rigidbody.transform.rotation = reader.ReadQuaternion();
+    }
+
+
+
+
+    new void OnEnable()
     {
         _playerInput.PreyControls.Enable();
     }

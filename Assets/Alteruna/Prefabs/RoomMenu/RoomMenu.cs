@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using Alteruna.Trinity;
-using UnityEditor.SearchService;
 
 namespace Alteruna
 {

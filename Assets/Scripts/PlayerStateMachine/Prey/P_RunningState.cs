@@ -10,8 +10,14 @@ public class P_RunningState : P_BaseState
     }
     public override void EnterState()
     {
-        //_ctx.Animator.SetWalking(true);
-        //_ctx.Animator.SetRunning(true);
+        //_ctx.Animator.SetBool("isWalking", true);
+        //_ctx.Animator.SetBool("isRunning", true);
+
+        _ctx.RemoteAnimator.SetWalking(true);
+        _ctx.RemoteAnimator.SetRunning(true);
+
+        _ctx.ArmsAnimator.SetBool("isWalking", true);
+        _ctx.ArmsAnimator.SetBool("isRunning", true);
     }
 
     public override void UpdateState()

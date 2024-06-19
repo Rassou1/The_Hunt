@@ -18,7 +18,8 @@ public class H_InAirState : H_BaseState
     public override void EnterState()
     {
         InitializeSubState();
-        //_ctx.Animator.SetFalling(true);
+        _ctx.RemoteAnimator.SetFalling(true);
+        _ctx.ArmsAnimator.SetBool("isFalling", true);
         hasDoubleJumped = false;
         buttonReleased = false;
         direction = _ctx.PreCollideMovement;
@@ -44,7 +45,7 @@ public class H_InAirState : H_BaseState
         }
 
         //Setting the vert speed instead of adding to it, makes it more rewarding to be patient with the double jump - Love
-        if (!hasDoubleJumped && _ctx.IsJumpPressed && buttonReleased && _currentSubState != _factory.Slide())
+        if (!hasDoubleJumped && _ctx.IsJumpPressed && buttonReleased)
         {
             _ctx.VertMagnitude = 7.5f;
             hasDoubleJumped = true;

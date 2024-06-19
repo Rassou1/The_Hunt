@@ -1,8 +1,9 @@
+using Alteruna;
 using UnityEngine;
 
 
 //The base state for all the prey states in the state machine - Love
-public abstract class P_BaseState 
+public abstract class P_BaseState
 {
     private bool _isRootState = false;
     protected P_StateManager _ctx;

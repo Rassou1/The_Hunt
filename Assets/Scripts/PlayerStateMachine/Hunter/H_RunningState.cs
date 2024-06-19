@@ -11,8 +11,11 @@ public class H_RunningState : H_BaseState
     }
     public override void EnterState()
     {
-        //_ctx.Animator.SetWalking(true);
-        //_ctx.Animator.SetRunning(true);
+        _ctx.RemoteAnimator.SetWalking(true);
+        _ctx.RemoteAnimator.SetRunning(true);
+
+        _ctx.ArmsAnimator.SetBool("isWalking", true);
+        _ctx.ArmsAnimator.SetBool("isRunning", true);
     }
 
     public override void UpdateState()

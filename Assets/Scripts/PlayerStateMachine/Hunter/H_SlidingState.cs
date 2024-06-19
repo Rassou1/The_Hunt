@@ -20,8 +20,9 @@ public class H_SlidingState : H_BaseState
         _ctx.CapsuleColliderHeight -= 1f;
         
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
-        _ctx.HorMouseMod = 0.2f;
-        //_ctx.Animator.SetSliding(true);
+        _ctx.HorMouseMod = 0.4f;
+        _ctx.RemoteAnimator.SetSliding(true);
+        _ctx.ArmsAnimator.SetBool("isSliding", true);
     }
 
     public override void UpdateState()
@@ -66,7 +67,8 @@ public class H_SlidingState : H_BaseState
         
         _ctx.SubStateDirSet = new Vector3(0, 0, 0);
         _ctx.HorMouseMod = 1f;
-        //_ctx.Animator.SetSliding(false);
+        _ctx.RemoteAnimator.SetSliding(false);
+        _ctx.ArmsAnimator.SetBool("isSliding", false);
     }
 
     public override void CheckSwitchState()
