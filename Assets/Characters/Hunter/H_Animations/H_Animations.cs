@@ -12,11 +12,11 @@ public class H_Animations : AttributesSync
 
     private void Start()
     {
-        //if (!gameObject.GetComponent<Alteruna.Avatar>().IsMe)
-        //{
-        //    enabled = false;
-        //    return;
-        //}
+        if (!gameObject.GetComponent<Alteruna.Avatar>().IsMe)
+        {
+            enabled = false;
+            return;
+        }
     }
 
 
