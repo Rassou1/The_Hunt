@@ -45,7 +45,7 @@ public class P_MoveCamera : MonoBehaviour
                 // Find the child GameObjects by name
                 Transform firstChild = parentTransform.Find("PreyComponent");
                 Transform orientation = firstChild.Find("Orientation");
-                Transform camerahold = orientation.Find("CameraHolder");
+                Transform camerahold = firstChild.Find("CameraHolder");
                 Transform cam = camerahold.Find("PlayerCam"); 
                 Transform arm = cam.Find("PreyFPSArms");
                 Transform rend = arm.Find("PreyV2Rabbit_3JointRig.009");

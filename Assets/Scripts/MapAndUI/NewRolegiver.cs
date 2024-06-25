@@ -64,7 +64,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             resetAllPrefabs();
 
-            int hunterIndex = Random.Range(0, players.Count);
+            int hunterIndex = Random.Range(0, players.Count - 1);
             //int hunterIndex = 0;
 
             foreach (GameObject p in players)
@@ -121,7 +121,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
         // Transfer the position from the first child to the second child
 
-        secondChild.position = Vector2.zero;
+        secondChild.position = Vector3.zero;
         secondChild.rotation = firstChild.rotation;
 
 
@@ -180,8 +180,11 @@ public class NewRoleGiver : AttributesSync, IInteractable
             Transform parentTransform = obj.transform;
 
             // Find the child GameObjects by name
-            Transform firstChild = parentTransform.Find("PreyComponent");
-            Transform secondChild = parentTransform.Find("HunterComponent");
+            Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
+            Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+
+            firstChild.position = Vector3.zero;
+            secondChild.position = Vector3.zero;
 
             // Transfer the position from the first child to the second child
             secondChild.position = firstChild.position;

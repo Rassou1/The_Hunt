@@ -204,6 +204,7 @@ public class H_StateManager : Synchronizable
 
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
+        Debug.Log(_capsuleCollider);
 
         //Getting the bounds of the capsule collider and reduce it slightly to use for collisions later - Love
         _bounds = _capsuleCollider.bounds;
@@ -335,7 +336,7 @@ public class H_StateManager : Synchronizable
             //Second pass gives us the collision of the movement resulting from gravity - Love
             _appliedMovement += CollideAndSlide(_gravDir * -_vertMagnitude * Time.deltaTime, _capsuleCollider.transform.position + _appliedMovement, 0, true, _gravDir * -_vertMagnitude * Time.deltaTime);
             //Move the rigidbody of the character with the movement after the collision passes - Love
-            _rigidbody.transform.position += _appliedMovement;
+            _rigidbody.transform.position += _appliedMovement;  
 
         }
 
