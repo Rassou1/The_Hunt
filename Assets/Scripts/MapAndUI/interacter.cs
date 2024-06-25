@@ -41,6 +41,8 @@ public class interacter : MonoBehaviour
     {
 
 
+
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
@@ -69,8 +71,10 @@ public class interacter : MonoBehaviour
     {
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
         Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
+
+
         Debug.Log("Attacking");
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
+        if (Physics.SphereCast(ray,5f, out RaycastHit hitInfo, InteractRange))
         {
             IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 

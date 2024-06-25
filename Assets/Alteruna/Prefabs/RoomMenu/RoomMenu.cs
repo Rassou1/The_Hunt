@@ -21,7 +21,7 @@ namespace Alteruna
 		[SerializeField] private Button LeaveButton;
 		[SerializeField] private UnityEngine.SceneManagement.Scene CurrentScene;
 
-		public bool ShowUserCount = false;
+        public bool ShowUserCount = false;
 
 		// manual refresh can be done by calling Multiplayer.RefreshRoomList();
 		public bool AutomaticallyRefresh = true;
@@ -43,7 +43,8 @@ namespace Alteruna
 				Multiplayer = FindObjectOfType<Multiplayer>();
 			}
 
-			if (Multiplayer == null)
+
+            if (Multiplayer == null)
 			{
 				Debug.LogError("Unable to find a active object of type Multiplayer.");
 				if (TitleText != null) TitleText.text = "Missing Multiplayer Component";
@@ -68,9 +69,10 @@ namespace Alteruna
                 });
 
 				LeaveButton.onClick.AddListener(() =>
-				{
+				{                    
+					Multiplayer.LoadScene("TEMPSTART");
 					Multiplayer.CurrentRoom?.Leave();
-					_refreshTime = RefreshInterval;
+                    _refreshTime = RefreshInterval;
 				});
 
 				if (TitleText != null)

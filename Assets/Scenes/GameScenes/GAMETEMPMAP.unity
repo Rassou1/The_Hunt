@@ -2425,7 +2425,6 @@ MonoBehaviour:
   players: []
   preyList: []
   hunterList: []
-  mp: {fileID: 0}
 --- !u!1 &254506871
 GameObject:
   m_ObjectHideFlags: 0
