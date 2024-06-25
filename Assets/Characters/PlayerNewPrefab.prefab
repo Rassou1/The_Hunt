@@ -3961,6 +3961,7 @@ MonoBehaviour:
     Frequency: 120
   _avatar: {fileID: 7566427906986039737}
   amIHunter: 0
+  hInteractor: {fileID: 1748334502008202459}
   _mouseSens: 10
   _maxSlopeAngle: 45
   _softCap: 13

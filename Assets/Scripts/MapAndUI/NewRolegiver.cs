@@ -64,8 +64,10 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
             resetAllPrefabs();
 
-            int hunterIndex = Random.Range(0, players.Count - 1);
-            //int hunterIndex = 0;
+            //int hunterIndex = Random.Range(0, players.Count - 1);
+            //Legacy code. Doesn't work due to networking errors.
+            
+            int hunterIndex = 0;
 
             foreach (GameObject p in players)
             {
@@ -166,6 +168,8 @@ public class NewRoleGiver : AttributesSync, IInteractable
     void Update()
     {
         players = FindObjectsOnLayer(9);
+       
+        
         networkManager = FindAnyObjectByType<Multiplayer>();
         playerStates = networkManager.GetComponent<PlayerStates>();
     }

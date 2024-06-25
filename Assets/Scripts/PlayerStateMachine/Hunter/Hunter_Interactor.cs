@@ -41,26 +41,28 @@ public class Hunter_Interactor : MonoBehaviour
     {
 
 
-        if (Input.GetMouseButtonDown(0))
+        
+    }
+
+    public void Attack()
+    {
+        Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
         {
-            Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+            IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
 
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
+            if (interactObj != null)
             {
-                IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
+                interactObj.InitInteract(_avatar.name);
 
-
-                if (interactObj != null)
-                {
-                    interactObj.InitInteract(_avatar.name);
-
-                    Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
-                }
-                else
-                {
-                    Debug.Log("No interactable object found!");
-                }
+                Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
+            }
+            else
+            {
+                Debug.Log("No interactable object found!");
             }
         }
     }

@@ -20,6 +20,7 @@ public class H_StateManager : Synchronizable
     PlayerInput _playerInput;
 
     public bool amIHunter;
+    public Hunter_Interactor hInteractor;
 
     CapsuleCollider _capsuleCollider;
     Bounds _bounds;
@@ -565,6 +566,7 @@ public class H_StateManager : Synchronizable
         _isAttacking = true;
         _remoteAnimator.SetPunching(true);
         _armsAnimator.SetBool("isPunching", true);
+        hInteractor.Attack();
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
     }
