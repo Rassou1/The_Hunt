@@ -102,6 +102,8 @@ public class MapMover : AttributesSync
         else if (scene.name == "Final_Map" && playerStates.gameStarted && playerStates.gameEnded)
         {
             //Moves players from game map to lobby. Sends them to their place based on their status (tagged, escaped, hunter).
+            //NOT WORKING DUE TO PLAYERANDBODY DISCREPANCY. MAKE SURE YOU CHANGE THE RIGHT POSITIONS, SAME WAY AS IN NEWROLEGIVER AND INITIAL MAPMOVER
+
 
             Transform transform = player.GetComponent<Transform>();
             preyList = FindObjectsOnLayer(7);
