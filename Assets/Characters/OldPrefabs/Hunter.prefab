@@ -717,6 +717,7 @@ GameObject:
   - component: {fileID: 8946993901969155920}
   - component: {fileID: 5353640939556403478}
   - component: {fileID: 2721879162072327540}
+  - component: {fileID: 985300803165549084}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -841,7 +842,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2557244760397437280}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
   m_Name: 
@@ -869,6 +870,27 @@ MonoBehaviour:
   tagged: 0
   prisonPosition: {x: 63.7, y: 10.58, z: -17.28}
   _avatar: {fileID: 8776662269726789565}
+  _hunterManager: {fileID: 0}
+  _preyManager: {fileID: 0}
+  movingmap: 0
+  _interactor: {fileID: 0}
+--- !u!114 &985300803165549084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557244760397437280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f108ca67a19665e409cba700a64d65ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractorCam: {fileID: 2557244760397437280}
+  InteractorSource: {fileID: 9100720902073967107}
+  InteractRange: 0
+  me: {fileID: 0}
+  interactionCooldown: 5
 --- !u!1 &2681727672921862636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2131,6 +2153,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a43938b3ecb1e14caceab769c319fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 
+  BucketBehaviors:
+  - Name: Min
+    NetLOD: 0
+    Frequency: -1
+  - Name: Low
+    NetLOD: 1
+    Frequency: 10
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 30
+  - Name: High
+    NetLOD: 3
+    Frequency: 50
+  - Name: Max
+    NetLOD: 4
+    Frequency: 120
+  _avatar: {fileID: 0}
+  amIHunter: 0
   _mouseSens: 40
   _maxSlopeAngle: 45
   _softCap: 9
@@ -2139,7 +2181,10 @@ MonoBehaviour:
   _rigidbody: {fileID: 1325185144502167339}
   _cameraOrientation: {fileID: 7907752421950828694}
   _cameraPostion: {fileID: 3002893479764173587}
+  _interacter: {fileID: 0}
   _animator: {fileID: 4492582352410083277}
+  _armsAnimator: {fileID: 0}
+  _remoteAnimator: {fileID: 0}
   _finalMagnitude: 0
   _actualMagnitude: 0
   _dashCooldown: 5
@@ -2693,6 +2738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {fileID: 3002893479764173587}
+  avatar: {fileID: 0}
 --- !u!1 &9152579666806431240
 GameObject:
   m_ObjectHideFlags: 0
