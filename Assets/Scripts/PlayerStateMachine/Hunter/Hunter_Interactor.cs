@@ -60,48 +60,85 @@ public class Hunter_Interactor : AttributesSync
     [SynchronizableMethod]
     public void Attack()
     {
+        if (InteractorCam == null)
+        {
+            Debug.LogError("InteractorCam is not assigned.");
+            return;
+        }
+
+        if (_avatar == null)
+        {
+            Debug.LogError("The avatar initiating the interaction is not assigned.");
+            return;
+        }
+
+        // Define the radius for the SphereCast
+        float sphereRadius = 0.5f; // Adjust this value as needed
 
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
 
-
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
+        // Perform the SphereCast
+        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange))
         {
             IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
-
 
             if (interactObj != null)
             {
                 interactObj.InitInteract(_avatar.name);
-
-                Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
+                Debug.Log($"{gameObject.name} interacted with {interactObj.GiveObject().name} at position {hitInfo.point}");
             }
             else
             {
                 Debug.Log("No interactable object found!");
             }
         }
+        else
+        {
+            Debug.Log("SphereCast did not hit any objects.");
+        }
     }
+
 
     public void InteractionRay()
     {
+        if (InteractorCam == null)
+        {
+            Debug.LogError("InteractorCam is not assigned.");
+            return;
+        }
+
+        if (me == null)
+        {
+            Debug.LogError("The object initiating the interaction is not assigned.");
+            return;
+        }
+
+        // Define the radius for the SphereCast
+        float sphereRadius = 0.5f; // Adjust this value as needed
+
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
         Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
-        Debug.Log("Attacking");
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, InteractRange))
+        Debug.Log("Attempting interaction");
+
+        // Perform the SphereCast
+        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange))
         {
             IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
-
 
             if (interactObj != null)
             {
                 interactObj.InitInteract(me.name);
-
-                Debug.Log(gameObject.name + " interacted with " + interactObj.GiveObject().name);
+                Debug.Log($"{gameObject.name} interacted with {interactObj.GiveObject().name} at position {hitInfo.point}");
             }
             else
             {
                 Debug.Log("No interactable object found!");
             }
         }
+        else
+        {
+            Debug.Log("SphereCast did not hit any objects.");
+        }
     }
+
 }
