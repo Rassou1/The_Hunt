@@ -16,7 +16,7 @@ interface HIInteractable
 
     public GameObject GiveObject();
 }
-public class Hunter_Interactor : MonoBehaviour
+public class Hunter_Interactor : AttributesSync
 {
     // Start is called before the first frame update
     private Alteruna.Avatar _avatar;
@@ -36,6 +36,19 @@ public class Hunter_Interactor : MonoBehaviour
         me = gameObject;
     }
 
+    public void SetAttack()
+    {
+        InvokeRemoteMethod("AttackRemote", UserId.All);
+    }
+
+
+
+    [SynchronizableMethod]
+    public void AttackRemote()
+    {
+        Attack();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -44,8 +57,10 @@ public class Hunter_Interactor : MonoBehaviour
         
     }
 
+    [SynchronizableMethod]
     public void Attack()
     {
+
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
 
 

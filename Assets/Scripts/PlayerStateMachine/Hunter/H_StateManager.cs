@@ -562,11 +562,11 @@ public class H_StateManager : Synchronizable
 
     void OnAttack(InputAction.CallbackContext context)
     {
-        if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
+        if (!_avatar.IsMe||_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
         _isAttacking = true;
         _remoteAnimator.SetPunching(true);
         _armsAnimator.SetBool("isPunching", true);
-        hInteractor.Attack();
+        hInteractor.SetAttack();
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
     }
