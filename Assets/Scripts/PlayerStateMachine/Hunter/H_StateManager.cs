@@ -50,7 +50,7 @@ public class H_StateManager : Synchronizable
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
-    public interacter _interacter;
+    //public interacter _interacter;
     public Animator _animator;
     public Animator _armsAnimator;
     public H_Animations _remoteAnimator;
@@ -562,7 +562,9 @@ public class H_StateManager : Synchronizable
 
     void OnAttack(InputAction.CallbackContext context)
     {
+
         if (!_avatar.IsMe||_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
+
         _isAttacking = true;
         _remoteAnimator.SetPunching(true);
         _armsAnimator.SetBool("isPunching", true);
@@ -617,11 +619,9 @@ public class H_StateManager : Synchronizable
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(0.1f);
-        for(float i = 0; i < 0.5f; i += Time.deltaTime)
-        {
-            _interacter.InteractionRay();
-            yield return null;
-        }
+
+            hInteractor.Attack();
+ 
         _remoteAnimator.SetPunching(false);
         _armsAnimator.SetBool("isPunching", false);
         yield return new WaitForSeconds(0.35f);

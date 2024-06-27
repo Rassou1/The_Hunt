@@ -4,6 +4,7 @@ using UnityEngine;
 using Alteruna;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms;
 /// <summary>
 /// Script written by: ---
 /// Fixed for th hunter by Hamdi.
@@ -47,6 +48,7 @@ public class Hunter_Interactor : AttributesSync
     public void AttackRemote()
     {
         Attack();
+
     }
 
     // Update is called once per frame
@@ -54,12 +56,18 @@ public class Hunter_Interactor : AttributesSync
     {
 
 
-        
+
     }
+
+
+   
+
+
 
     [SynchronizableMethod]
     public void Attack()
     {
+
         if (InteractorCam == null)
         {
             Debug.LogError("InteractorCam is not assigned.");
@@ -78,7 +86,7 @@ public class Hunter_Interactor : AttributesSync
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
 
         // Perform the SphereCast
-        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange))
+        if (Physics.SphereCast(InteractorCam.transform.position, sphereRadius, InteractorCam.transform.forward, out RaycastHit hitInfo, InteractRange))
         {
             IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 

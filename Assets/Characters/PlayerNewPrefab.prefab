@@ -1089,9 +1089,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f108ca67a19665e409cba700a64d65ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 2f0dc629-c14b-4402-8b51-16e1c160b284
+  Reliability: 1
+  LocalMethodBehavior: 1
   InteractorCam: {fileID: 8069392528602212407}
   InteractorSource: {fileID: 2833849638471885709}
-  InteractRange: 1.1
+  InteractRange: 10
   me: {fileID: 1537914950847844620}
 --- !u!1 &1554703547536722506
 GameObject:
@@ -3970,7 +3974,6 @@ MonoBehaviour:
   _rigidbody: {fileID: 672891025351659196}
   _cameraOrientation: {fileID: 7228998573676511553}
   _cameraPostion: {fileID: 684376852109019960}
-  _interacter: {fileID: 8811234123907765804}
   _animator: {fileID: 1570531997046739908}
   _armsAnimator: {fileID: 6886000345657404654}
   _remoteAnimator: {fileID: 3136571778272917934}
@@ -7440,7 +7443,7 @@ MonoBehaviour:
   _hunterManager: {fileID: 1128020610449734755}
   _preyManager: {fileID: 1269575076366420476}
   movingmap: 0
-  _interactor: {fileID: 0}
+  _interactor: {fileID: 1737605374854112259}
 --- !u!1 &4386694156673462764 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9183273402705518421, guid: 59556d925da285648bfaf1333170db54, type: 3}
