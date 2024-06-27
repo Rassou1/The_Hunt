@@ -16,7 +16,7 @@ public class PlayerStates : MonoBehaviour
     //    new Vector3(9,1, 6) 
     //};
 
-    public List<GameObject> players;
+    private List<GameObject> players;
 
     public bool gameStarted;
     public bool gameEnded;

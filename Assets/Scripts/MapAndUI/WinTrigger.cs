@@ -68,7 +68,8 @@ public class WinTrigger : MonoBehaviour
 
     public IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(delay);
+        //yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(0);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -103,19 +104,26 @@ public class WinTrigger : MonoBehaviour
             {
                 stateManager.Escaped = true;
                 playerStates.playerEscaped(player);
+                other.gameObject.GetComponent<P_StateManager>().Ghost = true;
+                //makes u invisible
+                other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+                other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             }
 
             if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == FindObjectsOnLayer(7).Count && playerStates.escapedPlayers.Count > 0)
             {
                 playerStates.gameEnded = true;
                
-                foreach (var obj in players)
+                foreach (GameObject obj in players)
                 {
                     Debug.Log("winMove");
+                    other.gameObject.GetComponent<P_StateManager>().Ghost = false;
+                    //makes u visible
+                    other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+                    other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                     obj.GetComponent<InteractablePlayer>().movingmap = true;
                     mapMover.moveMaps(obj);
                 }
-
             }           
         }
     }
