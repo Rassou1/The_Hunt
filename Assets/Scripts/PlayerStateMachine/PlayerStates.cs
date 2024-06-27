@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Alteruna;
 
 public class PlayerStates : MonoBehaviour
 {
@@ -20,7 +21,6 @@ public class PlayerStates : MonoBehaviour
     public bool gameStarted;
     public bool gameEnded;
     public bool allPlayersTagged;
-
     public void stateReset()
     {
         escapedPlayers.Clear();
@@ -43,7 +43,7 @@ public class PlayerStates : MonoBehaviour
 
     public void Update()
     {
-        
+
     }
 
 }

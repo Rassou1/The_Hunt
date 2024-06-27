@@ -31,8 +31,7 @@ public class WinTrigger : MonoBehaviour
         mp = FindAnyObjectByType<Multiplayer>();//new PlayerStates();
         playerStates = mp.GetComponent<PlayerStates>();
         
-        preyList = FindObjectsOnLayer(7);
-        hunterList = FindObjectsOnLayer(6);
+       
         mapMover = new MapMover();
         //youWinText.SetActive(false);
        
@@ -43,8 +42,12 @@ public class WinTrigger : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+
         //Finds all players. Ends game when all players are tagged. Moves back to lobby.
         players = FindObjectsOnLayer(9);
+        preyList = FindObjectsOnLayer(7);
+        hunterList = FindObjectsOnLayer(6);
+
         if (playerStates.taggedPlayers.Count == players.Count - 1 && playerStates.taggedPlayers.Count > 0)
         {
             playerStates.allPlayersTagged = true;
@@ -88,14 +91,14 @@ public class WinTrigger : MonoBehaviour
     {
         //On entering the escape door, the player turns into ghost, is logged as having escaped, and upon all players escaping, sends everyone back to lobby.
         mp = FindObjectOfType<Multiplayer>();
-
-        Debug.Log($"{other} has interacted with winTrigger");
-        if (other.gameObject.tag == "Player")
+        GameObject playerNewPrefab = other.gameObject.transform.parent.parent.parent.gameObject;
+        Debug.Log($"{playerNewPrefab.name} has interacted with winTrigger");
+        if (playerNewPrefab.tag == "Player")
         {
             //youWinText.SetActive(true);
             //StartCoroutine(CountDown());
-            stateManager = other.gameObject.GetComponentInChildren<P_StateManager>(true);
-            player = other.gameObject;
+            stateManager = playerNewPrefab.GetComponentInChildren<P_StateManager>(true);
+            player = playerNewPrefab;
             if (other.gameObject.layer == 7)
             {
                 stateManager.Escaped = true;
