@@ -104,24 +104,30 @@ public class MapMover : AttributesSync
             //Moves players from game map to lobby. Sends them to their place based on their status (tagged, escaped, hunter).
             //NOT WORKING DUE TO PLAYERANDBODY DISCREPANCY. MAKE SURE YOU CHANGE THE RIGHT POSITIONS, SAME WAY AS IN NEWROLEGIVER AND INITIAL MAPMOVER
 
+            //UPDATE NOTE: Changed the structure of the code to accomodate for playerandbody, basically just stole the code from the initial map movement (which is tested and working).
+            //this should theoretically work. literally no guarantee of it since I can't test on my laptop /ibrahim
 
-            Transform transform = player.GetComponent<Transform>();
+            
             preyList = FindObjectsOnLayer(7);
             foreach (GameObject prey in preyList)
             {
+                Transform parentTransform = prey.transform;
+                Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
+                Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
                 if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
-                    prey.GetComponentInParent<Transform>().position = new Vector3(64.5f, 16.44f, 100);
+                    /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(64.5f, 16.44f, 100);
                 }
                 else if (prey.GetComponentInChildren<P_StateManager>().Escaped == false)
                 {
-                    prey.GetComponentInParent<Transform>().position = new Vector3(100f, 0.8f, 100);
+                    /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(107f, 0.8f, 95);
                 }
+                secondChild.position = new Vector3(84f, 16.44f, 128);
             }
             hunterList = FindObjectsOnLayer(6);
             foreach (GameObject hunter in hunterList)
             {
-                hunter.GetComponentInParent<Transform>().position = new Vector3(84f, 16.44f, 128);
+                /*hunter.GetComponentInParent<Transform>()*/
             }
             networkManager = FindAnyObjectByType<Multiplayer>();
             networkManager.LoadScene("LOOBY");
