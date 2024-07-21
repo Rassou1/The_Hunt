@@ -13,6 +13,8 @@ TagManager:
   - 'Collactable '
   - groundMud
   - groundWood
+  - SP_Diamond
+  - SP_FinalDoor
   layers:
   - Default
   - TransparentFX

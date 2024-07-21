@@ -209,7 +209,7 @@ public class SP_P_StateMachine : MonoBehaviour
         _bounds = _capsuleCollider.bounds;
         _bounds.Expand(-2 * _skindWidth);
 
-
+        
 
         //This gets the inputs from unity's new input system - Love
         _playerInput.PreyControls.Move.started += OnMovementInput;
@@ -245,6 +245,9 @@ public class SP_P_StateMachine : MonoBehaviour
 
         //Set the resetposition of the character to wherever they spawn so I don't have to set it each time I debug - Love
         _resetPosition = _rigidbody.transform.position;
+
+        //To make sure the collisions script doesn't try to stop the character when running into a trigger collider - Love
+        Physics.queriesHitTriggers = false;
 
     }
 

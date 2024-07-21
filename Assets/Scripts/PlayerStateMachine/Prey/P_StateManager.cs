@@ -253,7 +253,10 @@ public class P_StateManager : Synchronizable
 
         //Set the resetposition of the character to wherever they spawn so I don't have to set it each time I debug - Love
         _resetPosition =  _rigidbody.transform.position;
-        
+
+
+        //To make sure the collisions script doesn't try to stop the character when running into a trigger collider - Love
+        Physics.queriesHitTriggers = false;
     }
 
     
