@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7873579553979501141}
   - component: {fileID: 478634928845751156}
   - component: {fileID: 5181474676454001097}
-  - component: {fileID: 6604299003084439376}
   m_Layer: 0
   m_Name: SP_DiamondPickup
   m_TagString: SP_Diamond
@@ -120,30 +119,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13481103, y: 0.20064688, z: 0.050000012}
   m_Center: {x: -2.646978e-23, y: 0, z: -0.0000000018626456}
---- !u!54 &6604299003084439376
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5655414237628624845}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

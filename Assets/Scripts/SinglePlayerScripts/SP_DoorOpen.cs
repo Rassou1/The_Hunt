@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SP_DoorOpen : MonoBehaviour
 {
-    Vector3 _moveDown = new Vector3(0, 0.001f, 0);
+    Vector3 _moveDown = new Vector3(0, 0.005f, 0);
     float _totMoved = 0;
 
     

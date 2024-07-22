@@ -32,5 +32,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScenes/LOOBY.unity
     guid: 3ac95b133b2f8bd41bf8a210081bc057
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Singleplayer/SP_Menu.unity
+    guid: 18a6bf2ab31ee614e87f27c2e82e0a84
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Singleplayer/P_SPTutorial.unity
+    guid: ba29df60a11fc404eae7ed3f6e13e837
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Singleplayer/P_SPTrial.unity
+    guid: e5c0ec46a3a664146a444f7eefe72220
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Singleplayer/H_SPTutorial.unity
+    guid: afb6c75821f188b45bc828a4b1dcc37b
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Singleplayer/H_SPTrial.unity
+    guid: c7d4b61f5660b5c4b876ffc3048216bd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

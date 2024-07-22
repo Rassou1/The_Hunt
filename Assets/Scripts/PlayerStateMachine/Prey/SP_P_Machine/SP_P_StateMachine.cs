@@ -431,6 +431,11 @@ public class SP_P_StateMachine : MonoBehaviour
         }
     }
 
+    public void TeleportPlayer(Vector3 pos)
+    {
+        _rigidbody.transform.position = pos;
+    }
+
     //This is an emergency method for snapping the player up to the surface they where standing on if the start to clip through. Kind of brute forcing the problem but it works most of the time - Love
     void AntiClipCheck()
     {
