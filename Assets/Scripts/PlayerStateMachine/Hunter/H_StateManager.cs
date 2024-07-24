@@ -21,6 +21,7 @@ public class H_StateManager : Synchronizable
 
     public bool amIHunter;
     public Hunter_Interactor hInteractor;
+    public Kill_BottonUI killUI;
 
     CapsuleCollider _capsuleCollider;
     Bounds _bounds;
@@ -571,6 +572,7 @@ public class H_StateManager : Synchronizable
         _remoteAnimator.SetPunching(true);
         _armsAnimator.SetBool("isPunching", true);
         hInteractor.SetAttack();
+        killUI.HandleAttack();
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
     }
