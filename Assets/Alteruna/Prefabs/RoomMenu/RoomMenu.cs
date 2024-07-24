@@ -19,6 +19,7 @@ namespace Alteruna
 		[SerializeField] private GameObject ContentContainer;
 		[SerializeField] private Button StartButton;
 		[SerializeField] private Button LeaveButton;
+		[SerializeField] private Button SPButton;
 		[SerializeField] private UnityEngine.SceneManagement.Scene CurrentScene;
 
         public bool ShowUserCount = false;
@@ -219,8 +220,9 @@ namespace Alteruna
 		{
 			StartButton.interactable = false;
 			LeaveButton.interactable = true;
+            SPButton.gameObject.SetActive(false);
 
-			if (TitleText != null)
+            if (TitleText != null)
 			{
 				TitleText.text = "In Room " + room.Name;
 			}
@@ -234,8 +236,9 @@ namespace Alteruna
 
 			StartButton.interactable = true;
 			LeaveButton.interactable = false;
+            SPButton.gameObject.SetActive(true);
 
-			if (TitleText != null)
+            if (TitleText != null)
 			{
 				TitleText.text = "Rooms";
 			}
