@@ -52,7 +52,8 @@ public class SP_H_StateManager : MonoBehaviour
     //public interacter _interacter;
     public Animator _animator;
     public Animator _armsAnimator;
-    
+    public SP_NPC_PreyManager _npcPreyManager;
+
     //Transform _thisCharacter;
 
     float _mouseRotationX;
@@ -261,6 +262,11 @@ public class SP_H_StateManager : MonoBehaviour
         //{
         //    otherPlayerSounds.NonLocalPlayerTest();
         //}
+
+        if (_isAttacking)
+        {
+            Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, 1);
+        }
 
         if (gameObject.GetComponentInParent<PlayerWalking>() != null)
         {
@@ -545,16 +551,24 @@ public class SP_H_StateManager : MonoBehaviour
 
     void OnAttack(InputAction.CallbackContext context)
     {
-
         if (_isAttacking || _currentState.CurrentSubState == _states.Slide()) return;
-
         _isAttacking = true;
         _armsAnimator.SetBool("isPunching", true);
         killUI.HandleAttack();
         _attackDurationCoroutine = AttackDuration();
         StartCoroutine(_attackDurationCoroutine);
+        SPAttack();
     }
 
+    void SPAttack()
+    {
+        RaycastHit hit;
+        Physics.Raycast(_rigidbody.transform.position, _relForward, out hit, 1.5f);
+        if (hit.collider.gameObject.CompareTag("SP_Prey"))
+        {
+            _npcPreyManager.RemovePrey(hit.collider.gameObject);
+        }
+    }
 
     //Rotates the camera according tó the mouse rotation from the "OnLookInput" method
     public void SetCameraOrientation()

@@ -15,6 +15,7 @@ TagManager:
   - groundWood
   - SP_Diamond
   - SP_FinalDoor
+  - SP_Prey
   layers:
   - Default
   - TransparentFX
