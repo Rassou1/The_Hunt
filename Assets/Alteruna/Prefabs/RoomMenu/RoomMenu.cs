@@ -21,7 +21,6 @@ namespace Alteruna
 		[SerializeField] private Button LeaveButton;
 		[SerializeField] private Button SPButton;
 		[SerializeField] private UnityEngine.SceneManagement.Scene CurrentScene;
-
         public bool ShowUserCount = false;
 
 		// manual refresh can be done by calling Multiplayer.RefreshRoomList();
@@ -220,7 +219,13 @@ namespace Alteruna
 		{
 			StartButton.interactable = false;
 			LeaveButton.interactable = true;
-            SPButton.gameObject.SetActive(false);
+
+			Scene currentScene = SceneManager.GetActiveScene();
+
+            if (currentScene.name == "TEMPSTART") { 
+				SPButton.gameObject.SetActive(false); 
+			}
+
 
             if (TitleText != null)
 			{
