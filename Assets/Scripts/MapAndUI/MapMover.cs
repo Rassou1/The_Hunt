@@ -117,11 +117,11 @@ public class MapMover : AttributesSync
                 Transform parentTransform = currentplayer.transform;
                 Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
                 Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
-                if (currentplayer.GetComponentInChildren<P_StateManager>().Escaped == true)
+                if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
                     /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(64.5f, 16.44f, 100);
                 }
-                else if (currentplayer.GetComponentInChildren<P_StateManager>().Escaped == false)
+                else if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == false)
                 {
                     /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(107f, 0.8f, 95);
                 }
