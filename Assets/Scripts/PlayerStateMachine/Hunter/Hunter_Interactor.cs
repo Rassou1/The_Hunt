@@ -55,12 +55,13 @@ public class Hunter_Interactor : AttributesSync
     void Update()
     {
 
+        Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
 
 
     }
 
 
-   
+
 
 
 
