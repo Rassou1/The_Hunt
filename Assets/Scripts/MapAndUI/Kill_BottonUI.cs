@@ -1,3 +1,4 @@
+using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -7,7 +8,7 @@ public class Kill_BottonUI : MonoBehaviour
 {
     private bool isAttack = false;
     private float attackCooldown = 0.35f; // 35 milliseconds
-
+    public Alteruna.Avatar avatar;
     public GameObject onAttackUI;
     public GameObject offAttackUI;
 
@@ -31,6 +32,15 @@ public class Kill_BottonUI : MonoBehaviour
 
     public void Update()
     {
+        if (!avatar.IsMe)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+
         onAttackUI.SetActive(!isAttack);
         offAttackUI.SetActive(isAttack);
     }

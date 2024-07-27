@@ -3645,6 +3645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38a9178025920e4faa2f4e42a371f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatar: {fileID: 7566427906986039737}
   onAttackUI: {fileID: 1958308495320143718}
   offAttackUI: {fileID: 8212697393506954505}
 --- !u!1 &5544831552413060902
