@@ -241,7 +241,12 @@ namespace Alteruna
 
 			StartButton.interactable = true;
 			LeaveButton.interactable = false;
-            SPButton.gameObject.SetActive(true);
+            Scene currentScene = SceneManager.GetActiveScene();
+
+            if (currentScene.name == "TEMPSTART")
+            {
+                SPButton.gameObject.SetActive(true);
+            }
 
             if (TitleText != null)
 			{
