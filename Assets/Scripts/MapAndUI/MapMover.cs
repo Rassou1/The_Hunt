@@ -10,6 +10,8 @@ public class MapMover : AttributesSync
     public List<GameObject> players;
     public List<GameObject> preyList;
     public List<GameObject> hunterList;
+    public List<GameObject> parents;
+
     P_StateManager pManager;
 
     Multiplayer networkManager;
@@ -107,18 +109,19 @@ public class MapMover : AttributesSync
             //UPDATE NOTE: Changed the structure of the code to accomodate for playerandbody, basically just stole the code from the initial map movement (which is tested and working).
             //this should theoretically work. literally no guarantee of it since I can't test on my laptop /ibrahim
 
-            
-            preyList = FindObjectsOnLayer(7);
-            foreach (GameObject prey in preyList)
+            //TEST NOTE: It doesnt work not sure of the reason yet, but it seems like firstChild isnt innitialized in some way /Tyron 
+
+            parents = FindObjectsOnLayer(9);
+            foreach (GameObject currentplayer in parents)
             {
-                Transform parentTransform = prey.transform;
+                Transform parentTransform = currentplayer.transform;
                 Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
                 Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
-                if (prey.GetComponentInChildren<P_StateManager>().Escaped == true)
+                if (currentplayer.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
                     /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(64.5f, 16.44f, 100);
                 }
-                else if (prey.GetComponentInChildren<P_StateManager>().Escaped == false)
+                else if (currentplayer.GetComponentInChildren<P_StateManager>().Escaped == false)
                 {
                     /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(107f, 0.8f, 95);
                 }
