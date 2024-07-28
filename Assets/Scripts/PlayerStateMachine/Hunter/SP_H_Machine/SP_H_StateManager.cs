@@ -462,6 +462,11 @@ public class SP_H_StateManager : MonoBehaviour
         _caughtPrey = 0;
     }
 
+    public void TeleportPlayer(Vector3 pos)
+    {
+        _rigidbody.transform.position = pos;
+    }
+
     //All "On_Press" methods are tied to the input system - Love
     public void OnJumpPress(InputAction.CallbackContext context)
     {

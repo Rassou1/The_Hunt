@@ -10,6 +10,8 @@ public class SP_ReturnMenuScript : MonoBehaviour
         
         if (other.gameObject.CompareTag("Player"))
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("SP_Menu");
         }
     }
