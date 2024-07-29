@@ -7,7 +7,6 @@ public class SP_ReturnMenuScript : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        
         if (other.gameObject.CompareTag("Player"))
         {
             Cursor.lockState = CursorLockMode.None;

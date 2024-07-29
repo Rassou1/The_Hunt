@@ -19,7 +19,7 @@ public class SP_H_StateManager : MonoBehaviour
     //I'm using "_" for every variable that's declared in the class and not using it for the ones declared in methods. Should make it easier to see which one belongs where at a glance. Please follow this convention to the best of your abilities.
     PlayerInput _playerInput;
 
-    public Kill_BottonUI killUI;
+    public SP_KillButtonUI killUI;
 
     CapsuleCollider _capsuleCollider;
     Bounds _bounds;
@@ -568,7 +568,8 @@ public class SP_H_StateManager : MonoBehaviour
     void SPAttack()
     {
         RaycastHit hit;
-        Physics.Raycast(_rigidbody.transform.position, _relForward, out hit, 1.5f);
+        if (!Physics.Raycast(_rigidbody.transform.position, _relForward, out hit, 1.5f)) return;
+
         if (hit.collider.gameObject.CompareTag("SP_Prey"))
         {
             _npcPreyManager.RemovePrey(hit.collider.gameObject);
