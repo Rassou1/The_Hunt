@@ -125,6 +125,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ResetSPLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""b546072d-460d-4131-9a46-d71369145ad6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -303,6 +312,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""GhostTest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d7671f9-b3cd-493b-a111-7963466038da"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetSPLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -404,6 +424,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""SensDown"",
                     ""type"": ""Button"",
                     ""id"": ""8e1293a6-9348-4c72-8a03-7ee53ad83b04"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ResetSPLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""fe42abeb-bfb2-45c5-aa97-a0d00721a41b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -586,6 +615,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""SensDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b9cba54-4959-48f0-877d-0ab5df77c04d"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetSPLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -605,6 +645,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PreyControls_SetReset = m_PreyControls.FindAction("Set Reset", throwIfNotFound: true);
         m_PreyControls_Dash = m_PreyControls.FindAction("Dash", throwIfNotFound: true);
         m_PreyControls_GhostTest = m_PreyControls.FindAction("GhostTest", throwIfNotFound: true);
+        m_PreyControls_ResetSPLevel = m_PreyControls.FindAction("ResetSPLevel", throwIfNotFound: true);
         // HunterControls
         m_HunterControls = asset.FindActionMap("HunterControls", throwIfNotFound: true);
         m_HunterControls_Move = m_HunterControls.FindAction("Move", throwIfNotFound: true);
@@ -618,6 +659,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_HunterControls_Attack = m_HunterControls.FindAction("Attack", throwIfNotFound: true);
         m_HunterControls_SensUp = m_HunterControls.FindAction("SensUp", throwIfNotFound: true);
         m_HunterControls_SensDown = m_HunterControls.FindAction("SensDown", throwIfNotFound: true);
+        m_HunterControls_ResetSPLevel = m_HunterControls.FindAction("ResetSPLevel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -690,6 +732,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PreyControls_SetReset;
     private readonly InputAction m_PreyControls_Dash;
     private readonly InputAction m_PreyControls_GhostTest;
+    private readonly InputAction m_PreyControls_ResetSPLevel;
     public struct PreyControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -705,6 +748,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @SetReset => m_Wrapper.m_PreyControls_SetReset;
         public InputAction @Dash => m_Wrapper.m_PreyControls_Dash;
         public InputAction @GhostTest => m_Wrapper.m_PreyControls_GhostTest;
+        public InputAction @ResetSPLevel => m_Wrapper.m_PreyControls_ResetSPLevel;
         public InputActionMap Get() { return m_Wrapper.m_PreyControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -747,6 +791,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @GhostTest.started += instance.OnGhostTest;
             @GhostTest.performed += instance.OnGhostTest;
             @GhostTest.canceled += instance.OnGhostTest;
+            @ResetSPLevel.started += instance.OnResetSPLevel;
+            @ResetSPLevel.performed += instance.OnResetSPLevel;
+            @ResetSPLevel.canceled += instance.OnResetSPLevel;
         }
 
         private void UnregisterCallbacks(IPreyControlsActions instance)
@@ -784,6 +831,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @GhostTest.started -= instance.OnGhostTest;
             @GhostTest.performed -= instance.OnGhostTest;
             @GhostTest.canceled -= instance.OnGhostTest;
+            @ResetSPLevel.started -= instance.OnResetSPLevel;
+            @ResetSPLevel.performed -= instance.OnResetSPLevel;
+            @ResetSPLevel.canceled -= instance.OnResetSPLevel;
         }
 
         public void RemoveCallbacks(IPreyControlsActions instance)
@@ -816,6 +866,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_HunterControls_Attack;
     private readonly InputAction m_HunterControls_SensUp;
     private readonly InputAction m_HunterControls_SensDown;
+    private readonly InputAction m_HunterControls_ResetSPLevel;
     public struct HunterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -831,6 +882,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_HunterControls_Attack;
         public InputAction @SensUp => m_Wrapper.m_HunterControls_SensUp;
         public InputAction @SensDown => m_Wrapper.m_HunterControls_SensDown;
+        public InputAction @ResetSPLevel => m_Wrapper.m_HunterControls_ResetSPLevel;
         public InputActionMap Get() { return m_Wrapper.m_HunterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -873,6 +925,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SensDown.started += instance.OnSensDown;
             @SensDown.performed += instance.OnSensDown;
             @SensDown.canceled += instance.OnSensDown;
+            @ResetSPLevel.started += instance.OnResetSPLevel;
+            @ResetSPLevel.performed += instance.OnResetSPLevel;
+            @ResetSPLevel.canceled += instance.OnResetSPLevel;
         }
 
         private void UnregisterCallbacks(IHunterControlsActions instance)
@@ -910,6 +965,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SensDown.started -= instance.OnSensDown;
             @SensDown.performed -= instance.OnSensDown;
             @SensDown.canceled -= instance.OnSensDown;
+            @ResetSPLevel.started -= instance.OnResetSPLevel;
+            @ResetSPLevel.performed -= instance.OnResetSPLevel;
+            @ResetSPLevel.canceled -= instance.OnResetSPLevel;
         }
 
         public void RemoveCallbacks(IHunterControlsActions instance)
@@ -940,6 +998,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSetReset(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnGhostTest(InputAction.CallbackContext context);
+        void OnResetSPLevel(InputAction.CallbackContext context);
     }
     public interface IHunterControlsActions
     {
@@ -954,5 +1013,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnSensUp(InputAction.CallbackContext context);
         void OnSensDown(InputAction.CallbackContext context);
+        void OnResetSPLevel(InputAction.CallbackContext context);
     }
 }

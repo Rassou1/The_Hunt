@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ResetSPLevel",
+                    "type": "Button",
+                    "id": "b546072d-460d-4131-9a46-d71369145ad6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -281,6 +290,17 @@
                     "action": "GhostTest",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d7671f9-b3cd-493b-a111-7963466038da",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetSPLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -382,6 +402,15 @@
                     "name": "SensDown",
                     "type": "Button",
                     "id": "8e1293a6-9348-4c72-8a03-7ee53ad83b04",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ResetSPLevel",
+                    "type": "Button",
+                    "id": "fe42abeb-bfb2-45c5-aa97-a0d00721a41b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -562,6 +591,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SensDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b9cba54-4959-48f0-877d-0ab5df77c04d",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetSPLevel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

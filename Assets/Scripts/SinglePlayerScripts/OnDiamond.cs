@@ -10,7 +10,7 @@ public class OnDiamond : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _manager.RemoveDiamond(gameObject);
+            _manager.RemoveDiamond();
             Destroy(gameObject);
         }
     }

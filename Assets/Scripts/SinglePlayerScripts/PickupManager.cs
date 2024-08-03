@@ -2,17 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-//This script manages two 
+//This script keeps track of how many diamonds are collected, how many needs collecting, what to do when you collect enough of them as well as updating the diamonds collected text.
+//It also handles respawning the diamonds when resetting a scene without reloading it.
+//-Love
 public class PickupManager : MonoBehaviour
 {
+    
     public int _neededDiamonds;
     public GameObject _diamondPrefab;
-    List<GameObject> _onStartDiamonds = new List<GameObject>();
-    public List<GameObject> _activeDiamonds = new List<GameObject>();
-    public int _maxDiamonds;
+    List<DiamondTransform> _onStartDiamonds = new List<DiamondTransform>();
+    
+    int _activeDiamonds;
+    int _maxDiamonds;
 
     public GameObject _door1;
     public GameObject _door2;
@@ -21,15 +26,19 @@ public class PickupManager : MonoBehaviour
 
     private void Awake()
     {
-        _onStartDiamonds = GameObject.FindGameObjectsWithTag("SP_Diamond").ToList();
-        _activeDiamonds = _onStartDiamonds;
-        _maxDiamonds = _onStartDiamonds.Count;
+        GameObject[] tempDiamondArray = GameObject.FindGameObjectsWithTag("SP_Diamond");
+        foreach(GameObject go in tempDiamondArray)
+        {
+            _onStartDiamonds.Add(new DiamondTransform(go.transform.position, go.transform.rotation));
+        }
+        _maxDiamonds = tempDiamondArray.Length;
+        _activeDiamonds = _maxDiamonds;
     }
 
-    public void RemoveDiamond(GameObject go)
+    public void RemoveDiamond()
     {
-        _activeDiamonds.Remove(go);
-        if(_maxDiamonds - _activeDiamonds.Count >= _neededDiamonds)
+        --_activeDiamonds;
+        if(_maxDiamonds - _activeDiamonds >= _neededDiamonds)
         {
             if(_door1 != null)
             {
@@ -40,27 +49,39 @@ public class PickupManager : MonoBehaviour
                 _door2.AddComponent<SP_DoorOpen>();
             }
         }
-        _diamondCounter.text = (_maxDiamonds - _activeDiamonds.Count).ToString() + "/" + _neededDiamonds.ToString() + " diamonds picked up";
+        _diamondCounter.text = (_maxDiamonds - _activeDiamonds).ToString() + "/" + _neededDiamonds.ToString() + " diamonds picked up";
     }
 
 
     public void RespawnDiamonds()
     {
         RemoveDiamonds();
-        _activeDiamonds = _onStartDiamonds;
-        foreach(GameObject go in _activeDiamonds)
+        foreach(DiamondTransform diamond in _onStartDiamonds)
         {
-            Instantiate(go);
+            GameObject tempInstantiatedDiamond = Instantiate(_diamondPrefab, diamond._pos, diamond._rot);
+            tempInstantiatedDiamond.GetComponent<OnDiamond>()._manager = this;
         }
+        _activeDiamonds = _maxDiamonds;
+        _diamondCounter.text = "";
     }
 
     public void RemoveDiamonds()
     {
-        GameObject[] _tempDiamondArray = GameObject.FindGameObjectsWithTag("SP_Diamonds");
+        GameObject[] _tempDiamondArray = GameObject.FindGameObjectsWithTag("SP_Diamond");
         foreach (GameObject go in _tempDiamondArray)
         {
             Destroy(go);
         }
     }
+}
 
+public class DiamondTransform
+{
+    public Vector3 _pos;
+    public Quaternion _rot;
+    public DiamondTransform(Vector3 pos, Quaternion rot)
+    {
+        _pos = pos;
+        _rot = rot;
+    }
 }
