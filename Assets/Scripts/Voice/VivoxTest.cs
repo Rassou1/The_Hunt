@@ -84,14 +84,14 @@ public class VivoxTest : MonoBehaviour
             {
                 if (muteicon != null)
                 {
-                    muteicon.gameObject.active = false;
+                    muteicon.gameObject.SetActive(false);
                 }
             }
             else
             {
                 if (muteicon != null)
                 {
-                    muteicon.gameObject.active = true;
+                    muteicon.gameObject.SetActive(true);
                 }
             }
 

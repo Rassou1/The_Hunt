@@ -95,12 +95,12 @@ public class InteractablePlayer : AttributesSync, IInteractable
             Transform firstChild = parentTransform.Find("PreyComponent");
             Transform secondChild = parentTransform.Find("HunterComponent");
 
-            if (secondChild.gameObject.active)
+            if (secondChild.gameObject.activeSelf)
             {
                 players.Add(secondChild.gameObject);
             }
 
-            if (firstChild.gameObject.active)
+            if (firstChild.gameObject.activeSelf)
             {
                 players.Add(firstChild.gameObject);
             }

@@ -21,7 +21,6 @@ public class SP_DashCooldown : MonoBehaviour
     private SP_P_StateMachine script;
     private float dash_cooldown;
 
-    bool display_outline = false;
 
     // Start is called before the first frame update
     void Start()

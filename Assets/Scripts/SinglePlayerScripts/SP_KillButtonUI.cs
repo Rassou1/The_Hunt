@@ -15,10 +15,7 @@ public class SP_KillButtonUI : MonoBehaviour
 
     public void HandleAttack()
     {
-        if (isAttack)
-        {
-            return;
-        }
+        if (isAttack) return;
 
         isAttack = true;
         StartCoroutine(AttackCooldown());

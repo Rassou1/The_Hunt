@@ -16,25 +16,27 @@ public class WinTrigger : MonoBehaviour
     private P_StateManager stateManager;
     public PlayerStates playerStates;
     //public RoleGiver roleGiver;
-    Multiplayer mp = new Multiplayer();
+    Multiplayer mp/* = new Multiplayer()*/; //Commented out the new here since it gets instanciated on start, change back if it broke anything - Love
     MapMover mapMover;
-    string hoboInteractor = ("lol");
 
     public List<GameObject> players;
     public List<GameObject> preyList;
     public List<GameObject> hunterList;
 
-    string sceneName = "TEMPLOBBY";
+    //Commented these out since they were never used and just gave a yellow error in the editor which was annoying me, change back if it broke anything - Love
+    //string hoboInteractor = ("lol");
+    //string sceneName = "TEMPLOBBY";
     void Start()
     {
         //On game start, finds the multiplayer component. Makes list of prey and hunter. 
         mp = FindAnyObjectByType<Multiplayer>();//new PlayerStates();
         playerStates = mp.GetComponent<PlayerStates>();
-        
-       
-        mapMover = new MapMover();
+
+        //Commented out this as well since it gave a "can't use new keyword with monobehavior" error in the editor, change back if it broke anything - Love
+        //mapMover = new MapMover();
+
         //youWinText.SetActive(false);
-       
+
         playerStates.escapedPlayers.Clear();
         playerStates.taggedPlayers.Clear();
     }

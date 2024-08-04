@@ -75,7 +75,7 @@ public class MapMover : AttributesSync
                 secondChild.position = Vector3.zero;
                 firstChild.position = Vector3.zero;
                 int spawnLocation = Random.Range(0, 80000);
-                if (firstChild.gameObject.active)
+                if (firstChild.gameObject.activeSelf)
                 {
                     if (spawnLocation <= 20000)
                     {
@@ -149,7 +149,7 @@ public class MapMover : AttributesSync
     void Update()
     {
         players = FindObjectsOnLayer(9);
-        Debug.Log(players.Count);
+        //Debug.Log(players.Count);
         networkManager = FindAnyObjectByType<Multiplayer>();
         spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();

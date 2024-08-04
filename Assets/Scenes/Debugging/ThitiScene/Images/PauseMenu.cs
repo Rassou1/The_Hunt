@@ -8,7 +8,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     public List<GameObject> lobbyMenu;
 
-    public bool isPaused=false;
+    public bool isPaused = false;
 
 
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class PauseMenu : MonoBehaviour
     {
         //pauseMenu.SetActive(false);
        
-        pauseMenu.active = false;
+        pauseMenu.SetActive(false);
         
     }
 
@@ -38,11 +38,11 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
-        pauseMenu.active = true;
+        pauseMenu.SetActive(true);
 
         foreach (GameObject go in lobbyMenu)
         {
-            go.active = true;
+            go.SetActive(true);
         }
 
         UnlockMouse();
@@ -52,11 +52,11 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        pauseMenu.active = false;
+        pauseMenu.SetActive(false);
 
         foreach (GameObject go in lobbyMenu)
         {
-            go.active = false;
+            go.SetActive(false);
         }
         LockMouse();
         Time.timeScale = 1f;

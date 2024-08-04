@@ -205,7 +205,6 @@ public class SP_H_StateManager : MonoBehaviour
 
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
-        Debug.Log(_capsuleCollider);
 
         //Getting the bounds of the capsule collider and reduce it slightly to use for collisions later - Love
         _bounds = _capsuleCollider.bounds;
@@ -265,7 +264,7 @@ public class SP_H_StateManager : MonoBehaviour
 
         if (_isAttacking)
         {
-            Debug.DrawRay(_rigidbody.transform.position, _relForward, Color.green, 1);
+            Debug.DrawRay(_cameraOrientation.transform.position, _cameraOrientation.forward.normalized * 2f, Color.green, 1);
         }
 
         if (gameObject.GetComponentInParent<PlayerWalking>() != null)
@@ -456,11 +455,6 @@ public class SP_H_StateManager : MonoBehaviour
         return camRelativeHor;
     }
 
-    //Reset how many prey the hunter has caught - Love
-    public void ResetHunterStats()
-    {
-        _caughtPrey = 0;
-    }
 
     public void TeleportPlayer(Vector3 pos)
     {
@@ -568,7 +562,7 @@ public class SP_H_StateManager : MonoBehaviour
     void SPAttack()
     {
         RaycastHit hit;
-        if (!Physics.Raycast(_rigidbody.transform.position, _relForward, out hit, 1.5f)) return;
+        if (!Physics.SphereCast(_cameraOrientation.transform.position, 0.3f,_cameraOrientation.forward, out hit, 1.5f)) return;
 
         if (hit.collider.gameObject.CompareTag("SP_Prey"))
         {

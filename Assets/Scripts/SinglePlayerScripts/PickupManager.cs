@@ -55,7 +55,7 @@ public class PickupManager : MonoBehaviour
 
     public void RespawnDiamonds()
     {
-        RemoveDiamonds();
+        RemoveAllDiamonds();
         foreach(DiamondTransform diamond in _onStartDiamonds)
         {
             GameObject tempInstantiatedDiamond = Instantiate(_diamondPrefab, diamond._pos, diamond._rot);
@@ -65,7 +65,7 @@ public class PickupManager : MonoBehaviour
         _diamondCounter.text = "";
     }
 
-    public void RemoveDiamonds()
+    public void RemoveAllDiamonds()
     {
         GameObject[] _tempDiamondArray = GameObject.FindGameObjectsWithTag("SP_Diamond");
         foreach (GameObject go in _tempDiamondArray)

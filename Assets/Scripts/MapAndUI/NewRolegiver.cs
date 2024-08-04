@@ -193,14 +193,14 @@ public class NewRoleGiver : AttributesSync, IInteractable
             // Transfer the position from the first child to the second child
             secondChild.position = firstChild.position;
             secondChild.rotation = firstChild.rotation;
-            if (!firstChild.gameObject.active)
+            if (!firstChild.gameObject.activeSelf)
             {
 
                 // Turn the first GameObject on
-                firstChild.gameObject.active = true;
+                firstChild.gameObject.SetActive(true);
 
                 // Turn the second GameObject off
-                secondChild.gameObject.active = false;
+                secondChild.gameObject.SetActive(false);
             }
 
         }

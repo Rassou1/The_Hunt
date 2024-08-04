@@ -19,7 +19,6 @@ public class SCR_dash_cooldown : MonoBehaviour
     private P_StateManager script;
     private float dash_cooldown;
 
-    bool display_outline = false;
 
     // Start is called before the first frame update
     void Start()

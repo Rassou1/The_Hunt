@@ -13,7 +13,7 @@ public class SCR_abilityManager : MonoBehaviour
     public bool AB_canDoubleJump = true;
     public int AB_jumpsTotal = 1;
     public int AB_jumpsLeft = 1;
-    private float AB_jumpHeight = 10f;
+    //private float AB_jumpHeight = 10f;
 
     // All Dash variables
     public bool AB_canDash = true;
