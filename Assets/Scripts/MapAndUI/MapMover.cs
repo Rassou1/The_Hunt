@@ -130,7 +130,7 @@ public class MapMover : AttributesSync
             hunterList = FindObjectsOnLayer(6);
             foreach (GameObject hunter in hunterList)
             {
-                /*hunter.GetComponentInParent<Transform>()*/
+                hunter.GetComponentInParent<Transform>();
             }
             networkManager = FindAnyObjectByType<Multiplayer>();
             networkManager.LoadScene("LOOBY");

@@ -33,7 +33,7 @@ public class WinTrigger : MonoBehaviour
         playerStates = mp.GetComponent<PlayerStates>();
 
         //Commented out this as well since it gave a "can't use new keyword with monobehavior" error in the editor, change back if it broke anything - Love
-        //mapMover = new MapMover();
+        mapMover = new MapMover();
 
         //youWinText.SetActive(false);
 
