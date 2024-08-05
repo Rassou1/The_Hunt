@@ -122,7 +122,7 @@ public class WinTrigger : MonoBehaviour
                     other.gameObject.GetComponent<P_StateManager>().Ghost = false;
                     //makes u visible
                     other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
-                    other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                    other.gameObject.GetComponent<CapsuleCollider>().enabled = true;
                     obj.GetComponent<InteractablePlayer>().movingmap = true;
                     mapMover.moveMaps(obj);
                 }
