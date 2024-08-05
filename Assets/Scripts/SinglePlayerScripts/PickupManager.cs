@@ -24,6 +24,7 @@ public class PickupManager : MonoBehaviour
 
     public Text _diamondCounter;
 
+    public bool _exitOpened = false;
     private void Awake()
     {
         GameObject[] tempDiamondArray = GameObject.FindGameObjectsWithTag("SP_Diamond");
@@ -38,8 +39,9 @@ public class PickupManager : MonoBehaviour
     public void RemoveDiamond()
     {
         --_activeDiamonds;
-        if(_maxDiamonds - _activeDiamonds >= _neededDiamonds)
+        if(_maxDiamonds - _activeDiamonds >= _neededDiamonds && !_exitOpened)
         {
+            _exitOpened = true;
             if(_door1 != null)
             {
                 _door1.AddComponent<SP_DoorOpen>();

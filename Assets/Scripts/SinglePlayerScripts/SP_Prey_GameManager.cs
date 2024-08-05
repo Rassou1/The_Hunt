@@ -106,6 +106,7 @@ public class SP_Prey_GameManager : MonoBehaviour
         if (_door2.GetComponent<SP_DoorOpen>()) Destroy(_door2.GetComponent<SP_DoorOpen>());
         _door1.transform.position = _door1InitPos;
         _door2.transform.position = _door2InitPos;
+        _pickupManager._exitOpened = false;
     }
 
     public void WriteTimer(float? _inputTime)
