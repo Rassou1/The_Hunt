@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SP_Hunter_GameManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class SP_Hunter_GameManager : MonoBehaviour
     {
         _playerInput = new PlayerInput();
         _playerInput.HunterControls.ResetSPLevel.started += OnResetLevel;
+        _playerInput.HunterControls.Escape.started += OnEscape;
         _JSONTimerHandler = _timerHolder.GetComponent<JSON_TimerHandler>();
         _startPointStopper = _startPoint.transform.GetChild(0).gameObject;
         _bestTime = _JSONTimerHandler.Load();
@@ -53,7 +55,6 @@ public class SP_Hunter_GameManager : MonoBehaviour
         ResetLevel();
     }
 
-
     void ResetLevel()
     {
         _preyNPCManager.RespawnPrey();
@@ -71,12 +72,22 @@ public class SP_Hunter_GameManager : MonoBehaviour
         _startPointStopper.SetActive(false);
     }
 
+    private void ReturnToMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("SP_Menu");
+    }
+
     void OnResetLevel(InputAction.CallbackContext context)
     {
-        Debug.Log("Reset call");
         ResetLevel();
     }
 
+    void OnEscape(InputAction.CallbackContext context)
+    {
+        ReturnToMenu();
+    }
 
     public void WriteTimer(float? _inputTime)
     {

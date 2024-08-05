@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SP_Prey_GameManager : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class SP_Prey_GameManager : MonoBehaviour
     {
         _playerInput = new PlayerInput();
         _playerInput.PreyControls.ResetSPLevel.started += OnResetLevel;
+        _playerInput.PreyControls.Escape.started += OnEscape;
         _JSONTimerHandler = _timerHolder.GetComponent<JSON_TimerHandler>();
         _door1InitPos = _door1.transform.position;
         _door2InitPos = _door2.transform.position;
@@ -79,6 +81,18 @@ public class SP_Prey_GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         _startPointStopper.SetActive(false);
+    }
+
+    private void ReturnToMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("SP_Menu");
+    }
+
+    void OnEscape(InputAction.CallbackContext context)
+    {
+        //ReturnToMenu();
     }
 
     void OnResetLevel(InputAction.CallbackContext context)
