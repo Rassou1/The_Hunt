@@ -89,6 +89,8 @@ public class Hunter_Interactor : AttributesSync
         // Perform the SphereCast
         if (Physics.SphereCast(InteractorCam.transform.position, sphereRadius, InteractorCam.transform.forward, out RaycastHit hitInfo, InteractRange))
         {
+
+            Debug.Log(hitInfo.transform.gameObject.name);
             IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
             if (interactObj != null)
