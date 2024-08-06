@@ -30,7 +30,7 @@ public class Hunter_Interactor : AttributesSync
 
 
     [SerializeField] private GameObject me;
-    private float sphereRadius = 2f; // Adjust this value as needed
+    private float sphereRadius = 0.5f; // Adjust this value as needed
     void Start()
     {
         _avatar = gameObject.GetComponentInParent<Alteruna.Avatar>();
