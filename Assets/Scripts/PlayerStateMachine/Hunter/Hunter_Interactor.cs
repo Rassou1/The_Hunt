@@ -127,15 +127,16 @@ public class Hunter_Interactor : AttributesSync
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
         Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
         Debug.Log("Attempting interaction");
-
+        QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide; 
         // Perform the SphereCast
-        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange))
+        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange,7, queryTriggerInteraction))
         {
             IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
             if (interactObj != null)
             {
-                interactObj.InitInteract(me.name);
+                interactObj.InitInteract(me.name)
+                    ;
                 Debug.Log($"{gameObject.name} interacted with {interactObj.GiveObject().name} at position {hitInfo.point}");
             }
             else
