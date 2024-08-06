@@ -86,8 +86,9 @@ public class Hunter_Interactor : AttributesSync
 
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
 
+        QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide;
         // Perform the SphereCast
-        if (Physics.SphereCast(InteractorCam.transform.position, sphereRadius, InteractorCam.transform.forward, out RaycastHit hitInfo, InteractRange))
+        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange, 7, queryTriggerInteraction))
         {
 
             Debug.Log(hitInfo.transform.gameObject.name);
@@ -110,46 +111,46 @@ public class Hunter_Interactor : AttributesSync
     }
 
 
-    public void InteractionRay()
-    {
-        if (InteractorCam == null)
-        {
-            Debug.LogError("InteractorCam is not assigned.");
-            return;
-        }
+    //public void InteractionRay()
+    //{
+    //    if (InteractorCam == null)
+    //    {
+    //        Debug.LogError("InteractorCam is not assigned.");
+    //        return;
+    //    }
 
-        if (me == null)
-        {
-            Debug.LogError("The object initiating the interaction is not assigned.");
-            return;
-        }
+    //    if (me == null)
+    //    {
+    //        Debug.LogError("The object initiating the interaction is not assigned.");
+    //        return;
+    //    }
 
-        // Define the radius for the SphereCast
+    //    // Define the radius for the SphereCast
 
-        Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
-        Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
-        Debug.Log("Attempting interaction");
-        QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide; 
-        // Perform the SphereCast
-        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange,7, queryTriggerInteraction))
-        {
-            IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
+    //    Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+    //    Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
+    //    Debug.Log("Attempting interaction");
+    //    QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide; 
+    //    // Perform the SphereCast
+    //    if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange,7, queryTriggerInteraction))
+    //    {
+    //        IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
 
-            if (interactObj != null)
-            {
-                interactObj.InitInteract(me.name)
-                    ;
-                Debug.Log($"{gameObject.name} interacted with {interactObj.GiveObject().name} at position {hitInfo.point}");
-            }
-            else
-            {
-                Debug.Log("No interactable object found!");
-            }
-        }
-        else
-        {
-            Debug.Log("SphereCast did not hit any objects.");
-        }
-    }
+    //        if (interactObj != null)
+    //        {
+    //            interactObj.InitInteract(me.name)
+    //                ;
+    //            Debug.Log($"{gameObject.name} interacted with {interactObj.GiveObject().name} at position {hitInfo.point}");
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("No interactable object found!");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("SphereCast did not hit any objects.");
+    //    }
+    //}
 
 }
