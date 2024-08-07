@@ -86,7 +86,8 @@ public class SP_Hunter_GameManager : MonoBehaviour
 
     void OnEscape(InputAction.CallbackContext context)
     {
-        ReturnToMenu();
+        //Commented out so I don't return to another menu whenever i try to use the editor while testing
+        //ReturnToMenu();
     }
 
     public void WriteTimer(float? _inputTime)

@@ -45,15 +45,15 @@ public class JSON_TimerHandler : MonoBehaviour
         };
 
         string json = JsonUtility.ToJson(saveObject);
-        File.WriteAllText(Application.dataPath + _fileName, json);
+        File.WriteAllText(Application.dataPath + "/SP_JSONs" + _fileName, json);
     }
 
     //Method to return a nullable float. Made the float nullabe to allow you to attempt to load and be able to run the CheckOverwrite method without there being any previous data - Love
     public float? Load()
     {
-        if (File.Exists(Application.dataPath + _fileName))
+        if (File.Exists(Application.dataPath + "/SP_JSONs" + _fileName))
         {
-            string saveString = File.ReadAllText(Application.dataPath + _fileName);
+            string saveString = File.ReadAllText(Application.dataPath + "/SP_JSONs" + _fileName);
 
             SaveObject saveObject = JsonUtility.FromJson<SaveObject>(saveString);
             return saveObject._bestTime;

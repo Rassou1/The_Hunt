@@ -14,7 +14,7 @@ public class PickupManager : MonoBehaviour
     
     public int _neededDiamonds;
     public GameObject _diamondPrefab;
-    List<DiamondTransform> _onStartDiamonds = new List<DiamondTransform>();
+    List<GameObject> _onStartDiamonds = new List<GameObject>();
     
     int _activeDiamonds;
     int _maxDiamonds;
@@ -30,7 +30,7 @@ public class PickupManager : MonoBehaviour
         GameObject[] tempDiamondArray = GameObject.FindGameObjectsWithTag("SP_Diamond");
         foreach(GameObject go in tempDiamondArray)
         {
-            _onStartDiamonds.Add(new DiamondTransform(go.transform.position, go.transform.rotation));
+            _onStartDiamonds.Add(go);
         }
         _maxDiamonds = tempDiamondArray.Length;
         _activeDiamonds = _maxDiamonds;
@@ -54,36 +54,14 @@ public class PickupManager : MonoBehaviour
         _diamondCounter.text = (_maxDiamonds - _activeDiamonds).ToString() + "/" + _neededDiamonds.ToString() + " diamonds picked up";
     }
 
-
     public void RespawnDiamonds()
     {
-        RemoveAllDiamonds();
-        foreach(DiamondTransform diamond in _onStartDiamonds)
+        foreach(GameObject go in _onStartDiamonds)
         {
-            GameObject tempInstantiatedDiamond = Instantiate(_diamondPrefab, diamond._pos, diamond._rot);
-            tempInstantiatedDiamond.GetComponent<OnDiamond>()._manager = this;
+            go.SetActive(true);
         }
         _activeDiamonds = _maxDiamonds;
-        _diamondCounter.text = "";
+        _diamondCounter.text = string.Empty;
     }
 
-    public void RemoveAllDiamonds()
-    {
-        GameObject[] _tempDiamondArray = GameObject.FindGameObjectsWithTag("SP_Diamond");
-        foreach (GameObject go in _tempDiamondArray)
-        {
-            Destroy(go);
-        }
-    }
-}
-
-public class DiamondTransform
-{
-    public Vector3 _pos;
-    public Quaternion _rot;
-    public DiamondTransform(Vector3 pos, Quaternion rot)
-    {
-        _pos = pos;
-        _rot = rot;
-    }
 }
