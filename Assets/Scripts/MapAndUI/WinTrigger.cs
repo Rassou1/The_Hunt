@@ -65,6 +65,22 @@ public class WinTrigger : MonoBehaviour
                 
             }
         }
+
+        if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == FindObjectsOnLayer(7).Count && playerStates.escapedPlayers.Count > 0)
+        {
+            playerStates.gameEnded = true;
+
+            foreach (GameObject player in players)
+            {
+
+                player.gameObject.GetComponent<P_StateManager>().Ghost = false;
+                //makes u visible
+                player.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+                player.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+                player.GetComponent<InteractablePlayer>().movingmap = true;
+                mapMover.moveMaps(player);
+            }
+        }
     }
 
 
@@ -112,21 +128,7 @@ public class WinTrigger : MonoBehaviour
                 other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             }
 
-            if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == FindObjectsOnLayer(7).Count && playerStates.escapedPlayers.Count > 0)
-            {
-                playerStates.gameEnded = true;
-               
-                foreach (GameObject player in players)
-                {
-                    
-                    player.gameObject.GetComponent<P_StateManager>().Ghost = false;
-                    //makes u visible
-                    player.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
-                    player.gameObject.GetComponent<CapsuleCollider>().enabled = true;
-                    player.GetComponent<InteractablePlayer>().movingmap = true;
-                    mapMover.moveMaps(player);
-                }
-            }           
+                       
         }
     }
 
