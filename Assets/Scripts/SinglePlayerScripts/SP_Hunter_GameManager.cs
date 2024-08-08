@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -13,22 +14,24 @@ public class SP_Hunter_GameManager : MonoBehaviour
     [SerializeField] GameObject _player;
     [SerializeField] GameObject _timerHolder;
     [SerializeField] TMP_Text _timerDisplay;
-
-    private JSON_TimerHandler _JSONTimerHandler;
+    [SerializeField] string _timerFilePath;
     private GameObject _startPointStopper;
     IEnumerator _removeStartStopper;
 
+    public UnityEvent startLevel;
+    public UnityEvent resetLevel;
+
     private float? _timerTime;
     private float? _bestTime;
+    
 
     void Awake()
     {
         _playerInput = new PlayerInput();
         _playerInput.HunterControls.ResetSPLevel.started += OnResetLevel;
         _playerInput.HunterControls.Escape.started += OnEscape;
-        _JSONTimerHandler = _timerHolder.GetComponent<JSON_TimerHandler>();
         _startPointStopper = _startPoint.transform.GetChild(0).gameObject;
-        _bestTime = _JSONTimerHandler.Load();
+        _bestTime = JSON_Handler.Load(_timerFilePath);
         _timerDisplay.text = "Best Time: " + _bestTime?.ToString("0.##") ?? "No saved times";
         _timerDisplay.text += "\n Latest Time: ";
     }
@@ -38,8 +41,10 @@ public class SP_Hunter_GameManager : MonoBehaviour
         //Just in case we somehow missed deleting the last timer due to something unexpected happening we delete it again if it exist - Love
         if (_timerHolder.GetComponent<SP_Timer>()) Destroy(_timerHolder.GetComponent<SP_Timer>());
         _timerHolder.AddComponent<SP_Timer>();
+        startLevel.Invoke();
         Debug.Log("Level started");
     }
+
 
     public void FinishLevel()
     {
@@ -57,6 +62,7 @@ public class SP_Hunter_GameManager : MonoBehaviour
 
     void ResetLevel()
     {
+        resetLevel.Invoke();
         _preyNPCManager.RespawnPrey();
         if (_timerHolder.GetComponent<SP_Timer>()) Destroy(_timerHolder.GetComponent<SP_Timer>());
         _startPoint.SetActive(true);
@@ -66,6 +72,8 @@ public class SP_Hunter_GameManager : MonoBehaviour
         StartCoroutine(_removeStartStopper);
     }
 
+    //The "start stopper" is a barrier within the start bubble which exists for a second after restarting a level so you don't accidentally
+    //just run straight out of the bubble if you were holding W as you won/reset the level. - Love
     IEnumerator RemoveStartStopper()
     {
         yield return new WaitForSeconds(1f);
@@ -93,7 +101,7 @@ public class SP_Hunter_GameManager : MonoBehaviour
     public void WriteTimer(float? _inputTime)
     {
         if (_inputTime == null) return;
-        _bestTime = _JSONTimerHandler.CheckOverwrite(_inputTime.Value);
+        _bestTime = JSON_Handler.CheckOverwrite(_inputTime.Value, _timerFilePath);
         _timerDisplay.text = "Best Time: " + _bestTime?.ToString("0.##") ?? "No saved times";
         _timerDisplay.text += "\n Latest Time: " + _inputTime?.ToString("0.##") ?? string.Empty;
     }

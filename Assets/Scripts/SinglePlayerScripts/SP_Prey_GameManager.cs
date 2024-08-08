@@ -8,17 +8,17 @@ using UnityEngine.SceneManagement;
 public class SP_Prey_GameManager : MonoBehaviour
 {
     PlayerInput _playerInput;
-    [SerializeField] PickupManager _pickupManager;
+    [SerializeField] SP_PickupManager _pickupManager;
     [SerializeField] GameObject _startPoint;
     [SerializeField] GameObject _door1;
     [SerializeField] GameObject _door2;
     [SerializeField] GameObject _player;
     [SerializeField] GameObject _timerHolder;
     [SerializeField] TMP_Text _timerDisplay;
+    [SerializeField] string _timerFilePath;
     private Vector3 _door1InitPos;
     private Vector3 _door2InitPos;
 
-    private JSON_TimerHandler _JSONTimerHandler;
     private GameObject _startPointStopper;
     IEnumerator _removeStartStopper;
 
@@ -30,11 +30,11 @@ public class SP_Prey_GameManager : MonoBehaviour
         _playerInput = new PlayerInput();
         _playerInput.PreyControls.ResetSPLevel.started += OnResetLevel;
         _playerInput.PreyControls.Escape.started += OnEscape;
-        _JSONTimerHandler = _timerHolder.GetComponent<JSON_TimerHandler>();
+        
         _door1InitPos = _door1.transform.position;
         _door2InitPos = _door2.transform.position;
         _startPointStopper = _startPoint.transform.GetChild(0).gameObject;
-        _bestTime = _JSONTimerHandler.Load();
+        _bestTime = JSON_Handler.Load(_timerFilePath);
         _timerDisplay.text = "Best Time: " + _bestTime?.ToString("0.##") ?? "No saved times";
         _timerDisplay.text += "\n Latest Time: ";
     }
@@ -77,6 +77,8 @@ public class SP_Prey_GameManager : MonoBehaviour
         StartCoroutine(_removeStartStopper);
     }
 
+    //The "start stopper" is a barrier within the start bubble which exists for a second after restarting a level so you don't accidentally
+    //just run straight out of the bubble if you were holding W as you won/reset the level. - Love
     IEnumerator RemoveStartStopper()
     {
         yield return new WaitForSeconds(1f);
@@ -92,6 +94,7 @@ public class SP_Prey_GameManager : MonoBehaviour
 
     void OnEscape(InputAction.CallbackContext context)
     {
+        //Commented out so I don't return to another menu whenever i try to use the editor while testing - Love
         //ReturnToMenu();
     }
 
@@ -112,7 +115,7 @@ public class SP_Prey_GameManager : MonoBehaviour
     public void WriteTimer(float? _inputTime)
     {
         if (_inputTime == null) return;
-        _bestTime = _JSONTimerHandler.CheckOverwrite(_inputTime.Value);
+        _bestTime = JSON_Handler.CheckOverwrite(_inputTime.Value, _timerFilePath);
         _timerDisplay.text = "Best Time: " + _bestTime?.ToString("0.##") ?? "No saved times";
         _timerDisplay.text += "\n Latest Time: " + _inputTime?.ToString("0.##") ?? string.Empty;
     }

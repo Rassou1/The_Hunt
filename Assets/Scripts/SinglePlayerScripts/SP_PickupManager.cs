@@ -9,9 +9,8 @@ using UnityEngine.UI;
 //This script keeps track of how many diamonds are collected, how many needs collecting, what to do when you collect enough of them as well as updating the diamonds collected text.
 //It also handles respawning the diamonds when resetting a scene without reloading it.
 //-Love
-public class PickupManager : MonoBehaviour
+public class SP_PickupManager : MonoBehaviour
 {
-    
     public int _neededDiamonds;
     public GameObject _diamondPrefab;
     List<GameObject> _onStartDiamonds = new List<GameObject>();
@@ -42,6 +41,8 @@ public class PickupManager : MonoBehaviour
         if(_maxDiamonds - _activeDiamonds >= _neededDiamonds && !_exitOpened)
         {
             _exitOpened = true;
+            //I use this script both in the tutorial level which only has one door and in the trial which has 2 doors so I double check
+            //that there actually is a door before trying to add any components to avoid any null errors - Love
             if(_door1 != null)
             {
                 _door1.AddComponent<SP_DoorOpen>();

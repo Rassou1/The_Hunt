@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class SP_NPC_PreyManager : MonoBehaviour
 {
-    [SerializeField] GameObject _preyNPCPrefab;
     [SerializeField] GameObject _door1;
     [SerializeField] SP_Hunter_GameManager _gameManager;
 
