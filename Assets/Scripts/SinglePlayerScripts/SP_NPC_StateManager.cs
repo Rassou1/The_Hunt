@@ -18,17 +18,17 @@ public class SP_NPC_StateManager : MonoBehaviour
 
     public bool _activeLevel;
 
-    public SP_NPC_StateManager()
-    {
-        foreach (Transform child in _pathPointsCollection.transform)
-        {
-            SP_NPC_PathInfo tempPath = child.GetComponent<SP_NPC_PathInfo>();
-            _statesList.Add(new SP_NPC_State(child.transform.position, tempPath._speed, tempPath._run, tempPath._slide, tempPath._id, this));
-        }
-        _firstState = _statesList.FirstOrDefault(state => state._id == 1);
-        _activeState= _firstState;
-        _startPoint = gameObject.transform.position;
-    }
+    //public SP_NPC_StateManager()
+    //{
+    //    foreach (Transform child in _pathPointsCollection.transform)
+    //    {
+    //        SP_NPC_PathInfo tempPath = child.GetComponent<SP_NPC_PathInfo>();
+    //        _statesList.Add(new SP_NPC_State(child.transform.position, tempPath._speed, tempPath._run, tempPath._slide, tempPath._id, this));
+    //    }
+    //    _firstState = _statesList.FirstOrDefault(state => state._id == 1);
+    //    _activeState= _firstState;
+    //    _startPoint = gameObject.transform.position;
+    //}
 
     public void StartLevel()
     {
