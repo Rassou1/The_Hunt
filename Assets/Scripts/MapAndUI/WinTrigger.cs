@@ -116,15 +116,15 @@ public class WinTrigger : MonoBehaviour
             {
                 playerStates.gameEnded = true;
                
-                foreach (GameObject player in players)
+                foreach (GameObject obj in players)
                 {
-                    
-                    player.gameObject.GetComponent<P_StateManager>().Ghost = false;
+                    Debug.Log("winMove");
+                    other.gameObject.GetComponent<P_StateManager>().Ghost = false;
                     //makes u visible
-                    player.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
-                    player.gameObject.GetComponent<CapsuleCollider>().enabled = true;
-                    player.GetComponent<InteractablePlayer>().movingmap = true;
-                    mapMover.moveMaps(player);
+                    other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+                    other.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+                    obj.GetComponent<InteractablePlayer>().movingmap = true;
+                    mapMover.moveMaps(obj);
                 }
             }           
         }
