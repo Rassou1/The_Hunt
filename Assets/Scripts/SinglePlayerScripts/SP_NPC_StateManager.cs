@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+//This script manages the states of the NPC prey, it also calls for them to be created and puts them in a list
+//They get put in the list by their order in the editor window hierarchy, so you can just move them around in there if you want to change the order of the checkpoints on their route - Love
 public class SP_NPC_StateManager : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
@@ -11,35 +12,43 @@ public class SP_NPC_StateManager : MonoBehaviour
     public Animator Animator {  get { return _animator; } set { _animator = value; } }
 
     private SP_NPC_State _activeState;
-    private SP_NPC_State _firstState;
     private List<SP_NPC_State> _statesList = new List<SP_NPC_State>();
 
     private Vector3 _startPoint;
 
-    public bool _activeLevel;
+    [HideInInspector] public bool _activeLevel;
 
     public SP_NPC_StateManager()
     {
+        
+    }
+
+    public void Start()
+    {
         foreach (Transform child in _pathPointsCollection.transform)
         {
-            SP_NPC_PathInfo tempPath = child.GetComponent<SP_NPC_PathInfo>();
-            _statesList.Add(new SP_NPC_State(child.transform.position, tempPath._speed, tempPath._run, tempPath._slide, tempPath._id, this));
+            if (child.TryGetComponent<SP_NPC_PathInfo>(out SP_NPC_PathInfo tempPath))
+            {
+                _statesList.Add(tempPath.CreateState(this));
+            }
         }
-        _firstState = _statesList.FirstOrDefault(state => state._id == 1);
-        _activeState= _firstState;
+        _activeState = _statesList[0];
         _startPoint = gameObject.transform.position;
     }
 
     public void StartLevel()
     {
         _activeLevel = true;
+        _activeState.EnterState();
     }
 
     public void ResetPrey()
     {
         gameObject.transform.position = _startPoint;
-        _activeState = _firstState;
-        _activeLevel= false;
+        _activeState = _statesList[0];
+        _activeLevel = false;
+        _animator.SetBool("IsRunning", false);
+        _animator.SetBool("IsSliding", false);
     }
 
 
@@ -50,7 +59,7 @@ public class SP_NPC_StateManager : MonoBehaviour
 
     public void SwitchState()
     {
-        _activeState = _statesList.FirstOrDefault(state => state._id == _activeState._id + 1) ?? _firstState;
+        _activeState = _statesList.ElementAtOrDefault(_statesList.IndexOf(_activeState) + 1) ?? _statesList[0];
         _activeState.EnterState();
     }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.SceneManagement;
-
+using Unity.VisualScripting;
+// This is the script that manages most things in the prey trial - Love
 public class SP_Prey_GameManager : MonoBehaviour
 {
     PlayerInput _playerInput;

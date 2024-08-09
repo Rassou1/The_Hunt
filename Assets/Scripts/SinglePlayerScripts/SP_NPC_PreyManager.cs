@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
+//This script manages everything except the movement of the prey in the hunter trial and tutorial - Love
 public class SP_NPC_PreyManager : MonoBehaviour
 {
     [SerializeField] GameObject _door1;

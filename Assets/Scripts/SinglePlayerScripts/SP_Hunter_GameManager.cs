@@ -5,7 +5,8 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.SceneManagement;
-
+//This is the script that manages most things in the hunter trial.
+//This is also where I first learned about UnityEvents so I tested them out here. I will most likely be using them a lot in the future. - Love
 public class SP_Hunter_GameManager : MonoBehaviour
 {
     PlayerInput _playerInput;

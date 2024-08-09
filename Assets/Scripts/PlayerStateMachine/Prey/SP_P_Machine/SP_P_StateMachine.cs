@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-//This is just the "normal" state manager but addapted to work with the singleplayer tutorial
+//This version of the script has been changed to remove all references to multiplayer functionality so it can be used for singleplayer.
+// I didn't want to bog down the script with a bunch of checks if you were in multiplayer or singleplayer so I just created a copy instead of using the MP one - Love
 public class SP_P_StateMachine : MonoBehaviour
 {
     
