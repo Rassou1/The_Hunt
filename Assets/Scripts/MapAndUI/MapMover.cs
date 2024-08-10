@@ -129,10 +129,7 @@ public class MapMover : AttributesSync
                     /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(107f, 0.8f, 95);
                 }
                 secondChild.position = new Vector3(84f, 16.44f, 128);
-                currentplayer.gameObject.GetComponent<P_StateManager>().Ghost = false;
-                //makes u visible
-                currentplayer.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
-                currentplayer.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+                
             }
             hunterList = FindObjectsOnLayer(6);
             foreach (GameObject hunter in hunterList)
@@ -143,7 +140,13 @@ public class MapMover : AttributesSync
             networkManager = FindAnyObjectByType<Multiplayer>();
             networkManager.LoadScene("LOOBY");
             playerStates.gameStarted = false;
-            
+            foreach(GameObject currentplayer in parents)
+            {
+                currentplayer.gameObject.GetComponent<P_StateManager>().Ghost = false;
+                //makes u visible
+                currentplayer.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+                currentplayer.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            }
         }
     }
     // Start is called before the first frame update
