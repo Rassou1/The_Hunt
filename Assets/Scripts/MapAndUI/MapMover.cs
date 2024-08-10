@@ -115,8 +115,11 @@ public class MapMover : AttributesSync
             foreach (GameObject currentplayer in parents)
             {
                 Transform parentTransform = currentplayer.transform;
+                
                 Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
+                
                 Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+                
                 if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
                     /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(64.5f, 16.44f, 100);
@@ -126,16 +129,24 @@ public class MapMover : AttributesSync
                     /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(107f, 0.8f, 95);
                 }
                 secondChild.position = new Vector3(84f, 16.44f, 128);
+                
             }
             hunterList = FindObjectsOnLayer(6);
             foreach (GameObject hunter in hunterList)
             {
                 hunter.GetComponentInParent<Transform>();
             }
+            
             networkManager = FindAnyObjectByType<Multiplayer>();
             networkManager.LoadScene("LOOBY");
             playerStates.gameStarted = false;
-            
+            foreach(GameObject currentplayer in parents)
+            {
+                currentplayer.gameObject.GetComponent<P_StateManager>().Ghost = false;
+                //makes u visible
+                currentplayer.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+                currentplayer.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            }
         }
     }
     // Start is called before the first frame update
