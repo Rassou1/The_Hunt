@@ -108,7 +108,7 @@ public class WinTrigger : MonoBehaviour
                 playerStates.playerEscaped(player);
                 other.gameObject.GetComponent<P_StateManager>().Ghost = true;
                 //makes u invisible
-                //other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+                other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
                 Debug.Log(other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject);
                 other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             }
