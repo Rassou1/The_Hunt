@@ -1,3 +1,4 @@
+using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,29 +15,36 @@ public class EndGameController : MonoBehaviour
 
     private PlayerStates playerStates;
     private GameObject thisPlayer;
+    public Alteruna.Avatar avatar;
 
     private bool escapedAnimationPlayed = false;
     private bool caughtAnimationPlayed = false;
 
     void Start()
     {
-        // Assuming this script is attached to the player GameObject
         thisPlayer = transform.root.gameObject;
 
-        // Find the PlayerStates script in the scene
         playerStates = FindObjectOfType<PlayerStates>();
     }
 
     void Update()
     {
-        // Check if the current player is in the escapedPlayers list and the animation hasn't played yet
+      
+        if (!avatar.IsMe)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+        
         if (playerStates.escapedPlayers.Contains(thisPlayer) && !escapedAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
             escapedAnimationPlayed = true;
         }
 
-        // Check if the current player is in the taggedPlayers list and the animation hasn't played yet
         if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));

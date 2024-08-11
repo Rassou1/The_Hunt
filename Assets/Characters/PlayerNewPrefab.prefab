@@ -5859,6 +5859,7 @@ MonoBehaviour:
   spinScaleTime: 0.3
   extraScaleTime: 0.15
   scaleDownTime: 0.1
+  avatar: {fileID: 7566427906986039737}
 --- !u!1 &7981023939896729249
 GameObject:
   m_ObjectHideFlags: 0
