@@ -13,29 +13,34 @@ public class EndGameController : MonoBehaviour
     public float scaleDownTime;
 
     private PlayerStates playerStates;
+    private GameObject thisPlayer;
 
     private bool escapedAnimationPlayed = false;
     private bool caughtAnimationPlayed = false;
 
     void Start()
     {
-        
+        // Assuming this script is attached to the player GameObject
+        thisPlayer = transform.root.gameObject;
 
+        // Find the PlayerStates script in the scene
         playerStates = FindObjectOfType<PlayerStates>();
     }
 
     void Update()
     {
-        if (playerStates.escapedPlayers.Count > 0 && !escapedAnimationPlayed)
+        // Check if the current player is in the escapedPlayers list and the animation hasn't played yet
+        if (playerStates.escapedPlayers.Contains(thisPlayer) && !escapedAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
-            escapedAnimationPlayed = true;  
+            escapedAnimationPlayed = true;
         }
 
-        if (playerStates.taggedPlayers.Count > 0 && !caughtAnimationPlayed)
+        // Check if the current player is in the taggedPlayers list and the animation hasn't played yet
+        if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
-            caughtAnimationPlayed = true; 
+            caughtAnimationPlayed = true;
         }
     }
 
@@ -46,7 +51,7 @@ public class EndGameController : MonoBehaviour
 
         yield return AnimateObject(obj2, 360, spinScaleTime, 0.001f, 6.61f);
 
-        float maxScale = 6.61f * 2f;  
+        float maxScale = 6.61f * 2f;
         yield return AnimateObject(obj2, 0, extraScaleTime, 6.61f, maxScale);
 
         yield return AnimateObject(obj2, 0, scaleDownTime, maxScale, 6.61f);
