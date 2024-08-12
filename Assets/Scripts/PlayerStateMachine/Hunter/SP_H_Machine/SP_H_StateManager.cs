@@ -266,7 +266,7 @@ public class SP_H_StateManager : MonoBehaviour
 
         if (_isAttacking)
         {
-            Debug.DrawRay(_cameraOrientation.transform.position, _cameraOrientation.forward.normalized * 2f, Color.green, 1);
+            Debug.DrawRay(_cameraOrientation.transform.position, _cameraOrientation.forward.normalized * 2.5f, Color.green, 1);
         }
 
         if (gameObject.GetComponentInParent<PlayerWalking>() != null)
@@ -564,8 +564,7 @@ public class SP_H_StateManager : MonoBehaviour
     void SPAttack()
     {
         RaycastHit hit;
-        if (!Physics.SphereCast(_cameraOrientation.transform.position, 0.3f,_cameraOrientation.forward, out hit, 1.5f)) return;
-
+        if (!Physics.SphereCast(_cameraOrientation.transform.position, 0.39f,_cameraOrientation.forward, out hit, 2.5f)) return;
         if (hit.collider.gameObject.CompareTag("SP_Prey"))
         {
             _npcPreyManager.RemovePrey(hit.collider.gameObject);

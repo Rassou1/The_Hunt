@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 //This script returns the player to the singleplayer menu, either through entering the exit area or pressing esc. - Love
+//Only for the tutorials, not the trials - Love
 public class SP_ReturnMenuScript : MonoBehaviour
 {
     PlayerInput _playerInput;

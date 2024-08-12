@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
-//This script handles saving and loading JSON files, both for saving your best time in the trial mode and for
-//creating the NPC preys state machines for their movement paths - Love
+//This script handles saving and loading JSON files. - Love
 public static class JSON_Handler
 {
+    //A string to the folder the JSONs get saved in, purely for the convenience of refering to the variable instead of the file path when writing the code. - Love
     private static string _filePath = "/SP_JSONs";
 
-    //The classes which are used to save data to the JSONs - Love
+    //The classes which are used to save data to the JSONs for the timer - Love
     private class SaveTime
     {
         public float _bestTime;
     }
 
-    private class NPCPreyStatePath
-    {
-        public Vector3 _targetPos;
-        public float _speed;
-        public bool _run;
-        public bool _slide;
-    }
 
     //This method is used to check if you should overwrite your old best time with your new one. It then returns your current best time - Love
     public static float? CheckOverwrite(float newTime, string fileName)

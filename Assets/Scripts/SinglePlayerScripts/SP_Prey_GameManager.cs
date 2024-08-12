@@ -65,7 +65,7 @@ public class SP_Prey_GameManager : MonoBehaviour
         ResetLevel();
     }
 
-
+    //Resets the level, including player position, timer, diamonds, and adding the "start stopper" - Love
     public void ResetLevel()
     {
         _pickupManager.RespawnDiamonds();
@@ -86,8 +86,11 @@ public class SP_Prey_GameManager : MonoBehaviour
         _startPointStopper.SetActive(false);
     }
 
+    //Returns the player to the SP menu. Resets the level before that to avoid any lingering timers being loaded in the background. - Love
+    //The coroutine being started but not given enough time to finish before we switch does not seem to create any issues after extensive testing - Love
     private void ReturnToMenu()
     {
+        ResetLevel();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene("SP_Menu");
@@ -95,8 +98,7 @@ public class SP_Prey_GameManager : MonoBehaviour
 
     void OnEscape(InputAction.CallbackContext context)
     {
-        //Commented out so I don't return to another menu whenever i try to use the editor while testing - Love
-        //ReturnToMenu();
+        ReturnToMenu();
     }
 
     void OnResetLevel(InputAction.CallbackContext context)

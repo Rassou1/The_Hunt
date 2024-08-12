@@ -42,8 +42,9 @@ public class SP_PickupManager : MonoBehaviour
         {
             _exitOpened = true;
             //I use this script both in the tutorial level which only has one door and in the trial which has 2 doors so I double check
-            //that there actually is a door before trying to add any components to avoid any null errors - Love
-            if(_door1 != null)
+            //that there actually is a door before trying to add any components to avoid any null errors
+            //Another solution would have been to just add a second door outside of the map area in the tutorial level, but this felt easier to "set and forget" - Love
+            if (_door1 != null)
             {
                 _door1.AddComponent<SP_DoorOpen>();
             }
