@@ -61,7 +61,7 @@ public class SP_Hunter_GameManager : MonoBehaviour
         ResetLevel();
     }
 
-    void ResetLevel()
+    public void ResetLevel()
     {
         resetLevel.Invoke();
         _preyNPCManager.RespawnPrey();

@@ -20,8 +20,8 @@ public class SP_NPC_PathInfo : MonoBehaviour
     private void Awake()
     {
         _pos = gameObject.transform.position;
-        //_meshRenderer = GetComponent<MeshRenderer>();
-        //_meshRenderer.enabled = false;
+        _meshRenderer = GetComponent<MeshRenderer>();
+        _meshRenderer.enabled = false;
     }
 
     public SP_NPC_State CreateState(SP_NPC_StateManager manager)

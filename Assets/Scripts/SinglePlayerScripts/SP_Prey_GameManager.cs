@@ -66,7 +66,7 @@ public class SP_Prey_GameManager : MonoBehaviour
     }
 
 
-    void ResetLevel()
+    public void ResetLevel()
     {
         _pickupManager.RespawnDiamonds();
         DoorReset();

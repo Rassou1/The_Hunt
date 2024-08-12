@@ -13,7 +13,7 @@ public class SP_DoorOpen : MonoBehaviour
     {
         gameObject.transform.position -= _moveDown;
         _totMoved += _moveDown.y;
-        if(_totMoved > 4)
+        if(_totMoved > 15)
         {
             Destroy(this);
         }
