@@ -143,7 +143,7 @@ public class MapMover : AttributesSync
             {
                 currentplayer.gameObject.GetComponent<P_StateManager>().Ghost = false;
                 //makes u visible
-                currentplayer.transform.parent.GetComponentInChildren<MeshRenderer>().enabled = false;
+                currentplayer.transform.parent.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
                 currentplayer.gameObject.GetComponent<CapsuleCollider>().enabled = true;
             }
             playerStates.gameStarted = false;
