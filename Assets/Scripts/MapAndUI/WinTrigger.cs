@@ -104,11 +104,12 @@ public class WinTrigger : MonoBehaviour
             player = playerNewPrefab;
             if (other.gameObject.layer == 7)
             {
+                Debug.Log(other.gameObject.name);
                 stateManager.Escaped = true;
                 playerStates.playerEscaped(player);
                 other.gameObject.GetComponent<P_StateManager>().Ghost = true;
                 //makes u invisible
-                other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+                other.transform.parent.GetComponentInChildren<MeshRenderer>().enabled = false;//transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
                 Debug.Log(other.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject);
                 other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             }

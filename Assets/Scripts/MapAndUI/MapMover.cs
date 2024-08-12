@@ -139,14 +139,15 @@ public class MapMover : AttributesSync
             
             networkManager = FindAnyObjectByType<Multiplayer>();
             networkManager.LoadScene("LOOBY");
-            playerStates.gameStarted = false;
-            foreach(GameObject currentplayer in parents)
+            foreach (GameObject currentplayer in parents)
             {
                 currentplayer.gameObject.GetComponent<P_StateManager>().Ghost = false;
                 //makes u visible
-                currentplayer.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+                currentplayer.transform.parent.GetComponentInChildren<MeshRenderer>().enabled = false;
                 currentplayer.gameObject.GetComponent<CapsuleCollider>().enabled = true;
             }
+            playerStates.gameStarted = false;
+            
         }
     }
     // Start is called before the first frame update
