@@ -206,7 +206,7 @@ public class H_StateManager : Synchronizable
 
         _playerInput = new PlayerInput();
         _capsuleCollider = GetComponent<CapsuleCollider>();
-        Debug.Log(_capsuleCollider);
+        
 
         //Getting the bounds of the capsule collider and reduce it slightly to use for collisions later - Love
         _bounds = _capsuleCollider.bounds;

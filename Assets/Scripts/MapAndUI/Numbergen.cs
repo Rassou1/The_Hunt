@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine.InputSystem.XR;
 using UnityEditor;
 
-public class RoleGiver: AttributesSync,IInteractable
+public class NumberGen: AttributesSync,IInteractable
 {
     public GameObject hunterCanvas;
     public GameObject preyCanvas;
@@ -27,10 +27,8 @@ public class RoleGiver: AttributesSync,IInteractable
 
     public void InitInteract(string interactor)
     {
-        
         players = GameObject.FindGameObjectsWithTag("Player");
         BroadcastRemoteMethod("Interact", interactor);
-
     }
     
     [SynchronizableMethod] 

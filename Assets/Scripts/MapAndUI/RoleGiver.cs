@@ -7,14 +7,13 @@ using Unity.VisualScripting;
 using UnityEngine.InputSystem.XR;
 using UnityEditor;
 
-public class NewRoleGiver : AttributesSync, IInteractable
+public class RoleGiver : AttributesSync, IInteractable
 {
     // Many memebers worked on this script file
     // Thitiwich implented the code to show the hunter/prey canvas but has been rewritten by another member in the group
     public GameObject hunterCanvas;
     public GameObject preyCanvas;
 
-    public List<GameObject> players;
     public GameObject newPrefab;
 
     public PlayerStates playerStates;
@@ -31,62 +30,37 @@ public class NewRoleGiver : AttributesSync, IInteractable
     public void InitInteract(string interactor)
     {
         //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game.
-        playerStates.stateReset();
+        playerStates.StateReset();
         BroadcastRemoteMethod("Interact", interactor);
-        
-        
-
-    }
-
-    List<GameObject> FindObjectsOnLayer(int layer)
-    {
-        //Finds every object on a given layer.
-        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        List<GameObject> objectsInLayer = new List<GameObject>();
-
-        foreach (var obj in allPlayers)
-        {
-            if (obj.layer == layer)
-            {
-                objectsInLayer.Add(obj);
-            }
-        }
-
-        return objectsInLayer;
     }
 
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
-        //Resets all players to prey. Moves all players to game map.Changes the host to a hunter.
-        if (players.Count > 0)
+        //Resets all players to prey. Moves all players to game map. Changes the host to a hunter. - Ibrahim
+        if (playerStates.Players.Count > 0)
         {
-
-            resetAllPrefabs();
+            ResetAllPrefabs();
 
             //int hunterIndex = Random.Range(0, players.Count - 1);
-            //Legacy code. Doesn't work due to networking errors.
-            
+            //Legacy code. Doesn't work due to networking errors. - Ibrahim
+
             int hunterIndex = 0;
 
-            foreach (GameObject p in players)
+            foreach (GameObject p in playerStates.Players)
             {
-                p.GetComponent<InteractablePlayer>().movingmap = true;
-                mm.moveMaps(p);
-                
+                //p.GetComponent<InteractablePlayer>().movingmap = true; Don't do this. Don't try to do my work for me please. - Ibrahim
+                mm.MoveMaps(p);
             }
 
 
-            for (int i = 0; i < players.Count; i++)
+            for (int i = 0; i < playerStates.Players.Count; i++)
             {
-
-                
-
-                Alteruna.Avatar avatar = players[i].GetComponent<Alteruna.Avatar>();
+                Alteruna.Avatar avatar = playerStates.Players[i].GetComponent<Alteruna.Avatar>();
 
                 if (i == hunterIndex)
                 {
-                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this. The layer of the hunterComponent is already on Hunter layer.
+                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this. The layer of the hunterComponent is already on Hunter layer. -Ibrahim
 
                     if (!avatar.IsMe)
                         return;
@@ -96,14 +70,13 @@ public class NewRoleGiver : AttributesSync, IInteractable
                 else
                 {
 
-                    //players[i].layer = LayerMask.NameToLayer("Prey");
+                    //players[i].layer = LayerMask.NameToLayer("Prey"); //Same deal as the hunter. -Ibrahim
 
                     if (!avatar.IsMe)
                         return;
                     preyCanvas.SetActive(true);
                 }
             }
-            
         }
     }
 
@@ -113,15 +86,15 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
     public void SwitchPrefab(int i)
     {
-        //Disables the prey and enables the hunter components of the player.
-        Transform parentTransform = players[i].transform;
+        //Disables the prey and enables the hunter components of the player. - Ibrahim
+        Transform parentTransform = playerStates.Players[i].transform;
 
-        // Find the child GameObjects by name
+        // Find the child GameObjects by name - Ibrahim
         Transform firstChild = parentTransform.Find("PreyComponent");
         Transform secondChild = parentTransform.Find("HunterComponent");
 
 
-        // Transfer the position from the first child to the second child
+        // Transfer the position from the first child to the second child - Ibrahim
 
         secondChild.position = Vector3.zero;
         secondChild.rotation = firstChild.rotation;
@@ -129,54 +102,36 @@ public class NewRoleGiver : AttributesSync, IInteractable
 
         if (firstChild != null && secondChild != null)
         {
-
-         
             secondChild.gameObject.SetActive(true);
-            
-            Debug.Log(firstChild.position.ToString() + secondChild.position.ToString());
-            
-         
             firstChild.gameObject.SetActive(false);
-
-
-
-
         }
-        else
-        {
-            Debug.LogWarning("One or both child GameObjects not found.");
-           
-        }
-
     }
 
     
 
     public void Tag(GameObject tagger, GameObject tagged)
     {
+        //If a player is tagged, they are sent to the jail's co-ordinates. - Ibrahim
         tagged.transform.position = new Vector3(63.7f, 10.58f, -17.28f);
-
     }
 
     void Start()
     {
         hunterCanvas.SetActive(false);
         preyCanvas.SetActive(false);
-        
     }
 
     void Update()
-    {
-        players = FindObjectsOnLayer(9);
-       
-        
+    {   
         networkManager = FindAnyObjectByType<Multiplayer>();
         playerStates = networkManager.GetComponent<PlayerStates>();
     }
 
-    public void resetAllPrefabs()
+
+    public void ResetAllPrefabs()
     {
-        List<GameObject> _players = FindObjectsOnLayer(9);
+        //MOVE THIS TO PLAYERSTATES - Ibrahim
+        List<GameObject> _players = playerStates.FindObjectsOnLayer(9);
 
         foreach (var obj in _players)
         {
@@ -193,6 +148,7 @@ public class NewRoleGiver : AttributesSync, IInteractable
             // Transfer the position from the first child to the second child
             secondChild.position = firstChild.position;
             secondChild.rotation = firstChild.rotation;
+            
             if (!firstChild.gameObject.activeSelf)
             {
 

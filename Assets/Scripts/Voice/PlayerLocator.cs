@@ -41,7 +41,7 @@ public class PlayerLocator : MonoBehaviour
             {
                 VivoxService.Instance.Set3DPosition(transform.gameObject, multiplayer.CurrentRoom.Name);
                 _nextPosUpdate += 0.3f;
-                Debug.Log("Updated Player Location");
+                
             }
         }
     }
