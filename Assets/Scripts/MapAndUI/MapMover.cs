@@ -7,112 +7,85 @@ using UnityEngine.SceneManagement;
 
 public class MapMover : AttributesSync
 {
-    public List<GameObject> players;
-    public List<GameObject> preyList;
-    public List<GameObject> hunterList;
-    public List<GameObject> parents;
-
-    P_StateManager pManager;
-
     Multiplayer networkManager;
-    Transform spawn;
     PlayerStates playerStates;
-
 
     public GameObject GiveObject()
     {
         return gameObject;
     }
 
-   
-
-    public List<GameObject> FindObjectsOnLayer(int layer)
-    {
-        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        List<GameObject> objectsInLayer = new List<GameObject>();
-
-        foreach (var obj in allPlayers)
-        {
-            if (obj.layer == layer)
-            {
-                objectsInLayer.Add(obj);
-            }
-        }
-
-        return objectsInLayer;
-    }
-
-
-
     [SynchronizableMethod]
-    public void moveMaps(GameObject player)
+    public void MoveMaps(GameObject player)
     {
-        //Finds the networkmanager and the playerstates global values. Moves players differently based on which map they are on. The gameStarted and gameEnded bools were used 
-        //to ensure correct placement of players.
+        //Finds the networkmanager and the playerstates global values. Moves players differently based on which map they are on. The gameStarted and gameEnded bools were used
+        //to ensure correct placement of players. - Ibrahim
         networkManager = FindAnyObjectByType<Multiplayer>();
-        spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();
         Scene scene = SceneManager.GetActiveScene();
         
 
-        if ((scene.name == "LOOBY" || scene.name == "TEMPSTART") && !playerStates.gameStarted)
+        if ((scene.name == "Start" || scene.name == "Lobby") && !playerStates.gameStarted)
         {
-            Debug.Log("moving from start");
-
-            //Transform transform = player.GetComponent<Transform>();
-            //transform.position = new Vector3(0, 3, -10);
-
-
-
-
-            foreach (GameObject p in players)
+            foreach (GameObject p in playerStates.Players)
             {
-                //Sends each player to a predetermined spawn in the final map.
+                //Sends each player to a predetermined spawn in the final map. - Ibrahim
                 Transform parentTransform = p.transform;
+
+                //Finds the PlayerAndBody component which controls position on both the prey and hunter. - Ibrahim
                 Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
                 Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+
+                //Centers all 3 objects onto one position to unify movement and avoid desync/animation errors. - Ibrahim
                 parentTransform.position = Vector3.zero;
                 secondChild.position = Vector3.zero;
                 firstChild.position = Vector3.zero;
+
+                //Picks a random spawn for the prey. Initially tried to make these values global through PlayerStates, however that caused sync errors due to the nature of PlayerStates. 
+                //It's more efficient to put them here. - Ibrahim
                 int spawnLocation = Random.Range(0, 80000);
+                
                 if (firstChild.gameObject.activeSelf)
                 {
                     if (spawnLocation <= 20000)
                     {
-                        firstChild.position = new Vector3(5, 1, 28);//playerStates.spawns[0];
+                        firstChild.position = new Vector3(5, 1, 28);
                     }
                     else if (spawnLocation <= 40000 && spawnLocation > 20000)
                     {
-                        firstChild.position = new Vector3(-11, 1, 27);//playerStates.spawns[1];
+                        firstChild.position = new Vector3(-11, 1, 27);
                     }
                     else if (spawnLocation <= 60000 && spawnLocation > 40000)
                     {
-                        firstChild.position = new Vector3(-14.5f, 1, 4);//playerStates.spawns[2];
+                        firstChild.position = new Vector3(-14.5f, 1, 4);
                     }
                     else if (spawnLocation <= 80000 && spawnLocation > 60000)
                     {
-                        firstChild.position = new Vector3(9, 1, 6); //playerStates.spawns[3];
+                        firstChild.position = new Vector3(9, 1, 6);
                     }
                 }
-
             }
             
-            networkManager.LoadScene("Final_Map");
+            //Loads the game scene, and sets the game started boolean to true. - Ibrahim
+            networkManager.LoadScene("Game_Map");
             playerStates.gameStarted = true;
-            Debug.Log($"Has game started? {playerStates.gameStarted}");
         }
-        else if (scene.name == "Final_Map" && playerStates.gameStarted && playerStates.gameEnded)
+        else if (scene.name == "Game_Map" && playerStates.gameStarted && playerStates.gameEnded)
         {
             //Moves players from game map to lobby. Sends them to their place based on their status (tagged, escaped, hunter).
-            //NOT WORKING DUE TO PLAYERANDBODY DISCREPANCY. MAKE SURE YOU CHANGE THE RIGHT POSITIONS, SAME WAY AS IN NEWROLEGIVER AND INITIAL MAPMOVER
+            //NOT WORKING DUE TO PLAYERANDBODY DISCREPANCY. MAKE SURE YOU CHANGE THE RIGHT POSITIONS, SAME WAY AS IN ROLEGIVER AND INITIAL MAPMOVER
 
             //UPDATE NOTE: Changed the structure of the code to accomodate for playerandbody, basically just stole the code from the initial map movement (which is tested and working).
             //this should theoretically work. literally no guarantee of it since I can't test on my laptop /ibrahim
 
             //TEST NOTE: It doesnt work not sure of the reason yet, but it seems like firstChild isnt innitialized in some way /Tyron 
 
-            parents = FindObjectsOnLayer(9);
-            foreach (GameObject currentplayer in parents)
+            //I have no clue why it isn't working at this point. It's the exact same code, but only works half the time?? I'll refactor it and we'll see. - Ibrahim
+
+            //IT IS ALIVE- Ibrahim
+
+
+            foreach (GameObject currentplayer in playerStates.Players)
             {
                 Transform parentTransform = currentplayer.transform;
                 
@@ -122,31 +95,32 @@ public class MapMover : AttributesSync
                 
                 if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
-                    /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(64.5f, 16.44f, 100);
+                    firstChild.position = new Vector3(64.5f, 16.44f, 100);
                 }
                 else if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == false)
                 {
-                    /*prey.GetComponentInParent<Transform>()*/firstChild.position = new Vector3(107f, 0.8f, 95);
+                    firstChild.position = new Vector3(107f, 0.8f, 95);
                 }
                 secondChild.position = new Vector3(84f, 16.44f, 128);
                 
             }
-            hunterList = FindObjectsOnLayer(6);
-            foreach (GameObject hunter in hunterList)
+            
+            foreach (GameObject hunter in playerStates.Hunters)
             {
                 hunter.GetComponentInParent<Transform>();
             }
             
             networkManager = FindAnyObjectByType<Multiplayer>();
-            networkManager.LoadScene("LOOBY");
-            playerStates.gameStarted = false;
-            foreach(GameObject currentplayer in parents)
+            networkManager.LoadScene("Lobby");
+            foreach (GameObject prey in playerStates.Prey)
             {
-                currentplayer.gameObject.GetComponent<P_StateManager>().Ghost = false;
+                prey.GetComponentInChildren<P_StateManager>(true).Ghost = false;
                 //makes u visible
-                currentplayer.gameObject.transform.parent.gameObject.transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
-                currentplayer.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+                prey.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+                prey.GetComponent<CapsuleCollider>().enabled = true;
             }
+            playerStates.gameStarted = false;
+            
         }
     }
     // Start is called before the first frame update
@@ -159,11 +133,7 @@ public class MapMover : AttributesSync
     // Update is called once per frame
     void Update()
     {
-        players = FindObjectsOnLayer(9);
-        //Debug.Log(players.Count);
         networkManager = FindAnyObjectByType<Multiplayer>();
-        spawn = networkManager.GetComponent<Transform>();
         playerStates = networkManager.GetComponent<PlayerStates>();
-        //Debug.Log(playerStates);
     }
 }

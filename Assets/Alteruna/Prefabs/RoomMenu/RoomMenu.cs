@@ -70,9 +70,9 @@ namespace Alteruna
 
 				LeaveButton.onClick.AddListener(() =>
 				{                    
-					Multiplayer.LoadScene("TEMPSTART");
+					Multiplayer.LoadScene("Start");
 					Multiplayer.CurrentRoom?.Leave();
-                    _refreshTime = RefreshInterval;
+                    _refreshTime = RefreshInterval;	
 				});
 
 				if (TitleText != null)
@@ -105,7 +105,7 @@ namespace Alteruna
 		private void FixedUpdate()
 		{
 			// Disable leaving if player mid-game
-			if (CurrentScene.name == "GAMETEMPMAP")
+			if (CurrentScene.name == "Game_Map")
 			{
 
 			}
@@ -222,7 +222,7 @@ namespace Alteruna
 
 			Scene currentScene = SceneManager.GetActiveScene();
 
-            if (currentScene.name == "TEMPSTART") { 
+            if (currentScene.name == "Start") { 
 				SPButton.gameObject.SetActive(false); 
 			}
 
@@ -243,7 +243,7 @@ namespace Alteruna
 			LeaveButton.interactable = false;
             Scene currentScene = SceneManager.GetActiveScene();
 
-            if (currentScene.name == "TEMPSTART")
+            if (currentScene.name == "Start")
             {
                 SPButton.gameObject.SetActive(true);
             }

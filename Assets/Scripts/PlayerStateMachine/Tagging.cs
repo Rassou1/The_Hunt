@@ -45,11 +45,11 @@ public class InteractablePlayer : AttributesSync, IInteractable
     {
         networkManager = FindAnyObjectByType<Multiplayer>();
         playerStates = networkManager.GetComponent<PlayerStates>();
-        if (movingmap)
-        {
-            MoveMap();
-            movingmap = false;
-        }
+        //if (movingmap)
+        //{
+        //    MoveMap();
+        //    movingmap = false;
+        //}
     }
 
 
@@ -64,21 +64,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
         
     }
     public GameObject _interactor;
-    List<GameObject> FindObjectsOnLayer(int layer)
-    {
-        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        List<GameObject> objectsInLayer = new List<GameObject>();
-
-        foreach (var obj in allPlayers)
-        {
-            if (obj.layer == layer)
-            {
-                objectsInLayer.Add(obj);
-            }
-        }
-
-        return objectsInLayer;
-    }
+    
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
@@ -86,7 +72,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
 
         List<GameObject> players = new List<GameObject>();
 
-        List<GameObject> parents = FindObjectsOnLayer(9);
+        List<GameObject> parents = playerStates.FindObjectsOnLayer(9);
 
         foreach (GameObject player in parents)
         {
@@ -143,6 +129,6 @@ public class InteractablePlayer : AttributesSync, IInteractable
     [SynchronizableMethod]
     public void MoveMap()
     {
-        mm.moveMaps(gameObject);
+        mm.MoveMaps(gameObject);
     }
 }

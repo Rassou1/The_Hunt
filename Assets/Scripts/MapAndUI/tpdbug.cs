@@ -5,11 +5,11 @@ using UnityEngine;
 public class tpdbug : MonoBehaviour
 {
     // Start is called before the first frame update
-    NewRoleGiver mm;
+    RoleGiver rg;
 
     void Start()
     {
-        mm = FindAnyObjectByType<NewRoleGiver>();
+        rg = FindAnyObjectByType<RoleGiver>();
     }
 
     // Update is called once per frame
@@ -17,7 +17,7 @@ public class tpdbug : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            mm.resetAllPrefabs();
+            rg.ResetAllPrefabs();
         }
     }
 }
