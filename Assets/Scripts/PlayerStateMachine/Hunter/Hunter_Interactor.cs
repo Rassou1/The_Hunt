@@ -76,10 +76,23 @@ public class Hunter_Interactor : AttributesSync
         // Instantiate the taggingCube at the calculated position and rotation
         GameObject spawnedCube = Instantiate(taggingCube, spawnPosition, cameraTransform.rotation);
 
-        // Attach the CubeLifetime script to handle destruction and collision tracking
-        //spawnedCube.AddComponent<CubeLifetime>().Initialize(cubeLifetime);
+        StartCoroutine(WaitForMilliseconds(300));
+
+        // Get the TaggingBoxCollisionHandler component from the spawned cube
+        TaggingBoxCollisionHandler collisionHandler = spawnedCube.GetComponent<TaggingBoxCollisionHandler>();
+        Debug.Log(collisionHandler.GiveList());
+
+       
     }
 
+    private IEnumerator WaitForMilliseconds(float milliseconds)
+    {
+        // Convert milliseconds to seconds
+        float seconds = milliseconds / 1000f;
+
+        // Wait for the specified amount of time
+        yield return new WaitForSeconds(seconds);
+    }
 
     [SynchronizableMethod]
     public void Attack()

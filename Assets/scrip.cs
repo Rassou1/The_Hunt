@@ -1,27 +1,37 @@
+using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TaggingBoxCollitionHandler : MonoBehaviour
-{
-    // Start is called before the first frame update
 
+public class TaggingBoxCollisionHandler : MonoBehaviour
+{
+    // List to store colliding objects
     public List<GameObject> objectList = new List<GameObject>();
 
     void Start()
     {
+        // Clear the list at the start
         objectList.Clear();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Update logic, if any, goes here
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        objectList.Add(collision.gameObject);
-        Debug.Log(objectList);
+        if (other.gameObject != null && !objectList.Contains(other.transform.root.gameObject) && other.transform.root.gameObject.name.Contains("PlayerNewPrefab"))
+        {
+            objectList.Add(other.transform.root.gameObject);
+        }
     }
+
+
+    public List<GameObject> GiveList()
+    {
+        return objectList;
+    }
+
 }

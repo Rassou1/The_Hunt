@@ -4421,7 +4421,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -7853,7 +7853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8060280617838245117, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8073696889094361895, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.w
