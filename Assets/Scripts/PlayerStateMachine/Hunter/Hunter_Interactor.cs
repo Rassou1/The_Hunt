@@ -60,9 +60,25 @@ public class Hunter_Interactor : AttributesSync
 
     }
 
+    public GameObject taggingCube;
 
+    public float cubeLifetime = 5f;
 
+    // Method to spawn the taggingCube
+    public void SpawnCube()
+    {
+        // Get the camera's transform
+        Transform cameraTransform = InteractorCam.transform;
 
+        // Calculate the position in front of the camera
+        Vector3 spawnPosition = cameraTransform.position + cameraTransform.forward * taggingCube.transform.localScale.z;
+
+        // Instantiate the taggingCube at the calculated position and rotation
+        GameObject spawnedCube = Instantiate(taggingCube, spawnPosition, cameraTransform.rotation);
+
+        // Attach the CubeLifetime script to handle destruction and collision tracking
+        spawnedCube.AddComponent<CubeLifetime>().Initialize(cubeLifetime);
+    }
 
 
     [SynchronizableMethod]
@@ -85,7 +101,7 @@ public class Hunter_Interactor : AttributesSync
         
 
         Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
-
+        SpawnCube();
         QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide;
         // Perform the SphereCast
         if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange, 7, queryTriggerInteraction))
@@ -153,4 +169,43 @@ public class Hunter_Interactor : AttributesSync
     //    }
     //}
 
+}
+
+
+public class CubeLifetime : MonoBehaviour
+{
+    private float lifetime;
+    private List<GameObject> collidedObjects = new List<GameObject>();
+
+    // Initialize the lifetime of the cube
+    public void Initialize(float lifetime)
+    {
+        this.lifetime = lifetime;
+        StartCoroutine(DestroyAfterLifetime());
+    }
+
+    // Coroutine to destroy the cube after its lifetime expires
+    private IEnumerator<WaitForSeconds> DestroyAfterLifetime()
+    {
+        yield return new WaitForSeconds(lifetime);
+        LogCollisions();
+        Destroy(gameObject);
+    }
+
+    // OnCollisionEnter is called when the cube collides with another object
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Add the collided object to the list
+        collidedObjects.Add(collision.gameObject);
+    }
+
+    // Log the collisions when the cube is destroyed
+    private void LogCollisions()
+    {
+        Debug.Log("The cube collided with the following objects:");
+        foreach (GameObject obj in collidedObjects)
+        {
+            Debug.Log(obj.name);
+        }
+    }
 }
