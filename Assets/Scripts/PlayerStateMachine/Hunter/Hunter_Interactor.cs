@@ -80,9 +80,12 @@ public class Hunter_Interactor : AttributesSync
 
         // Get the TaggingBoxCollisionHandler component from the spawned cube
         TaggingBoxCollisionHandler collisionHandler = spawnedCube.GetComponent<TaggingBoxCollisionHandler>();
-        Debug.Log(collisionHandler.GiveList());
 
-       
+        foreach (GameObject obj in collisionHandler.GiveList())
+        {
+            Debug.Log("Colliding Object: " + obj.name);
+        }
+
     }
 
     private IEnumerator WaitForMilliseconds(float milliseconds)
