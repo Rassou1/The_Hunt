@@ -1173,6 +1173,7 @@ MonoBehaviour:
   InteractRange: 2
   me: {fileID: 1537914950847844620}
   taggingCube: {fileID: 7885764919395856526, guid: 6e1d5a78bedd0c341bdd34077ffe19e4, type: 3}
+  cubeLifetime: 5
 --- !u!1 &1554703547536722506
 GameObject:
   m_ObjectHideFlags: 0

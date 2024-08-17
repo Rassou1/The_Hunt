@@ -77,7 +77,7 @@ public class Hunter_Interactor : AttributesSync
         GameObject spawnedCube = Instantiate(taggingCube, spawnPosition, cameraTransform.rotation);
 
         // Attach the CubeLifetime script to handle destruction and collision tracking
-        spawnedCube.AddComponent<CubeLifetime>().Initialize(cubeLifetime);
+        //spawnedCube.AddComponent<CubeLifetime>().Initialize(cubeLifetime);
     }
 
 
@@ -169,43 +169,4 @@ public class Hunter_Interactor : AttributesSync
     //    }
     //}
 
-}
-
-
-public class CubeLifetime : MonoBehaviour
-{
-    private float lifetime;
-    private List<GameObject> collidedObjects = new List<GameObject>();
-
-    // Initialize the lifetime of the cube
-    public void Initialize(float lifetime)
-    {
-        this.lifetime = lifetime;
-        StartCoroutine(DestroyAfterLifetime());
-    }
-
-    // Coroutine to destroy the cube after its lifetime expires
-    private IEnumerator<WaitForSeconds> DestroyAfterLifetime()
-    {
-        yield return new WaitForSeconds(lifetime);
-        LogCollisions();
-        Destroy(gameObject);
-    }
-
-    // OnCollisionEnter is called when the cube collides with another object
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Add the collided object to the list
-        collidedObjects.Add(collision.gameObject);
-    }
-
-    // Log the collisions when the cube is destroyed
-    private void LogCollisions()
-    {
-        Debug.Log("The cube collided with the following objects:");
-        foreach (GameObject obj in collidedObjects)
-        {
-            Debug.Log(obj.name);
-        }
-    }
 }
