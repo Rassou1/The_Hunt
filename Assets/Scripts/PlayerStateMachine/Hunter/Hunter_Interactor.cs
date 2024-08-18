@@ -143,6 +143,8 @@ public class Hunter_Interactor : AttributesSync
 
         foreach (GameObject player in taggedPlayers)
         {
+            Transform prey = player.transform.Find("PreyComponent");
+
             IInteractable interactObj = player.gameObject.GetComponentInParent<IInteractable>();
 
             if (interactObj != null)
