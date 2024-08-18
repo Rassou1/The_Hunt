@@ -127,17 +127,23 @@ public class Hunter_Interactor : AttributesSync
         }
 
         // Define the radius for the SphereCast
-        
+
 
         //Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
         SpawnCube();
-        QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide;
-        // Perform the SphereCast
-        //if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange, 7, queryTriggerInteraction))
-        //{
-        foreach(GameObject player in taggedPlayers) 
+
+
+        StartCoroutine(ProcessInteractionsWithDelay());
+    }
+
+    private IEnumerator ProcessInteractionsWithDelay()
+    {
+        // Wait for 300 milliseconds
+        yield return new WaitForSeconds(300/1000f);
+
+        foreach (GameObject player in taggedPlayers)
         {
-         IInteractable interactObj = player.gameObject.GetComponentInParent<IInteractable>();
+            IInteractable interactObj = player.gameObject.GetComponentInParent<IInteractable>();
 
             if (interactObj != null)
             {
@@ -149,13 +155,15 @@ public class Hunter_Interactor : AttributesSync
                 Debug.Log("No interactable object found!");
             }
         }
-           
-        //}
-        //else
-        //{
-        //    Debug.Log("SphereCast did not hit any objects.");
-        //}
     }
+
+
+    //}
+    //else
+    //{
+    //    Debug.Log("SphereCast did not hit any objects.");
+    //}
+
 
 
     //public void InteractionRay()
