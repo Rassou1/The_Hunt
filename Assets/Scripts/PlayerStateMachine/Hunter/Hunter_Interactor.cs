@@ -147,7 +147,7 @@ public class Hunter_Interactor : AttributesSync
 
             if (interactObj != null)
             {
-                interactObj.InitInteract(_avatar.name);
+                interactObj.InitInteract(gameObject.name);
                 Debug.Log($"{gameObject.name} tagged {interactObj.GiveObject().name}");
             }
             else

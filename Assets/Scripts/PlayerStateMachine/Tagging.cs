@@ -38,13 +38,16 @@ public class InteractablePlayer : AttributesSync, IInteractable
     }
     public void Start()
     {
+        networkManager = FindAnyObjectByType<Multiplayer>();
         myName = gameObject.name;
     }
 
     private void Update()
     {
         networkManager = FindAnyObjectByType<Multiplayer>();
-        playerStates = networkManager.GetComponent<PlayerStates>();
+        
+
+          playerStates = networkManager.GetComponent<PlayerStates>();
         //if (movingmap)
         //{
         //    MoveMap();
