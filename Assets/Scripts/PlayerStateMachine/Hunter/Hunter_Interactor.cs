@@ -61,7 +61,7 @@ public class Hunter_Interactor : AttributesSync
     }
 
     public GameObject taggingCube;
-
+    public List<GameObject> taggedPlayers;
     public float cubeLifetime = 5f;
 
     // Method to spawn the taggingCube
@@ -100,7 +100,7 @@ public class Hunter_Interactor : AttributesSync
             // Check the list of colliding objects after the delay
             foreach (GameObject obj in collisionHandler.objectList)
             {
-                Debug.Log("Colliding Object: " + obj.name);
+                taggedPlayers.Add(obj);
             }
         }
         else
@@ -129,30 +129,32 @@ public class Hunter_Interactor : AttributesSync
         // Define the radius for the SphereCast
         
 
-        Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+        //Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
         SpawnCube();
         QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide;
         // Perform the SphereCast
-        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange, 7, queryTriggerInteraction))
+        //if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange, 7, queryTriggerInteraction))
+        //{
+        foreach(GameObject player in taggedPlayers) 
         {
-
-            Debug.Log(hitInfo.transform.gameObject.name);
-            IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
+         IInteractable interactObj = player.gameObject.GetComponentInParent<IInteractable>();
 
             if (interactObj != null)
             {
                 interactObj.InitInteract(_avatar.name);
-                Debug.Log($"{gameObject.name} interacted with {interactObj.GiveObject().name} at position {hitInfo.point}");
+                Debug.Log($"{gameObject.name} tagged {interactObj.GiveObject().name}");
             }
             else
             {
                 Debug.Log("No interactable object found!");
             }
         }
-        else
-        {
-            Debug.Log("SphereCast did not hit any objects.");
-        }
+           
+        //}
+        //else
+        //{
+        //    Debug.Log("SphereCast did not hit any objects.");
+        //}
     }
 
 
