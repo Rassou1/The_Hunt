@@ -76,26 +76,39 @@ public class Hunter_Interactor : AttributesSync
         // Instantiate the taggingCube at the calculated position and rotation
         GameObject spawnedCube = Instantiate(taggingCube, spawnPosition, cameraTransform.rotation);
 
-        StartCoroutine(WaitForMilliseconds(300));
-
-        // Get the TaggingBoxCollisionHandler component from the spawned cube
-        TaggingBoxCollisionHandler collisionHandler = spawnedCube.GetComponent<TaggingBoxCollisionHandler>();
-
-        foreach (GameObject obj in collisionHandler.objectList)
-        {
-            Debug.Log("Colliding Object: " + obj.name);
-        }
-
+        // Start a coroutine to wait for 300 milliseconds and then check the list
+        StartCoroutine(CheckCollisionsAfterDelay(spawnedCube, 300));
     }
 
-    private IEnumerator WaitForMilliseconds(float milliseconds)
+    private IEnumerator CheckCollisionsAfterDelay(GameObject cube, float milliseconds)
     {
         // Convert milliseconds to seconds
         float seconds = milliseconds / 1000f;
 
-        // Wait for the specified amount of time
+        Debug.Log("Timer start");
+
+        // Wait for the specified time
         yield return new WaitForSeconds(seconds);
+
+        Debug.Log("Timer end");
+
+        // Get the TaggingBoxCollisionHandler component from the spawned cube
+        TaggingBoxCollisionHandler collisionHandler = cube.GetComponent<TaggingBoxCollisionHandler>();
+
+        if (collisionHandler != null)
+        {
+            // Check the list of colliding objects after the delay
+            foreach (GameObject obj in collisionHandler.objectList)
+            {
+                Debug.Log("Colliding Object: " + obj.name);
+            }
+        }
+        else
+        {
+            Debug.LogError("TaggingBoxCollisionHandler component not found on the spawned cube.");
+        }
     }
+
 
     [SynchronizableMethod]
     public void Attack()
