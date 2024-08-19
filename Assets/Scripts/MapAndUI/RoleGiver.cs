@@ -9,8 +9,6 @@ using UnityEditor;
 
 public class RoleGiver : AttributesSync, IInteractable
 {
-    // Many memebers worked on this script file
-    // Thitiwich implented the code to show the hunter/prey canvas but has been rewritten by another member in the group
     public GameObject hunterCanvas;
     public GameObject preyCanvas;
 
@@ -22,6 +20,9 @@ public class RoleGiver : AttributesSync, IInteractable
     public MapMover mm;
 
     public Spawner spawner;
+
+    int hunterIndex = 0;
+
     public GameObject GiveObject()
     {
         return gameObject;
@@ -37,43 +38,35 @@ public class RoleGiver : AttributesSync, IInteractable
     [SynchronizableMethod]
     public void Interact(string interactor)
     {
-        //Resets all players to prey. Moves all players to game map. Changes the host to a hunter. - Ibrahim
+        //On interact with the GameObject that houses this script: - Ibrahim
         if (playerStates.Players.Count > 0)
         {
+            //All players are reset - Ibrahim
             ResetAllPrefabs();
-
-            //int hunterIndex = Random.Range(0, players.Count - 1);
-            //Legacy code. Doesn't work due to networking errors. - Ibrahim
-
-            int hunterIndex = 0;
 
             foreach (GameObject p in playerStates.Players)
             {
-                //p.GetComponent<InteractablePlayer>().movingmap = true; Don't do this. Don't try to do my work for me please. - Ibrahim
+                //The players and all networking components move scenes. - Ibrahim
                 mm.MoveMaps(p);
             }
-
 
             for (int i = 0; i < playerStates.Players.Count; i++)
             {
                 Alteruna.Avatar avatar = playerStates.Players[i].GetComponent<Alteruna.Avatar>();
-
+                //The host gets turned into a hunter via the SwitchPrefab script. - Ibrahim
                 if (i == hunterIndex)
                 {
-                    //players[i].layer = LayerMask.NameToLayer("Hunter"); //Don't do this. The layer of the hunterComponent is already on Hunter layer. -Ibrahim
-
                     if (!avatar.IsMe)
                         return;
                     SwitchPrefab(hunterIndex);
+                    //Hunter UI is turned on. - Ibrahim
                     hunterCanvas.SetActive(true);
                 }
                 else
                 {
-
-                    //players[i].layer = LayerMask.NameToLayer("Prey"); //Same deal as the hunter. -Ibrahim
-
                     if (!avatar.IsMe)
                         return;
+                    //For all other players, the prey UI is turned on instead. - Ibrahim
                     preyCanvas.SetActive(true);
                 }
             }
@@ -99,7 +92,7 @@ public class RoleGiver : AttributesSync, IInteractable
         secondChild.position = Vector3.zero;
         secondChild.rotation = firstChild.rotation;
 
-
+        //Enable the hunter, then disable the prey component. - Ibrahim
         if (firstChild != null && secondChild != null)
         {
             secondChild.gameObject.SetActive(true);
@@ -117,6 +110,7 @@ public class RoleGiver : AttributesSync, IInteractable
 
     void Start()
     {
+        //Both UI canvases are turned off at the beginning to avoid overlap between the two. - Ibrahim
         hunterCanvas.SetActive(false);
         preyCanvas.SetActive(false);
     }

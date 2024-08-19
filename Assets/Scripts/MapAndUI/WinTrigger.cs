@@ -12,12 +12,10 @@ public class WinTrigger : MonoBehaviour
     GameObject player;
     private P_StateManager stateManager;
     public PlayerStates playerStates;
-    Multiplayer mp/* = new Multiplayer()*/; //Commented out the new here since it gets instanciated on start, change back if it broke anything - Love
+    Multiplayer mp;
     MapMover mapMover;
 
-    //Commented these out since they were never used and just gave a yellow error in the editor which was annoying me, change back if it broke anything - Love
-    //string hoboInteractor = ("lol");
-    //string sceneName = "TEMPLOBBY";
+    
 
     void Start()
     {
@@ -25,8 +23,6 @@ public class WinTrigger : MonoBehaviour
         mp = FindAnyObjectByType<Multiplayer>();
         playerStates = mp.GetComponent<PlayerStates>();
 
-        //Commented out this as well since it gave a "can't use new keyword with monobehavior" error in the editor, change back if it broke anything - Lov
-        //It broke something - Ibrahim
         mapMover = new MapMover();
 
         playerStates.escapedPlayers.Clear();
@@ -35,7 +31,7 @@ public class WinTrigger : MonoBehaviour
 
     // Update is called once per frame
     public void Update()
-    {
+    { 
         if (playerStates.taggedPlayers.Count == playerStates.Prey.Count && playerStates.taggedPlayers.Count > 0)
         {
             playerStates.allPlayersTagged = true;
@@ -45,7 +41,6 @@ public class WinTrigger : MonoBehaviour
             playerStates.gameEnded = true;
             foreach (GameObject p in playerStates.Players)
             {
-                //p.GetComponent<InteractablePlayer>().movingmap = true; 
                 mapMover.MoveMaps(p);
                 
             }

@@ -73,17 +73,9 @@ public class MapMover : AttributesSync
         else if (scene.name == "Game_Map" && playerStates.gameStarted && playerStates.gameEnded)
         {
             //Moves players from game map to lobby. Sends them to their place based on their status (tagged, escaped, hunter).
-            //NOT WORKING DUE TO PLAYERANDBODY DISCREPANCY. MAKE SURE YOU CHANGE THE RIGHT POSITIONS, SAME WAY AS IN ROLEGIVER AND INITIAL MAPMOVER
 
             //UPDATE NOTE: Changed the structure of the code to accomodate for playerandbody, basically just stole the code from the initial map movement (which is tested and working).
-            //this should theoretically work. literally no guarantee of it since I can't test on my laptop /ibrahim
-
-            //TEST NOTE: It doesnt work not sure of the reason yet, but it seems like firstChild isnt innitialized in some way /Tyron 
-
-            //I have no clue why it isn't working at this point. It's the exact same code, but only works half the time?? I'll refactor it and we'll see. - Ibrahim
-
-            //IT IS ALIVE- Ibrahim
-
+            //this should theoretically work. /ibrahim
 
             foreach (GameObject currentplayer in playerStates.Players)
             {
