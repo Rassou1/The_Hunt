@@ -278,7 +278,7 @@ public class P_StateManager : Synchronizable
         //    DiamondsTaken++;
         //}
 
-        if (gameObject.GetComponentInParent<PlayerWalking>() != null)
+        if (gameObject.GetComponentInParent<PlayerWalking>() != null && _ghost == false)
         {
             if (_isMovementPressed && _isGrounded && !_isSprintPressed && !_isSlidePressed)
             {
@@ -288,6 +288,7 @@ public class P_StateManager : Synchronizable
             if (_isMovementPressed && _isGrounded && _isSprintPressed && !_isSlidePressed)
             {
                 playerSounds.PlayRunSound();
+                
             }
         }
 
