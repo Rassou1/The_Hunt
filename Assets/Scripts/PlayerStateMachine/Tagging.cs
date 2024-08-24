@@ -10,7 +10,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
 
     public Vector3 prisonPosition = new Vector3(-43.941452f, 8.03499985f, -49.7112961f);
     public Alteruna.Avatar _avatar;
-    Multiplayer networkManager;
+    public Multiplayer networkManager;
     PlayerStates playerStates;
     //public PlayerManagerBase _playerManager;
 
@@ -38,13 +38,16 @@ public class InteractablePlayer : AttributesSync, IInteractable
     }
     public void Start()
     {
+        networkManager = FindAnyObjectByType<Multiplayer>();
         myName = gameObject.name;
     }
 
     private void Update()
     {
         networkManager = FindAnyObjectByType<Multiplayer>();
-        playerStates = networkManager.GetComponent<PlayerStates>();
+        
+
+          playerStates = networkManager.GetComponent<PlayerStates>();
         //if (movingmap)
         //{
         //    MoveMap();

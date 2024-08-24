@@ -60,9 +60,54 @@ public class Hunter_Interactor : AttributesSync
 
     }
 
+    public GameObject taggingCube;
+    public List<GameObject> taggedPlayers;
+    public float cubeLifetime = 5f;
 
+    // Method to spawn the taggingCube
+    public void SpawnCube()
+    {
+        // Get the camera's transform
+        Transform cameraTransform = InteractorCam.transform;
 
+        // Calculate the position in front of the camera
+        Vector3 spawnPosition = cameraTransform.position + cameraTransform.forward * taggingCube.transform.localScale.z;
 
+        // Instantiate the taggingCube at the calculated position and rotation
+        GameObject spawnedCube = Instantiate(taggingCube, spawnPosition, cameraTransform.rotation);
+
+        // Start a coroutine to wait for 300 milliseconds and then check the list
+        StartCoroutine(CheckCollisionsAfterDelay(spawnedCube, 300));
+    }
+
+    private IEnumerator CheckCollisionsAfterDelay(GameObject cube, float milliseconds)
+    {
+        // Convert milliseconds to seconds
+        float seconds = milliseconds / 1000f;
+
+        Debug.Log("Timer start");
+
+        // Wait for the specified time
+        yield return new WaitForSeconds(seconds);
+
+        Debug.Log("Timer end");
+
+        // Get the TaggingBoxCollisionHandler component from the spawned cube
+        TaggingBoxCollisionHandler collisionHandler = cube.GetComponent<TaggingBoxCollisionHandler>();
+
+        if (collisionHandler != null)
+        {
+            // Check the list of colliding objects after the delay
+            foreach (GameObject obj in collisionHandler.objectList)
+            {
+                taggedPlayers.Add(obj);
+            }
+        }
+        else
+        {
+            Debug.LogError("TaggingBoxCollisionHandler component not found on the spawned cube.");
+        }
+    }
 
 
     [SynchronizableMethod]
@@ -82,33 +127,45 @@ public class Hunter_Interactor : AttributesSync
         }
 
         // Define the radius for the SphereCast
-        
 
-        Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
 
-        QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.Collide;
-        // Perform the SphereCast
-        if (Physics.SphereCast(ray, sphereRadius, out RaycastHit hitInfo, InteractRange, 7, queryTriggerInteraction))
+        //Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+        SpawnCube();
+
+
+        StartCoroutine(ProcessInteractionsWithDelay());
+    }
+
+    private IEnumerator ProcessInteractionsWithDelay()
+    {
+        // Wait for 300 milliseconds
+        yield return new WaitForSeconds(300/1000f);
+
+        foreach (GameObject player in taggedPlayers)
         {
+            Transform prey = player.transform.Find("PreyComponent");
 
-            Debug.Log(hitInfo.transform.gameObject.name);
-            IInteractable interactObj = hitInfo.collider.gameObject.GetComponentInParent<IInteractable>();
+            IInteractable interactObj = prey.gameObject.GetComponentInParent<IInteractable>();
 
             if (interactObj != null)
             {
-                interactObj.InitInteract(_avatar.name);
-                Debug.Log($"{gameObject.name} interacted with {interactObj.GiveObject().name} at position {hitInfo.point}");
+                interactObj.InitInteract(gameObject.transform.root.name);
+                Debug.Log($"{gameObject.transform.root.name} tagged {interactObj.GiveObject().name}");
             }
             else
             {
                 Debug.Log("No interactable object found!");
             }
         }
-        else
-        {
-            Debug.Log("SphereCast did not hit any objects.");
-        }
     }
+
+
+    //}
+    //else
+    //{
+    //    Debug.Log("SphereCast did not hit any objects.");
+    //}
+
 
 
     //public void InteractionRay()

@@ -1172,6 +1172,9 @@ MonoBehaviour:
   InteractorSource: {fileID: 2833849638471885709}
   InteractRange: 2
   me: {fileID: 1537914950847844620}
+  taggingCube: {fileID: 7885764919395856526, guid: 6e1d5a78bedd0c341bdd34077ffe19e4, type: 3}
+  taggedPlayers: []
+  cubeLifetime: 5
 --- !u!1 &1554703547536722506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6998,8 +7001,6 @@ GameObject:
   - component: {fileID: 5382581127656534061}
   - component: {fileID: 7566427906986039737}
   - component: {fileID: 8844845579550324302}
-  - component: {fileID: 8811234123907765804}
-  - component: {fileID: 7773378596374827617}
   - component: {fileID: 8643063952669146692}
   - component: {fileID: 3114294699107689675}
   - component: {fileID: 5458006861526385047}
@@ -7065,45 +7066,6 @@ MonoBehaviour:
   _uidString: bb6abba6-7f1f-40fb-92e9-03af38dfe7af
   Reliability: 1
   LocalMethodBehavior: 1
---- !u!114 &8811234123907765804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9209242939184243159}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 534eb61cd539a2d4b9b274233e3f1855, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InteractorCam: {fileID: 4783567523206326615}
-  InteractorSource: {fileID: 5382581127656534061}
-  InteractRange: 1.1
-  me: {fileID: 9209242939184243159}
---- !u!114 &7773378596374827617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9209242939184243159}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db10a0c97f27ac145b2be0d7eac216be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
-  _uidString: 0cc4245b-a878-4a69-9f50-bbc592c599a2
-  Reliability: 1
-  LocalMethodBehavior: 1
-  tagged: 0
-  prisonPosition: {x: 63.7, y: 10.58, z: -17.28}
-  _avatar: {fileID: 7566427906986039737}
-  _hunterManager: {fileID: 1128020610449734755}
-  _preyManager: {fileID: 1269575076366420476}
-  movingmap: 0
-  _interactor: {fileID: 0}
 --- !u!114 &8643063952669146692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7128,7 +7090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b752496b9df7a4b823fe7be2aec0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taggingPlayer: {fileID: 7773378596374827617}
+  taggingPlayer: {fileID: 0}
 --- !u!114 &5458006861526385047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7849,6 +7811,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.034545477
       objectReference: {fileID: 0}
+    - target: {fileID: 8060280617838245117, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8073696889094361895, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9367828
@@ -8097,6 +8063,7 @@ MonoBehaviour:
   tagged: 0
   prisonPosition: {x: -43.941452, y: 8.035, z: -49.711296}
   _avatar: {fileID: 7566427906986039737}
+  networkManager: {fileID: 0}
   _hunterManager: {fileID: 1128020610449734755}
   _preyManager: {fileID: 1269575076366420476}
   movingmap: 0
@@ -8123,11 +8090,6 @@ MonoBehaviour:
   Reliability: 1
   LocalMethodBehavior: 1
   avatar: {fileID: 7566427906986039737}
---- !u!1 &4783567523206326615 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 140602009291933678, guid: 59556d925da285648bfaf1333170db54, type: 3}
-  m_PrefabInstance: {fileID: 4868709614004448953}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4871366360179217991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3290272104888574, guid: 59556d925da285648bfaf1333170db54, type: 3}
