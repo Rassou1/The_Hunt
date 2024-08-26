@@ -109,7 +109,7 @@ public class MapMover : AttributesSync
                 prey.GetComponentInChildren<P_StateManager>(true).Ghost = false;
                 //makes u visible
                 prey.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-                prey.GetComponentInChildren<CapsuleCollider>().enabled = true;
+                prey.GetComponent<CapsuleCollider>().enabled = true;
             }
             playerStates.gameStarted = false;
             
