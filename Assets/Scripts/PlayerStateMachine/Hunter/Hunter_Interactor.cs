@@ -28,11 +28,15 @@ public class Hunter_Interactor : AttributesSync
     public Transform InteractorSource;
     public float InteractRange;
 
+    public Multiplayer networkManager;
+    PlayerStates playerStates;
 
     [SerializeField] private GameObject me;
     private float sphereRadius = 0.5f; // Adjust this value as needed
     void Start()
     {
+        networkManager = FindAnyObjectByType<Multiplayer>();
+
         _avatar = gameObject.GetComponentInParent<Alteruna.Avatar>();
         me = gameObject;
     }
@@ -47,13 +51,19 @@ public class Hunter_Interactor : AttributesSync
     [SynchronizableMethod]
     public void AttackRemote()
     {
-        Attack();
+        if (playerStates.gameEnded) return;
+            Attack();
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        networkManager = FindAnyObjectByType<Multiplayer>();
+
+
+        playerStates = networkManager.GetComponent<PlayerStates>();
 
         Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
 
