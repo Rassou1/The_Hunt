@@ -1147,6 +1147,7 @@ MonoBehaviour:
   InteractorCam: {fileID: 4062844638846800762}
   InteractorSource: {fileID: 2833849638471885709}
   InteractRange: 2
+  networkManager: {fileID: 0}
   me: {fileID: 1537914950847844620}
   taggingCube: {fileID: 7885764919395856526, guid: 6e1d5a78bedd0c341bdd34077ffe19e4, type: 3}
   taggedPlayers: []
