@@ -33,7 +33,9 @@ public class PlayerStates : MonoBehaviour
         roleGiver.ResetAllPrefabs();
         foreach(GameObject prey in prey)
         {
-            P_StateManager state = prey.GetComponent<P_StateManager>();
+            P_StateManager state = prey.GetComponentInChildren<P_StateManager>();
+            Debug.Log(state);
+            Debug.Log(state.Escaped);
             state.Escaped = false;
             state.Caught = false;
         }
