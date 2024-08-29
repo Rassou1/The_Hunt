@@ -14,12 +14,9 @@ public class P_SlidingState : P_BaseState
 
     //Change the position of the camera as well as the size of the collider when entering and exiting the state - Love
     //Also make the horizontal mouse sensitivity lower to make the slide feel less maneuverable, also creates a forward direction modifier to the root state that gives your sideways inputs less impact for the same reason - Love
-    public override void EnterState()//0.41f -0.29f
+    public override void EnterState()
     {
-        float x = _ctx._cameraPostion.transform.position.x;
-        float y = _ctx._cameraPostion.transform.position.z;
-        _ctx._cameraPostion.transform.position = new Vector3(x, -0.29f, y);
-
+        _ctx._cameraPostion.transform.position -= new Vector3(0, 0.7f, 0);
         _ctx.CapsuleColliderHeight = 0.7f;
         
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
@@ -66,9 +63,7 @@ public class P_SlidingState : P_BaseState
 
     public override void ExitState()
     {
-        float x = _ctx._cameraPostion.transform.position.x;
-        float y = _ctx._cameraPostion.transform.position.z;
-        _ctx._cameraPostion.transform.position = new Vector3(x, 0.41f, y);
+        _ctx._cameraPostion.transform.position += new Vector3(0, 0.7f, 0);
         _ctx.CapsuleColliderHeight = 1.5f;
         _ctx.SubStateDirSet = new Vector3(0, 0, 0);
         _ctx.HorMouseMod = 1f;
