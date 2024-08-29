@@ -47,6 +47,11 @@ public class CollectItems : MonoBehaviour
             }
         }
     }
+    void Awake()
+    {
+        isCollected = false;
+        Diamonds.SetActive(true);
+    }
 
     void OnEnable()
     {
@@ -116,4 +121,6 @@ public class CollectItems : MonoBehaviour
             diamondCountText.text = "Diamonds: " + diamondsCollected;
         }
     }
+
+    
 }

@@ -65,7 +65,7 @@ public class WinTrigger : MonoBehaviour
                 stateManager.Escaped = true;
                 playerStates.playerEscaped(player);
                 other.gameObject.GetComponent<P_StateManager>().Ghost = true;
-                //makes u invisible
+                //Makes you invisible. Enables ghost mode.
                 other.transform.parent.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
                 other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             }
@@ -76,23 +76,11 @@ public class WinTrigger : MonoBehaviour
                
                 foreach (GameObject obj in playerStates.Players)
                 {
-                    //obj.GetComponent<InteractablePlayer>().movingmap = true;
                     mapMover.MoveMaps(obj);
                 }
             }           
         }
     }
-
-
-    //old code no longer used. - Ibrahim
-    //public IEnumerator CountDown()
-    //{
-    //    //yield return new WaitForSeconds(delay);
-    //    yield return new WaitForSeconds(0);
-    //    Cursor.lockState = CursorLockMode.None;
-    //    Cursor.visible = true;
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    //}
 
 }
 

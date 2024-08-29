@@ -49,19 +49,19 @@ public class MapMover : AttributesSync
                 {
                     if (spawnLocation <= 20000)
                     {
-                        firstChild.position = new Vector3(5, 1, 28);
+                        firstChild.position = new Vector3(5, 1.7f, 28);
                     }
                     else if (spawnLocation <= 40000 && spawnLocation > 20000)
                     {
-                        firstChild.position = new Vector3(-11, 1, 27);
+                        firstChild.position = new Vector3(-11, 1.7f, 27);
                     }
                     else if (spawnLocation <= 60000 && spawnLocation > 40000)
                     {
-                        firstChild.position = new Vector3(-14.5f, 1, 4);
+                        firstChild.position = new Vector3(-14.5f, 1.7f, 4);
                     }
                     else if (spawnLocation <= 80000 && spawnLocation > 60000)
                     {
-                        firstChild.position = new Vector3(9, 1, 6);
+                        firstChild.position = new Vector3(9, 1.7f, 6);
                     }
                 }
             }
@@ -107,7 +107,7 @@ public class MapMover : AttributesSync
             foreach (GameObject prey in playerStates.Prey)
             {
                 prey.GetComponentInChildren<P_StateManager>(true).Ghost = false;
-                //makes u visible
+                //Makes you visible. Disables ghost mode.
                 prey.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
                 prey.GetComponent<CapsuleCollider>().enabled = true;
             }
