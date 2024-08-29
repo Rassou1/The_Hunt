@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6295d2c1690bedc4b85e84b6e132b29c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: TEMPSTART
+  _sceneName: Start
 --- !u!1 &101840427
 GameObject:
   m_ObjectHideFlags: 0
