@@ -60,7 +60,7 @@ public class WinTrigger : MonoBehaviour
         {
             stateManager = playerNewPrefab.GetComponentInChildren<P_StateManager>(true);
             player = playerNewPrefab;
-            if (other.gameObject.layer == 7)
+            if (other.gameObject.layer == 7) 
             {
                 stateManager.Escaped = true;
                 playerStates.playerEscaped(player);

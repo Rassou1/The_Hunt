@@ -41,9 +41,7 @@ public class RoleGiver : AttributesSync, IInteractable
         //On interact with the GameObject that houses this script: - Ibrahim
         if (playerStates.Players.Count > 0)
         {
-            //All players are reset - Ibrahim
-            ResetAllPrefabs();
-
+            
             foreach (GameObject p in playerStates.Players)
             {
                 //The players and all networking components move scenes. - Ibrahim

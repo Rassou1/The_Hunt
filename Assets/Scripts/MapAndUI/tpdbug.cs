@@ -7,17 +7,17 @@ public class tpdbug : MonoBehaviour
     // Start is called before the first frame update
     RoleGiver rg;
 
-    void Start()
-    {
-        rg = FindAnyObjectByType<RoleGiver>();
-    }
+    //void Start()
+    //{
+    //    rg = FindAnyObjectByType<RoleGiver>();
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            rg.ResetAllPrefabs();
-        }
-    }
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.K))
+    //    {
+    //        rg.ResetAllPrefabs();
+    //    }
+    //}
 }

@@ -23,14 +23,19 @@ public class PlayerStates : MonoBehaviour
     private List <GameObject> prey;
     private List <GameObject> hunters;
 
+    public RoleGiver roleGiver;
+
     public bool gameStarted;
     public bool gameEnded;
     public bool allPlayersTagged;
     public void StateReset()
     {
-        foreach (GameObject player in players)
+        roleGiver.ResetAllPrefabs();
+        foreach(GameObject prey in prey)
         {
-
+            P_StateManager state = prey.GetComponent<P_StateManager>();
+            state.Escaped = false;
+            state.Caught = false;
         }
         escapedPlayers.Clear();
         taggedPlayers.Clear();
@@ -57,6 +62,8 @@ public class PlayerStates : MonoBehaviour
         players = FindObjectsOnLayer(9);
         prey = FindObjectsOnLayer(7);
         hunters = FindObjectsOnLayer(6);
+        roleGiver = FindObjectOfType<RoleGiver>();
+        Debug.Log(roleGiver.ToString());
     }
 
     public List<GameObject> Players { get { return players; } }
