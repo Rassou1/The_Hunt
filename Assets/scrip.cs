@@ -50,6 +50,7 @@ public class TaggingBoxCollisionHandler : MonoBehaviour
                 objectList.Add(rootObject);
             }
         }
+
     }
 
 

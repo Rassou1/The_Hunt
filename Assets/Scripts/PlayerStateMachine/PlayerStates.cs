@@ -65,7 +65,6 @@ public class PlayerStates : MonoBehaviour
         prey = FindObjectsOnLayer(7);
         hunters = FindObjectsOnLayer(6);
         roleGiver = FindObjectOfType<RoleGiver>();
-        Debug.Log(roleGiver.ToString());
     }
 
     public List<GameObject> Players { get { return players; } }

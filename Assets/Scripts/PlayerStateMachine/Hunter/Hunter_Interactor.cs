@@ -117,6 +117,7 @@ public class Hunter_Interactor : AttributesSync
         {
             Debug.LogError("TaggingBoxCollisionHandler component not found on the spawned cube.");
         }
+                Destroy(cube);
     }
 
 
