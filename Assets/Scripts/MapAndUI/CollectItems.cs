@@ -23,10 +23,12 @@ public class CollectItems : MonoBehaviour
         audioPlay = GetComponent<AudioSource>();
         _renderer = GetComponent<Renderer>();
         _collider = GetComponent<BoxCollider>();
-        if (Diamonds != null)
-        {
-            Diamonds.SetActive(true);  // Ensure the diamond is visible and interactable at the start
-        }
+        isCollected = false;
+        Diamonds.SetActive(true);
+        //if (Diamonds != null)
+        //{
+        //    Diamonds.SetActive(true);  // Ensure the diamond is visible and interactable at the start
+        //}
         UpdateDiamondText();
     }
 
@@ -46,11 +48,6 @@ public class CollectItems : MonoBehaviour
                 other.GetComponentInChildren<P_StateManager>().DiamondsTaken++;
             }
         }
-    }
-    void Awake()
-    {
-        isCollected = false;
-        Diamonds.SetActive(true);
     }
 
     void OnEnable()

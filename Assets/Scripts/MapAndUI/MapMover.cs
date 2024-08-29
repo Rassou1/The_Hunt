@@ -108,8 +108,9 @@ public class MapMover : AttributesSync
             {
                 prey.GetComponentInChildren<P_StateManager>(true).Ghost = false;
                 //Makes you visible. Disables ghost mode.
+                Debug.Log("ghost off");
                 prey.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-                prey.GetComponent<CapsuleCollider>().enabled = true;
+                prey.GetComponentInChildren<CapsuleCollider>().enabled = true;
             }
             playerStates.gameStarted = false;
             
