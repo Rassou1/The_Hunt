@@ -3136,6 +3136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {fileID: 684376852109019960}
+  cameraBasePosition: {fileID: 0}
   avatar: {fileID: 7566427906986039737}
 --- !u!1 &4166207050790885680
 GameObject:
@@ -4376,6 +4377,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 672891025351659196}
   _cameraOrientation: {fileID: 7228998573676511553}
   _cameraPostion: {fileID: 684376852109019960}
+  _cameraBasePostion: {fileID: 2450038516188579346}
   _animator: {fileID: 1570531997046739908}
   _armsAnimator: {fileID: 6886000345657404654}
   _remoteAnimator: {fileID: 3136571778272917934}
