@@ -16,7 +16,7 @@ public class H_SlidingState : H_BaseState
     //Also make the horizontal mouse sensitivity lower to make the slide feel less maneuverable, also creates a forward direction modifier to the root state that gives your sideways inputs less impact for the same reason - Love
     public override void EnterState()
     {
-        _ctx._cameraPostion.transform.position-= new Vector3(0, 0.9f, 0); ;
+        _ctx._cameraPostion.transform.position = _ctx._cameraBasePostion.transform.position - new Vector3(0, 0.9f, 0);
         _ctx.CapsuleColliderHeight = 1.2f;
         
         _ctx.SubStateDirSet = new Vector3(0, 0, 2);
@@ -62,7 +62,7 @@ public class H_SlidingState : H_BaseState
 
     public override void ExitState()
     {
-        _ctx._cameraPostion.transform.position += new Vector3(0, 0.9f, 0);
+        _ctx._cameraPostion.transform.position = _ctx._cameraBasePostion.transform.position;
         _ctx.CapsuleColliderHeight = 2.2f;
         
         _ctx.SubStateDirSet = new Vector3(0, 0, 0);

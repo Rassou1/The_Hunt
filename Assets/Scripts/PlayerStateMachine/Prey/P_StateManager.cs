@@ -51,6 +51,7 @@ public class P_StateManager : Synchronizable
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
+    public Transform _cameraBasePostion;
     public Animator _animator;
     public Animator _armsAnimator;
     public P_Animations _remoteAnimator;

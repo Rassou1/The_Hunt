@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 public class P_MoveCamera : MonoBehaviour
 {
     public Transform cameraPosition;
+    public Transform cameraBasePosition;
 
     public Renderer parentRenderer;
 

@@ -51,6 +51,7 @@ public class H_StateManager : Synchronizable
     public Rigidbody _rigidbody;
     public Transform _cameraOrientation;
     public Transform _cameraPostion;
+    public Transform _cameraBasePostion;
     //public interacter _interacter;
     public Animator _animator;
     public Animator _armsAnimator;

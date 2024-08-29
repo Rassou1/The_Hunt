@@ -5,6 +5,7 @@ using UnityEngine;
 public class H_MoveCamera : MonoBehaviour
 {
     public Transform cameraPosition;
+    public Transform cameraBasePosition;
     public Alteruna.Avatar avatar;
 
     private void Update()

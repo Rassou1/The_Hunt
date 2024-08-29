@@ -1505,6 +1505,37 @@ Transform:
   - {fileID: 4675789686295566675}
   m_Father: {fileID: 1246284237382996009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2440808355496300840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7837294227718277322}
+  m_Layer: 7
+  m_Name: CameraBasePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7837294227718277322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440808355496300840}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.40999997, z: -0.014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5250154633362532522}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2538446173194290431
 GameObject:
   m_ObjectHideFlags: 0
@@ -3443,6 +3474,7 @@ Transform:
   m_Children:
   - {fileID: 6375193796799964629}
   - {fileID: 8323935753692563728}
+  - {fileID: 7837294227718277322}
   - {fileID: 3290272104888574}
   - {fileID: 8225655184412673692}
   - {fileID: 7387120987316871633}
@@ -4154,6 +4186,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31a29400454b6d4dbb0bdf39894fd38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 
+  BucketBehaviors:
+  - Name: Min
+    NetLOD: 0
+    Frequency: -1
+  - Name: Low
+    NetLOD: 1
+    Frequency: 10
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 30
+  - Name: High
+    NetLOD: 3
+    Frequency: 50
+  - Name: Max
+    NetLOD: 4
+    Frequency: 120
   _avatar: {fileID: 0}
   _mouseSens: 40
   _maxSlopeAngle: 45
@@ -4163,7 +4213,9 @@ MonoBehaviour:
   _rigidbody: {fileID: 2048607568547372349}
   _cameraOrientation: {fileID: 8236263713199787024}
   _cameraPostion: {fileID: 8323935753692563728}
-  _animator: {fileID: 4912836814126313985}
+  _animator: {fileID: 0}
+  _armsAnimator: {fileID: 0}
+  _remoteAnimator: {fileID: 0}
   _finalMagnitude: 0
   _actualMagnitude: 0
   _dashCooldown: 3
