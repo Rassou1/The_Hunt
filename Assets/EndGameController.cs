@@ -42,13 +42,14 @@ public class EndGameController : MonoBehaviour
         if (playerStates.escapedPlayers.Contains(thisPlayer) && !escapedAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
+            Debug.Log("ascepate animation" + escaped.transform.position);
             escapedAnimationPlayed = true;
-        }
-
-        if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
+        }else if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
+            Debug.Log("cuaght animation" + caught.transform.position);
             caughtAnimationPlayed = true;
+
         }
     }
 
@@ -68,6 +69,10 @@ public class EndGameController : MonoBehaviour
 
         obj1.SetActive(false);
         obj2.SetActive(false);
+        caughtAnimationPlayed = false;
+        escapedAnimationPlayed = false;
+
+
     }
 
     private IEnumerator AnimateObject(GameObject obj, float angle, float duration, float startScale, float endScale)
