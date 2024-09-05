@@ -127,7 +127,6 @@ public class RoleGiver : AttributesSync, IInteractable
 
         foreach (var obj in _players)
         {
-
             Transform parentTransform = obj.transform;
 
             Transform firstChild = parentTransform.Find("PreyComponent");
@@ -143,17 +142,12 @@ public class RoleGiver : AttributesSync, IInteractable
             // Transfer the position from the first child to the second child
             secondChildPosition.position = firstChildPosition.position;
             secondChildPosition.rotation = firstChildPosition.rotation;
-            
-            if (!firstChild.gameObject.activeSelf)
-            {
 
                 // Turn the first GameObject on
                 firstChild.gameObject.SetActive(true);
 
                 // Turn the second GameObject off
                 secondChild.gameObject.SetActive(false);
-            }
-
         }
     }
 
