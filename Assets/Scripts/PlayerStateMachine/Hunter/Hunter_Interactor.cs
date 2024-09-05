@@ -5,6 +5,7 @@ using Alteruna;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// Script written by: ---
 /// Fixed for th hunter by Hamdi.
@@ -46,12 +47,15 @@ public class Hunter_Interactor : AttributesSync
         InvokeRemoteMethod("AttackRemote", UserId.All);
     }
 
-
+    public UnityEngine.SceneManagement.Scene currentscene;
 
     [SynchronizableMethod]
     public void AttackRemote()
     {
-        if (playerStates.gameEnded) return;
+        if (currentscene.name == "Start" || currentscene.name == "Lobby") 
+        { 
+            return;
+        }
             Attack();
         
 
@@ -60,6 +64,9 @@ public class Hunter_Interactor : AttributesSync
     // Update is called once per frame
     void Update()
     {
+
+        currentscene= SceneManager.GetActiveScene();
+        Debug.Log(currentscene.name);
         networkManager = FindAnyObjectByType<Multiplayer>();
 
 
@@ -141,6 +148,7 @@ public class Hunter_Interactor : AttributesSync
 
 
         //Ray ray = new Ray(InteractorCam.transform.position, InteractorCam.transform.forward);
+
         SpawnCube();
 
 

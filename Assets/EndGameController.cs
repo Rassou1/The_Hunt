@@ -44,7 +44,9 @@ public class EndGameController : MonoBehaviour
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
             Debug.Log("ascepate animation" + escaped.transform.position);
             escapedAnimationPlayed = true;
-        }else if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
+        }
+        
+        if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
             Debug.Log("cuaght animation" + caught.transform.position);
