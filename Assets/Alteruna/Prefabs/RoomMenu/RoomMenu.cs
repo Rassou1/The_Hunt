@@ -66,7 +66,6 @@ namespace Alteruna
 
                     // Teleport UI to a specific position
                     TeleportUI(teleportPosition);
-					gameObject.SetActive(false);
                 });
 
 				LeaveButton.onClick.AddListener(() =>
@@ -108,7 +107,7 @@ namespace Alteruna
 			// Disable leaving if player mid-game
 			if (CurrentScene.name == "Game_Map")
 			{
-				gameObject.SetActive (false);
+
 			}
 			if (!Multiplayer.enabled)
 			{
@@ -182,7 +181,7 @@ namespace Alteruna
 					}
 				}
 			}
-			gameObject.SetActive(false);
+
 			return false;
 		}
 
