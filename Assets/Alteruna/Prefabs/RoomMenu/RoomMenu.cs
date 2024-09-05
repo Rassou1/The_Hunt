@@ -18,7 +18,7 @@ namespace Alteruna
 		[SerializeField] private GameObject WANEntryPrefab;
 		[SerializeField] private GameObject ContentContainer;
 		[SerializeField] private Button StartButton;
-		[SerializeField] private Button LeaveButton;
+		//[SerializeField] private Button LeaveButton;
 		[SerializeField] private Button SPButton;
 		[SerializeField] private UnityEngine.SceneManagement.Scene CurrentScene;
         public bool ShowUserCount = false;
@@ -68,12 +68,12 @@ namespace Alteruna
                     TeleportUI(teleportPosition);
                 });
 
-				LeaveButton.onClick.AddListener(() =>
-				{                    
-					Multiplayer.LoadScene("Start");
-					Multiplayer.CurrentRoom?.Leave();
-                    _refreshTime = RefreshInterval;	
-				});
+				//LeaveButton.onClick.AddListener(() =>
+				//{                    
+				//	Multiplayer.LoadScene("Start");
+				//	Multiplayer.CurrentRoom?.Leave();
+    //                _refreshTime = RefreshInterval;	
+				//});
 
 				if (TitleText != null)
 				{
@@ -99,7 +99,7 @@ namespace Alteruna
 			}
 
 			StartButton.interactable = false;
-			LeaveButton.interactable = false;
+			//LeaveButton.interactable = false;
 		}
 
 		private void FixedUpdate()
@@ -195,7 +195,7 @@ namespace Alteruna
 			}
 
 			StartButton.interactable = true;
-			LeaveButton.interactable = false;
+			//LeaveButton.interactable = false;
 
 			if (TitleText != null)
 			{
@@ -206,7 +206,7 @@ namespace Alteruna
 		private void Disconnected(Multiplayer multiplayer, Endpoint endPoint)
 		{
 			StartButton.interactable = false;
-			LeaveButton.interactable = false;
+			//LeaveButton.interactable = false;
 
 			_connectionMessage = "Reconnecting";
 			if (TitleText != null)
@@ -218,7 +218,7 @@ namespace Alteruna
 		private void JoinedRoom(Multiplayer multiplayer, Room room, User user)
 		{
 			StartButton.interactable = false;
-			LeaveButton.interactable = true;
+			//LeaveButton.interactable = true;
 
 			Scene currentScene = SceneManager.GetActiveScene();
 
@@ -240,7 +240,7 @@ namespace Alteruna
 			_roomI = -1;
 
 			StartButton.interactable = true;
-			LeaveButton.interactable = false;
+			//LeaveButton.interactable = false;
             Scene currentScene = SceneManager.GetActiveScene();
 
             if (currentScene.name == "Start")
