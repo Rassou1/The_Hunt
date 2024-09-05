@@ -20,7 +20,7 @@ namespace Alteruna
 		[SerializeField] private Button StartButton;
 		[SerializeField] private Button LeaveButton;
 		[SerializeField] private Button SPButton;
-		[SerializeField] private UnityEngine.SceneManagement.Scene CurrentScene;
+		[SerializeField] private UnityEngine.SceneManagement.Scene currentScene;
         public bool ShowUserCount = false;
 
 		// manual refresh can be done by calling Multiplayer.RefreshRoomList();
@@ -105,8 +105,9 @@ namespace Alteruna
 
 		private void FixedUpdate()
 		{
-			// Disable leaving if player mid-game
-			if (CurrentScene.name == "Game_Map")
+            currentScene = SceneManager.GetActiveScene();
+            // Disable leaving if player mid-game
+            if (currentScene.name == "Game_Map")
 			{
 				gameObject.SetActive (false);
 			}
@@ -221,8 +222,6 @@ namespace Alteruna
 			StartButton.interactable = false;
 			LeaveButton.interactable = true;
 
-			Scene currentScene = SceneManager.GetActiveScene();
-
             if (currentScene.name == "Start") { 
 				SPButton.gameObject.SetActive(false); 
 			}
@@ -242,7 +241,7 @@ namespace Alteruna
 
 			StartButton.interactable = true;
 			LeaveButton.interactable = false;
-            Scene currentScene = SceneManager.GetActiveScene();
+            
 
             if (currentScene.name == "Start")
             {
