@@ -130,16 +130,19 @@ public class RoleGiver : AttributesSync, IInteractable
 
             Transform parentTransform = obj.transform;
 
-            // Find the child GameObjects by name
-            Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
-            Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+            Transform firstChild = parentTransform.Find("PreyComponent");
+            Transform secondChild = parentTransform.Find("HunterComponent");
 
-            firstChild.position = Vector3.zero;
-            secondChild.position = Vector3.zero;
+            // Find the child GameObjects' positions by name
+            Transform firstChildPosition = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
+            Transform secondChildPosition = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+
+            firstChildPosition.position = Vector3.zero;
+            secondChildPosition.position = Vector3.zero;
 
             // Transfer the position from the first child to the second child
-            secondChild.position = firstChild.position;
-            secondChild.rotation = firstChild.rotation;
+            secondChildPosition.position = firstChildPosition.position;
+            secondChildPosition.rotation = firstChildPosition.rotation;
             
             if (!firstChild.gameObject.activeSelf)
             {
