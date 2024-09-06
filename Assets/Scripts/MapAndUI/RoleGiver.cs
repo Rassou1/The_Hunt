@@ -167,9 +167,7 @@ public class RoleGiver : AttributesSync, IInteractable
                     secondChild.gameObject.SetActive(false);
                     firstChildPosition.transform.position = new Vector3(84f, 16.44f, 128);
                 }
-            }
-
-            if (firstChild != null && firstChild.gameObject.activeSelf)
+            }else if (firstChild != null && firstChild.gameObject.activeSelf)
             {
 
                 if (!secondChild.gameObject.activeSelf)
