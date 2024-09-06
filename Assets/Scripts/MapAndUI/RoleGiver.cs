@@ -178,11 +178,7 @@ public class RoleGiver : AttributesSync, IInteractable
                 if (!secondChild.gameObject.activeSelf)
                 {
 
-                    // Turn the first GameObject on
-                    secondChild.gameObject.SetActive(true);
-
-                    // Turn the second GameObject off
-                    firstChild.gameObject.SetActive(false);
+                    
                     secondChildPosition.transform.position = new Vector3(64.5f, 16.44f, 100);
                 }
             }
