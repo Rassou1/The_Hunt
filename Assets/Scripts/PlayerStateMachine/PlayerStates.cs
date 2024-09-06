@@ -31,7 +31,6 @@ public class PlayerStates : MonoBehaviour
     bool hasReset = false;
     public void StateReset()
     {
-        roleGiver.ResetAllPrefabs();
         foreach (GameObject prey in prey)
         {
             P_StateManager state = prey.GetComponentInChildren<P_StateManager>();
@@ -46,6 +45,7 @@ public class PlayerStates : MonoBehaviour
         gameStarted = false;
         gameEnded = false;
         hasReset = true;
+        roleGiver.ResetAllPrefabs();
     }
 
     public void playerEscaped(GameObject player)
@@ -66,17 +66,18 @@ public class PlayerStates : MonoBehaviour
         prey = FindObjectsOnLayer(7);
         hunters = FindObjectsOnLayer(6);
         roleGiver = FindObjectOfType<RoleGiver>();
+       
+        if (gameStarted && hasReset)
+        {
+            hasReset = false;
 
+        }
         if (gameEnded && !hasReset)
         {
             StateReset();
 
         }
-        if (gameStarted)
-        {
-            hasReset = false;
 
-        }
     }
 
     public List<GameObject> Players { get { return players; } }
