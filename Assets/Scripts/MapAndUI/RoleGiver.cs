@@ -17,9 +17,10 @@ public class RoleGiver : AttributesSync, IInteractable
     public PlayerStates playerStates;
     public Multiplayer networkManager;
 
+    public WinTrigger wt;
     public MapMover mm;
 
-    public Spawner spawner;
+
 
     int hunterIndex = 0;
 
@@ -111,6 +112,8 @@ public class RoleGiver : AttributesSync, IInteractable
         //Both UI canvases are turned off at the beginning to avoid overlap between the two. - Ibrahim
         hunterCanvas.SetActive(false);
         preyCanvas.SetActive(false);
+
+        mm = wt.mapMover;
     }
 
     void Update()

@@ -13,7 +13,7 @@ public class WinTrigger : MonoBehaviour
     private P_StateManager stateManager;
     public PlayerStates playerStates;
     Multiplayer mp;
-    MapMover mapMover;
+    public MapMover mapMover;
 
     
 

@@ -64,6 +64,10 @@ public class PlayerStates : MonoBehaviour
     public void Update()
     {
         players = FindObjectsOnLayer(9);
+        if (roleGiver == null)
+        { 
+            Debug.Log("rogiver  null");
+        }
         prey = FindObjectsOnLayer(7);
         hunters = FindObjectsOnLayer(6);
         roleGiver = FindObjectOfType<RoleGiver>();
