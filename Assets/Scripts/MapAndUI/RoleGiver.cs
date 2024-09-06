@@ -136,19 +136,12 @@ public class RoleGiver : AttributesSync, IInteractable
 
             // Find the child GameObjects' positions by name
             Transform firstChildPosition = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
-            Debug.Log("reset firstpos:  " + firstChildPosition.position);
 
             Transform secondChildPosition = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
-            Debug.Log("reset second pos:  " + secondChildPosition.position);
 
 
             if (secondChild != null && secondChild.gameObject.activeSelf)
             {
-                Debug.Log("reseting" + obj.name);
-
-                //firstChildPosition.position = Vector3.zero;
-                //secondChildPosition.position = Vector3.zero;
-
                 // Transfer the position from the first child to the second child
                 secondChildPosition.position = firstChildPosition.position;
                 secondChildPosition.rotation = firstChildPosition.rotation;
@@ -161,6 +154,8 @@ public class RoleGiver : AttributesSync, IInteractable
 
                     // Turn the second GameObject off
                     secondChild.gameObject.SetActive(false);
+                    Debug.Log("i did somthing in rolegiver");
+                    firstChild.transform.position = new Vector3(84f, 16.44f, 128);
                 }
             }
 

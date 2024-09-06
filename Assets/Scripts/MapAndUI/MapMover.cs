@@ -115,6 +115,8 @@ public class MapMover : AttributesSync
             playerStates.gameStarted = false;
             
         }
+        Debug.Log("i did somthing in mapmover");
+
     }
     // Start is called before the first frame update
     void Start()
