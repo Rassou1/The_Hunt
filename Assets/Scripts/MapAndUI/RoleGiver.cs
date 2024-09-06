@@ -137,8 +137,8 @@ public class RoleGiver : AttributesSync, IInteractable
             Transform firstChildPosition = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
             Transform secondChildPosition = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
 
-            firstChildPosition.position = Vector3.zero;
-            secondChildPosition.position = Vector3.zero;
+            //firstChildPosition.position = Vector3.zero;
+            //secondChildPosition.position = Vector3.zero;
 
             // Transfer the position from the first child to the second child
             secondChildPosition.position = firstChildPosition.position;
