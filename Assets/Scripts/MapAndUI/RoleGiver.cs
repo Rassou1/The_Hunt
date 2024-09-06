@@ -131,9 +131,12 @@ public class RoleGiver : AttributesSync, IInteractable
     public void ResetAllPrefabs()
     {
         //MOVE THIS TO PLAYERSTATES - Ibrahim
-        List<GameObject> _players = playerStates.FindObjectsOnLayer(9);
+        //List<GameObject> _players = playerStates.Players;
+        networkManager = FindAnyObjectByType<Multiplayer>();
 
-        foreach (var obj in _players)
+        playerStates = networkManager.GetComponent<PlayerStates>();
+
+        foreach (var obj in playerStates.Players)
         {
             
             //Debug.Log("reseting"+obj.name);
@@ -162,8 +165,25 @@ public class RoleGiver : AttributesSync, IInteractable
 
                     // Turn the second GameObject off
                     secondChild.gameObject.SetActive(false);
-                    Debug.Log("i did somthing in rolegiver");
                     firstChildPosition.transform.position = new Vector3(84f, 16.44f, 128);
+                }
+            }
+
+            if (firstChild != null && firstChild.gameObject.activeSelf)
+            {
+                // Transfer the position from the first child to the second child
+                firstChildPosition.position = secondChildPosition.position;
+                firstChildPosition.rotation = secondChildPosition.rotation;
+
+                if (!secondChild.gameObject.activeSelf)
+                {
+
+                    // Turn the first GameObject on
+                    secondChild.gameObject.SetActive(true);
+
+                    // Turn the second GameObject off
+                    firstChild.gameObject.SetActive(false);
+                    secondChildPosition.transform.position = new Vector3(64.5f, 16.44f, 100);
                 }
             }
 
