@@ -127,7 +127,7 @@ public class RoleGiver : AttributesSync, IInteractable
 
         foreach (var obj in _players)
         {
-
+            Debug.Log("reseting"+obj.name);
             Transform parentTransform = obj.transform;
 
             Transform firstChild = parentTransform.Find("PreyComponent");

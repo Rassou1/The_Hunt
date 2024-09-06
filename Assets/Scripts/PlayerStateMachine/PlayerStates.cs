@@ -40,12 +40,13 @@ public class PlayerStates : MonoBehaviour
             state.Caught = false;
         }
         escapedPlayers.Clear();
-        taggedPlayers.Clear();
+        taggedPlayers.Clear();        
+        roleGiver.ResetAllPrefabs();
+
         allPlayersTagged = false;
         gameStarted = false;
         gameEnded = false;
         hasReset = true;
-        roleGiver.ResetAllPrefabs();
     }
 
     public void playerEscaped(GameObject player)
