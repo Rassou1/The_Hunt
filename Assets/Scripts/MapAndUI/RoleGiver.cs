@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.XR;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class RoleGiver : AttributesSync, IInteractable
 {
@@ -112,8 +113,12 @@ public class RoleGiver : AttributesSync, IInteractable
         //Both UI canvases are turned off at the beginning to avoid overlap between the two. - Ibrahim
         hunterCanvas.SetActive(false);
         preyCanvas.SetActive(false);
-
-        mm = wt.mapMover;
+        Scene scene = SceneManager.GetActiveScene();
+        
+        if (mm==null&&scene.name=="Game_Map")
+        {
+            mm = wt.mapMover;
+        }
     }
 
     void Update()
