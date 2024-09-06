@@ -155,7 +155,7 @@ public class RoleGiver : AttributesSync, IInteractable
                     // Turn the second GameObject off
                     secondChild.gameObject.SetActive(false);
                     Debug.Log("i did somthing in rolegiver");
-                    firstChild.transform.position = new Vector3(84f, 16.44f, 128);
+                    firstChildPosition.transform.position = new Vector3(84f, 16.44f, 128);
                 }
             }
 
