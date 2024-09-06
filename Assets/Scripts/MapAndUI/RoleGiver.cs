@@ -127,6 +127,7 @@ public class RoleGiver : AttributesSync, IInteractable
 
         foreach (var obj in _players)
         {
+            
             Debug.Log("reseting"+obj.name);
             Transform parentTransform = obj.transform;
 
@@ -137,22 +138,27 @@ public class RoleGiver : AttributesSync, IInteractable
             Transform firstChildPosition = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
             Transform secondChildPosition = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
 
-            //firstChildPosition.position = Vector3.zero;
-            //secondChildPosition.position = Vector3.zero;
-
-            // Transfer the position from the first child to the second child
-            secondChildPosition.position = firstChildPosition.position;
-            secondChildPosition.rotation = firstChildPosition.rotation;
-            
-            if (!firstChild.gameObject.activeSelf)
+            if(secondChild != null && secondChild.gameObject.activeSelf)
             {
 
-                // Turn the first GameObject on
-                firstChild.gameObject.SetActive(true);
+                //firstChildPosition.position = Vector3.zero;
+                //secondChildPosition.position = Vector3.zero;
 
-                // Turn the second GameObject off
-                secondChild.gameObject.SetActive(false);
+                // Transfer the position from the first child to the second child
+                secondChildPosition.position = firstChildPosition.position;
+                secondChildPosition.rotation = firstChildPosition.rotation;
+            
+                if (!firstChild.gameObject.activeSelf)
+                {
+
+                    // Turn the first GameObject on
+                    firstChild.gameObject.SetActive(true);
+
+                    // Turn the second GameObject off
+                    secondChild.gameObject.SetActive(false);
+                }
             }
+
 
         }
     }
