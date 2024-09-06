@@ -171,15 +171,10 @@ public class RoleGiver : AttributesSync, IInteractable
 
             if (firstChild != null && firstChild.gameObject.activeSelf)
             {
-                // Transfer the position from the first child to the second child
-                firstChildPosition.position = secondChildPosition.position;
-                firstChildPosition.rotation = secondChildPosition.rotation;
 
                 if (!secondChild.gameObject.activeSelf)
                 {
-
-                    
-                    secondChildPosition.transform.position = new Vector3(64.5f, 16.44f, 100);
+                    firstChildPosition.transform.position = new Vector3(64.5f, 16.44f, 100);
                 }
             }
 
