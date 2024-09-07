@@ -12,12 +12,15 @@ public class chunkDelition : MonoBehaviour
         timer.amountOfTime = 0.5f;
         timer.StartTimer();
 
-        if(timer.timerOver)Destroy(this.gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (timer.timerOver)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }
