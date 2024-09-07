@@ -28,7 +28,7 @@ public class globalTimer : MonoBehaviour
         {
             _time += Time.deltaTime;
         }
-        if(amountOfTime<=_time)
+        if(amountOfTime>=_time)
         {
             StopTimer();
         }
