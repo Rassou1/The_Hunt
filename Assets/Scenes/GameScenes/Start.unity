@@ -749,6 +749,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &77615319 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4350687824213943231, guid: d5f26854a8904624c8073139cd2eb346, type: 3}
+  m_PrefabInstance: {fileID: 1720339631}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd74ecf3a4ac36c4d99871958d65a331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &90614680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10935,6 +10946,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 768677674694724655, guid: d5f26854a8904624c8073139cd2eb346, type: 3}
+      propertyPath: timer
+      value: 
+      objectReference: {fileID: 77615319}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

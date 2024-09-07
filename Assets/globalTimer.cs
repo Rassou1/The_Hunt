@@ -4,33 +4,45 @@ using UnityEngine;
 
 public class globalTimer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float _time=0f;
-    bool starttimer=false;
+    public float time = 0f;
+    bool startTimer = false;
     public float amountOfTime;
-    public bool timerOver=false;
+    public bool timerOver = false;
+
+    void Start()
+    {
+        // Optional initialization
+    }
+
+    void Update()
+    {
+        if (startTimer)
+        {
+            time += Time.deltaTime;
+
+            if (time >= amountOfTime)
+            {
+                StopTimer();
+                timerOver = true; // Set the timer as over
+            }
+        }
+    }
+
     public void StartTimer()
     {
-        starttimer = true;
+        startTimer = true;
+        timerOver = false; // Reset timerOver when starting
     }
 
     public void StopTimer()
     {
-        starttimer = false;
-        _time = 0f;
-
+        startTimer = false;
+        // Do not reset time here if you want to preserve the elapsed time
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResetTimer()
     {
-        if (starttimer)
-        {
-            _time += Time.deltaTime;
-        }
-        if(amountOfTime>=_time)
-        {
-            StopTimer();
-        }
+        time = 0f;
+        timerOver = false;
     }
 }
