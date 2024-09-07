@@ -47,7 +47,7 @@ public class TaggingBoxCollisionHandler : MonoBehaviour
                 (hunter == null || !hunter.gameObject.activeSelf))
             {
                 //spawn particall here plz
-                Instantiate(particles, this.transform.position,this.transform.rotation);
+                //Instantiate(particles, this.transform.position,this.transform.rotation);
 
                 // Add the root object to the objectList
                 objectList.Add(rootObject);
