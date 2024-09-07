@@ -5,7 +5,7 @@ using UnityEngine;
 public class chunkDelition : MonoBehaviour
 {
 
-    globalTimer timer;
+    public globalTimer timer;
     // Start is called before the first frame update
     void Start()
     {
