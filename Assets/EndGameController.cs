@@ -54,7 +54,7 @@ public class EndGameController : MonoBehaviour
         {
             Debug.Log("D");
         }
-        if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
+        if (playerStates.taggedPlayers.Contains(thisPlayer.transform.Find("PreyComponent").gameObject) && !caughtAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
             Debug.Log("cuaght animation" + caught.transform.position);
