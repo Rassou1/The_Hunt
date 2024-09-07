@@ -8,7 +8,7 @@ public class TaggingBoxCollisionHandler : MonoBehaviour
 {
     // List to store colliding objects
     public List<GameObject> objectList = new List<GameObject>();
-
+    public GameObject particles;
     void Start()
     {
         // Clear the list at the start
@@ -46,6 +46,9 @@ public class TaggingBoxCollisionHandler : MonoBehaviour
             if (prey != null && prey.gameObject.activeSelf &&
                 (hunter == null || !hunter.gameObject.activeSelf))
             {
+                //spawn particall here plz
+                Instantiate(particles, this.transform.position,this.transform.rotation);
+
                 // Add the root object to the objectList
                 objectList.Add(rootObject);
             }
