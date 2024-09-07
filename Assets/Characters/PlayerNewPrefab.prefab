@@ -1149,6 +1149,8 @@ MonoBehaviour:
   InteractRange: 2
   networkManager: {fileID: 0}
   me: {fileID: 1537914950847844620}
+  currentscene:
+    m_Handle: 0
   taggingCube: {fileID: 7885764919395856526, guid: 6e1d5a78bedd0c341bdd34077ffe19e4, type: 3}
   taggedPlayers: []
   cubeLifetime: 5
@@ -4577,7 +4579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.32809716, g: 0.6430377, b: 0.6886792, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5.5, y: 2.9}
   m_UseGraphicAlpha: 1
 --- !u!1 &6196159076487322812
@@ -7366,6 +7368,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.10551416
       objectReference: {fileID: 0}
+    - target: {fileID: 2335434280205590570, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_ShowMaskGraphic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2498850294606266694, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9363114
@@ -7408,6 +7414,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3205052533095931578, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526595351862753021, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3531389086966691215, guid: 59556d925da285648bfaf1333170db54, type: 3}
@@ -7749,6 +7759,26 @@ PrefabInstance:
     - target: {fileID: 6798341386782492017, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.103937775
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052825630288449998, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052825630288449998, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_EffectColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052825630288449998, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_EffectColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052825630288449998, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_EffectColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052825630288449998, guid: 59556d925da285648bfaf1333170db54, type: 3}
+      propertyPath: m_EffectColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7088210012119259097, guid: 59556d925da285648bfaf1333170db54, type: 3}
       propertyPath: m_LocalRotation.w

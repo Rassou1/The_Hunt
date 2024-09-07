@@ -2,6 +2,7 @@ using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndGameController : MonoBehaviour
 {
@@ -45,7 +46,14 @@ public class EndGameController : MonoBehaviour
             Debug.Log("ascepate animation" + escaped.transform.position);
             escapedAnimationPlayed = true;
         }
-        
+        if (playerStates.escapedPlayers.Count > 0)
+        {
+            Debug.Log("D");
+        }
+        if (playerStates.taggedPlayers.Count > 0)
+        {
+            Debug.Log("D");
+        }
         if (playerStates.taggedPlayers.Contains(thisPlayer) && !caughtAnimationPlayed)
         {
             StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
@@ -71,8 +79,13 @@ public class EndGameController : MonoBehaviour
 
         obj1.SetActive(false);
         obj2.SetActive(false);
-        caughtAnimationPlayed = false;
-        escapedAnimationPlayed = false;
+
+        if (SceneManager.GetActiveScene().name != "Game_Map")
+        {
+            caughtAnimationPlayed = false;
+            escapedAnimationPlayed = false;
+        }
+        
 
 
     }
