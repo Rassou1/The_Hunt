@@ -24,6 +24,7 @@ public class PlayerStates : MonoBehaviour
     private List<GameObject> hunters;
 
     public RoleGiver roleGiver;
+    public EndGameController endGameController;
 
     public bool gameStarted;
     public bool gameEnded;
@@ -41,7 +42,7 @@ public class PlayerStates : MonoBehaviour
         }
         escapedPlayers.Clear();
         taggedPlayers.Clear();        
-        roleGiver.ResetAllPrefabs();
+        roleGiver.ResetAllPrefabs();    
 
         allPlayersTagged = false;
         gameStarted = false;
@@ -51,12 +52,19 @@ public class PlayerStates : MonoBehaviour
 
     public void playerEscaped(GameObject player)
     {
-        escapedPlayers.Add(player);
+        if (!escapedPlayers.Contains(player))
+        {
+            escapedPlayers.Add(player);
+        }
+        
     }
 
     public void playerTagged(GameObject player)
     {
-        taggedPlayers.Add(player);
+        if(!taggedPlayers.Contains(player)) 
+        { 
+            taggedPlayers.Add(player); 
+        }
     }
 
 
@@ -64,10 +72,6 @@ public class PlayerStates : MonoBehaviour
     public void Update()
     {
         players = FindObjectsOnLayer(9);
-        if (roleGiver == null)
-        { 
-            Debug.Log("rogiver  null");
-        }
         prey = FindObjectsOnLayer(7);
         hunters = FindObjectsOnLayer(6);
         roleGiver = FindObjectOfType<RoleGiver>();
@@ -79,8 +83,11 @@ public class PlayerStates : MonoBehaviour
         }
         if (gameEnded && !hasReset)
         {
+            if (roleGiver == null)
+            {
+                Debug.Log("rogiver  null");
+            }
             StateReset();
-
         }
 
     }

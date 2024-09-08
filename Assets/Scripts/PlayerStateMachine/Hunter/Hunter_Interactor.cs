@@ -52,10 +52,10 @@ public class Hunter_Interactor : AttributesSync
     [SynchronizableMethod]
     public void AttackRemote()
     {
-        if (currentscene.name == "Start" || currentscene.name == "Lobby") 
-        { 
-            return;
-        }
+        //if (currentscene.name == "Start" || currentscene.name == "Lobby") 
+        //{ 
+        //    return;
+        //}
             Attack();
         
 
@@ -65,7 +65,7 @@ public class Hunter_Interactor : AttributesSync
     void Update()
     {
 
-        currentscene= SceneManager.GetActiveScene();
+        currentscene = SceneManager.GetActiveScene();
         Debug.Log(currentscene.name);
         networkManager = FindAnyObjectByType<Multiplayer>();
 

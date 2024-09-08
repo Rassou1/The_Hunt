@@ -29,6 +29,7 @@ public class H_StateManager : Synchronizable
     int _maxBounces = 5;
     float _skindWidth = 0.05f;
 
+    public bool atkCooldown;
     
 
     public float _mouseSens;
@@ -265,7 +266,7 @@ public class H_StateManager : Synchronizable
             otherPlayerSounds.NonLocalPlayerTest();
         }
 
-        
+        atkCooldown = killUI.offAttackUI;
 
 
         if (!_avatar.IsMe)

@@ -32,7 +32,9 @@ public class WinTrigger : MonoBehaviour
     // Update is called once per frame
     public void Update()
     { 
-        if (playerStates.taggedPlayers.Count == playerStates.Prey.Count && playerStates.taggedPlayers.Count > 0)
+        if (playerStates.taggedPlayers.Count == (playerStates.Players.Count -1) && playerStates.taggedPlayers.Count > 0)
+            //I would much rather we compare the tagged player count to the prey count, but due to the hunter being turned back into prey on return to lobby we can't do that without using a temporary value.
+            //This is far more readable. - Ibrahim
         {
             playerStates.allPlayersTagged = true;
         }
@@ -41,8 +43,8 @@ public class WinTrigger : MonoBehaviour
             playerStates.gameEnded = true;
             foreach (GameObject p in playerStates.Players)
             {
+                //mapmover is null somehow. i wish i knew how. Maybe move mapMover over to the networkmanager? - Ibrahim
                 mapMover.MoveMaps(p);
-                
             }
         }
     }

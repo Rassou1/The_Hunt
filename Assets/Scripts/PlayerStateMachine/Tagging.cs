@@ -47,7 +47,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
         networkManager = FindAnyObjectByType<Multiplayer>();
         
 
-          playerStates = networkManager.GetComponent<PlayerStates>();
+        playerStates = networkManager.GetComponent<PlayerStates>();
         //if (movingmap)
         //{
         //    MoveMap();

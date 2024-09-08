@@ -13220,6 +13220,7 @@ MonoBehaviour:
   escapedPlayers: []
   taggedPlayers: []
   roleGiver: {fileID: 0}
+  endGameController: {fileID: 0}
   gameStarted: 0
   gameEnded: 0
   allPlayersTagged: 0
