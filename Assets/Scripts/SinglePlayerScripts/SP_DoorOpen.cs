@@ -5,7 +5,7 @@ using UnityEngine;
 //This script works the same as the timer in that it is created and destroyed according to need. - Love
 public class SP_DoorOpen : MonoBehaviour
 {
-    [SerializeField] private float _moveAmount;
+    private float _moveAmount = 13;
     Vector3 _moveDown = new Vector3(0, 0.005f, 0);
     float _totMoved = 0;
     void Update()
