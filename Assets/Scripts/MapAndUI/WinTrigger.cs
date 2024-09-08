@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class WinTrigger : MonoBehaviour
 {
-    public GameObject youWinText;
-    public float delay;
+    //public GameObject youWinText;
+    //public float delay;
     GameObject player;
     private P_StateManager stateManager;
     public PlayerStates playerStates;
@@ -23,7 +23,7 @@ public class WinTrigger : MonoBehaviour
         mp = FindAnyObjectByType<Multiplayer>();
         playerStates = mp.GetComponent<PlayerStates>();
 
-        mapMover = new MapMover();
+        //mapMover = new MapMover(); deprecated code, now references an existing mapmover object in the map - Ibrahim
 
         playerStates.escapedPlayers.Clear();
         playerStates.taggedPlayers.Clear();
@@ -72,7 +72,7 @@ public class WinTrigger : MonoBehaviour
                 other.gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
             }
 
-            if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == playerStates.FindObjectsOnLayer(7).Count && playerStates.escapedPlayers.Count > 0)
+            if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == (playerStates.Players.Count - 1) && playerStates.escapedPlayers.Count > 0)
             {
                 playerStates.gameEnded = true;
                
