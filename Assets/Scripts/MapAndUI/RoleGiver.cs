@@ -34,7 +34,9 @@ public class RoleGiver : AttributesSync, IInteractable
     {
         //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game.
         playerStates.StateReset();
+
         BroadcastRemoteMethod("Interact", interactor);
+        ResetHunter();
     }
 
     [SynchronizableMethod]
@@ -130,6 +132,8 @@ public class RoleGiver : AttributesSync, IInteractable
 
     public void ResetAllPrefabs()
     {
+        Scene scene = SceneManager.GetActiveScene();
+        Debug.Log(scene.name + " RoleGIver Reset All Prefab ");
         //MOVE THIS TO PLAYERSTATES - Ibrahim
         //List<GameObject> _players = playerStates.Players;
         networkManager = FindAnyObjectByType<Multiplayer>();
@@ -151,12 +155,67 @@ public class RoleGiver : AttributesSync, IInteractable
             Transform secondChildPosition = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
 
 
+            //if (secondChild != null && secondChild.gameObject.activeSelf)
+            //{
+            //    // Transfer the position from the first child to the second child
+            //    secondChildPosition.position = firstChildPosition.position;
+            //    secondChildPosition.rotation = firstChildPosition.rotation;
+            
+            //    if (!firstChild.gameObject.activeSelf)
+            //    {
+
+            //        // Turn the first GameObject on
+            //        firstChild.gameObject.SetActive(true);
+
+            //        // Turn the second GameObject off
+            //        secondChild.gameObject.SetActive(false);
+            //        firstChildPosition.transform.position = new Vector3(84f, 16.44f, 128);
+            //    }
+            //}
+            //else if (firstChild != null && firstChild.gameObject.activeSelf)
+            //{
+
+                if (!secondChild.gameObject.activeSelf)
+                {
+                    firstChildPosition.transform.position = new Vector3(64.5f, 16.44f, 100);
+                }
+            //}
+
+
+        }
+    }
+
+    public void ResetHunter()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        Debug.Log(scene.name + " RoleGIver Reset All Prefab ");
+        //MOVE THIS TO PLAYERSTATES - Ibrahim
+        //List<GameObject> _players = playerStates.Players;
+        networkManager = FindAnyObjectByType<Multiplayer>();
+
+        playerStates = networkManager.GetComponent<PlayerStates>();
+
+        foreach (var obj in playerStates.Players)
+        {
+
+            //Debug.Log("reseting"+obj.name);
+            Transform parentTransform = obj.transform;
+
+            Transform firstChild = parentTransform.Find("PreyComponent");
+            Transform secondChild = parentTransform.Find("HunterComponent");
+
+            // Find the child GameObjects' positions by name
+            Transform firstChildPosition = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
+
+            Transform secondChildPosition = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+
+
             if (secondChild != null && secondChild.gameObject.activeSelf)
             {
                 // Transfer the position from the first child to the second child
                 secondChildPosition.position = firstChildPosition.position;
                 secondChildPosition.rotation = firstChildPosition.rotation;
-            
+
                 if (!firstChild.gameObject.activeSelf)
                 {
 
@@ -167,16 +226,7 @@ public class RoleGiver : AttributesSync, IInteractable
                     secondChild.gameObject.SetActive(false);
                     firstChildPosition.transform.position = new Vector3(84f, 16.44f, 128);
                 }
-            }else if (firstChild != null && firstChild.gameObject.activeSelf)
-            {
-
-                if (!secondChild.gameObject.activeSelf)
-                {
-                    firstChildPosition.transform.position = new Vector3(64.5f, 16.44f, 100);
-                }
             }
-
-
         }
     }
 

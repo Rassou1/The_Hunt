@@ -85,7 +85,7 @@ public class PlayerStates : MonoBehaviour
         {
             if (roleGiver == null)
             {
-                Debug.Log("rogiver  null");
+                Debug.Log("rolegiver  null");
             }
             StateReset();
         }

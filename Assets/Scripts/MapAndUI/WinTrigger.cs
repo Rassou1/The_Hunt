@@ -43,6 +43,7 @@ public class WinTrigger : MonoBehaviour
             playerStates.gameEnded = true;
             foreach (GameObject p in playerStates.Players)
             {
+                Debug.Log(playerStates.Players.Count);
                 //mapmover is null somehow. i wish i knew how. Maybe move mapMover over to the networkmanager? - Ibrahim
                 mapMover.MoveMaps(p);
             }
