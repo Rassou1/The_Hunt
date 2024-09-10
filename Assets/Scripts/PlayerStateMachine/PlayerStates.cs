@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Alteruna;
+using System;
 
 public class PlayerStates : MonoBehaviour
 {
@@ -24,14 +25,19 @@ public class PlayerStates : MonoBehaviour
     private List<GameObject> hunters;
 
     public RoleGiver roleGiver;
-    public EndGameController endGameController;
+    public AttributesSync sync;
+    //public EndGameController endGameController;
 
     public bool gameStarted;
     public bool gameEnded;
     public bool allPlayersTagged;
     bool hasReset = false;
+
+    public int lastPlayerIndex;
+
     public void StateReset()
     {
+        
         foreach (GameObject prey in prey)
         {
             P_StateManager state = prey.GetComponentInChildren<P_StateManager>();
@@ -42,12 +48,13 @@ public class PlayerStates : MonoBehaviour
         }
         escapedPlayers.Clear();
         taggedPlayers.Clear();        
-        roleGiver.ResetAllPrefabs();    
-
+         
+        
         allPlayersTagged = false;
         gameStarted = false;
         gameEnded = false;
         hasReset = true;
+        PlayerForceSync();
     }
 
     public void playerEscaped(GameObject player)
@@ -67,19 +74,42 @@ public class PlayerStates : MonoBehaviour
         }
     }
 
+    public void PlayerForceSync()
+    {
+        sync = roleGiver.Multiplayer.gameObject.GetComponent<AttributesSync>();
+        
+        foreach(GameObject player in Players)
+        {
+            sync.ForceSync();
+        }
+        
+        //for (int i = 0; i < Players.Count; i++)
+        //{
+        //    if ((i == lastPlayerIndex))
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        Alteruna.Avatar avatar = Players[i].GetComponent<Alteruna.Avatar>();
+        //        Debug.Log("HunterForceSync worked up until the Sync");
+        //        sync.ForceSync();
+        //        Debug.Log("ForceSync was called.");
+        //    }
 
+        //}
+    }
 
     public void Update()
-    {
+    { 
         players = FindObjectsOnLayer(9);
         prey = FindObjectsOnLayer(7);
         hunters = FindObjectsOnLayer(6);
         roleGiver = FindObjectOfType<RoleGiver>();
-       
+
         if (gameStarted && hasReset)
         {
             hasReset = false;
-
         }
         if (gameEnded && !hasReset)
         {
@@ -91,6 +121,8 @@ public class PlayerStates : MonoBehaviour
         }
 
     }
+
+
 
     public List<GameObject> Players { get { return players; } }
     public List<GameObject> Prey { get { return prey; } }

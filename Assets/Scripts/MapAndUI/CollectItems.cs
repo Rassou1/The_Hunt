@@ -18,6 +18,8 @@ public class CollectItems : MonoBehaviour
     private Renderer _renderer;
     private BoxCollider _collider;
 
+    public PlayerStates playerStates;
+
     void Start()
     {
         audioPlay = GetComponent<AudioSource>();
@@ -46,6 +48,7 @@ public class CollectItems : MonoBehaviour
             if (other.GetComponentInChildren<P_StateManager>() != null)
             {
                 other.GetComponentInChildren<P_StateManager>().DiamondsTaken++;
+                playerStates.PlayerForceSync();   
             }
         }
     }
@@ -83,6 +86,7 @@ public class CollectItems : MonoBehaviour
 
     private void Update()
     {
+        playerStates = FindAnyObjectByType<PlayerStates>();
         if (isCollected)
         {
             if (!audioPlay.isPlaying)

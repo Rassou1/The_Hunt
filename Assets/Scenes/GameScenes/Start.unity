@@ -12949,6 +12949,7 @@ GameObject:
   - component: {fileID: 1969025901}
   - component: {fileID: 1969025900}
   - component: {fileID: 1969025903}
+  - component: {fileID: 1969025904}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: NetworkManager
@@ -13220,10 +13221,26 @@ MonoBehaviour:
   escapedPlayers: []
   taggedPlayers: []
   roleGiver: {fileID: 0}
-  endGameController: {fileID: 0}
+  sync: {fileID: 0}
   gameStarted: 0
   gameEnded: 0
   allPlayersTagged: 0
+--- !u!114 &1969025904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969025899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 419518920, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 1969025901}
+  _uidString: b8e96850-27d2-4046-98a4-91de41ccd6f8
+  Reliability: 1
+  LocalMethodBehavior: 1
 --- !u!1001 &1980168335
 PrefabInstance:
   m_ObjectHideFlags: 0
