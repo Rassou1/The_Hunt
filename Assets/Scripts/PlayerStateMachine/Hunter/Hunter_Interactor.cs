@@ -57,7 +57,8 @@ public class Hunter_Interactor : AttributesSync
         //    return;
         //}
             Attack();
-        
+        taggedPlayers.Clear();
+
 
     }
 
@@ -74,6 +75,11 @@ public class Hunter_Interactor : AttributesSync
 
         Debug.DrawRay(InteractorCam.transform.position, InteractorCam.transform.forward * InteractRange, Color.magenta);
 
+        Debug.Log("taggedPlayers");
+        foreach(GameObject p in taggedPlayers)
+        {
+            Debug.Log(p.name);
+        }
 
     }
 
@@ -169,7 +175,7 @@ public class Hunter_Interactor : AttributesSync
             if (interactObj != null)
             {
                 interactObj.InitInteract(gameObject.transform.root.name);
-                Debug.Log($"{gameObject.transform.root.name} tagged {interactObj.GiveObject().name}");
+                Debug.Log($"{gameObject.transform.root.name} tagged {player}");
             }
             else
             {

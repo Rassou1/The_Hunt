@@ -33,7 +33,7 @@ public class RoleGiver : AttributesSync, IInteractable
     public void InitInteract(string interactor)
     {
         //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game.
-        playerStates.StateReset();
+        //playerStates.StateReset();
         BroadcastRemoteMethod("Interact", interactor);
     }
 

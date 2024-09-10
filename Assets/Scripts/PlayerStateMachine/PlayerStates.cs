@@ -87,7 +87,7 @@ public class PlayerStates : MonoBehaviour
             {
                 Debug.Log("rogiver  null");
             }
-            StateReset();
+            //StateReset();
         }
 
     }
