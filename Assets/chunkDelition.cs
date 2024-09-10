@@ -9,7 +9,7 @@ public class chunkDelition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer.amountOfTime = 1f;
+        timer.amountOfTime = 0.5f;
         timer.StartTimer();
 
     }
