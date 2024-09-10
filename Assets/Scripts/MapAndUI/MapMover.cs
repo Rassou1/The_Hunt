@@ -97,10 +97,10 @@ public class MapMover : AttributesSync
                 
             }
             
-            foreach (GameObject hunter in playerStates.Hunters)
-            {
-                hunter.GetComponentInParent<Transform>();
-            }
+            //foreach (GameObject hunter in playerStates.Hunters)
+            //{
+            //    hunter.GetComponentInParent<Transform>();
+            //}
             
             networkManager = FindAnyObjectByType<Multiplayer>();
             networkManager.LoadScene("Lobby");
