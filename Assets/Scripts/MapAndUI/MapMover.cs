@@ -25,7 +25,7 @@ public class MapMover : AttributesSync
         Scene scene = SceneManager.GetActiveScene();
         
 
-        if ((scene.name == "Start" || scene.name == "Lobby") && !playerStates.gameStarted)
+        if ((scene.name == "Start" || scene.name == "Lobby") && !playerStates.gameStarted && !playerStates.gameEnded)
         {
             foreach (GameObject p in playerStates.Players)
             {
@@ -119,8 +119,6 @@ public class MapMover : AttributesSync
             //playerStates.PlayerForceSync();
             //playerStates.PlayerForceSync();
         }
-        Debug.Log("i did somthing in mapmover");
-
     }
     // Start is called before the first frame update
     void Start()
