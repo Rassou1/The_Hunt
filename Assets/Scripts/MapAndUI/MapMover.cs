@@ -114,7 +114,6 @@ public class MapMover : AttributesSync
             }
             playerStates.gameStarted = false;
             //playerStates.PlayerForceSync();
-            playerStates.roleGiver.ResetAllPrefabs();
             //playerStates.PlayerForceSync();
         }
         Debug.Log("i did somthing in mapmover");
