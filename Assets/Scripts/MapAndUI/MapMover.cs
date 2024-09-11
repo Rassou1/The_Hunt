@@ -44,8 +44,8 @@ public class MapMover : AttributesSync
                 //Picks a random spawn for the prey. Initially tried to make these values global through PlayerStates, however that caused sync errors due to the nature of PlayerStates. 
                 //It's more efficient to put them here. - Ibrahim
                 int spawnLocation = Random.Range(0, 80000);
-                secondChild.position = new Vector3(558, 49f, 669);
-                firstChild.position = new Vector3(558, 49f, 669);
+                secondChild.position = new Vector3(73, -111.5f, 102);
+                firstChild.position = new Vector3(73, -111.5f, 102);
 
 
                 //if (firstChild.gameObject.activeSelf)
