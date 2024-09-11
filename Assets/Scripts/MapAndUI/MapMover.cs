@@ -25,7 +25,7 @@ public class MapMover : AttributesSync
         Scene scene = SceneManager.GetActiveScene();
         
 
-        if ((scene.name == "Start" || scene.name == "Lobby") && !playerStates.gameStarted && !playerStates.gameEnded)
+        if (!playerStates.gameStarted && !playerStates.gameEnded)
         {
             foreach (GameObject p in playerStates.Players)
             {
