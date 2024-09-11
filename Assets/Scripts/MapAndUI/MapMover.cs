@@ -73,7 +73,7 @@ public class MapMover : AttributesSync
             //networkManager.LoadScene("Game_Map");
             playerStates.gameStarted = true;
         }
-        else if (scene.name == "Game_Map" && playerStates.gameStarted && playerStates.gameEnded)
+        else if (playerStates.gameStarted && playerStates.gameEnded)
         {
             //Moves players from game map to lobby. Sends them to their place based on their status (tagged, escaped, hunter).
 
@@ -90,13 +90,13 @@ public class MapMover : AttributesSync
                 
                 if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
-                    firstChild.position = new Vector3(64.5f, 16.44f, 100);
+                    firstChild.position = new Vector3(67.7900009f, 19.8600006f, 99.1600037f);
                 }
                 else if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == false)
                 {
-                    firstChild.position = new Vector3(107f, 0.8f, 95);
+                    firstChild.position = new Vector3(106.099998f, 2.05999994f, 99.1600037f);
                 }
-                secondChild.position = new Vector3(84f, 16.44f, 128);
+                secondChild.position = new Vector3(84.9000015f, 16.9899998f, 127.059998f);
                 
             }
             

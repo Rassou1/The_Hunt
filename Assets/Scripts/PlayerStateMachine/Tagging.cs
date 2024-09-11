@@ -8,7 +8,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
 {
     public bool tagged = false; // Boolean to track if the prey is tagged
 
-    public Vector3 prisonPosition = new Vector3(-43.941452f, 8.03499985f, -49.7112961f);
+    public Vector3 prisonPosition = new Vector3(29.2747192f, -103.767456f, 47.6999893f);
     public Alteruna.Avatar _avatar;
     public Multiplayer networkManager;
     PlayerStates playerStates;
@@ -112,7 +112,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
             // Teleport the player to the prison position
             Transform parentTransform = GetComponent<TransformSynchronizable>().transform;
             Transform firstChild = parentTransform.Find("PlayerAndBody");
-            firstChild.position = new Vector3(-43.941452f, 8.03499985f, -49.7112961f);
+            firstChild.position = prisonPosition;
             _preyManager.Caught = true;
             playerStates.playerTagged(gameObject);
 

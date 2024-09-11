@@ -41,8 +41,8 @@ public class PlayerStates : MonoBehaviour
         foreach (GameObject prey in prey)
         {
             P_StateManager state = prey.GetComponentInChildren<P_StateManager>();
-            Debug.Log(state);
-            Debug.Log(state.Escaped);
+            //Debug.Log(state);
+            //Debug.Log(state.Escaped);
             state.Escaped = false;
             state.Caught = false;
         }
@@ -71,7 +71,8 @@ public class PlayerStates : MonoBehaviour
     {
         if(!taggedPlayers.Contains(player)) 
         { 
-            taggedPlayers.Add(player); 
+            taggedPlayers.Add(player);
+            Debug.Log(player + " Tagged");
         }
     }
 
@@ -116,7 +117,21 @@ public class PlayerStates : MonoBehaviour
         {
             if (roleGiver == null)
             {
-                Debug.Log("rogiver  null");
+                Debug.Log("rolgiver  null");
+            }
+            Debug.Log("gameStarted: " + gameStarted + ";  gameEnded: " + gameEnded+ "allPlayersTagged: "+ allPlayersTagged);
+
+            Debug.Log("TaggedPlayers:");
+
+            foreach (GameObject p in taggedPlayers)
+            {
+                Debug.Log(p.transform.root.name);
+            }
+            Debug.Log("EscapedPlayers:");
+
+            foreach (GameObject p in escapedPlayers)
+            {
+                Debug.Log(p.transform.root.name);
             }
             StateReset();
         }
