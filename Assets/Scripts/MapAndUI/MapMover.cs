@@ -44,30 +44,33 @@ public class MapMover : AttributesSync
                 //Picks a random spawn for the prey. Initially tried to make these values global through PlayerStates, however that caused sync errors due to the nature of PlayerStates. 
                 //It's more efficient to put them here. - Ibrahim
                 int spawnLocation = Random.Range(0, 80000);
-                
-                if (firstChild.gameObject.activeSelf)
-                {
-                    if (spawnLocation <= 20000)
-                    {
-                        firstChild.position = new Vector3(5, 1.7f, 28);
-                    }
-                    else if (spawnLocation <= 40000 && spawnLocation > 20000)
-                    {
-                        firstChild.position = new Vector3(-11, 1.7f, 27);
-                    }
-                    else if (spawnLocation <= 60000 && spawnLocation > 40000)
-                    {
-                        firstChild.position = new Vector3(-14.5f, 1.7f, 4);
-                    }
-                    else if (spawnLocation <= 80000 && spawnLocation > 60000)
-                    {
-                        firstChild.position = new Vector3(9, 1.7f, 6);
-                    }
-                }
+                secondChild.position = new Vector3(558, 49f, 669);
+                firstChild.position = new Vector3(558, 49f, 669);
+
+
+                //if (firstChild.gameObject.activeSelf)
+                //{
+                //    if (spawnLocation <= 20000)
+                //    {
+                //        firstChild.position = new Vector3(5, 1.7f, 28);
+                //    }
+                //    else if (spawnLocation <= 40000 && spawnLocation > 20000)
+                //    {
+                //        firstChild.position = new Vector3(-11, 1.7f, 27);
+                //    }
+                //    else if (spawnLocation <= 60000 && spawnLocation > 40000)
+                //    {
+                //        firstChild.position = new Vector3(-14.5f, 1.7f, 4);
+                //    }
+                //    else if (spawnLocation <= 80000 && spawnLocation > 60000)
+                //    {
+                //        firstChild.position = new Vector3(9, 1.7f, 6);
+                //    }
+                //}
             }
-            
+
             //Loads the game scene, and sets the game started boolean to true. - Ibrahim
-            networkManager.LoadScene("Game_Map");
+            //networkManager.LoadScene("Game_Map");
             playerStates.gameStarted = true;
         }
         else if (scene.name == "Game_Map" && playerStates.gameStarted && playerStates.gameEnded)
