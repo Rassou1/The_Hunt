@@ -106,7 +106,7 @@ public class MapMover : AttributesSync
             //}
             
             networkManager = FindAnyObjectByType<Multiplayer>();
-            networkManager.LoadScene("Lobby");
+            //networkManager.LoadScene("Lobby");
             foreach (GameObject prey in playerStates.Prey)
             {
                 prey.GetComponentInChildren<P_StateManager>(true).Ghost = false;
