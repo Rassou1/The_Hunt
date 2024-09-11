@@ -113,9 +113,9 @@ public class MapMover : AttributesSync
                 prey.GetComponentInChildren<CapsuleCollider>().enabled = true;
             }
             playerStates.gameStarted = false;
-            playerStates.PlayerForceSync();
+            //playerStates.PlayerForceSync();
             playerStates.roleGiver.ResetAllPrefabs();
-            playerStates.PlayerForceSync();
+            //playerStates.PlayerForceSync();
         }
         Debug.Log("i did somthing in mapmover");
 

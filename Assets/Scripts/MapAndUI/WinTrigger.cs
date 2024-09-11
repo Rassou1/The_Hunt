@@ -69,7 +69,6 @@ public class WinTrigger : MonoBehaviour
                 //Makes you invisible. Enables ghost mode.
                 other.transform.parent.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
                 other.gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
-                playerStates.PlayerForceSync();
             }
 
             if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == (playerStates.Players.Count - 1) && playerStates.escapedPlayers.Count > 0)
