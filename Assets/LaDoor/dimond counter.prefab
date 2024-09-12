@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2172393411714896287}
   - component: {fileID: 3488262079908303896}
   - component: {fileID: 9029961741717823168}
-  m_Layer: 5
+  m_Layer: 17
   m_Name: dimond counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
