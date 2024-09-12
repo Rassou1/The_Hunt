@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {fileID: 8323935753692563728}
+  cameraBasePosition: {fileID: 0}
   parentRenderer: {fileID: 6022055686390360417}
   avatar: {fileID: 0}
 --- !u!1 &165650270092463430
@@ -4005,8 +4006,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9092421773036476780}
   - {fileID: 7588308513344199732}
+  - {fileID: 9092421773036476780}
   m_Father: {fileID: 7387120987316871633}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4213,6 +4214,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 2048607568547372349}
   _cameraOrientation: {fileID: 8236263713199787024}
   _cameraPostion: {fileID: 8323935753692563728}
+  _cameraBasePostion: {fileID: 0}
   _animator: {fileID: 0}
   _armsAnimator: {fileID: 0}
   _remoteAnimator: {fileID: 0}

@@ -35,7 +35,7 @@ public class SCR_dash_cooldown : MonoBehaviour
         if (dash_cooldown == 0)
         {
             outline.enabled = true;
-            outline.effectColor = Color.Lerp(outline.effectColor, Color.cyan, 0.12f);
+            outline.effectColor = Color.Lerp(outline.effectColor, Color.white, 0.12f);
         }
         else
         {
