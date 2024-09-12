@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public class CollectItems : MonoBehaviour
     private static int diamondsCollected = 0;
     private int requiredDiamonds = 1;
     private bool isCollected = false;
-    public Text diamondCountText;
+    public TextMeshProUGUI diamondCountText;
     AudioSource audioPlay;
     public Sounds pickupsounds;
     private Renderer _renderer;
@@ -20,17 +21,28 @@ public class CollectItems : MonoBehaviour
 
     public PlayerStates playerStates;
 
+    GameObject diamondCount;
+
+    // Floating and rotation variables
+    public float floatSpeed = 1.0f;     // Speed of floating up and down
+    float floatHeight = 0.2f;    // Maximum height of the float
+    public float rotationSpeed = 45.0f; // Speed of rotation in degrees per second
+
+    private Vector3 initialPosition;
+
     void Start()
     {
+        GameObject roomMenu = GameObject.Find("Room Menu");
+        GameObject diamondCount = roomMenu.transform.Find("dimond counter").gameObject;
+        diamondCountText = diamondCount.GetComponent<TextMeshProUGUI>();
+
         audioPlay = GetComponent<AudioSource>();
         _renderer = GetComponent<Renderer>();
         _collider = GetComponent<BoxCollider>();
         isCollected = false;
         Diamonds.SetActive(true);
-        //if (Diamonds != null)
-        //{
-        //    Diamonds.SetActive(true);  // Ensure the diamond is visible and interactable at the start
-        //}
+        initialPosition = Diamonds.transform.position; // Store the initial position for floating effect
+
         UpdateDiamondText();
     }
 
@@ -48,7 +60,7 @@ public class CollectItems : MonoBehaviour
             if (other.GetComponentInChildren<P_StateManager>() != null)
             {
                 other.GetComponentInChildren<P_StateManager>().DiamondsTaken++;
-                playerStates.PlayerForceSync();   
+                playerStates.PlayerForceSync();
             }
         }
     }
@@ -87,6 +99,13 @@ public class CollectItems : MonoBehaviour
     private void Update()
     {
         playerStates = FindAnyObjectByType<PlayerStates>();
+
+        // Animate the diamond with floating and rotation
+        if (!isCollected)
+        {
+            AnimateDiamond();
+        }
+
         if (isCollected)
         {
             if (!audioPlay.isPlaying)
@@ -119,9 +138,17 @@ public class CollectItems : MonoBehaviour
     {
         if (diamondCountText != null)
         {
-            diamondCountText.text = "Diamonds: " + diamondsCollected;
+            diamondCountText.text = "Diamonds: " + diamondsCollected + "/10";
         }
     }
 
-    
+    private void AnimateDiamond()
+    {
+        // Floating effect
+        float newY = Mathf.Sin(Time.time * floatSpeed) * floatHeight + initialPosition.y;
+        Diamonds.transform.position = new Vector3(initialPosition.x, newY, initialPosition.z);
+
+        // Rotation effect
+        Diamonds.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+    }
 }
