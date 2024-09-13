@@ -169,7 +169,7 @@ public class Hunter_Interactor : AttributesSync
             if (interactObj != null)
             {
                 interactObj.InitInteract(gameObject.transform.root.name);
-                Debug.Log($"{gameObject.transform.root.name} tagged {interactObj.GiveObject().name}");
+                Debug.Log($"{gameObject.transform.root.name} tagged {interactObj.GiveObject().transform.root.name}");
             }
             else
             {

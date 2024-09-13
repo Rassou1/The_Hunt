@@ -1,29 +1,26 @@
+using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiamondRandomizer : MonoBehaviour
+public class DiamondRandomizer : AttributesSync
 {
-    private List<GameObject> diamondVariants = new List<GameObject>();
+    [SerializeField] private List<GameObject> diamondVariants = new List<GameObject>();
+    public PlayerStates playerStates;
+    Multiplayer mp;
 
-
+    bool hasRandomized=false;
     // Start is called before the first frame update
     void Start()
     {
-        // Find all children with names that start with "Diamonds Variant"
-        foreach (Transform child in transform)
-        {
-            if (child.name.StartsWith("Diamonds Variant"))
-            {
-                diamondVariants.Add(child.gameObject);
-            }
-        }
+        mp = FindAnyObjectByType<Multiplayer>();
+        playerStates = mp.GetComponent<PlayerStates>();
 
-        // Randomize the list and activate 60% of them
-        ActivateRandomSet(0.6f);
+      
     }
 
     // Function to activate a random set of objects based on the percentage
+    [SynchronizableMethod]
     void ActivateRandomSet(float percentage)
     {
         // Shuffle the list of diamond variants
@@ -47,6 +44,7 @@ public class DiamondRandomizer : MonoBehaviour
     }
 
     // Fisher-Yates shuffle to randomize the list
+    [SynchronizableMethod]
     void ShuffleList(List<GameObject> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
@@ -59,8 +57,33 @@ public class DiamondRandomizer : MonoBehaviour
     }
 
     // Update is called once per frame
+    [SynchronizableMethod]
     void Update()
     {
+        if(playerStates.gameStarted && !hasRandomized)
+        {
+            hasRandomized=true;
+            // Find all children with names that start with "Diamonds Variant"
+            foreach (Transform child in transform)
+            {
+                if (child.name.StartsWith("Diamonds Variant"))
+                {
+                    diamondVariants.Add(child.gameObject);
+                }
+            }
 
+            // Randomize the list and activate 60% of them
+            ActivateRandomSet(0.6f);
+        }
+
+        if(!playerStates.gameStarted) hasRandomized=false;
+
+        if(playerStates.gameEnded)
+        {
+            foreach(GameObject diamond in diamondVariants)
+            {
+                diamond.SetActive(true);
+            }
+        }
     }
 }
