@@ -176,6 +176,8 @@ public class Hunter_Interactor : AttributesSync
                 Debug.Log("No interactable object found!");
             }
         }
+
+        taggedPlayers.Clear();
     }
 
 
