@@ -20,9 +20,9 @@ public class PlayerStates : MonoBehaviour
     //};
 
     //Lists for all the types of players. Used repetitively through the stages of gameplay.
-    public List<GameObject> players;
-    public List<GameObject> prey;
-    public List<GameObject> hunters;
+    private List<GameObject> players;
+    private List<GameObject> prey;
+    private List<GameObject> hunters;
 
     public RoleGiver roleGiver;
     public AttributesSync sync;
@@ -62,7 +62,6 @@ public class PlayerStates : MonoBehaviour
         if (!escapedPlayers.Contains(player))
         {
             escapedPlayers.Add(player);
-            Debug.Log(player + " Escaped");
         }
         
     }
