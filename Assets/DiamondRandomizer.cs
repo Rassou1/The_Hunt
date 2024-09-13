@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DiamondRandomizer : AttributesSync
 {
-    private List<GameObject> diamondVariants = new List<GameObject>();
+    [SerializeField] private List<GameObject> diamondVariants = new List<GameObject>();
     public PlayerStates playerStates;
     Multiplayer mp;
 
