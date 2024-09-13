@@ -20,6 +20,7 @@ public class DiamondRandomizer : AttributesSync
     }
 
     // Function to activate a random set of objects based on the percentage
+    [SynchronizableMethod]
     void ActivateRandomSet(float percentage)
     {
         // Shuffle the list of diamond variants
@@ -43,6 +44,7 @@ public class DiamondRandomizer : AttributesSync
     }
 
     // Fisher-Yates shuffle to randomize the list
+    [SynchronizableMethod]
     void ShuffleList(List<GameObject> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
