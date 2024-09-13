@@ -1,3 +1,4 @@
+using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,16 @@ using UnityEngine;
 public class DiamondRandomizer : MonoBehaviour
 {
     private List<GameObject> diamondVariants = new List<GameObject>();
+    public PlayerStates playerStates;
+    Multiplayer mp;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        mp = FindAnyObjectByType<Multiplayer>();
+        playerStates = mp.GetComponent<PlayerStates>();
+
         // Find all children with names that start with "Diamonds Variant"
         foreach (Transform child in transform)
         {
@@ -61,6 +67,12 @@ public class DiamondRandomizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(playerStates.gameEnded)
+        {
+            foreach(GameObject diamond in diamondVariants)
+            {
+                diamond.SetActive(true);
+            }
+        }
     }
 }
