@@ -138,7 +138,7 @@ public class CollectItems : MonoBehaviour
     {
         if (diamondCountText != null)
         {
-            diamondCountText.text = "Diamonds: " + diamondsCollected + "/10";
+            diamondCountText.text = "Diamonds: " + diamondsCollected + "/20";
         }
     }
 
