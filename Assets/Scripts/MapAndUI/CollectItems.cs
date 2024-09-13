@@ -39,8 +39,8 @@ public class CollectItems : MonoBehaviour
         audioPlay = GetComponent<AudioSource>();
         _renderer = GetComponent<Renderer>();
         _collider = GetComponent<BoxCollider>();
-        isCollected = false;
-        Diamonds.SetActive(true);
+        
+        
         initialPosition = Diamonds.transform.position; // Store the initial position for floating effect
 
         UpdateDiamondText();
@@ -77,8 +77,8 @@ public class CollectItems : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        diamondsCollected = 0;  // Reset the diamonds count when the scene is loaded
-        UpdateDiamondText();  // Update the diamond text to reflect the reset count
+          // Reset the diamonds count when the scene is loaded
+        // Update the diamond text to reflect the reset count
     }
 
     private void CollectDiamond()
@@ -112,6 +112,13 @@ public class CollectItems : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+        if (!playerStates.gameEnded && !playerStates.gameStarted)
+        {
+            Diamonds.SetActive(true);
+            isCollected = false;
+            diamondsCollected = 0;
+            UpdateDiamondText();
         }
     }
 

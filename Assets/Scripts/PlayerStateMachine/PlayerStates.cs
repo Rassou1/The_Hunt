@@ -41,8 +41,6 @@ public class PlayerStates : MonoBehaviour
         foreach (GameObject prey in prey)
         {
             P_StateManager state = prey.GetComponentInChildren<P_StateManager>();
-            //Debug.Log(state);
-            //Debug.Log(state.Escaped);
             state.Escaped = false;
             state.Caught = false;
         }
@@ -54,7 +52,7 @@ public class PlayerStates : MonoBehaviour
         gameStarted = false;
         gameEnded = false;
         hasReset = true;
-        PlayerForceSync();
+        //PlayerForceSync();
     }
 
     public void playerEscaped(GameObject player)

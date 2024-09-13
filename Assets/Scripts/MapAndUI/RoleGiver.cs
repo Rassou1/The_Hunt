@@ -46,7 +46,7 @@ public class RoleGiver : AttributesSync, IInteractable
             
             foreach (GameObject p in playerStates.Players)
             {
-                //The players and all networking components move scenes. - Ibrahim
+                //The players and all networking components move between the game map and the lobby. - Ibrahim
                 mm.MoveMaps(p);
             }
 
@@ -113,12 +113,12 @@ public class RoleGiver : AttributesSync, IInteractable
         //Both UI canvases are turned off at the beginning to avoid overlap between the two. - Ibrahim
         hunterCanvas.SetActive(false);
         preyCanvas.SetActive(false);
-        Scene scene = SceneManager.GetActiveScene();
+        //Scene scene = SceneManager.GetActiveScene();
         
-        if (mm==null&&scene.name=="Game_Map")
-        {
-            mm = wt.mapMover;
-        }
+        //if (mm==null&&scene.name=="Game_Map")
+        //{
+        //    mm = wt.mapMover;
+        //}
     }
 
     void Update()

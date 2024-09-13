@@ -20,9 +20,11 @@ public class MapMover : AttributesSync
     {
         //Finds the networkmanager and the playerstates global values. Moves players differently based on which map they are on. The gameStarted and gameEnded bools were used
         //to ensure correct placement of players. - Ibrahim
+        //Updated to accomodate for the Alteruna update, now that everything's in the same scene. No longer moves scenes or forces sync; said code can be found in the github. - Ibrahim, Hamdi
         networkManager = FindAnyObjectByType<Multiplayer>();
         playerStates = networkManager.GetComponent<PlayerStates>();
-        Scene scene = SceneManager.GetActiveScene();
+        
+        //Scene scene = SceneManager.GetActiveScene();
         
 
         if (!playerStates.gameStarted && !playerStates.gameEnded)
@@ -33,44 +35,44 @@ public class MapMover : AttributesSync
                 Transform parentTransform = p.transform;
 
                 //Finds the PlayerAndBody component which controls position on both the prey and hunter. - Ibrahim
-                Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
-                Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+                Transform preyComponent = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
+                Transform hunterComponent = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
 
-                //Centers all 3 objects onto one position to unify movement and avoid desync/animation errors. - Ibrahim
+                //Centers all 3 objects' local positions to unify movement and avoid desync/animation errors. - Ibrahim
                 parentTransform.position = Vector3.zero;
-                secondChild.position = Vector3.zero;
-                firstChild.position = Vector3.zero;
+                hunterComponent.position = Vector3.zero;
+                preyComponent.position = Vector3.zero;
 
-                //Picks a random spawn for the prey. Initially tried to make these values global through PlayerStates, however that caused sync errors due to the nature of PlayerStates. 
+                //Picks a random spawn for the prey. Initially tried to make these values global through PlayerStates, however that caused sync errors. 
                 //It's more efficient to put them here. - Ibrahim
                 int spawnLocation = Random.Range(0, 80000);
-                secondChild.position = new Vector3(73, -111f, 102);
-                firstChild.position = new Vector3(73, -111f, 102);
+                hunterComponent.position = new Vector3(73, -111f, 102);
 
 
-                //if (firstChild.gameObject.activeSelf)
-                //{
-                //    if (spawnLocation <= 20000)
-                //    {
-                //        firstChild.position = new Vector3(5, 1.7f, 28);
-                //    }
-                //    else if (spawnLocation <= 40000 && spawnLocation > 20000)
-                //    {
-                //        firstChild.position = new Vector3(-11, 1.7f, 27);
-                //    }
-                //    else if (spawnLocation <= 60000 && spawnLocation > 40000)
-                //    {
-                //        firstChild.position = new Vector3(-14.5f, 1.7f, 4);
-                //    }
-                //    else if (spawnLocation <= 80000 && spawnLocation > 60000)
-                //    {
-                //        firstChild.position = new Vector3(9, 1.7f, 6);
-                //    }
-                //}
+                if (preyComponent.gameObject.activeSelf)
+                {
+                    if (spawnLocation <= 20000)
+                    {
+                        preyComponent.position = new Vector3(86, -111, 113);
+                    }
+                    else if (spawnLocation <= 40000 && spawnLocation > 20000)
+                    {
+                        preyComponent.position = new Vector3(80, -111, 123);
+                    }
+                    else if (spawnLocation <= 60000 && spawnLocation > 40000)
+                    {
+                        preyComponent.position = new Vector3(57, -111, 116);
+                    }
+                    else if (spawnLocation <= 80000 && spawnLocation > 60000)
+                    {
+                        preyComponent.position = new Vector3(57, -111, 100);
+                    }
+                }
             }
 
-            //Loads the game scene, and sets the game started boolean to true. - Ibrahim
+            //Loads the game scene, and sets the game started boolean to true. Deprected now.- Ibrahim
             //networkManager.LoadScene("Game_Map");
+            
             playerStates.gameStarted = true;
         }
         else if (playerStates.gameStarted && playerStates.gameEnded)
@@ -80,23 +82,25 @@ public class MapMover : AttributesSync
             //UPDATE NOTE: Changed the structure of the code to accomodate for playerandbody, basically just stole the code from the initial map movement (which is tested and working).
             //this should theoretically work. /ibrahim
 
+            //Changed once again to avoid desync. - Ibrahim
+
             foreach (GameObject currentplayer in playerStates.Players)
             {
                 Transform parentTransform = currentplayer.transform;
                 
-                Transform firstChild = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
+                Transform preyComponent = parentTransform.Find("PreyComponent").Find("PlayerAndBody");
                 
-                Transform secondChild = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
+                Transform hunterComponent = parentTransform.Find("HunterComponent").Find("PlayerAndBody");
                 
-                if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == true)
+                if (preyComponent.GetComponentInChildren<P_StateManager>().Escaped == true)
                 {
-                    firstChild.position = new Vector3(67.7900009f, 19.8600006f, 99.1600037f);
+                    preyComponent.position = new Vector3(67.7900009f, 19.8600006f, 99.1600037f);
                 }
-                else if (firstChild.GetComponentInChildren<P_StateManager>().Escaped == false)
+                else if (preyComponent.GetComponentInChildren<P_StateManager>().Escaped == false)
                 {
-                    firstChild.position = new Vector3(106.099998f, 2.05999994f, 99.1600037f);
+                    preyComponent.position = new Vector3(106.099998f, 2.05999994f, 99.1600037f);
                 }
-                secondChild.position = new Vector3(84.9000015f, 16.9899998f, 127.059998f);
+                hunterComponent.position = new Vector3(84.9000015f, 16.9899998f, 127.059998f);
                 
             }
             
