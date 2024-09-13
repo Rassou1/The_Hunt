@@ -9,24 +9,14 @@ public class DiamondRandomizer : MonoBehaviour
     public PlayerStates playerStates;
     Multiplayer mp;
 
-
+    bool hasRandomized=false;
     // Start is called before the first frame update
     void Start()
     {
         mp = FindAnyObjectByType<Multiplayer>();
         playerStates = mp.GetComponent<PlayerStates>();
 
-        // Find all children with names that start with "Diamonds Variant"
-        foreach (Transform child in transform)
-        {
-            if (child.name.StartsWith("Diamonds Variant"))
-            {
-                diamondVariants.Add(child.gameObject);
-            }
-        }
-
-        // Randomize the list and activate 60% of them
-        ActivateRandomSet(0.6f);
+      
     }
 
     // Function to activate a random set of objects based on the percentage
@@ -67,6 +57,24 @@ public class DiamondRandomizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(playerStates.gameStarted && !hasRandomized)
+        {
+            hasRandomized=true;
+            // Find all children with names that start with "Diamonds Variant"
+            foreach (Transform child in transform)
+            {
+                if (child.name.StartsWith("Diamonds Variant"))
+                {
+                    diamondVariants.Add(child.gameObject);
+                }
+            }
+
+            // Randomize the list and activate 60% of them
+            ActivateRandomSet(0.6f);
+        }
+
+        if(!playerStates.gameStarted) hasRandomized=false;
+
         if(playerStates.gameEnded)
         {
             foreach(GameObject diamond in diamondVariants)
