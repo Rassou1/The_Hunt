@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiamondRandomizer : MonoBehaviour
+public class DiamondRandomizer : AttributesSync
 {
     private List<GameObject> diamondVariants = new List<GameObject>();
     public PlayerStates playerStates;
@@ -55,6 +55,7 @@ public class DiamondRandomizer : MonoBehaviour
     }
 
     // Update is called once per frame
+    [SynchronizableMethod]
     void Update()
     {
         if(playerStates.gameStarted && !hasRandomized)
