@@ -77,11 +77,8 @@ public class PlayerStates : MonoBehaviour
     public void PlayerForceSync()
     {
         sync = roleGiver.Multiplayer.gameObject.GetComponent<AttributesSync>();
-        
-        foreach(GameObject player in Players)
-        {
-            sync.ForceSync();
-        }
+
+        sync.ForceSync();
         
         //for (int i = 0; i < Players.Count; i++)
         //{

@@ -93,6 +93,8 @@ public class CollectItems : MonoBehaviour
             diamondsCollected++;
             UpdateDiamondText();
             CheckDiamondsCollected();
+            playerStates.PlayerForceSync();
+
         }
     }
 

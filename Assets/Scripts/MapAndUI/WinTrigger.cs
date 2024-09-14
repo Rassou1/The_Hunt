@@ -75,10 +75,11 @@ public class WinTrigger : MonoBehaviour
             {
                 playerStates.lastPlayerIndex = playerStates.Players.IndexOf(player);
                 playerStates.gameEnded = true;
-               
+                
                 foreach (GameObject obj in playerStates.Players)
                 {
                     mapMover.MoveMaps(obj);
+                    playerStates.PlayerForceSync();
                 }
             }           
         }
