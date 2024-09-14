@@ -48,10 +48,10 @@ public class WinTrigger : MonoBehaviour
         {
             foreach (GameObject p in playerStates.Prey)
             {
-                P_StateManager state = p.GetComponent<P_StateManager>();
+                P_StateManager state = p.GetComponentInChildren<P_StateManager>();
                 if (state.Escaped)
                 {
-                    playerStates.playerEscaped(p);
+                    playerStates.playerEscaped(p.GetComponentInParent<GameObject>());
                     Debug.Log(p.ToString() + " has escaped");
                 }
                 if (state.Caught)
@@ -80,7 +80,15 @@ public class WinTrigger : MonoBehaviour
             if (other.gameObject.layer == 7) 
             {
                 stateManager.Escaped = true;
-                playerStates.playerEscaped(player);
+                try
+                {
+                    playerStates.playerEscaped(player);
+                }
+                catch
+                {
+                    Debug.Log("player not added to escaped");
+                }
+                
                 other.gameObject.GetComponent<P_StateManager>().Ghost = true;
                 //Makes you invisible. Enables ghost mode.
                 other.transform.parent.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
