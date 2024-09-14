@@ -110,8 +110,8 @@ public class InteractablePlayer : AttributesSync, IInteractable
         {
             // Teleport the player to the prison position
             Transform parentTransform = GetComponentInChildren<TransformSynchronizable>().transform;
-            Transform firstChild = parentTransform.Find("PlayerAndBody");
-            firstChild.position = new Vector3(29, -104, 47.5f);
+            //Transform firstChild = parentTransform.Find("PlayerAndBody");
+            parentTransform.position = new Vector3(29, -104, 47.5f);
             _preyManager.Caught = true;
             playerStates.playerTagged(gameObject);
 
