@@ -74,6 +74,7 @@ public class MapMover : AttributesSync
             //networkManager.LoadScene("Game_Map");
             
             playerStates.gameStarted = true;
+            playerStates.hasReset = false;
         }
         else if (playerStates.gameStarted && playerStates.gameEnded)
         {

@@ -31,7 +31,7 @@ public class PlayerStates : MonoBehaviour
     public bool gameStarted;
     public bool gameEnded;
     public bool allPlayersTagged;
-    bool hasReset = false;
+    public bool hasReset = false;
 
     public int lastPlayerIndex;
 
@@ -104,11 +104,7 @@ public class PlayerStates : MonoBehaviour
         hunters = FindObjectsOnLayer(6);
         roleGiver = FindObjectOfType<RoleGiver>();
 
-        if (gameStarted && hasReset)
-        {
-            hasReset = false;
-        }
-        if (gameEnded && !hasReset)
+        if (!gameEnded && !gameStarted && !hasReset)
         {
             if (roleGiver == null)
             {
