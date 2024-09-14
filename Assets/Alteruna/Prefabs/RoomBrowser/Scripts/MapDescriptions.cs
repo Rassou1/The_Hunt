@@ -17,9 +17,6 @@ namespace Alteruna
 	{
 		[NonSerialized]
 		public int BuildIndex = -1;
-
-		public bool Hidden = false;
-
 		[HideInInspector]
 		public string SceneName;
 		public string ScenePath;
@@ -43,6 +40,7 @@ namespace Alteruna
 	}
 
 
+	[CreateAssetMenu(fileName = "NewMapDescriptions", menuName = "Alteruna/MapDescriptions")]
 	public class MapDescriptions : ScriptableObject
 	{
 #region PATHS
@@ -51,21 +49,16 @@ namespace Alteruna
 		private const string RESOURCE_PATH = RESOURCE_DIRECTORY + "/" + RESOURCE_NAME + ".asset";
 #endregion
 		static MapDescriptions _instance;
-		public static MapDescriptions Instance => GetInstance();
+		public static MapDescriptions Instance => GetInstance(); 
 
-		public bool ChangeSceneOnRoomJoined = true;
 		public Sprite DefaultImage;
 
-		[SerializeField]
-		private List<MapInfo> DescriptionItems = new List<MapInfo>();
+		[SerializeField] private List<MapInfo> DescriptionItems = new List<MapInfo>();
 
 
-		public List<MapInfo> GetValidMapDescriptions(bool getHiddenDescriptions = false)
+		public List<MapInfo> GetValidMapDescriptions()
 		{
-			return DescriptionItems.Where(d => d.BuildIndex >= 0 && (getHiddenDescriptions || !d.Hidden))
-				.GroupBy(d => d.BuildIndex)
-				.Select(d => d.First())
-			.ToList();
+			return DescriptionItems.Where(d => d.BuildIndex >= 0).GroupBy(d => d.BuildIndex).Select(d => d.First()).ToList();
 		}
 
 		public MapInfo GetMapDescription(int sceneIndex)
@@ -76,9 +69,6 @@ namespace Alteruna
 			{
 				info = new MapInfo(sceneIndex, "Description missing.");
 				DescriptionItems.Add(info);
-#if UNITY_EDITOR
-				MarkAsDirty();
-#endif
 			}
 
 			return info;
@@ -100,27 +90,12 @@ namespace Alteruna
 #if UNITY_EDITOR
 		public void PopulateScenesIntoList()
 		{
-			bool buildSettingsContainsInvalidScenes = false;
 			DescriptionItems.Clear();
-
 			for (int i = 0, l = EditorBuildSettings.scenes.Length; i < l; i++)
 			{
-				if (!File.Exists(EditorBuildSettings.scenes[i].path))
-				{
-					buildSettingsContainsInvalidScenes = true;
-					continue;
-				}
-
 				MapInfo info = new MapInfo(i, "Description missing.");
 				DescriptionItems.Add(info);
 			}
-
-			if (buildSettingsContainsInvalidScenes)
-			{
-				Debug.LogWarning($"Warning! Build settings refers to one or more scenes that couldn't be found.");
-			}
-
-			MarkAsDirty();
 		}
 
 		private void OnEnable()
@@ -143,7 +118,7 @@ namespace Alteruna
 			EditorBuildSettings.scenes.AssignIndexesToScenes(DescriptionItems);
 		}
 
-		public void Reset()
+		private void Reset()
 		{
 			HandleDefaultImage();
 			PopulateScenesIntoList();
@@ -176,28 +151,16 @@ namespace Alteruna
 				_instance.PopulateScenesIntoList();
 #endif
 			}
-
-#if UNITY_EDITOR
-			if (_instance.DescriptionItems.Count <= 0)
-			{
-				_instance.PopulateScenesIntoList();
-			}
-			_instance.HandleDefaultImage();
-#else
+#if !UNITY_EDITOR
 			foreach (var item in _instance.DescriptionItems)
 			{
 				item.BuildIndex = SceneUtility.GetBuildIndexByScenePath(item.ScenePath);
 			}
+#else
+			_instance.HandleDefaultImage();
 #endif
-
 			return _instance;
 		}
-#if UNITY_EDITOR
-		void MarkAsDirty()
-		{
-			EditorUtility.SetDirty(Instance);
-		}
-#endif
 	}
 
 
@@ -215,7 +178,6 @@ namespace Alteruna
 			{
 				info.BuildIndex = -1;
 			}
-
 			int negator = 0;
 			for (int i = 0, l = scenes.Length; i < l; i++)
 			{
@@ -223,7 +185,6 @@ namespace Alteruna
 				{
 					negator++;
 				}
-
 				var infos = mapInfos.Where(m => m.SceneName == scenes[i].Name()).ToList();
 				foreach (var info in infos)
 				{

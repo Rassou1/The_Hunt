@@ -51,7 +51,7 @@ public class WinTrigger : MonoBehaviour
                 P_StateManager state = p.GetComponentInChildren<P_StateManager>();
                 if (state.Escaped)
                 {
-                    playerStates.playerEscaped(p);
+                    playerStates.playerEscaped(p.GetComponentInParent<GameObject>());
                     Debug.Log(p.ToString() + " has escaped");
                 }
                 if (state.Caught)
