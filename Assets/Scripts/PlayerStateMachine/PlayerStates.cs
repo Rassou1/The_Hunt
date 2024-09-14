@@ -110,20 +110,6 @@ public class PlayerStates : MonoBehaviour
             {
                 Debug.Log("rolgiver  null");
             }
-            Debug.Log("gameStarted: " + gameStarted + ";  gameEnded: " + gameEnded+ "allPlayersTagged: "+ allPlayersTagged);
-
-            Debug.Log("TaggedPlayers:");
-
-            foreach (GameObject p in taggedPlayers)
-            {
-                Debug.Log(p.transform.root.name);
-            }
-            Debug.Log("EscapedPlayers:");
-
-            foreach (GameObject p in escapedPlayers)
-            {
-                Debug.Log(p.transform.root.name);
-            }
             StateReset();
         }
 

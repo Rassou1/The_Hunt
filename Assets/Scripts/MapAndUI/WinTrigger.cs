@@ -63,8 +63,8 @@ public class WinTrigger : MonoBehaviour
                 //}
                 if (state.Caught)
                 {
-                    playerStates.playerTagged(p);
-                    Debug.Log(p.ToString() + " has been tagged");
+                    playerStates.playerTagged(p.transform.root.gameObject);
+                    Debug.Log(p.transform.root.gameObject.ToString() + " has been tagged");
                 }
             }
         

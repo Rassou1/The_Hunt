@@ -40,27 +40,20 @@ public class EndGameController : MonoBehaviour
             gameObject.SetActive(true);
         }
         
-        if (playerStates.escapedPlayers.Contains(thisPlayer) && !escapedAnimationPlayed)
-        {
-            //StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
-            //Debug.Log("ascepate animation" + escaped.transform.position);
-            //escapedAnimationPlayed = true;
-        }
-        if (playerStates.escapedPlayers.Count > 0)
-        {
-            Debug.Log("D");
-        }
-        if (playerStates.taggedPlayers.Count > 0)
-        {
-            Debug.Log("D");
-        }
-        if (playerStates.taggedPlayers.Contains(thisPlayer.transform.Find("PreyComponent").gameObject) && !caughtAnimationPlayed)
-        {
-            //StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
-            //Debug.Log("cuaght animation" + caught.transform.position);
-            //caughtAnimationPlayed = true;
+        //if (playerStates.escapedPlayers.Contains(thisPlayer) && !escapedAnimationPlayed)
+        //{
+        //    //StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
+        //    //Debug.Log("ascepate animation" + escaped.transform.position);
+        //    //escapedAnimationPlayed = true;
+        //}
 
-        }
+        //if (playerStates.taggedPlayers.Contains(thisPlayer.transform.Find("PreyComponent").gameObject) && !caughtAnimationPlayed)
+        //{
+        //    //StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
+        //    //Debug.Log("cuaght animation" + caught.transform.position);
+        //    //caughtAnimationPlayed = true;
+
+        //}
     }
 
     private IEnumerator ActivateAndAnimateObjectsForTime(GameObject obj1, GameObject obj2, float totalTime, float spinScaleTime, float extraScaleTime, float scaleDownTime)
