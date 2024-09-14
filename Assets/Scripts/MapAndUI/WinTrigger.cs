@@ -43,6 +43,19 @@ public class WinTrigger : MonoBehaviour
             playerStates.gameEnded = true;
             mapMover.MoveMaps();
         }
+
+        foreach(GameObject p in playerStates.Players)
+        {
+            P_StateManager state = p.GetComponent<P_StateManager>();
+            if (state.Escaped)
+            {
+                playerStates.playerEscaped(p);
+            }
+            if(state.Caught)
+            {
+                playerStates.playerTagged(p);
+            }
+        }
     }
 
     
