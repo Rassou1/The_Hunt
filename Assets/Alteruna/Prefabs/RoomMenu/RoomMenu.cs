@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Linq;
 using Alteruna.Trinity;
 
@@ -9,19 +8,14 @@ namespace Alteruna
 {
 	public class RoomMenu : CommunicationBridge
 	{
-        [SerializeField] private RectTransform uiTransform; // Reference to the RectTransform of the UI
-        [SerializeField] private Vector2 startPosition; // Original position of the UI
-        [SerializeField] private Vector2 teleportPosition; // Position to teleport the UI
-
-        [SerializeField] private Text TitleText;
+		[SerializeField] private Text TitleText;
 		[SerializeField] private GameObject LANEntryPrefab;
 		[SerializeField] private GameObject WANEntryPrefab;
 		[SerializeField] private GameObject ContentContainer;
 		[SerializeField] private Button StartButton;
-		//[SerializeField] private Button LeaveButton;
-		[SerializeField] private Button SPButton;
-		[SerializeField] private UnityEngine.SceneManagement.Scene CurrentScene;
-        public bool ShowUserCount = false;
+		[SerializeField] private Button LeaveButton;
+
+		public bool ShowUserCount = false;
 
 		// manual refresh can be done by calling Multiplayer.RefreshRoomList();
 		public bool AutomaticallyRefresh = true;
@@ -43,8 +37,7 @@ namespace Alteruna
 				Multiplayer = FindObjectOfType<Multiplayer>();
 			}
 
-
-            if (Multiplayer == null)
+			if (Multiplayer == null)
 			{
 				Debug.LogError("Unable to find a active object of type Multiplayer.");
 				if (TitleText != null) TitleText.text = "Missing Multiplayer Component";
@@ -63,17 +56,13 @@ namespace Alteruna
 					// for more control, use Multiplayer.CreateRoom
 					Multiplayer.JoinOnDemandRoom();
 					_refreshTime = RefreshInterval;
+				});
 
-                    // Teleport UI to a specific position
-                    TeleportUI(teleportPosition);
-                });
-
-				//LeaveButton.onClick.AddListener(() =>
-				//{                    
-				//	Multiplayer.LoadScene("Start");
-				//	Multiplayer.CurrentRoom?.Leave();
-    //                _refreshTime = RefreshInterval;	
-				//});
+				LeaveButton.onClick.AddListener(() =>
+				{
+					Multiplayer.CurrentRoom?.Leave();
+					_refreshTime = RefreshInterval;
+				});
 
 				if (TitleText != null)
 				{
@@ -99,16 +88,11 @@ namespace Alteruna
 			}
 
 			StartButton.interactable = false;
-			//LeaveButton.interactable = false;
+			LeaveButton.interactable = false;
 		}
 
 		private void FixedUpdate()
 		{
-			// Disable leaving if player mid-game
-			if (CurrentScene.name == "Game_Map")
-			{
-
-			}
 			if (!Multiplayer.enabled)
 			{
 				TitleText.text = "Offline";
@@ -157,14 +141,7 @@ namespace Alteruna
 				}
 
 				_count++;
-
-                // Check if Tab button is held down
-                if (Input.GetKey(KeyCode.Tab))
-                {
-                    // Teleport UI back to its original position
-                    TeleportUI(startPosition);
-                }
-            }
+			}
 		}
 
 		public bool JoinRoom(string roomName, ushort password = 0)
@@ -195,7 +172,7 @@ namespace Alteruna
 			}
 
 			StartButton.interactable = true;
-			//LeaveButton.interactable = false;
+			LeaveButton.interactable = false;
 
 			if (TitleText != null)
 			{
@@ -206,7 +183,7 @@ namespace Alteruna
 		private void Disconnected(Multiplayer multiplayer, Endpoint endPoint)
 		{
 			StartButton.interactable = false;
-			//LeaveButton.interactable = false;
+			LeaveButton.interactable = false;
 
 			_connectionMessage = "Reconnecting";
 			if (TitleText != null)
@@ -218,37 +195,22 @@ namespace Alteruna
 		private void JoinedRoom(Multiplayer multiplayer, Room room, User user)
 		{
 			StartButton.interactable = false;
-			//LeaveButton.interactable = true;
+			LeaveButton.interactable = true;
 
-			Scene currentScene = SceneManager.GetActiveScene();
-
-            if (currentScene.name == "Start") { 
-				SPButton.gameObject.SetActive(false); 
-			}
-
-
-            if (TitleText != null)
+			if (TitleText != null)
 			{
 				TitleText.text = "In Room " + room.Name;
 			}
+		}
 
-            TeleportUI(teleportPosition);
-        }
-
-        private void LeftRoom(Multiplayer multiplayer)
+		private void LeftRoom(Multiplayer multiplayer)
 		{
 			_roomI = -1;
 
 			StartButton.interactable = true;
-			//LeaveButton.interactable = false;
-            Scene currentScene = SceneManager.GetActiveScene();
+			LeaveButton.interactable = false;
 
-            if (currentScene.name == "Start")
-            {
-                SPButton.gameObject.SetActive(true);
-            }
-
-            if (TitleText != null)
+			if (TitleText != null)
 			{
 				TitleText.text = "Rooms";
 			}
@@ -348,15 +310,13 @@ namespace Alteruna
 			}
 		}
 
-        private void TeleportUI(Vector2 position)
-        {
-            if (uiTransform != null)
-            {
-                uiTransform.anchoredPosition = position;
-            }
-        }
+		public new void Reset()
+		{
+			base.Reset();
+			EnsureEventSystem.Ensure(true);
+		}
 
-        private struct RoomObject
+		private struct RoomObject
 		{
 			public readonly GameObject GameObject;
 			public readonly Text Text;
