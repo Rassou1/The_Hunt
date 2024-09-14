@@ -115,9 +115,10 @@ public class CollectItems : MonoBehaviour
         }
         if (!playerStates.gameEnded && !playerStates.gameStarted)
         {
-            Diamonds.SetActive(true);
             isCollected = false;
-            diamondsCollected = 0;
+            _collider.enabled = true;
+            _renderer.enabled = true;
+            Debug.Log("DiamondReset");
             UpdateDiamondText();
         }
     }

@@ -42,9 +42,9 @@ public class EndGameController : MonoBehaviour
         
         if (playerStates.escapedPlayers.Contains(thisPlayer) && !escapedAnimationPlayed)
         {
-            StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
-            Debug.Log("ascepate animation" + escaped.transform.position);
-            escapedAnimationPlayed = true;
+            //StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, escaped, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
+            //Debug.Log("ascepate animation" + escaped.transform.position);
+            //escapedAnimationPlayed = true;
         }
         if (playerStates.escapedPlayers.Count > 0)
         {
@@ -56,9 +56,9 @@ public class EndGameController : MonoBehaviour
         }
         if (playerStates.taggedPlayers.Contains(thisPlayer.transform.Find("PreyComponent").gameObject) && !caughtAnimationPlayed)
         {
-            StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
-            Debug.Log("cuaght animation" + caught.transform.position);
-            caughtAnimationPlayed = true;
+            //StartCoroutine(ActivateAndAnimateObjectsForTime(endGameBackground, caught, activeTime, spinScaleTime, extraScaleTime, scaleDownTime));
+            //Debug.Log("cuaght animation" + caught.transform.position);
+            //caughtAnimationPlayed = true;
 
         }
     }
