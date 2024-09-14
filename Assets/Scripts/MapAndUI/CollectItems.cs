@@ -121,6 +121,7 @@ public class CollectItems : MonoBehaviour
             _collider.enabled = true;
             _renderer.enabled = true;
             Debug.Log("DiamondReset");
+            diamondsCollected = 0;
             UpdateDiamondText();
         }
     }
