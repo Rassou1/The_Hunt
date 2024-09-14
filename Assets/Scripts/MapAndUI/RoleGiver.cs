@@ -41,14 +41,13 @@ public class RoleGiver : AttributesSync, IInteractable
     public void Interact(string interactor)
     {
         //On interact with the GameObject that houses this script: - Ibrahim
-        if (playerStates.Players.Count > 0)
+        if (playerStates.Players.Count > 1)
         {
             
-            foreach (GameObject p in playerStates.Players)
-            {
+           
                 //The players and all networking components move between the game map and the lobby. - Ibrahim
-                mm.MoveMaps(p);
-            }
+                mm.MoveMaps();
+            
 
             for (int i = 0; i < playerStates.Players.Count; i++)
             {

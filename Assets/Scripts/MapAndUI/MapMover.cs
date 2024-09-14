@@ -16,7 +16,7 @@ public class MapMover : AttributesSync
     }
 
     [SynchronizableMethod]
-    public void MoveMaps(GameObject player)
+    public void MoveMaps()
     {
         //Finds the networkmanager and the playerstates global values. Moves players differently based on which map they are on. The gameStarted and gameEnded bools were used
         //to ensure correct placement of players. - Ibrahim

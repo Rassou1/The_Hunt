@@ -41,10 +41,7 @@ public class WinTrigger : MonoBehaviour
         if (playerStates.allPlayersTagged)
         {
             playerStates.gameEnded = true;
-            foreach (GameObject p in playerStates.Players)
-            {
-                mapMover.MoveMaps(p);
-            }
+            mapMover.MoveMaps();
         }
     }
 
@@ -56,7 +53,7 @@ public class WinTrigger : MonoBehaviour
         //On entering the escape door, the player turns into ghost, is logged as having escaped, and upon all players escaping, sends everyone back to lobby. - Ibrahim
         mp = FindObjectOfType<Multiplayer>();
         GameObject playerNewPrefab = other.gameObject.transform.parent.parent.parent.gameObject;
-        
+        Debug.Log("Player Escaped");
         if (playerNewPrefab.tag == "Player")
         {
             stateManager = playerNewPrefab.GetComponentInChildren<P_StateManager>(true);
@@ -75,12 +72,9 @@ public class WinTrigger : MonoBehaviour
             {
                 playerStates.lastPlayerIndex = playerStates.Players.IndexOf(player);
                 playerStates.gameEnded = true;
+                mapMover.MoveMaps();
+                playerStates.PlayerForceSync();
                 
-                foreach (GameObject obj in playerStates.Players)
-                {
-                    mapMover.MoveMaps(obj);
-                    playerStates.PlayerForceSync();
-                }
             }           
         }
     }
