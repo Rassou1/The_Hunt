@@ -43,8 +43,15 @@ public class WinTrigger : MonoBehaviour
             playerStates.gameEnded = true;
             mapMover.MoveMaps();
         }
-        
-        if(playerStates.gameStarted && !playerStates.gameEnded)
+
+        if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == (playerStates.Players.Count - 1) && playerStates.escapedPlayers.Count > 0)
+        {
+            playerStates.gameEnded = true;
+            mapMover.MoveMaps();
+            playerStates.PlayerForceSync();
+        }
+
+        if (playerStates.gameStarted && !playerStates.gameEnded)
         {
             foreach (GameObject p in playerStates.Prey)
             {
@@ -95,9 +102,8 @@ public class WinTrigger : MonoBehaviour
                 other.gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
             }
 
-            if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == (playerStates.Players.Count - 1) && playerStates.escapedPlayers.Count > 0)
+            if (playerStates.escapedPlayers.Count == playerStates.Prey.Count && playerStates.escapedPlayers.Count > 0)
             {
-                playerStates.lastPlayerIndex = playerStates.Players.IndexOf(player);
                 playerStates.gameEnded = true;
                 mapMover.MoveMaps();
                 playerStates.PlayerForceSync();
