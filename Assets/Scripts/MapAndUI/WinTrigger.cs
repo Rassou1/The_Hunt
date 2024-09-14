@@ -49,11 +49,11 @@ public class WinTrigger : MonoBehaviour
             foreach (GameObject p in playerStates.Prey)
             {
                 P_StateManager state = p.GetComponentInChildren<P_StateManager>();
-                if (state.Escaped)
-                {
-                    playerStates.playerEscaped(p.GetComponentInParent<GameObject>());
-                    Debug.Log(p.ToString() + " has escaped");
-                }
+                //if (state.Escaped)
+                //{
+                //    playerStates.playerEscaped(p);
+                //    Debug.Log(p.ToString() + " has escaped");
+                //}
                 if (state.Caught)
                 {
                     playerStates.playerTagged(p);
