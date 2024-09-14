@@ -1041,7 +1041,7 @@ MonoBehaviour:
     NetLOD: 4
     Frequency: 120
   UseGlobalPosition: 1
-  refreshRate: 120
+  refreshRate: 60
   SyncedAxes: 511
 --- !u!114 &2323297128974718852
 MonoBehaviour:
@@ -8936,7 +8936,7 @@ MonoBehaviour:
     NetLOD: 4
     Frequency: 120
   UseGlobalPosition: 1
-  refreshRate: 120
+  refreshRate: 60
   SyncedAxes: 511
 --- !u!114 &9090348373271904619
 MonoBehaviour:
