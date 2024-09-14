@@ -112,7 +112,7 @@ public class CollectItems : MonoBehaviour
         {
             if (!audioPlay.isPlaying)
             {
-                Destroy(gameObject);
+               
             }
         }
         if (!playerStates.gameEnded && !playerStates.gameStarted)
