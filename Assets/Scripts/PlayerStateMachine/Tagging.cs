@@ -109,7 +109,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
         if (_interactor.layer == LayerMask.NameToLayer("Hunter") && gameObject.layer == LayerMask.NameToLayer("Prey"))
         {
             // Teleport the player to the prison position
-            Transform parentTransform = GetComponent<TransformSynchronizable>().transform;
+            Transform parentTransform = GetComponentInChildren<TransformSynchronizable>().transform;
             Transform firstChild = parentTransform.Find("PlayerAndBody");
             firstChild.position = new Vector3(29, -104, 47.5f);
             _preyManager.Caught = true;
