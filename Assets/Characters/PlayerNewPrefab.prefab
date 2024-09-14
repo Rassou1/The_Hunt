@@ -2904,6 +2904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2833849638471885709}
   - component: {fileID: 672891025351659196}
+  - component: {fileID: 2029806309076504343}
   m_Layer: 6
   m_Name: PlayerAndBody
   m_TagString: Untagged
@@ -2959,6 +2960,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &2029806309076504343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316454377322105910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1312809854, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: 7ad2025c-09a7-4cb9-910f-45d2a43d8984
+  BucketBehaviors:
+  - Name: Min
+    NetLOD: 0
+    Frequency: -1
+  - Name: Low
+    NetLOD: 1
+    Frequency: 0
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 0
+  - Name: High
+    NetLOD: 3
+    Frequency: 0
+  - Name: Max
+    NetLOD: 4
+    Frequency: 120
+  UseGlobalPosition: 1
+  refreshRate: 120
+  SyncedAxes: 511
 --- !u!1 &3325566596365940131
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,7 +4834,6 @@ GameObject:
   - component: {fileID: 8640977815673215286}
   - component: {fileID: 1128020610449734755}
   - component: {fileID: 7582628521144172111}
-  - component: {fileID: 7189163474499563392}
   m_Layer: 6
   m_Name: Orientation
   m_TagString: Untagged
@@ -4901,39 +4934,6 @@ CapsuleCollider:
   m_Height: 2.2
   m_Direction: 1
   m_Center: {x: 0, y: 1.1, z: 0}
---- !u!114 &7189163474499563392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5924580533883007227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1312809854, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
-  _uidString: 7ad2025c-09a7-4cb9-910f-45d2a43d8984
-  BucketBehaviors:
-  - Name: Min
-    NetLOD: 0
-    Frequency: -1
-  - Name: Low
-    NetLOD: 1
-    Frequency: 0
-  - Name: Mid
-    NetLOD: 2
-    Frequency: 0
-  - Name: High
-    NetLOD: 3
-    Frequency: 0
-  - Name: Max
-    NetLOD: 4
-    Frequency: 120
-  UseGlobalPosition: 1
-  refreshRate: 120
-  SyncedAxes: 511
 --- !u!1 &6042554195103118254
 GameObject:
   m_ObjectHideFlags: 0
@@ -8853,9 +8853,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6596673362225695418, guid: 59556d925da285648bfaf1333170db54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2714926659711497951}
-    - targetCorrespondingSourceObject: {fileID: 6474725757306418197, guid: 59556d925da285648bfaf1333170db54, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 5829555560180891793, guid: 59556d925da285648bfaf1333170db54, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4308349294728816081}
+      addedObject: {fileID: 3224843871313527049}
     - targetCorrespondingSourceObject: {fileID: 9183273402705518421, guid: 59556d925da285648bfaf1333170db54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3516641510348071382}
@@ -8884,12 +8884,50 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5913030971392862021, guid: 59556d925da285648bfaf1333170db54, type: 3}
   m_PrefabInstance: {fileID: 4868709614004448953}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894882244977334956}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d31a29400454b6d4dbb0bdf39894fd38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1402761867415252520 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5829555560180891793, guid: 59556d925da285648bfaf1333170db54, type: 3}
+  m_PrefabInstance: {fileID: 4868709614004448953}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3224843871313527049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402761867415252520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1312809854, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  _uidString: d15a591b-29c9-4831-9b4f-6c4394ca2383
+  BucketBehaviors:
+  - Name: Min
+    NetLOD: 0
+    Frequency: -1
+  - Name: Low
+    NetLOD: 1
+    Frequency: 0
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 0
+  - Name: High
+    NetLOD: 3
+    Frequency: 0
+  - Name: Max
+    NetLOD: 4
+    Frequency: 120
+  UseGlobalPosition: 1
+  refreshRate: 120
+  SyncedAxes: 511
 --- !u!4 &1409882155117462875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5765110827027000290, guid: 59556d925da285648bfaf1333170db54, type: 3}
@@ -9001,44 +9039,6 @@ MonoBehaviour:
   _preyManager: {fileID: 1269575076366420476}
   movingmap: 0
   _interactor: {fileID: 1737605374854112259}
---- !u!1 &1894882244977334956 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6474725757306418197, guid: 59556d925da285648bfaf1333170db54, type: 3}
-  m_PrefabInstance: {fileID: 4868709614004448953}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4308349294728816081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894882244977334956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1312809854, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
-  _uidString: d15a591b-29c9-4831-9b4f-6c4394ca2383
-  BucketBehaviors:
-  - Name: Min
-    NetLOD: 0
-    Frequency: -1
-  - Name: Low
-    NetLOD: 1
-    Frequency: 0
-  - Name: Mid
-    NetLOD: 2
-    Frequency: 0
-  - Name: High
-    NetLOD: 3
-    Frequency: 0
-  - Name: Max
-    NetLOD: 4
-    Frequency: 120
-  UseGlobalPosition: 1
-  refreshRate: 120
-  SyncedAxes: 511
 --- !u!224 &3088967942758969997 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7588308513344199732, guid: 59556d925da285648bfaf1333170db54, type: 3}
