@@ -1040,8 +1040,8 @@ MonoBehaviour:
   - Name: Max
     NetLOD: 4
     Frequency: 120
-  UseGlobalPosition: 0
-  refreshRate: 30
+  UseGlobalPosition: 1
+  refreshRate: 120
   SyncedAxes: 511
 --- !u!114 &2323297128974718852
 MonoBehaviour:
@@ -8935,8 +8935,8 @@ MonoBehaviour:
   - Name: Max
     NetLOD: 4
     Frequency: 120
-  UseGlobalPosition: 0
-  refreshRate: 30
+  UseGlobalPosition: 1
+  refreshRate: 120
   SyncedAxes: 511
 --- !u!114 &9090348373271904619
 MonoBehaviour:
@@ -9028,7 +9028,6 @@ MonoBehaviour:
   Reliability: 1
   LocalMethodBehavior: 1
   tagged: 0
-  prisonPosition: {x: -43.941452, y: 8.035, z: -49.711296}
   _avatar: {fileID: 7566427906986039737}
   networkManager: {fileID: 0}
   _hunterManager: {fileID: 1128020610449734755}
