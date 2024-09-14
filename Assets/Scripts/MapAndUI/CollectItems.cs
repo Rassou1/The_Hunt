@@ -11,7 +11,7 @@ public class CollectItems : MonoBehaviour
     [SerializeField] public Animator Dooranim2;
     public GameObject Diamonds;
     private static int diamondsCollected = 0;
-    private int requiredDiamonds = 1;
+    private int requiredDiamonds = 20;
     private bool isCollected = false;
     public TextMeshProUGUI diamondCountText;
     AudioSource audioPlay;
