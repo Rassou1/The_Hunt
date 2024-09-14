@@ -70,7 +70,6 @@ public class PlayerStates : MonoBehaviour
         if(!taggedPlayers.Contains(player)) 
         { 
             taggedPlayers.Add(player);
-            Debug.Log(player + " Tagged");
         }
     }
 
