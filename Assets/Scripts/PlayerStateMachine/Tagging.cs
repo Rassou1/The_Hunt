@@ -113,7 +113,7 @@ public class InteractablePlayer : AttributesSync, IInteractable
             //Transform firstChild = parentTransform.Find("PlayerAndBody");
             parentTransform.position = new Vector3(29, -104, 47.5f);
             _preyManager.Caught = true;
-            playerStates.playerTagged(gameObject);
+            playerStates.playerTagged(gameObject.transform.root.gameObject);
 
         }
         //Debug.Log("");
