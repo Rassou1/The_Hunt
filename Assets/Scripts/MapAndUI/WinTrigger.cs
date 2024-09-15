@@ -19,7 +19,7 @@ public class WinTrigger : MonoBehaviour
 
     void Start()
     {
-        //On game start, finds the multiplayer component. Makes list of prey and hunter. 
+        //On game start, finds the multiplayer component. - Ibrahim
         mp = FindAnyObjectByType<Multiplayer>();
         playerStates = mp.GetComponent<PlayerStates>();
 
@@ -40,12 +40,14 @@ public class WinTrigger : MonoBehaviour
         }
         if (playerStates.allPlayersTagged)
         {
+            //Ends game and moves players back if all players are tagged. - Ibrahim
             playerStates.gameEnded = true;
             mapMover.MoveMaps();
         }
 
         if (playerStates.escapedPlayers.Count + playerStates.taggedPlayers.Count == (playerStates.Players.Count - 1) && playerStates.escapedPlayers.Count > 0)
         {
+            //Same code as above, but for when at least one player escapes. - Ibrahim
             playerStates.gameEnded = true;
             mapMover.MoveMaps();
             playerStates.PlayerForceSync();

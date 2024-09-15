@@ -6,11 +6,11 @@ using System;
 
 public class PlayerStates : MonoBehaviour
 {
-    //Global values. Gather number of players based on their states. Holds info for spawn locations. Resets all states on new game start.
+    //Global values. Gather number of players based on their states. Holds info for spawn locations. Resets all states on new game start. - Ibrahim
     public List<GameObject> escapedPlayers = new List<GameObject>();
     public List<GameObject> taggedPlayers = new List<GameObject>();
 
-    //Legacy code for random  hunter spawns. Removed due to the game becoming unfair.
+    //Legacy code for random  hunter spawns. Removed due to the game becoming unfair. - Ibrahim
     //public List<Vector3> spawns = new List<Vector3>()
     //{
     //    new Vector3(5,1,28),
@@ -19,7 +19,7 @@ public class PlayerStates : MonoBehaviour
     //    new Vector3(9,1, 6) 
     //};
 
-    //Lists for all the types of players. Used repetitively through the stages of gameplay.
+    //Lists for all the types of players. Used repetitively through the stages of gameplay. - Ibrahim
     public List<GameObject> players;
     public List<GameObject> prey;
     public List<GameObject> hunters;
@@ -37,7 +37,7 @@ public class PlayerStates : MonoBehaviour
 
     public void StateReset()
     {
-        
+        //Resets all common values except for the diamonds. Happens before game begins and after it ends. - Ibrahim
         foreach (GameObject prey in prey)
         {
             P_StateManager state = prey.GetComponentInChildren<P_StateManager>();
@@ -75,6 +75,7 @@ public class PlayerStates : MonoBehaviour
 
     public void PlayerForceSync()
     {
+        //Used to force all clients to sync together. - Ibrahim
         sync = roleGiver.Multiplayer.gameObject.GetComponent<AttributesSync>();
 
         sync.ForceSync();

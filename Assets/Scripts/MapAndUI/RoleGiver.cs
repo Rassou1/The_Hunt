@@ -32,7 +32,7 @@ public class RoleGiver : AttributesSync, IInteractable
 
     public void InitInteract(string interactor)
     {
-        //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game.
+        //Calls interact method, resets all player values. Ensures game restarts don't end due to leftover variables from last game. - Ibrahim
         playerStates.StateReset();
         BroadcastRemoteMethod("Interact", interactor);
     }
@@ -129,7 +129,7 @@ public class RoleGiver : AttributesSync, IInteractable
 
     public void ResetAllPrefabs()
     {
-        //MOVE THIS TO PLAYERSTATES - Ibrahim
+        //resets positions of players - Ibrahim
         //List<GameObject> _players = playerStates.Players;
         networkManager = FindAnyObjectByType<Multiplayer>();
 

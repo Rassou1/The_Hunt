@@ -117,6 +117,7 @@ public class CollectItems : MonoBehaviour
         }
         if (!playerStates.gameEnded && !playerStates.gameStarted)
         {
+            //Resets the values of the diamonds on game restart. - Ibrahim
             isCollected = false;
             _collider.enabled = true;
             _renderer.enabled = true;
